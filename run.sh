@@ -9,6 +9,9 @@ DATE=${1:-$(date +%Y%m%d)}
 echo "▶ スクレイパー実行: $DATE"
 python3 scraper.py "$DATE"
 
+echo "▶ 注目馬ピックアップ実行: $DATE"
+python3 run_pickup_all.py "$DATE"
+
 echo "▶ GitHubにデータをpush中..."
 git add output/ summary/
 git commit -m "data: $DATE"

@@ -130,6 +130,17 @@ def api_data(date):
     return jsonify({"triple": triple, "summary": summary})
 
 
+@app.route("/api/pickup_all/<date>")
+def api_pickup_all(date):
+    if not re.match(r"^\d{8}$", date):
+        return jsonify({"error": "invalid date"}), 400
+    path = BASE_DIR / "output" / date / "pickup_scores.json"
+    if not path.exists():
+        return jsonify({"error": "pickup_scores.json が見つかりません。run_pickup_all.py を実行してください。"}), 404
+    with open(path, encoding="utf-8") as f:
+        return jsonify(json.load(f))
+
+
 @app.route("/api/pickup", methods=["POST"])
 def api_pickup():
     data = request.get_json()

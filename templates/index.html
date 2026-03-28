@@ -534,92 +534,110 @@ function render(date) {
 }
 
 function renderPickupForm(date) {
+  // 非同期でデータ取得
+  setTimeout(() => loadPickupAll(date), 50);
+  return `<div id="pickup-all-content" style="text-align:center;padding:40px">
+    <div class="spinner" style="margin:0 auto 12px"></div>
+    <p style="color:#666">注目馬データを読み込み中...</p>
+  </div>`;
+}
+
+async function loadPickupAll(date) {
+  const container = document.getElementById('pickup-all-content');
+  if (!container) return;
+  try {
+    const res = await fetch('/api/pickup_all/' + date);
+    const data = await res.json();
+    container.innerHTML = renderPickupAll(data, date);
+  } catch(e) {
+    container.innerHTML = `<div class="advice-box">読み込みエラー: ${e.message}</div>`;
+  }
+}
+
+function renderPickupAll(data, date) {
+  if (data.error) {
+    return `<div class="advice-box">${data.error}<br><br>
+      <strong>生成方法（ターミナルで実行）:</strong><br>
+      <code style="background:#f0f0f0;padding:6px 10px;border-radius:6px;display:block;margin-top:8px;font-size:0.85rem;word-break:break-all">
+        cd ~/Desktop/netkeiba && python3 run_pickup_all.py ${date}
+      </code>
+    </div>`;
+  }
+
+  const races = data.races || {};
+  const allScored = [];
+  for (const [label, rdata] of Object.entries(races)) {
+    for (const h of (rdata.scored || [])) {
+      allScored.push({...h, race_label: label, venue: rdata.venue, race_num: rdata.race_num});
+    }
+  }
+
+  const counts = {
+    s3: allScored.filter(h => h.score >= 5).length,
+    s2: allScored.filter(h => h.score >= 3).length,
+    all: allScored.length,
+  };
+
+  // デフォルト: ★★★(5pt以上) を表示
+  window._pickupAll = allScored;
+  const defaultCards = renderScoredCards(allScored.filter(h => h.score >= 5));
+
   return `
-    <div class="pickup-form">
-      <label>出馬表URL（shutuba.html?race_id=...）</label>
-      <input type="url" id="pickup-url" placeholder="https://race.netkeiba.com/race/shutuba.html?race_id=..." />
-      <button class="pickup-btn" onclick="runPickup('${date}')">注目馬をピックアップ</button>
+    <div class="pickup-form" style="padding:10px 14px">
+      <div style="display:flex;gap:6px">
+        <button class="pickup-btn" id="pbtn-5" style="flex:1;padding:8px;font-size:0.82rem;background:#e8a000"
+          onclick="filterPU(5)">★★★ ${counts.s3}頭</button>
+        <button class="pickup-btn" id="pbtn-3" style="flex:1;padding:8px;font-size:0.82rem;background:#bbb"
+          onclick="filterPU(3)">★★以上 ${counts.s2}頭</button>
+        <button class="pickup-btn" id="pbtn-0" style="flex:1;padding:8px;font-size:0.82rem;background:#bbb"
+          onclick="filterPU(0)">全頭 ${counts.all}頭</button>
+      </div>
+      <p style="font-size:0.72rem;color:#aaa;margin-top:6px">${data.generated_at?.slice(0,16).replace('T',' ')} 集計 / ${Object.keys(races).length}レース</p>
     </div>
-    <div id="pickup-loading" style="display:none;text-align:center;padding:30px">
-      <div class="spinner"></div>
-      <p style="color:#666;margin-top:8px">AIデータを取得中（30秒〜1分かかります）</p>
-    </div>
-    <div id="pickup-result" class="pickup-result"></div>
+    <div id="pickup-cards">${defaultCards}</div>
   `;
 }
 
-async function runPickup(date) {
-  const url = document.getElementById('pickup-url').value.trim();
-  if (!url) { alert('URLを入力してください'); return; }
-
-  document.querySelector('.pickup-btn').disabled = true;
-  document.getElementById('pickup-loading').style.display = 'block';
-  document.getElementById('pickup-result').innerHTML = '';
-
-  try {
-    const res = await fetch('/api/pickup', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({shutuba_url: url, date})
-    });
-    const data = await res.json();
-    document.getElementById('pickup-result').innerHTML = renderPickupResult(data);
-  } catch(e) {
-    document.getElementById('pickup-result').innerHTML = `<p style="color:red">エラー: ${e.message}</p>`;
-  } finally {
-    document.querySelector('.pickup-btn').disabled = false;
-    document.getElementById('pickup-loading').style.display = 'none';
-  }
+function renderScoredCards(horses) {
+  if (!horses.length) return '<p class="empty" style="padding:16px">該当馬なし</p>';
+  return horses.sort((a,b) => b.score - a.score).map(h => {
+    const rankClass = h.score >= 5 ? 's3' : h.score >= 3 ? 's2' : h.score >= 1 ? 's1' : 's0';
+    const badgeClass = h.score >= 5 ? 'high' : h.score >= 3 ? 'mid' : '';
+    return `
+    <div class="scored-card">
+      <div class="scored-header">
+        <span class="horse-num" style="width:26px;height:26px;font-size:0.8rem">${h['馬番']}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:700;display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+            <span class="venue-badge" style="font-size:0.7rem">${h.race_label || ''}</span>
+            <span>${h['馬名']}</span>
+          </div>
+          <div class="triple-idx">
+            <span>近走 ${h['近走平均指数']}(${h['近走平均順位']})</span>
+            <span>距離 ${h['当該距離指数']}(${h['当該距離順位']})</span>
+            <span>コース ${h['当該コース指数']}(${h['当該コース順位']})</span>
+          </div>
+        </div>
+        <span class="star-rank ${rankClass}">${h.rank}</span>
+        <span class="score-badge ${badgeClass}">${h.score}pt</span>
+      </div>
+      ${h.breakdown && h.breakdown.length ? `
+      <div class="scored-body">
+        ${h.breakdown.map(b => `
+          <div class="breakdown-item"><span>${b.label}</span><span class="pts-badge">+${b.pts}pt</span></div>
+        `).join('')}
+      </div>` : ''}
+    </div>`;
+  }).join('');
 }
 
-function renderPickupResult(data) {
-  if (data.error) return `<div class="advice-box">${data.error}</div>`;
-
-  let html = `<div class="section-header" style="background:#1a3a5c;color:white;padding:10px 14px;border-radius:12px 12px 0 0;margin-bottom:0">
-    ${data.race_label || 'レース'} 注目馬ピックアップ
-    <span class="badge">${data.scored?.length || 0}頭（3指数重複馬）</span>
-  </div>`;
-
-  if (data.advice) {
-    html += `<div class="advice-box" style="border-radius:0">${data.advice}</div>`;
-  }
-
-  const scored = data.scored || [];
-  if (!scored.length) {
-    html += `<div class="advice-box">このレースの3指数重複馬が見つかりません。日付と会場を確認してください。</div>`;
-    return html;
-  }
-
-  scored.forEach(h => {
-    const rankClass = h.rank === '★★★' ? 's3' : h.rank === '★★' ? 's2' : h.rank === '★' ? 's1' : 's0';
-    const badgeClass = h.score >= 5 ? 'high' : h.score >= 3 ? 'mid' : '';
-    html += `
-      <div class="scored-card">
-        <div class="scored-header">
-          <span class="horse-num" style="width:26px;height:26px">${h['馬番']}</span>
-          <div>
-            <div style="font-weight:700">${h['馬名']}</div>
-            <div class="triple-idx">
-              <span>近走平均 ${h['近走平均指数']}(${h['近走平均順位']})</span>
-              <span>当該距離 ${h['当該距離指数']}(${h['当該距離順位']})</span>
-              <span>当該コース ${h['当該コース指数']}(${h['当該コース順位']})</span>
-            </div>
-          </div>
-          <span class="star-rank ${rankClass}">${h.rank}</span>
-          <span class="score-badge ${badgeClass}">${h.score}pt</span>
-        </div>
-        ${h.breakdown.length ? `
-        <div class="scored-body">
-          ${h.breakdown.map(b => `
-            <div class="breakdown-item">
-              <span>${b.label}</span>
-              <span class="pts-badge">+${b.pts}pt</span>
-            </div>
-          `).join('')}
-        </div>` : `<div class="scored-body"><p class="empty">追加指標への該当なし</p></div>`}
-      </div>`;
+function filterPU(min) {
+  ['5','3','0'].forEach(v => {
+    const btn = document.getElementById('pbtn-' + v);
+    if (btn) btn.style.background = v == min ? (v=='5'?'#e8a000':v=='3'?'#888':'#1a3a5c') : '#bbb';
   });
-  return html;
+  const filtered = (window._pickupAll || []).filter(h => h.score >= min);
+  document.getElementById('pickup-cards').innerHTML = renderScoredCards(filtered);
 }
 
 function switchTab(btn, tabId) {
