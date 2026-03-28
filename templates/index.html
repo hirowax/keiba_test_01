@@ -31,12 +31,7 @@
     cursor: pointer;
   }
 
-  #loading {
-    display: none;
-    text-align: center;
-    padding: 40px;
-    color: #666;
-  }
+  #loading { display: none; text-align: center; padding: 40px; color: #666; }
   .spinner {
     width: 36px; height: 36px;
     border: 4px solid #ddd;
@@ -49,115 +44,81 @@
 
   #content { padding: 12px; max-width: 800px; margin: 0 auto; }
 
-  /* タブ */
-  .tabs {
-    display: flex;
-    background: white;
-    border-radius: 12px;
-    padding: 4px;
-    margin-bottom: 12px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    overflow-x: auto;
-    gap: 4px;
-  }
-  .tab-btn {
-    flex: 1;
-    min-width: fit-content;
-    padding: 8px 14px;
-    border: none;
-    background: transparent;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: #666;
-    white-space: nowrap;
-    transition: all 0.2s;
-  }
-  .tab-btn.active {
-    background: #1a3a5c;
-    color: white;
-  }
-
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
-
-  /* 3指数重複馬 */
-  .triple-section {
+  /* ── 最注目馬セクション ── */
+  .top-pickup {
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
     margin-bottom: 12px;
   }
-  .section-header {
-    background: #e8a000;
+  .top-pickup-header {
+    background: linear-gradient(135deg, #e8a000, #c87800);
     color: white;
     padding: 10px 14px;
     font-weight: 700;
     font-size: 0.95rem;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
   }
-  .badge {
-    background: rgba(0,0,0,0.2);
-    border-radius: 20px;
-    padding: 2px 8px;
-    font-size: 0.8rem;
-  }
-
-  .triple-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.85rem;
-  }
-  .triple-table th {
-    background: #fef3d0;
-    color: #7a5000;
-    padding: 7px 8px;
-    text-align: center;
-    font-weight: 600;
-    border-bottom: 1px solid #f0d890;
-  }
-  .triple-table td {
-    padding: 9px 8px;
-    text-align: center;
-    border-bottom: 1px solid #f5f5f5;
-  }
-  .triple-table tr:last-child td { border-bottom: none; }
-  .triple-table tr:hover td { background: #fffbee; }
-  .horse-num {
-    display: inline-flex;
+  .top-pickup-row {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    width: 26px; height: 26px;
-    background: #1a3a5c;
-    color: white;
-    border-radius: 50%;
-    font-weight: 700;
-    font-size: 0.85rem;
+    gap: 8px;
+    padding: 9px 14px;
+    border-bottom: 1px solid #f5f5f5;
+    cursor: pointer;
+    transition: background 0.15s;
   }
-  .horse-name { font-weight: 600; text-align: left !important; }
-  .venue-badge {
-    display: inline-block;
-    background: #1a3a5c;
-    color: white;
-    border-radius: 4px;
-    padding: 2px 6px;
-    font-size: 0.75rem;
-    font-weight: 600;
+  .top-pickup-row:last-child { border-bottom: none; }
+  .top-pickup-row:hover { background: #fffbee; }
+  .tp-race { min-width: 54px; font-size: 0.78rem; font-weight: 700; color: #666; }
+  .tp-name { flex: 1; font-weight: 700; font-size: 0.95rem; }
+  .tp-score {
+    font-weight: 800;
+    font-size: 1rem;
+    color: #e8a000;
+    min-width: 36px;
+    text-align: right;
   }
-  .rank-1 { color: #e8a000; font-weight: 700; }
-  .rank-2 { color: #888; font-weight: 700; }
-  .rank-3 { color: #c05020; font-weight: 700; }
+  .tp-bd { font-size: 0.72rem; color: #999; display: flex; gap: 4px; flex-wrap: wrap; margin-top: 2px; }
+  .tp-bd span { background: #f5f5f5; border-radius: 3px; padding: 1px 5px; }
 
-  /* サマリー */
-  .venue-section {
+  /* ── タブ ── */
+  .tabs {
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    gap: 4px;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 8px 6px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #666;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab-btn.active { background: #1a3a5c; color: white; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── 開催場ブロック ── */
+  .venue-block {
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     margin-bottom: 12px;
   }
   .venue-header {
@@ -166,211 +127,155 @@
     padding: 10px 14px;
     font-weight: 700;
     font-size: 1rem;
-  }
-
-  .race-accordion { border-bottom: 1px solid #eee; }
-  .race-accordion:last-child { border-bottom: none; }
-  .race-toggle {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 11px 14px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    font-size: 0.92rem;
-    font-weight: 600;
-    color: #1a1a1a;
-    text-align: left;
-  }
-  .race-toggle:hover { background: #f8f8f8; }
-  .race-toggle .arrow {
-    font-size: 0.7rem;
-    transition: transform 0.2s;
-    color: #999;
-  }
-  .race-toggle.open .arrow { transform: rotate(180deg); }
-  .triple-pill {
-    background: #e8a000;
-    color: white;
-    border-radius: 20px;
-    padding: 2px 8px;
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-
-  .race-content { display: none; padding: 0 14px 14px; }
-  .race-content.open { display: block; }
-
-  .index-group { margin-bottom: 12px; }
-  .index-label {
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #666;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    padding: 3px 8px;
-    background: #f0f0f0;
-    border-radius: 4px;
-    display: inline-block;
-  }
-  .horse-row {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 4px;
-    border-bottom: 1px solid #f5f5f5;
+  }
+  .venue-badge-sm {
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 0.75rem;
+  }
+
+  /* ── レース アコーディオン ── */
+  .race-accordion { border-bottom: 1px solid #eee; }
+  .race-accordion:last-child { border-bottom: none; }
+  .race-toggle {
+    width: 100%; background: none; border: none;
+    padding: 11px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; font-size: 0.92rem; font-weight: 600;
+    color: #1a1a1a; text-align: left;
+  }
+  .race-toggle:hover { background: #f8f8f8; }
+  .race-toggle .arrow { font-size: 0.7rem; transition: transform 0.2s; color: #bbb; }
+  .race-toggle.open .arrow { transform: rotate(180deg); }
+  .triple-pill {
+    background: #e8a000; color: white;
+    border-radius: 20px; padding: 2px 8px;
+    font-size: 0.72rem; font-weight: 700; margin-left: 6px;
+  }
+  .star-pill {
+    background: #c8a000; color: white;
+    border-radius: 20px; padding: 2px 8px;
+    font-size: 0.72rem; font-weight: 700; margin-left: 4px;
+  }
+  .race-content { display: none; padding: 0 14px 14px; }
+  .race-content.open { display: block; }
+
+  /* ── 3指数重複馬タブ ── */
+  .triple-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+  .triple-table th {
+    background: #fef3d0; color: #7a5000;
+    padding: 6px 8px; text-align: center; font-weight: 600;
+    border-bottom: 1px solid #f0d890;
+  }
+  .triple-table td { padding: 8px; text-align: center; border-bottom: 1px solid #f5f5f5; }
+  .triple-table tr:last-child td { border-bottom: none; }
+  .triple-table tr:hover td { background: #fffbee; }
+  .horse-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px;
+    background: #1a3a5c; color: white;
+    border-radius: 50%; font-weight: 700; font-size: 0.82rem;
+  }
+  .horse-name { font-weight: 600; text-align: left !important; }
+  .rank-1 { color: #e8a000; font-weight: 700; }
+
+  /* ── サマリータブ ── */
+  .index-group { margin-bottom: 10px; }
+  .index-label {
+    font-size: 0.76rem; font-weight: 700; color: #666;
+    padding: 2px 8px; background: #f0f0f0; border-radius: 4px;
+    display: inline-block; margin-bottom: 5px;
+  }
+  .horse-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 2px; border-bottom: 1px solid #f5f5f5;
   }
   .horse-row:last-child { border-bottom: none; }
-  .idx-val {
-    margin-left: auto;
-    font-weight: 700;
-    font-size: 1rem;
-    color: #1a3a5c;
-    min-width: 36px;
-    text-align: right;
-  }
+  .idx-val { margin-left: auto; font-weight: 700; font-size: 1rem; color: #1a3a5c; min-width: 36px; text-align: right; }
   .rank-dot {
     width: 20px; height: 20px;
     display: inline-flex; align-items: center; justify-content: center;
-    border-radius: 50%;
-    font-size: 0.7rem; font-weight: 700; color: white;
-    flex-shrink: 0;
+    border-radius: 50%; font-size: 0.7rem; font-weight: 700; color: white; flex-shrink: 0;
   }
   .rank-dot.r1 { background: #e8a000; }
   .rank-dot.r2 { background: #888; }
   .rank-dot.r3 { background: #c05020; }
   .rank-dot.r4, .rank-dot.r5 { background: #ccc; color: #666; }
-
-  .triple-horses {
-    background: #fffbee;
-    border: 1px solid #f0d890;
-    border-radius: 8px;
-    padding: 10px;
-    margin-top: 4px;
+  .triple-box {
+    background: #fffbee; border: 1px solid #f0d890;
+    border-radius: 8px; padding: 9px; margin-top: 4px;
   }
-  .triple-horses-label {
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #e8a000;
-    margin-bottom: 6px;
-  }
+  .triple-box-label { font-size: 0.76rem; font-weight: 700; color: #e8a000; margin-bottom: 5px; }
   .triple-horse-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 5px 0;
-    border-bottom: 1px solid #f0d890;
-    font-size: 0.88rem;
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 0; border-bottom: 1px solid #f0d890; font-size: 0.86rem;
   }
   .triple-horse-row:last-child { border-bottom: none; }
 
-  .empty { color: #aaa; font-size: 0.85rem; padding: 8px 0; }
+  /* ── 注目馬PUタブ ── */
+  .pu-filter {
+    background: white; border-radius: 12px;
+    padding: 10px 14px; margin-bottom: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .pu-filter-btns { display: flex; gap: 6px; }
+  .pu-btn {
+    flex: 1; border: none; border-radius: 8px;
+    padding: 8px 4px; font-size: 0.82rem; font-weight: 700;
+    cursor: pointer; color: white; background: #bbb;
+  }
+  .pu-btn.active-5 { background: #e8a000; }
+  .pu-btn.active-3 { background: #888; }
+  .pu-btn.active-0 { background: #1a3a5c; }
+  .pu-meta { font-size: 0.72rem; color: #aaa; margin-top: 6px; }
 
-  /* ── ピックアップ UI ── */
-  .pickup-form {
-    background: white;
-    border-radius: 12px;
-    padding: 14px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    margin-bottom: 12px;
-  }
-  .pickup-form label { font-size: 0.85rem; font-weight: 600; color: #444; display: block; margin-bottom: 6px; }
-  .pickup-form input {
-    width: 100%;
-    padding: 9px 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-  }
-  .pickup-form input:focus { outline: none; border-color: #1a3a5c; }
-  .pickup-btn {
-    background: #1a3a5c;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    cursor: pointer;
-    width: 100%;
-  }
-  .pickup-btn:disabled { background: #aaa; cursor: not-allowed; }
-
-  .pickup-result { margin-top: 12px; }
   .scored-card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    margin-bottom: 10px;
+    background: white; border-radius: 12px;
+    overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    margin-bottom: 8px;
   }
   .scored-header {
-    display: flex;
-    align-items: center;
-    padding: 12px 14px;
-    gap: 10px;
+    display: flex; align-items: center; padding: 10px 14px; gap: 8px;
     border-bottom: 1px solid #f0f0f0;
   }
-  .star-rank {
-    font-size: 1.1rem;
-    min-width: 52px;
-    font-weight: 700;
+  .scored-info { flex: 1; min-width: 0; }
+  .scored-name { font-weight: 700; display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+  .race-tag {
+    background: #1a3a5c; color: white;
+    border-radius: 4px; padding: 1px 6px; font-size: 0.7rem; font-weight: 700;
   }
+  .triple-idx { font-size: 0.72rem; color: #999; display: flex; gap: 5px; flex-wrap: wrap; margin-top: 3px; }
+  .triple-idx span { background: #f5f5f5; border-radius: 3px; padding: 1px 5px; }
+  .star-rank { font-size: 1rem; font-weight: 800; min-width: 48px; text-align: right; }
   .star-rank.s3 { color: #e8a000; }
   .star-rank.s2 { color: #888; }
   .star-rank.s1 { color: #c05020; }
-  .star-rank.s0 { color: #ccc; }
+  .star-rank.s0 { color: #ddd; }
   .score-badge {
-    background: #1a3a5c;
-    color: white;
-    border-radius: 20px;
-    padding: 2px 10px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    margin-left: auto;
+    background: #1a3a5c; color: white;
+    border-radius: 20px; padding: 2px 9px; font-size: 0.78rem; font-weight: 700;
   }
   .score-badge.high { background: #e8a000; }
   .score-badge.mid  { background: #888; }
-  .scored-body { padding: 10px 14px; }
+  .scored-body { padding: 8px 14px; }
   .breakdown-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.83rem;
-    padding: 4px 0;
-    border-bottom: 1px solid #f5f5f5;
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.81rem; padding: 4px 0; border-bottom: 1px solid #f5f5f5;
   }
   .breakdown-item:last-child { border-bottom: none; }
   .pts-badge {
-    margin-left: auto;
-    background: #e8f0fb;
-    color: #1a3a5c;
-    border-radius: 4px;
-    padding: 1px 6px;
-    font-size: 0.78rem;
-    font-weight: 700;
+    margin-left: auto; background: #e8f0fb; color: #1a3a5c;
+    border-radius: 4px; padding: 1px 6px; font-size: 0.76rem; font-weight: 700;
   }
   .advice-box {
-    background: #fff3cd;
-    border: 1px solid #ffc107;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 0.85rem;
-    color: #856404;
-    margin-bottom: 12px;
+    background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px;
+    padding: 12px; font-size: 0.85rem; color: #856404; margin-bottom: 10px;
   }
-  .triple-idx {
-    font-size: 0.78rem;
-    color: #888;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 4px;
-  }
-  .triple-idx span { background: #f0f0f0; border-radius: 4px; padding: 1px 6px; }
+  .empty { color: #aaa; font-size: 0.85rem; padding: 8px 0; }
 </style>
 </head>
 <body>
@@ -384,181 +289,226 @@
   </select>
 </header>
 
-<div id="loading">
-  <div class="spinner"></div>
-  <p>データ読み込み中...</p>
-</div>
-
+<div id="loading"><div class="spinner"></div><p>データ読み込み中...</p></div>
 <div id="content"></div>
 
 <script>
-let currentData = null;
+// ── 定数 ──────────────────────────────────────────────────────
+const VENUE_ORDER = ['東京','中山','京都','阪神','中京','新潟','福島','函館','札幌','小倉'];
 
-function formatDate(d) {
-  return d.slice(0,4) + '/' + d.slice(4,6) + '/' + d.slice(6);
+function venueRank(v) {
+  const i = VENUE_ORDER.indexOf(v);
+  return i >= 0 ? i : 99;
 }
+function raceNumOf(label) {
+  const m = String(label).match(/(\d+)R/);
+  return m ? parseInt(m[1]) : 0;
+}
+function sortVenueDesc(entries) {
+  // entries: [[venue, ...], ...]
+  return entries.sort((a, b) => venueRank(a[0]) - venueRank(b[0]));
+}
+function sortRaceDesc(races) {
+  // races: [{label, ...}, ...]
+  return [...races].sort((a, b) => raceNumOf(b.label) - raceNumOf(a.label));
+}
+function sortRaceLabelDesc(labelMap) {
+  // {raceLabel: data} → sorted entries [[label, data], ...]
+  return Object.entries(labelMap).sort((a, b) => raceNumOf(b[0]) - raceNumOf(a[0]));
+}
+
+// ── データロード ──────────────────────────────────────────────
+let currentData = null;
+let currentPickup = null;
 
 async function loadDate(date) {
   document.getElementById('loading').style.display = 'block';
   document.getElementById('content').innerHTML = '';
-  const res = await fetch('/api/data/' + date);
-  currentData = await res.json();
+  const [main, pickup] = await Promise.all([
+    fetch('/api/data/' + date).then(r => r.json()),
+    fetch('/api/pickup_all/' + date).then(r => r.json()).catch(() => null),
+  ]);
+  currentData = main;
+  currentPickup = pickup;
   document.getElementById('loading').style.display = 'none';
   render(date);
 }
 
-function getRankClass(idx) {
-  if (idx === 1) return 'r1';
-  if (idx === 2) return 'r2';
-  if (idx === 3) return 'r3';
-  return 'r' + idx;
+// ── メインレンダー ────────────────────────────────────────────
+function render(date) {
+  const { triple, summary } = currentData;
+  const tripleCount = triple.length;
+  const starCount = currentPickup?.races
+    ? Object.values(currentPickup.races).flatMap(r => r.scored || []).filter(h => h.score >= 5).length
+    : 0;
+
+  document.getElementById('content').innerHTML = `
+    ${renderTopPickup()}
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'triple')">
+        ★重複馬<span style="background:#e8a000;color:white;border-radius:10px;padding:1px 6px;margin-left:4px;font-size:0.75rem">${tripleCount}</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(this,'summary')">レース別</button>
+      <button class="tab-btn" onclick="switchTab(this,'pickup')">注目馬PU</button>
+    </div>
+    <div id="tab-triple" class="tab-panel active">${renderTripleAll(triple)}</div>
+    <div id="tab-summary" class="tab-panel">${renderSummaryAll(summary)}</div>
+    <div id="tab-pickup" class="tab-panel">${renderPickupAll(currentPickup, date)}</div>
+  `;
 }
 
-function renderTriple(triple) {
+// ── 最注目馬（常時表示） ──────────────────────────────────────
+function renderTopPickup() {
+  if (!currentPickup?.races) return '';
+  const allScored = [];
+  for (const [label, rdata] of Object.entries(currentPickup.races)) {
+    for (const h of (rdata.scored || [])) {
+      if (h.score >= 5) allScored.push({...h, race_label: label});
+    }
+  }
+  if (!allScored.length) return '';
+
+  // 開催場順 → 同場内はレース番号降順 → 同レース内はスコア降順
+  allScored.sort((a, b) => {
+    const vd = venueRank(a.venue || '') - venueRank(b.venue || '');
+    if (vd !== 0) return vd;
+    const rd = raceNumOf(b.race_label) - raceNumOf(a.race_label);
+    if (rd !== 0) return rd;
+    return b.score - a.score;
+  });
+
+  const rows = allScored.map(h => `
+    <div class="top-pickup-row">
+      <span class="tp-race">${h.race_label}</span>
+      <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0">${h['馬番']}</span>
+      <div style="flex:1;min-width:0">
+        <div class="tp-name">${h['馬名']}</div>
+        <div class="tp-bd">${(h.breakdown||[]).map(b=>`<span>${b.label}+${b.pts}</span>`).join('')}</div>
+      </div>
+      <span class="tp-score">${h.score}pt</span>
+    </div>
+  `).join('');
+
+  return `
+    <div class="top-pickup">
+      <div class="top-pickup-header">
+        🏆 最注目馬（★★★ 5pt以上）
+        <span style="background:rgba(0,0,0,0.2);border-radius:10px;padding:1px 8px;font-size:0.78rem">${allScored.length}頭</span>
+      </div>
+      ${rows}
+    </div>
+  `;
+}
+
+// ── 3指数重複馬タブ ───────────────────────────────────────────
+function renderTripleAll(triple) {
   if (!triple.length) return '<p class="empty" style="padding:16px">3指数重複馬はありません</p>';
 
   // 開催場ごとにグループ
   const byVenue = {};
   triple.forEach(r => {
-    if (!byVenue[r['開催場']]) byVenue[r['開催場']] = [];
-    byVenue[r['開催場']].push(r);
+    if (!byVenue[r['開催場']]) byVenue[r['開催場']] = {};
+    const rn = r['レース番号'];
+    if (!byVenue[r['開催場']][rn]) byVenue[r['開催場']][rn] = [];
+    byVenue[r['開催場']][rn].push(r);
   });
 
-  let html = '';
-  for (const [venue, rows] of Object.entries(byVenue)) {
-    html += `<div class="triple-section">
-      <div class="section-header">
-        <span>${venue}</span>
-        <span class="badge">${rows.length}頭</span>
+  const venueEntries = Object.entries(byVenue).sort((a,b) => venueRank(a[0]) - venueRank(b[0]));
+  return venueEntries.map(([venue, raceMap]) => {
+    const raceEntries = Object.entries(raceMap).sort((a,b) => raceNumOf(b[0]) - raceNumOf(a[0]));
+    const total = Object.values(raceMap).flat().length;
+    const inner = raceEntries.map(([rn, horses]) => `
+      <div style="padding:10px 14px;border-bottom:1px solid #f5f5f5">
+        <div style="font-size:0.82rem;font-weight:700;color:#666;margin-bottom:6px">${venue}${rn}</div>
+        <table class="triple-table">
+          <thead><tr>
+            <th>馬番</th><th style="text-align:left">馬名</th>
+            <th>近走平均</th><th>当該距離</th><th>当該コース</th>
+          </tr></thead>
+          <tbody>${horses.map(h => `
+            <tr>
+              <td><span class="horse-num">${h['馬番']}</span></td>
+              <td class="horse-name">${h['馬名']}</td>
+              <td class="${h['近走平均順位']==='1位'?'rank-1':''}">${h['近走平均指数']}<br><small>${h['近走平均順位']}</small></td>
+              <td>${h['当該距離指数']}<br><small>${h['当該距離順位']}</small></td>
+              <td>${h['当該コース指数']}<br><small>${h['当該コース順位']}</small></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
       </div>
-      <table class="triple-table">
-        <thead><tr>
-          <th>R</th><th>馬番</th><th>馬名</th>
-          <th>近走平均</th><th>当該距離</th><th>当該コース</th>
-        </tr></thead><tbody>`;
-    rows.forEach(r => {
-      const rankClass = r['近走平均順位'] === '1位' ? 'rank-1' : r['近走平均順位'] === '2位' ? 'rank-2' : '';
-      html += `<tr>
-        <td>${r['レース番号']}</td>
-        <td><span class="horse-num">${r['馬番']}</span></td>
-        <td class="horse-name">${r['馬名']}</td>
-        <td class="${rankClass}">${r['近走平均指数']}<br><small>${r['近走平均順位']}</small></td>
-        <td>${r['当該距離指数']}<br><small>${r['当該距離順位']}</small></td>
-        <td>${r['当該コース指数']}<br><small>${r['当該コース順位']}</small></td>
-      </tr>`;
-    });
-    html += '</tbody></table></div>';
+    `).join('');
+    return `
+      <div class="venue-block">
+        <div class="venue-header">${venue} <span class="venue-badge-sm">${total}頭</span></div>
+        ${inner}
+      </div>`;
+  }).join('');
+}
+
+// ── レース別サマリータブ ──────────────────────────────────────
+function renderSummaryAll(summary) {
+  const venueEntries = Object.entries(summary).sort((a,b) => venueRank(a[0]) - venueRank(b[0]));
+  return venueEntries.map(([venue, races]) => {
+    const sortedRaces = [...races].sort((a,b) => raceNumOf(b.label) - raceNumOf(a.label));
+    const inner = sortedRaces.map(race => {
+      const hasTriple = race.triple?.length > 0;
+      return `
+        <div class="race-accordion">
+          <button class="race-toggle" onclick="toggleRace(this)">
+            <span>${race.label}${hasTriple ? `<span class="triple-pill">★${race.triple.length}頭</span>` : ''}</span>
+            <span class="arrow">▼</span>
+          </button>
+          <div class="race-content">
+            ${renderSummaryRace(race)}
+          </div>
+        </div>`;
+    }).join('');
+    return `<div class="venue-block"><div class="venue-header">${venue}</div>${inner}</div>`;
+  }).join('');
+}
+
+function renderSummaryRace(race) {
+  const modes = [
+    {key:'average', label:'近走平均'},
+    {key:'distance', label:'当該距離'},
+    {key:'course',   label:'当該コース'},
+  ];
+  let html = modes.map(m => {
+    const horses = race[m.key] || [];
+    return `<div class="index-group">
+      <span class="index-label">${m.label}</span>
+      ${horses.length ? horses.map((h,i) => `
+        <div class="horse-row">
+          <span class="rank-dot r${i+1}">${i+1}</span>
+          <span class="horse-num" style="width:22px;height:22px;font-size:0.74rem">${h.num}</span>
+          <span>${h.name}</span>
+          <span class="idx-val">${h.val}</span>
+        </div>`).join('') : '<p class="empty">データなし</p>'}
+    </div>`;
+  }).join('');
+
+  if (race.triple?.length) {
+    html += `<div class="triple-box">
+      <div class="triple-box-label">★ 3指数すべてトップ5入り</div>
+      ${race.triple.map(h => `
+        <div class="triple-horse-row">
+          <span class="horse-num" style="width:22px;height:22px;font-size:0.74rem">${h.num}</span>
+          <span style="font-weight:600">${h.name}</span>
+          <span style="margin-left:auto;font-size:0.78rem;color:#888">
+            ${h.avg||'-'} / ${h.dist||'-'} / ${h.crs||'-'}
+          </span>
+        </div>`).join('')}
+    </div>`;
   }
   return html;
 }
 
-function renderSummary(summary) {
-  let html = '';
-  for (const [venue, races] of Object.entries(summary)) {
-    html += `<div class="venue-section">
-      <div class="venue-header">🏟 ${venue}</div>`;
-
-    races.forEach((race, i) => {
-      const hasTriple = race.triple && race.triple.length > 0;
-      html += `<div class="race-accordion">
-        <button class="race-toggle" onclick="toggleRace(this)">
-          <span>${race.label} ${hasTriple ? `<span class="triple-pill">★ ${race.triple.length}頭</span>` : ''}</span>
-          <span class="arrow">▼</span>
-        </button>
-        <div class="race-content">`;
-
-      const modes = [
-        { key: 'average', label: '近走平均' },
-        { key: 'distance', label: '当該距離' },
-        { key: 'course', label: '当該コース' },
-      ];
-      modes.forEach(m => {
-        html += `<div class="index-group">
-          <span class="index-label">${m.label}</span>`;
-        const horses = race[m.key];
-        if (!horses || !horses.length) {
-          html += '<p class="empty">データなし</p>';
-        } else {
-          horses.forEach((h, rank) => {
-            html += `<div class="horse-row">
-              <span class="rank-dot ${getRankClass(rank+1)}">${rank+1}</span>
-              <span class="horse-num" style="width:22px;height:22px;font-size:0.75rem">${h.num}</span>
-              <span>${h.name}</span>
-              <span class="idx-val">${h.val}</span>
-            </div>`;
-          });
-        }
-        html += '</div>';
-      });
-
-      // 3指数重複馬
-      if (hasTriple) {
-        html += `<div class="triple-horses">
-          <div class="triple-horses-label">★ 3指数すべてトップ5入り</div>`;
-        race.triple.forEach(h => {
-          html += `<div class="triple-horse-row">
-            <span class="horse-num" style="width:22px;height:22px;font-size:0.75rem">${h.num}</span>
-            <span style="font-weight:600">${h.name}</span>
-            <span style="margin-left:auto;font-size:0.8rem;color:#666">
-              平均:${h.avg || '-'} 距離:${h.dist || '-'} コース:${h.crs || '-'}
-            </span>
-          </div>`;
-        });
-        html += '</div>';
-      }
-
-      html += '</div></div>';
-    });
-    html += '</div>';
-  }
-  return html;
-}
-
-function render(date) {
-  const { triple, summary } = currentData;
-  const tripleCount = triple.length;
-
-  const content = document.getElementById('content');
-  content.innerHTML = `
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab(this, 'triple')">
-        ★ 3指数重複馬 <span class="badge" style="background:#e8a000;color:white;margin-left:4px">${tripleCount}</span>
-      </button>
-      <button class="tab-btn" onclick="switchTab(this, 'summary')">レース別</button>
-      <button class="tab-btn" onclick="switchTab(this, 'pickup')">注目馬PU</button>
-    </div>
-    <div id="tab-triple" class="tab-panel active">${renderTriple(triple)}</div>
-    <div id="tab-summary" class="tab-panel">${renderSummary(summary)}</div>
-    <div id="tab-pickup" class="tab-panel">${renderPickupForm(date)}</div>
-  `;
-}
-
-function renderPickupForm(date) {
-  // 非同期でデータ取得
-  setTimeout(() => loadPickupAll(date), 50);
-  return `<div id="pickup-all-content" style="text-align:center;padding:40px">
-    <div class="spinner" style="margin:0 auto 12px"></div>
-    <p style="color:#666">注目馬データを読み込み中...</p>
-  </div>`;
-}
-
-async function loadPickupAll(date) {
-  const container = document.getElementById('pickup-all-content');
-  if (!container) return;
-  try {
-    const res = await fetch('/api/pickup_all/' + date);
-    const data = await res.json();
-    container.innerHTML = renderPickupAll(data, date);
-  } catch(e) {
-    container.innerHTML = `<div class="advice-box">読み込みエラー: ${e.message}</div>`;
-  }
-}
-
+// ── 注目馬PUタブ ──────────────────────────────────────────────
 function renderPickupAll(data, date) {
-  if (data.error) {
-    return `<div class="advice-box">${data.error}<br><br>
-      <strong>生成方法（ターミナルで実行）:</strong><br>
-      <code style="background:#f0f0f0;padding:6px 10px;border-radius:6px;display:block;margin-top:8px;font-size:0.85rem;word-break:break-all">
+  if (!data || data.error) {
+    return `<div class="advice-box">${data?.error || 'データなし'}<br><br>
+      <strong>生成方法:</strong><br>
+      <code style="background:#f5f5f0;padding:6px;border-radius:4px;display:block;margin-top:6px;font-size:0.83rem;word-break:break-all">
         cd ~/Desktop/netkeiba && python3 run_pickup_all.py ${date}
       </code>
     </div>`;
@@ -573,44 +523,49 @@ function renderPickupAll(data, date) {
   }
 
   const counts = {
-    s3: allScored.filter(h => h.score >= 5).length,
-    s2: allScored.filter(h => h.score >= 3).length,
+    s5: allScored.filter(h => h.score >= 5).length,
+    s3: allScored.filter(h => h.score >= 3).length,
     all: allScored.length,
   };
 
-  // デフォルト: ★★★(5pt以上) を表示
   window._pickupAll = allScored;
-  const defaultCards = renderScoredCards(allScored.filter(h => h.score >= 5));
 
   return `
-    <div class="pickup-form" style="padding:10px 14px">
-      <div style="display:flex;gap:6px">
-        <button class="pickup-btn" id="pbtn-5" style="flex:1;padding:8px;font-size:0.82rem;background:#e8a000"
-          onclick="filterPU(5)">★★★ ${counts.s3}頭</button>
-        <button class="pickup-btn" id="pbtn-3" style="flex:1;padding:8px;font-size:0.82rem;background:#bbb"
-          onclick="filterPU(3)">★★以上 ${counts.s2}頭</button>
-        <button class="pickup-btn" id="pbtn-0" style="flex:1;padding:8px;font-size:0.82rem;background:#bbb"
-          onclick="filterPU(0)">全頭 ${counts.all}頭</button>
+    <div class="pu-filter">
+      <div class="pu-filter-btns">
+        <button class="pu-btn active-5" id="pbtn-5" onclick="filterPU(5)">★★★ ${counts.s5}頭</button>
+        <button class="pu-btn" id="pbtn-3" onclick="filterPU(3)">★★以上 ${counts.s3}頭</button>
+        <button class="pu-btn" id="pbtn-0" onclick="filterPU(0)">全頭 ${counts.all}頭</button>
       </div>
-      <p style="font-size:0.72rem;color:#aaa;margin-top:6px">${data.generated_at?.slice(0,16).replace('T',' ')} 集計 / ${Object.keys(races).length}レース</p>
+      <div class="pu-meta">${data.generated_at?.slice(0,16).replace('T',' ')} 集計 / ${Object.keys(races).length}レース</div>
     </div>
-    <div id="pickup-cards">${defaultCards}</div>
+    <div id="pickup-cards">${renderPUCards(allScored.filter(h => h.score >= 5))}</div>
   `;
 }
 
-function renderScoredCards(horses) {
+function renderPUCards(horses) {
   if (!horses.length) return '<p class="empty" style="padding:16px">該当馬なし</p>';
-  return horses.sort((a,b) => b.score - a.score).map(h => {
-    const rankClass = h.score >= 5 ? 's3' : h.score >= 3 ? 's2' : h.score >= 1 ? 's1' : 's0';
-    const badgeClass = h.score >= 5 ? 'high' : h.score >= 3 ? 'mid' : '';
+
+  // 開催場順 → レース番号降順 → スコア降順
+  const sorted = [...horses].sort((a,b) => {
+    const vd = venueRank(a.venue||'') - venueRank(b.venue||'');
+    if (vd !== 0) return vd;
+    const rd = raceNumOf(b.race_label) - raceNumOf(a.race_label);
+    if (rd !== 0) return rd;
+    return b.score - a.score;
+  });
+
+  return sorted.map(h => {
+    const rc = h.score >= 5 ? 's3' : h.score >= 3 ? 's2' : h.score >= 1 ? 's1' : 's0';
+    const bc = h.score >= 5 ? 'high' : h.score >= 3 ? 'mid' : '';
     return `
     <div class="scored-card">
       <div class="scored-header">
         <span class="horse-num" style="width:26px;height:26px;font-size:0.8rem">${h['馬番']}</span>
-        <div style="flex:1;min-width:0">
-          <div style="font-weight:700;display:flex;align-items:center;gap:5px;flex-wrap:wrap">
-            <span class="venue-badge" style="font-size:0.7rem">${h.race_label || ''}</span>
-            <span>${h['馬名']}</span>
+        <div class="scored-info">
+          <div class="scored-name">
+            <span class="race-tag">${h.race_label||''}</span>
+            ${h['馬名']}
           </div>
           <div class="triple-idx">
             <span>近走 ${h['近走平均指数']}(${h['近走平均順位']})</span>
@@ -618,12 +573,12 @@ function renderScoredCards(horses) {
             <span>コース ${h['当該コース指数']}(${h['当該コース順位']})</span>
           </div>
         </div>
-        <span class="star-rank ${rankClass}">${h.rank}</span>
-        <span class="score-badge ${badgeClass}">${h.score}pt</span>
+        <span class="star-rank ${rc}">${h.rank}</span>
+        <span class="score-badge ${bc}">${h.score}pt</span>
       </div>
-      ${h.breakdown && h.breakdown.length ? `
+      ${h.breakdown?.length ? `
       <div class="scored-body">
-        ${h.breakdown.map(b => `
+        ${h.breakdown.map(b=>`
           <div class="breakdown-item"><span>${b.label}</span><span class="pts-badge">+${b.pts}pt</span></div>
         `).join('')}
       </div>` : ''}
@@ -632,21 +587,22 @@ function renderScoredCards(horses) {
 }
 
 function filterPU(min) {
-  ['5','3','0'].forEach(v => {
-    const btn = document.getElementById('pbtn-' + v);
-    if (btn) btn.style.background = v == min ? (v=='5'?'#e8a000':v=='3'?'#888':'#1a3a5c') : '#bbb';
+  document.querySelectorAll('.pu-btn').forEach(b => {
+    b.className = 'pu-btn';
   });
+  const btn = document.getElementById('pbtn-' + min);
+  if (btn) btn.className = `pu-btn active-${min === 5 ? 5 : min === 3 ? 3 : 0}`;
   const filtered = (window._pickupAll || []).filter(h => h.score >= min);
-  document.getElementById('pickup-cards').innerHTML = renderScoredCards(filtered);
+  document.getElementById('pickup-cards').innerHTML = renderPUCards(filtered);
 }
 
+// ── ユーティリティ ────────────────────────────────────────────
 function switchTab(btn, tabId) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('tab-' + tabId).classList.add('active');
 }
-
 function toggleRace(btn) {
   btn.classList.toggle('open');
   btn.nextElementSibling.classList.toggle('open');
