@@ -267,6 +267,110 @@
   .triple-horse-row:last-child { border-bottom: none; }
 
   .empty { color: #aaa; font-size: 0.85rem; padding: 8px 0; }
+
+  /* ── ピックアップ UI ── */
+  .pickup-form {
+    background: white;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+  }
+  .pickup-form label { font-size: 0.85rem; font-weight: 600; color: #444; display: block; margin-bottom: 6px; }
+  .pickup-form input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+  .pickup-form input:focus { outline: none; border-color: #1a3a5c; }
+  .pickup-btn {
+    background: #1a3a5c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+  }
+  .pickup-btn:disabled { background: #aaa; cursor: not-allowed; }
+
+  .pickup-result { margin-top: 12px; }
+  .scored-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+  }
+  .scored-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    gap: 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .star-rank {
+    font-size: 1.1rem;
+    min-width: 52px;
+    font-weight: 700;
+  }
+  .star-rank.s3 { color: #e8a000; }
+  .star-rank.s2 { color: #888; }
+  .star-rank.s1 { color: #c05020; }
+  .star-rank.s0 { color: #ccc; }
+  .score-badge {
+    background: #1a3a5c;
+    color: white;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-left: auto;
+  }
+  .score-badge.high { background: #e8a000; }
+  .score-badge.mid  { background: #888; }
+  .scored-body { padding: 10px 14px; }
+  .breakdown-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.83rem;
+    padding: 4px 0;
+    border-bottom: 1px solid #f5f5f5;
+  }
+  .breakdown-item:last-child { border-bottom: none; }
+  .pts-badge {
+    margin-left: auto;
+    background: #e8f0fb;
+    color: #1a3a5c;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .advice-box {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.85rem;
+    color: #856404;
+    margin-bottom: 12px;
+  }
+  .triple-idx {
+    font-size: 0.78rem;
+    color: #888;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+  .triple-idx span { background: #f0f0f0; border-radius: 4px; padding: 1px 6px; }
 </style>
 </head>
 <body>
@@ -420,11 +524,102 @@ function render(date) {
       <button class="tab-btn active" onclick="switchTab(this, 'triple')">
         ★ 3指数重複馬 <span class="badge" style="background:#e8a000;color:white;margin-left:4px">${tripleCount}</span>
       </button>
-      <button class="tab-btn" onclick="switchTab(this, 'summary')">レース別サマリー</button>
+      <button class="tab-btn" onclick="switchTab(this, 'summary')">レース別</button>
+      <button class="tab-btn" onclick="switchTab(this, 'pickup')">注目馬PU</button>
     </div>
     <div id="tab-triple" class="tab-panel active">${renderTriple(triple)}</div>
     <div id="tab-summary" class="tab-panel">${renderSummary(summary)}</div>
+    <div id="tab-pickup" class="tab-panel">${renderPickupForm(date)}</div>
   `;
+}
+
+function renderPickupForm(date) {
+  return `
+    <div class="pickup-form">
+      <label>出馬表URL（shutuba.html?race_id=...）</label>
+      <input type="url" id="pickup-url" placeholder="https://race.netkeiba.com/race/shutuba.html?race_id=..." />
+      <button class="pickup-btn" onclick="runPickup('${date}')">注目馬をピックアップ</button>
+    </div>
+    <div id="pickup-loading" style="display:none;text-align:center;padding:30px">
+      <div class="spinner"></div>
+      <p style="color:#666;margin-top:8px">AIデータを取得中（30秒〜1分かかります）</p>
+    </div>
+    <div id="pickup-result" class="pickup-result"></div>
+  `;
+}
+
+async function runPickup(date) {
+  const url = document.getElementById('pickup-url').value.trim();
+  if (!url) { alert('URLを入力してください'); return; }
+
+  document.querySelector('.pickup-btn').disabled = true;
+  document.getElementById('pickup-loading').style.display = 'block';
+  document.getElementById('pickup-result').innerHTML = '';
+
+  try {
+    const res = await fetch('/api/pickup', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({shutuba_url: url, date})
+    });
+    const data = await res.json();
+    document.getElementById('pickup-result').innerHTML = renderPickupResult(data);
+  } catch(e) {
+    document.getElementById('pickup-result').innerHTML = `<p style="color:red">エラー: ${e.message}</p>`;
+  } finally {
+    document.querySelector('.pickup-btn').disabled = false;
+    document.getElementById('pickup-loading').style.display = 'none';
+  }
+}
+
+function renderPickupResult(data) {
+  if (data.error) return `<div class="advice-box">${data.error}</div>`;
+
+  let html = `<div class="section-header" style="background:#1a3a5c;color:white;padding:10px 14px;border-radius:12px 12px 0 0;margin-bottom:0">
+    ${data.race_label || 'レース'} 注目馬ピックアップ
+    <span class="badge">${data.scored?.length || 0}頭（3指数重複馬）</span>
+  </div>`;
+
+  if (data.advice) {
+    html += `<div class="advice-box" style="border-radius:0">${data.advice}</div>`;
+  }
+
+  const scored = data.scored || [];
+  if (!scored.length) {
+    html += `<div class="advice-box">このレースの3指数重複馬が見つかりません。日付と会場を確認してください。</div>`;
+    return html;
+  }
+
+  scored.forEach(h => {
+    const rankClass = h.rank === '★★★' ? 's3' : h.rank === '★★' ? 's2' : h.rank === '★' ? 's1' : 's0';
+    const badgeClass = h.score >= 5 ? 'high' : h.score >= 3 ? 'mid' : '';
+    html += `
+      <div class="scored-card">
+        <div class="scored-header">
+          <span class="horse-num" style="width:26px;height:26px">${h['馬番']}</span>
+          <div>
+            <div style="font-weight:700">${h['馬名']}</div>
+            <div class="triple-idx">
+              <span>近走平均 ${h['近走平均指数']}(${h['近走平均順位']})</span>
+              <span>当該距離 ${h['当該距離指数']}(${h['当該距離順位']})</span>
+              <span>当該コース ${h['当該コース指数']}(${h['当該コース順位']})</span>
+            </div>
+          </div>
+          <span class="star-rank ${rankClass}">${h.rank}</span>
+          <span class="score-badge ${badgeClass}">${h.score}pt</span>
+        </div>
+        ${h.breakdown.length ? `
+        <div class="scored-body">
+          ${h.breakdown.map(b => `
+            <div class="breakdown-item">
+              <span>${b.label}</span>
+              <span class="pts-badge">+${b.pts}pt</span>
+            </div>
+          `).join('')}
+        </div>` : `<div class="scored-body"><p class="empty">追加指標への該当なし</p></div>`}
+      </div>`;
+  });
+  return html;
 }
 
 function switchTab(btn, tabId) {

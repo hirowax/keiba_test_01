@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """netkeiba タイム指数 Web アプリ"""
 
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from pathlib import Path
 import pandas as pd
 import json
@@ -128,6 +128,45 @@ def api_data(date):
     triple = load_triple(date)
     summary = load_summary(date)
     return jsonify({"triple": triple, "summary": summary})
+
+
+@app.route("/api/pickup", methods=["POST"])
+def api_pickup():
+    data = request.get_json()
+    shutuba_url = data.get("shutuba_url", "")
+    date = data.get("date", "")
+
+    if not re.search(r"race_id=\d{12}", shutuba_url):
+        return jsonify({"error": "shutuba URL が正しくありません"}), 400
+    if not re.match(r"^\d{8}$", date):
+        return jsonify({"error": "date が不正です"}), 400
+
+    # race_id からレース情報を特定して (A) 馬を絞り込む
+    m = re.search(r"race_id=(\d{12})", shutuba_url)
+    race_id = m.group(1)
+    venue_code = race_id[4:6]
+    race_num = race_id[10:12].lstrip("0") or "1"
+    venue_map = {
+        "01": "札幌", "02": "函館", "03": "福島", "04": "新潟",
+        "05": "東京", "06": "中山", "07": "中京", "08": "京都",
+        "09": "阪神", "10": "小倉",
+    }
+    venue = venue_map.get(venue_code, "")
+    race_label = f"{race_num}R"
+
+    # この日の全3指数重複馬を読み込み、対象レースで絞り込む
+    triple_all = load_triple(date)
+    triple_race = [
+        h for h in triple_all
+        if str(h.get("開催場", "")) == venue
+        and str(h.get("レース番号", "")).lstrip("0") == race_label.rstrip("R")
+    ]
+
+    from race_pickup import analyze_race
+    result = analyze_race(shutuba_url, triple_race)
+    result["venue"] = venue
+    result["race_label"] = f"{venue}{race_label}"
+    return jsonify(result)
 
 
 if __name__ == "__main__":
