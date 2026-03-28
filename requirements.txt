@@ -1,0 +1,8 @@
+playwright
+beautifulsoup4
+pandas
+python-dotenv
+lxml
+openpyxl
+flask
+gunicorn

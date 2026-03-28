@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>netkeiba タイム指数</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f0f2f5; color: #1a1a1a; }
+
+  header {
+    background: #1a3a5c;
+    color: white;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  header h1 { font-size: 1.1rem; font-weight: 700; flex: 1; }
+  select#date-select {
+    background: #2a5a8c;
+    color: white;
+    border: 1px solid #4a7aac;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  #loading {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    color: #666;
+  }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 4px solid #ddd;
+    border-top-color: #1a3a5c;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  #content { padding: 12px; max-width: 800px; margin: 0 auto; }
+
+  /* タブ */
+  .tabs {
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    overflow-x: auto;
+    gap: 4px;
+  }
+  .tab-btn {
+    flex: 1;
+    min-width: fit-content;
+    padding: 8px 14px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #666;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: #1a3a5c;
+    color: white;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* 3指数重複馬 */
+  .triple-section {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+  }
+  .section-header {
+    background: #e8a000;
+    color: white;
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .badge {
+    background: rgba(0,0,0,0.2);
+    border-radius: 20px;
+    padding: 2px 8px;
+    font-size: 0.8rem;
+  }
+
+  .triple-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .triple-table th {
+    background: #fef3d0;
+    color: #7a5000;
+    padding: 7px 8px;
+    text-align: center;
+    font-weight: 600;
+    border-bottom: 1px solid #f0d890;
+  }
+  .triple-table td {
+    padding: 9px 8px;
+    text-align: center;
+    border-bottom: 1px solid #f5f5f5;
+  }
+  .triple-table tr:last-child td { border-bottom: none; }
+  .triple-table tr:hover td { background: #fffbee; }
+  .horse-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px; height: 26px;
+    background: #1a3a5c;
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .horse-name { font-weight: 600; text-align: left !important; }
+  .venue-badge {
+    display: inline-block;
+    background: #1a3a5c;
+    color: white;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .rank-1 { color: #e8a000; font-weight: 700; }
+  .rank-2 { color: #888; font-weight: 700; }
+  .rank-3 { color: #c05020; font-weight: 700; }
+
+  /* サマリー */
+  .venue-section {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+  }
+  .venue-header {
+    background: #1a3a5c;
+    color: white;
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .race-accordion { border-bottom: 1px solid #eee; }
+  .race-accordion:last-child { border-bottom: none; }
+  .race-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 11px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-align: left;
+  }
+  .race-toggle:hover { background: #f8f8f8; }
+  .race-toggle .arrow {
+    font-size: 0.7rem;
+    transition: transform 0.2s;
+    color: #999;
+  }
+  .race-toggle.open .arrow { transform: rotate(180deg); }
+  .triple-pill {
+    background: #e8a000;
+    color: white;
+    border-radius: 20px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .race-content { display: none; padding: 0 14px 14px; }
+  .race-content.open { display: block; }
+
+  .index-group { margin-bottom: 12px; }
+  .index-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #666;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    padding: 3px 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  .horse-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 4px;
+    border-bottom: 1px solid #f5f5f5;
+  }
+  .horse-row:last-child { border-bottom: none; }
+  .idx-val {
+    margin-left: auto;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1a3a5c;
+    min-width: 36px;
+    text-align: right;
+  }
+  .rank-dot {
+    width: 20px; height: 20px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    font-size: 0.7rem; font-weight: 700; color: white;
+    flex-shrink: 0;
+  }
+  .rank-dot.r1 { background: #e8a000; }
+  .rank-dot.r2 { background: #888; }
+  .rank-dot.r3 { background: #c05020; }
+  .rank-dot.r4, .rank-dot.r5 { background: #ccc; color: #666; }
+
+  .triple-horses {
+    background: #fffbee;
+    border: 1px solid #f0d890;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 4px;
+  }
+  .triple-horses-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #e8a000;
+    margin-bottom: 6px;
+  }
+  .triple-horse-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid #f0d890;
+    font-size: 0.88rem;
+  }
+  .triple-horse-row:last-child { border-bottom: none; }
+
+  .empty { color: #aaa; font-size: 0.85rem; padding: 8px 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏇 タイム指数</h1>
+  <select id="date-select">
+    {% for d in dates %}
+    <option value="{{ d }}">{{ d[:4] }}/{{ d[4:6] }}/{{ d[6:] }}</option>
+    {% endfor %}
+  </select>
+</header>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <p>データ読み込み中...</p>
+</div>
+
+<div id="content"></div>
+
+<script>
+let currentData = null;
+
+function formatDate(d) {
+  return d.slice(0,4) + '/' + d.slice(4,6) + '/' + d.slice(6);
+}
+
+async function loadDate(date) {
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('content').innerHTML = '';
+  const res = await fetch('/api/data/' + date);
+  currentData = await res.json();
+  document.getElementById('loading').style.display = 'none';
+  render(date);
+}
+
+function getRankClass(idx) {
+  if (idx === 1) return 'r1';
+  if (idx === 2) return 'r2';
+  if (idx === 3) return 'r3';
+  return 'r' + idx;
+}
+
+function renderTriple(triple) {
+  if (!triple.length) return '<p class="empty" style="padding:16px">3指数重複馬はありません</p>';
+
+  // 開催場ごとにグループ
+  const byVenue = {};
+  triple.forEach(r => {
+    if (!byVenue[r['開催場']]) byVenue[r['開催場']] = [];
+    byVenue[r['開催場']].push(r);
+  });
+
+  let html = '';
+  for (const [venue, rows] of Object.entries(byVenue)) {
+    html += `<div class="triple-section">
+      <div class="section-header">
+        <span>${venue}</span>
+        <span class="badge">${rows.length}頭</span>
+      </div>
+      <table class="triple-table">
+        <thead><tr>
+          <th>R</th><th>馬番</th><th>馬名</th>
+          <th>近走平均</th><th>当該距離</th><th>当該コース</th>
+        </tr></thead><tbody>`;
+    rows.forEach(r => {
+      const rankClass = r['近走平均順位'] === '1位' ? 'rank-1' : r['近走平均順位'] === '2位' ? 'rank-2' : '';
+      html += `<tr>
+        <td>${r['レース番号']}</td>
+        <td><span class="horse-num">${r['馬番']}</span></td>
+        <td class="horse-name">${r['馬名']}</td>
+        <td class="${rankClass}">${r['近走平均指数']}<br><small>${r['近走平均順位']}</small></td>
+        <td>${r['当該距離指数']}<br><small>${r['当該距離順位']}</small></td>
+        <td>${r['当該コース指数']}<br><small>${r['当該コース順位']}</small></td>
+      </tr>`;
+    });
+    html += '</tbody></table></div>';
+  }
+  return html;
+}
+
+function renderSummary(summary) {
+  let html = '';
+  for (const [venue, races] of Object.entries(summary)) {
+    html += `<div class="venue-section">
+      <div class="venue-header">🏟 ${venue}</div>`;
+
+    races.forEach((race, i) => {
+      const hasTriple = race.triple && race.triple.length > 0;
+      html += `<div class="race-accordion">
+        <button class="race-toggle" onclick="toggleRace(this)">
+          <span>${race.label} ${hasTriple ? `<span class="triple-pill">★ ${race.triple.length}頭</span>` : ''}</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="race-content">`;
+
+      const modes = [
+        { key: 'average', label: '近走平均' },
+        { key: 'distance', label: '当該距離' },
+        { key: 'course', label: '当該コース' },
+      ];
+      modes.forEach(m => {
+        html += `<div class="index-group">
+          <span class="index-label">${m.label}</span>`;
+        const horses = race[m.key];
+        if (!horses || !horses.length) {
+          html += '<p class="empty">データなし</p>';
+        } else {
+          horses.forEach((h, rank) => {
+            html += `<div class="horse-row">
+              <span class="rank-dot ${getRankClass(rank+1)}">${rank+1}</span>
+              <span class="horse-num" style="width:22px;height:22px;font-size:0.75rem">${h.num}</span>
+              <span>${h.name}</span>
+              <span class="idx-val">${h.val}</span>
+            </div>`;
+          });
+        }
+        html += '</div>';
+      });
+
+      // 3指数重複馬
+      if (hasTriple) {
+        html += `<div class="triple-horses">
+          <div class="triple-horses-label">★ 3指数すべてトップ5入り</div>`;
+        race.triple.forEach(h => {
+          html += `<div class="triple-horse-row">
+            <span class="horse-num" style="width:22px;height:22px;font-size:0.75rem">${h.num}</span>
+            <span style="font-weight:600">${h.name}</span>
+            <span style="margin-left:auto;font-size:0.8rem;color:#666">
+              平均:${h.avg || '-'} 距離:${h.dist || '-'} コース:${h.crs || '-'}
+            </span>
+          </div>`;
+        });
+        html += '</div>';
+      }
+
+      html += '</div></div>';
+    });
+    html += '</div>';
+  }
+  return html;
+}
+
+function render(date) {
+  const { triple, summary } = currentData;
+  const tripleCount = triple.length;
+
+  const content = document.getElementById('content');
+  content.innerHTML = `
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this, 'triple')">
+        ★ 3指数重複馬 <span class="badge" style="background:#e8a000;color:white;margin-left:4px">${tripleCount}</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(this, 'summary')">レース別サマリー</button>
+    </div>
+    <div id="tab-triple" class="tab-panel active">${renderTriple(triple)}</div>
+    <div id="tab-summary" class="tab-panel">${renderSummary(summary)}</div>
+  `;
+}
+
+function switchTab(btn, tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + tabId).classList.add('active');
+}
+
+function toggleRace(btn) {
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+
+// 初期ロード
+const sel = document.getElementById('date-select');
+sel.addEventListener('change', e => loadDate(e.target.value));
+if (sel.value) loadDate(sel.value);
+</script>
+</body>
+</html>

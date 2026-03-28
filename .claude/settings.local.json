@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install:*)",
+      "Bash(pip3 install:*)",
+      "Read(//usr/local/**)",
+      "Read(//Users/hirowax/Library/**)",
+      "Read(//usr/bin/**)",
+      "Bash(/usr/bin/python3 --version)",
+      "Bash(/usr/bin/python3 -m pip --version)",
+      "Bash(sed -i '' 's/-> pd.DataFrame | None:/-> Optional[pd.DataFrame]:/g' scraper.py)",
+      "Bash(sed -i '' 's/dict\\\\[str, pd.DataFrame | None\\\\]/Dict[str, Optional[pd.DataFrame]]/g' scraper.py)",
+      "Bash(sed -i '' 's/list\\\\[dict\\\\]/List[dict]/g' scraper.py)",
+      "Bash(sed -i '' 's/: dict\\\\[str, pd.DataFrame | None\\\\] = {}/: Dict[str, Optional[pd.DataFrame]] = {}/g' scraper.py)",
+      "Bash(python3 -c \"import scraper\")",
+      "Bash(python3 scraper.py 20260321)",
+      "Bash(python3 -m pip install openpyxl -q)",
+      "Bash(python3 -:*)",
+      "Bash(python3:*)"
+    ]
+  }
+}
