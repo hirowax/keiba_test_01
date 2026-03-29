@@ -17,10 +17,13 @@ COOKIES_FILE = Path("cookies.json")
 
 
 # ─── スコアリング定義 ────────────────────────────────────────────
-SCORE_POSITION   = 3   # 推定ポジション有利馬（4コーナーAI）
-SCORE_TOP3_EACH  = 1   # shutuba 各データ上位3頭 カテゴリー登場1回
-SCORE_PICKUP     = 2   # data_top データ分析ピックアップ3頭
-SCORE_ANALYSIS   = 1   # data_top 出走馬分析 カテゴリー登場1回
+SCORE_POSITION      = 3   # 推定ポジション有利馬（4コーナーAI）
+SCORE_TOP3_EACH     = 1   # shutuba 各データ上位3頭 カテゴリー登場1回
+SCORE_PICKUP        = 2   # data_top データ分析ピックアップ3頭
+SCORE_ANALYSIS      = 1   # data_top 出走馬分析 カテゴリー登場1回
+SCORE_PREV_IDX_HIGH = 2   # 前走タイム指数90以上
+SCORE_PREV_IDX_MID  = 1   # 前走タイム指数70〜89
+SCORE_REVIVAL       = 2   # 前走1-3番人気かつ凡走(4着以下) 巻き返し馬
 
 THRESHOLD_HIGH   = 5   # ★★★
 THRESHOLD_MID    = 3   # ★★
@@ -58,6 +61,7 @@ def scrape_shutuba(page, race_id: str) -> dict:
 
     # ── 出馬表: 馬番 → 馬名 (AI展開図のHorseIconから取得が最も確実) ──
     horse_map: Dict[str, str] = {}
+    horse_id_map: Dict[str, str] = {}  # 馬番 → horse_id
     for span in soup.select("span.HorseIcon[id^='Horse']"):
         horse_id = span.get("id", "")  # "Horse7" → "7"
         num = horse_id.replace("Horse", "")
@@ -67,9 +71,12 @@ def scrape_shutuba(page, race_id: str) -> dict:
             if short_name:
                 horse_map[num] = short_name
 
-    # AI展開図に出ない馬はHorseInfoテーブルから補完
+    # AI展開図に出ない馬はHorseInfoテーブルから補完 + horse_id取得
     for a in soup.select("td.HorseInfo a[href*='/horse/']"):
         name = _norm_name(a.get_text(strip=True))
+        href = a.get("href", "")
+        m_id = re.search(r"/horse/(\d+)", href)
+        hid = m_id.group(1) if m_id else ""
         if not name:
             continue
         tr = a.find_parent("tr")
@@ -82,8 +89,11 @@ def scrape_shutuba(page, race_id: str) -> dict:
         else:
             tds = tr.find_all("td")
             num = next((t.get_text(strip=True) for t in tds if t.get_text(strip=True).isdigit()), "")
-        if num.isdigit() and num not in horse_map:
-            horse_map[num] = name[:4]  # 短縮名で補完
+        if num.isdigit():
+            if num not in horse_map:
+                horse_map[num] = name[:4]  # 短縮名で補完
+            if hid and num not in horse_id_map:
+                horse_id_map[num] = hid
 
     # ── 推定ポジション有利馬 ──
     position_nums: set = set()
@@ -125,6 +135,7 @@ def scrape_shutuba(page, race_id: str) -> dict:
 
     return {
         "horse_map": horse_map,
+        "horse_id_map": horse_id_map,
         "position_nums": position_nums,
         "top3_hits": top3_hits,
     }
@@ -214,12 +225,15 @@ def score_horses(
     triple_horses: List[dict],
     shutuba_data: dict,
     data_top_data: dict,
+    prev_db: dict = None,
 ) -> List[dict]:
     """
     triple_horses: [{馬番, 馬名, ...}]  ← (A) 3指数重複馬
+    prev_db: {horse_id: {prev_pop, prev_rank, prev_idx, ...}}  ← horse_db.json
     """
     position_nums  = shutuba_data["position_nums"]
     top3_hits      = shutuba_data["top3_hits"]
+    horse_id_map   = shutuba_data.get("horse_id_map", {})
     pickup_nums    = data_top_data["pickup_nums"]
     analysis_hits  = data_top_data["analysis_hits"]
 
@@ -254,6 +268,33 @@ def score_horses(
             score += pts
             breakdown.append({"label": f"出走馬分析 {acnt}条件該当", "pts": pts})
 
+        # ⑤ 前走タイム指数 / ⑥ 巻き返し馬（prev_db使用）
+        if prev_db is not None:
+            hid = horse_id_map.get(num, "")
+            prev = prev_db.get(hid, {}) if hid else {}
+
+            # ⑤ 前走タイム指数
+            try:
+                prev_idx = float(prev.get("prev_idx", ""))
+                if prev_idx >= 90:
+                    score += SCORE_PREV_IDX_HIGH
+                    breakdown.append({"label": f"前走指数{prev_idx:.0f}(90以上)", "pts": SCORE_PREV_IDX_HIGH})
+                elif prev_idx >= 70:
+                    score += SCORE_PREV_IDX_MID
+                    breakdown.append({"label": f"前走指数{prev_idx:.0f}(70以上)", "pts": SCORE_PREV_IDX_MID})
+            except (ValueError, TypeError):
+                pass
+
+            # ⑥ 巻き返し馬: 前走1-3番人気 かつ 前走4着以下
+            try:
+                prev_pop_val  = int(prev.get("prev_pop", 99))
+                prev_rank_val = int(prev.get("prev_rank", 99))
+                if prev_pop_val <= 3 and prev_rank_val >= 4:
+                    score += SCORE_REVIVAL
+                    breakdown.append({"label": f"巻き返し馬(前走{prev_pop_val}人気{prev_rank_val}着)", "pts": SCORE_REVIVAL})
+            except (ValueError, TypeError):
+                pass
+
         # 星ランク
         if score >= THRESHOLD_HIGH:
             rank = "★★★"
@@ -276,7 +317,7 @@ def score_horses(
 
 
 # ─── メイン API ───────────────────────────────────────────────────
-def analyze_race(shutuba_url: str, triple_horses: List[dict]) -> dict:
+def analyze_race(shutuba_url: str, triple_horses: List[dict], prev_db: dict = None) -> dict:
     """
     shutuba_url:   出馬表URL (race_id入り)
     triple_horses: (A) この race の3指数重複馬リスト
@@ -303,7 +344,7 @@ def analyze_race(shutuba_url: str, triple_horses: List[dict]) -> dict:
 
         browser.close()
 
-    scored = score_horses(triple_horses, shutuba_data, data_top_data)
+    scored = score_horses(triple_horses, shutuba_data, data_top_data, prev_db=prev_db)
 
     # スコア付き馬が1頭もいない場合のアドバイス
     has_any_bonus = any(h["score"] > 0 for h in scored)
@@ -318,6 +359,7 @@ def analyze_race(shutuba_url: str, triple_horses: List[dict]) -> dict:
     return {
         "race_id": race_id,
         "horse_map": shutuba_data["horse_map"],
+        "horse_id_map": shutuba_data.get("horse_id_map", {}),
         "position_nums": list(shutuba_data["position_nums"]),
         "top3_hits": shutuba_data["top3_hits"],
         "pickup_nums": list(data_top_data["pickup_nums"]),

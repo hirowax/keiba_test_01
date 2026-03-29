@@ -28,6 +28,66 @@ logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).parent
 ACCESS_INTERVAL = 3
+HORSE_DB_PATH = BASE_DIR / "output" / "horse_db.json"
+HORSE_DB_STALE_DAYS = 7  # キャッシュ有効期限（日）
+
+
+def load_horse_db() -> dict:
+    if HORSE_DB_PATH.exists():
+        with open(HORSE_DB_PATH, encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+
+def save_horse_db(db: dict) -> None:
+    HORSE_DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(HORSE_DB_PATH, "w", encoding="utf-8") as f:
+        json.dump(db, f, ensure_ascii=False, indent=2)
+
+
+def is_cache_fresh(entry: dict, date: str) -> bool:
+    """scraped_at が date から HORSE_DB_STALE_DAYS 以内かチェック"""
+    scraped_at = entry.get("scraped_at", "")
+    if not scraped_at:
+        return False
+    try:
+        d_scraped = datetime.strptime(scraped_at, "%Y%m%d")
+        d_target  = datetime.strptime(date, "%Y%m%d")
+        return abs((d_target - d_scraped).days) <= HORSE_DB_STALE_DAYS
+    except Exception:
+        return False
+
+
+def scrape_horse_prev_page(page, horse_id: str) -> dict:
+    """db.netkeiba の馬ページから前走データを取得"""
+    from bs4 import BeautifulSoup as BS
+    url = f"https://db.netkeiba.com/horse/{horse_id}/"
+    page.goto(url, wait_until="domcontentloaded")
+    time.sleep(2)
+    soup = BS(page.content(), "html.parser")
+
+    table = soup.find("table", class_="db_h_race_results")
+    if not table:
+        return {}
+    rows = table.find_all("tr")
+    data_rows = [r for r in rows if r.find("td")]
+    if not data_rows:
+        return {}
+
+    cells = [c.get_text(strip=True) for c in data_rows[0].find_all("td")]
+
+    def safe(idx):
+        try: return cells[idx]
+        except: return ""
+
+    return {
+        "prev_date":  safe(0),
+        "prev_pop":   safe(10),
+        "prev_rank":  safe(11),
+        "prev_idx":   safe(20),
+        "prev_idx_m": safe(21),
+        "prev_dist":  safe(14),
+    }
 
 
 def main():
@@ -43,6 +103,10 @@ def main():
     logger.info(f"3指数重複馬: {len(triple_df)}頭 / {triple_df.groupby(['開催場','レース番号']).ngroups}レース")
 
     email, password = load_env()
+
+    # horse_db ロード
+    horse_db = load_horse_db()
+    logger.info(f"horse_db: {len(horse_db)}頭 キャッシュ済み")
 
     results = {}  # race_label -> 結果dict
 
@@ -92,7 +156,19 @@ def main():
                 data_top_data = scrape_data_top(page, race_id, shutuba_data["horse_map"])
                 time.sleep(ACCESS_INTERVAL)
 
-                scored = score_horses(triple_horses, shutuba_data, data_top_data)
+                # 前走データ: キャッシュ確認 → 欠損馬のみスクレイプ
+                horse_id_map = shutuba_data.get("horse_id_map", {})
+                for num, hid in horse_id_map.items():
+                    if hid and (hid not in horse_db or not is_cache_fresh(horse_db[hid], date)):
+                        try:
+                            prev = scrape_horse_prev_page(page, hid)
+                            prev["scraped_at"] = date
+                            horse_db[hid] = prev
+                            time.sleep(ACCESS_INTERVAL)
+                        except Exception as e:
+                            logger.warning(f"  前走データ取得失敗 {hid}: {e}")
+
+                scored = score_horses(triple_horses, shutuba_data, data_top_data, prev_db=horse_db)
 
                 has_any_bonus = any(h["score"] > 0 for h in scored)
                 advice = None
@@ -120,6 +196,10 @@ def main():
                 results[race_label] = {"error": str(e)}
 
         browser.close()
+
+    # horse_db 保存
+    save_horse_db(horse_db)
+    logger.info(f"horse_db 保存: {HORSE_DB_PATH} ({len(horse_db)}頭)")
 
     # JSON 保存
     out_dir = BASE_DIR / "output" / date
