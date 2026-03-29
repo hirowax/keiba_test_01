@@ -6,6 +6,7 @@
 
 import json
 import time
+import random
 import re
 from pathlib import Path
 from typing import List, Dict
@@ -54,8 +55,15 @@ def scrape_shutuba(page, race_id: str) -> dict:
         horse_map:     {馬番: 馬名} (出馬表)
     """
     url = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
+    # race.netkeiba トップを経由してから shutuba へ
+    if random.random() < 0.5:
+        try:
+            page.goto("https://race.netkeiba.com/", wait_until="domcontentloaded")
+            time.sleep(random.uniform(1.0, 3.0))
+        except Exception:
+            pass
     page.goto(url, wait_until="domcontentloaded")
-    time.sleep(3)
+    time.sleep(random.uniform(2.5, 6.0))
     html = page.content()
     soup = BeautifulSoup(html, "html.parser")
 
@@ -149,8 +157,16 @@ def scrape_data_top(page, race_id: str, horse_map: Dict[str, str]) -> dict:
         analysis_hits: {馬番: カテゴリー数} (出走馬分析テーブル)
     """
     url = f"https://race.netkeiba.com/race/data_top.html?race_id={race_id}&rf=race_submenu"
+    # shutuba ページを経由してから data_top へ（自然な閲覧順）
+    if random.random() < 0.4:
+        try:
+            via = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
+            page.goto(via, wait_until="domcontentloaded")
+            time.sleep(random.uniform(1.5, 4.0))
+        except Exception:
+            pass
     page.goto(url, wait_until="domcontentloaded")
-    time.sleep(3)
+    time.sleep(random.uniform(2.5, 6.0))
     html = page.content()
     soup = BeautifulSoup(html, "html.parser")
 
@@ -339,7 +355,7 @@ def analyze_race(shutuba_url: str, triple_horses: List[dict], prev_db: dict = No
         page = context.new_page()
 
         shutuba_data = scrape_shutuba(page, race_id)
-        time.sleep(2)
+        time.sleep(random.uniform(3.0, 8.0))
         data_top_data = scrape_data_top(page, race_id, shutuba_data["horse_map"])
 
         browser.close()

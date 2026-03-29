@@ -7,6 +7,7 @@ netkeiba タイム指数スクレイパー
 import sys
 import json
 import time
+import random
 import logging
 import re
 from pathlib import Path
@@ -40,7 +41,57 @@ MODES = {
     "distance": "当該距離",
     "course": "当該コース",
 }
-ACCESS_INTERVAL = 3  # 秒
+ACCESS_INTERVAL = 3  # 秒（後方互換のため残す）
+
+# 中間経由候補ページ
+_BROWSE_VIA = [
+    "https://www.netkeiba.com/",
+    "https://race.netkeiba.com/",
+    "https://db.netkeiba.com/",
+    "https://news.netkeiba.com/",
+    "https://race.netkeiba.com/top/news.html",
+]
+
+
+def human_sleep(min_sec: float = 3.0, max_sec: float = 8.0) -> None:
+    """人間らしいランダム待機"""
+    t = random.uniform(min_sec, max_sec)
+    # まれに少し長い「考え中」ポーズを入れる
+    if random.random() < 0.12:
+        t += random.uniform(2.0, 6.0)
+    time.sleep(t)
+
+
+def _random_scroll(page) -> None:
+    """ページをランダムにスクロール（人間らしい読み込み動作）"""
+    try:
+        for _ in range(random.randint(1, 3)):
+            page.evaluate(f"window.scrollBy(0, {random.randint(80, 500)})")
+            time.sleep(random.uniform(0.2, 0.9))
+        if random.random() < 0.45:
+            page.evaluate(f"window.scrollBy(0, -{random.randint(40, 200)})")
+            time.sleep(random.uniform(0.1, 0.5))
+    except Exception:
+        pass
+
+
+def human_browse(page, target_url: str, force_via: str = None) -> None:
+    """
+    ランダムな中間ページを経由してから target_url へ移動。
+    直接ジャンプを避け、人間の自然な閲覧に見せる。
+    force_via: 指定した場合は必ずそのページを経由する
+    """
+    # 約35%の確率で中間ページ経由（force_via指定時は必ず経由）
+    if force_via or random.random() < 0.35:
+        via = force_via or random.choice(_BROWSE_VIA)
+        try:
+            page.goto(via, wait_until="domcontentloaded")
+            _random_scroll(page)
+            human_sleep(1.2, 4.0)
+        except Exception:
+            pass
+
+    page.goto(target_url, wait_until="domcontentloaded")
 
 
 # ─── ユーティリティ ───────────────────────────────────────────
@@ -78,15 +129,25 @@ def is_logged_in(page) -> bool:
 # ─── ログイン ─────────────────────────────────────────────────
 def login(page, email: str, password: str) -> None:
     logger.info("ログインを試みます")
+    # まず netkeiba トップを経由してから
+    try:
+        page.goto("https://www.netkeiba.com/", wait_until="domcontentloaded")
+        _random_scroll(page)
+        human_sleep(1.0, 3.0)
+    except Exception:
+        pass
     page.goto(LOGIN_URL, wait_until="domcontentloaded")
+    human_sleep(0.8, 2.5)
     page.fill("input[name='login_id']", email)
+    time.sleep(random.uniform(0.3, 0.9))
     page.fill("input[name='pswd']", password)
+    human_sleep(0.5, 1.5)
     page.click("input[type='submit'], button[type='submit']")
     try:
         page.wait_for_load_state("load", timeout=15000)
     except PlaywrightTimeoutError:
         pass
-    time.sleep(2)
+    human_sleep(1.5, 3.5)
     logger.info("ログイン完了")
 
 
@@ -98,7 +159,9 @@ def get_race_ids(page, date: str) -> List[dict]:
     """
     url = RACE_LIST_URL.format(date=date)
     logger.info(f"レース一覧取得: {url}")
-    page.goto(url, wait_until="domcontentloaded")
+    # race.netkeiba.com トップを必ず経由
+    human_browse(page, url, force_via="https://race.netkeiba.com/")
+    _random_scroll(page)
 
     # レース一覧テーブルが描画されるのを待つ
     try:
@@ -152,7 +215,13 @@ def _build_label(race_id: str, soup: BeautifulSoup, a_tag) -> str:
 def parse_speed_table(page, race_id: str, mode: str) -> Optional[pd.DataFrame]:
     url = SPEED_URL.format(race_id=race_id, mode=mode)
     try:
-        page.goto(url, wait_until="domcontentloaded")
+        # averageモードの初回だけ shutuba or race top を経由（自然な流れ）
+        if mode == "average" and random.random() < 0.4:
+            via = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
+            human_browse(page, url, force_via=via)
+        else:
+            human_browse(page, url)
+        _random_scroll(page)
         page.wait_for_selector("table.Speed_Index_Table, table.RaceSpeed, .SpeedIndex, table", timeout=15000)
     except PlaywrightTimeoutError:
         logger.warning(f"テーブル待機タイムアウト: {url}")
@@ -559,7 +628,7 @@ def main():
                     logger.error(f"{label} {mode_label} 取得失敗: {e}")
                     dfs[mode_key] = None
                 finally:
-                    time.sleep(ACCESS_INTERVAL)
+                    human_sleep(3.0, 9.0)
 
             # mode_label をキーに変換して蓄積
             all_data.setdefault(venue, {})[label] = {

@@ -7,6 +7,7 @@ usage: python3 run_pickup_all.py [YYYYMMDD]
 import sys
 import json
 import time
+import random
 import logging
 from datetime import datetime
 from pathlib import Path
@@ -16,7 +17,7 @@ from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeo
 
 from scraper import (
     load_env, load_cookies, save_cookies, is_logged_in, login,
-    get_race_ids,
+    get_race_ids, human_sleep, human_browse, _random_scroll,
 )
 from race_pickup import scrape_shutuba, scrape_data_top, score_horses
 
@@ -27,7 +28,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).parent
-ACCESS_INTERVAL = 3
 HORSE_DB_PATH = BASE_DIR / "output" / "horse_db.json"
 HORSE_DB_STALE_DAYS = 7  # キャッシュ有効期限（日）
 
@@ -62,8 +62,9 @@ def scrape_horse_prev_page(page, horse_id: str) -> dict:
     """db.netkeiba の馬ページから前走データを取得"""
     from bs4 import BeautifulSoup as BS
     url = f"https://db.netkeiba.com/horse/{horse_id}/"
-    page.goto(url, wait_until="domcontentloaded")
-    time.sleep(2)
+    human_browse(page, url)
+    _random_scroll(page)
+    human_sleep(1.0, 3.0)
     soup = BS(page.content(), "html.parser")
 
     table = soup.find("table", class_="db_h_race_results")
@@ -152,9 +153,9 @@ def main():
 
             try:
                 shutuba_data = scrape_shutuba(page, race_id)
-                time.sleep(ACCESS_INTERVAL)
+                human_sleep(4.0, 10.0)
                 data_top_data = scrape_data_top(page, race_id, shutuba_data["horse_map"])
-                time.sleep(ACCESS_INTERVAL)
+                human_sleep(4.0, 10.0)
 
                 # 前走データ: キャッシュ確認 → 欠損馬のみスクレイプ
                 horse_id_map = shutuba_data.get("horse_id_map", {})
@@ -164,7 +165,7 @@ def main():
                             prev = scrape_horse_prev_page(page, hid)
                             prev["scraped_at"] = date
                             horse_db[hid] = prev
-                            time.sleep(ACCESS_INTERVAL)
+                            human_sleep(2.0, 6.0)
                         except Exception as e:
                             logger.warning(f"  前走データ取得失敗 {hid}: {e}")
 
