@@ -276,6 +276,48 @@
     padding: 12px; font-size: 0.85rem; color: #856404; margin-bottom: 10px;
   }
   .empty { color: #aaa; font-size: 0.85rem; padding: 8px 0; }
+
+  /* ── 新バッジ類 ── */
+  .axis-badge {
+    background: #0077aa; color: white;
+    border-radius: 4px; padding: 1px 6px; font-size: 0.68rem; font-weight: 700;
+    white-space: nowrap;
+  }
+  .anaba-badge {
+    background: #aa3300; color: white;
+    border-radius: 4px; padding: 1px 6px; font-size: 0.68rem; font-weight: 700;
+    white-space: nowrap;
+  }
+  .sanko-badge {
+    background: #999; color: white;
+    border-radius: 4px; padding: 1px 5px; font-size: 0.65rem; font-weight: 600;
+    white-space: nowrap;
+  }
+  .pop-badge {
+    background: #f0f0f0; color: #555;
+    border-radius: 4px; padding: 1px 6px; font-size: 0.72rem; font-weight: 600;
+    white-space: nowrap;
+  }
+  .pop-badge.low { background: #ffe4cc; color: #aa4400; }
+
+  /* ── 穴馬セクション ── */
+  .anaba-section {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    margin-bottom: 12px;
+  }
+  .anaba-header {
+    background: linear-gradient(135deg, #aa3300, #882200);
+    color: white;
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 </style>
 </head>
 <body>
@@ -344,6 +386,7 @@ function render(date) {
 
   document.getElementById('content').innerHTML = `
     ${renderTopPickup()}
+    ${renderAnabaSection()}
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab(this,'triple')">
         ★重複馬<span style="background:#e8a000;color:white;border-radius:10px;padding:1px 6px;margin-left:4px;font-size:0.75rem">${tripleCount}</span>
@@ -377,23 +420,81 @@ function renderTopPickup() {
     return b.score - a.score;
   });
 
-  const rows = allScored.map(h => `
+  const rows = allScored.map(h => {
+    const popStr = h.today_pop ? `<span class="pop-badge">${h.today_pop}人気</span>` : '';
+    return `
     <div class="top-pickup-row">
       <span class="tp-race">${h.race_label}</span>
       <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0">${h['馬番']}</span>
       <div style="flex:1;min-width:0">
-        <div class="tp-name">${h['馬名']}</div>
+        <div class="tp-name" style="gap:5px;display:flex;align-items:center;flex-wrap:wrap">
+          ${h['馬名']}
+          <span class="axis-badge">軸向け</span>
+          ${popStr}
+        </div>
         <div class="tp-bd">${(h.breakdown||[]).map(b=>`<span>${b.label}+${b.pts}</span>`).join('')}</div>
       </div>
       <span class="tp-score">${h.score}pt</span>
     </div>
-  `).join('');
+  `}).join('');
 
   return `
     <div class="top-pickup">
       <div class="top-pickup-header">
-        🏆 最注目馬（★★★ 5pt以上）
+        🏆 最注目馬（★★★ 5pt以上）<span style="font-size:0.76rem;font-weight:400;opacity:0.85">馬連/ワイド 軸向け</span>
         <span style="background:rgba(0,0,0,0.2);border-radius:10px;padding:1px 8px;font-size:0.78rem">${allScored.length}頭</span>
+      </div>
+      ${rows}
+    </div>
+  `;
+}
+
+// ── 期待値の高い穴馬セクション ────────────────────────────────
+function renderAnabaSection() {
+  if (!currentPickup?.races) return '';
+  // score >= 3 かつ today_pop >= 5（5人気以下 = 人気薄）
+  const anaba = [];
+  for (const [label, rdata] of Object.entries(currentPickup.races)) {
+    for (const h of (rdata.scored || [])) {
+      const pop = parseInt(h.today_pop || '0');
+      if (h.score >= 3 && pop >= 5) {
+        anaba.push({...h, race_label: label});
+      }
+    }
+  }
+  if (!anaba.length) return '';
+
+  anaba.sort((a, b) => {
+    const vd = venueRank(a.venue || '') - venueRank(b.venue || '');
+    if (vd !== 0) return vd;
+    const rd = raceNumOf(b.race_label) - raceNumOf(a.race_label);
+    if (rd !== 0) return rd;
+    return b.score - a.score;
+  });
+
+  const rows = anaba.map(h => {
+    const pop = parseInt(h.today_pop || '0');
+    const popStr = h.today_pop ? `<span class="pop-badge low">${h.today_pop}人気</span>` : '';
+    return `
+    <div class="top-pickup-row">
+      <span class="tp-race">${h.race_label}</span>
+      <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0">${h['馬番']}</span>
+      <div style="flex:1;min-width:0">
+        <div class="tp-name" style="gap:5px;display:flex;align-items:center;flex-wrap:wrap">
+          ${h['馬名']}
+          ${popStr}
+        </div>
+        <div class="tp-bd">${(h.breakdown||[]).map(b=>`<span>${b.label}+${b.pts}</span>`).join('')}</div>
+      </div>
+      <span class="tp-score" style="color:#aa3300">${h.score}pt</span>
+    </div>
+  `}).join('');
+
+  return `
+    <div class="anaba-section">
+      <div class="anaba-header">
+        🎯 期待値の高い穴馬（スコア3pt以上 × 5人気以下）
+        <span style="background:rgba(0,0,0,0.2);border-radius:10px;padding:1px 8px;font-size:0.78rem">${anaba.length}頭</span>
       </div>
       ${rows}
     </div>
@@ -558,6 +659,16 @@ function renderPUCards(horses) {
   return sorted.map(h => {
     const rc = h.score >= 5 ? 's3' : h.score >= 3 ? 's2' : h.score >= 1 ? 's1' : 's0';
     const bc = h.score >= 5 ? 'high' : h.score >= 3 ? 'mid' : '';
+    const raceNum = raceNumOf(h.race_label || '');
+    const isSanko = raceNum >= 1 && raceNum <= 3;
+    const isAxis = h.score >= 5;
+    const pop = parseInt(h.today_pop || '0');
+    const isAnaba = h.score >= 3 && pop >= 5;
+    const popStr = h.today_pop
+      ? `<span class="pop-badge${isAnaba ? ' low' : ''}">${h.today_pop}人気</span>` : '';
+    const axisStr = isAxis ? `<span class="axis-badge">軸向け</span>` : '';
+    const anabaStr = isAnaba ? `<span class="anaba-badge">穴馬</span>` : '';
+    const sankoStr = isSanko ? `<span class="sanko-badge">参考</span>` : '';
     return `
     <div class="scored-card">
       <div class="scored-header">
@@ -565,7 +676,9 @@ function renderPUCards(horses) {
         <div class="scored-info">
           <div class="scored-name">
             <span class="race-tag">${h.race_label||''}</span>
+            ${sankoStr}
             ${h['馬名']}
+            ${axisStr}${anabaStr}${popStr}
           </div>
           <div class="triple-idx">
             <span>近走 ${h['近走平均指数']}(${h['近走平均順位']})</span>

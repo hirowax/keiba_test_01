@@ -79,7 +79,8 @@ def scrape_shutuba(page, race_id: str) -> dict:
             if short_name:
                 horse_map[num] = short_name
 
-    # AI展開図に出ない馬はHorseInfoテーブルから補完 + horse_id取得
+    # AI展開図に出ない馬はHorseInfoテーブルから補完 + horse_id取得 + 人気取得
+    pop_map: Dict[str, str] = {}  # 馬番 → 人気順位
     for a in soup.select("td.HorseInfo a[href*='/horse/']"):
         name = _norm_name(a.get_text(strip=True))
         href = a.get("href", "")
@@ -102,6 +103,13 @@ def scrape_shutuba(page, race_id: str) -> dict:
                 horse_map[num] = name[:4]  # 短縮名で補完
             if hid and num not in horse_id_map:
                 horse_id_map[num] = hid
+            # 人気（Popular class）
+            if num not in pop_map:
+                pop_td = tr.find("td", class_=lambda c: c and "Popular" in c)
+                if pop_td:
+                    val = re.sub(r"\s+", "", pop_td.get_text(strip=True))
+                    if val.isdigit():
+                        pop_map[num] = val
 
     # ── 推定ポジション有利馬 ──
     position_nums: set = set()
@@ -144,6 +152,7 @@ def scrape_shutuba(page, race_id: str) -> dict:
     return {
         "horse_map": horse_map,
         "horse_id_map": horse_id_map,
+        "pop_map": pop_map,
         "position_nums": position_nums,
         "top3_hits": top3_hits,
     }
@@ -250,6 +259,7 @@ def score_horses(
     position_nums  = shutuba_data["position_nums"]
     top3_hits      = shutuba_data["top3_hits"]
     horse_id_map   = shutuba_data.get("horse_id_map", {})
+    pop_map        = shutuba_data.get("pop_map", {})
     pickup_nums    = data_top_data["pickup_nums"]
     analysis_hits  = data_top_data["analysis_hits"]
 
@@ -326,6 +336,7 @@ def score_horses(
             "score": score,
             "rank": rank,
             "breakdown": breakdown,
+            "today_pop": pop_map.get(num, ""),
         })
 
     results.sort(key=lambda x: -x["score"])

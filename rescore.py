@@ -55,6 +55,7 @@ def main():
             "position_nums": set(rdata.get("position_nums", [])),
             "top3_hits":     rdata.get("top3_hits", {}),
             "horse_id_map":  horse_id_map,
+            "pop_map":       rdata.get("pop_map", {}),
         }
         data_top_data = {
             "pickup_nums":   set(rdata.get("pickup_nums", [])),
