@@ -1,0 +1,802 @@
+{
+  "中京6R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "メイショウアイル",
+      "pop": "6",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "パイオニアスクエア",
+      "pop": "8",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "8",
+      "name": "ロードガレリア",
+      "pop": "4",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 4,
+      "waku": "",
+      "num": "4",
+      "name": "マイネルアズーロ",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 7,
+      "waku": "",
+      "num": "1",
+      "name": "サンライズバブル",
+      "pop": "3",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "中京7R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "アイブリンク",
+      "pop": "2",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "ディペンダブル",
+      "pop": "4",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "ハギノコラソン",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 4,
+      "waku": "",
+      "num": "2",
+      "name": "ベルフィーヌ",
+      "pop": "3",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "中京8R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "テルヒコウ",
+      "pop": "4",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "ショウグンマサムネ",
+      "pop": "5",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "スタニングレディ",
+      "pop": "7",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 7,
+      "waku": "",
+      "num": "2",
+      "name": "メイショウナルカミ",
+      "pop": "2",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "中京10R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "ゴールデンクラウド",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "テーオーマルコーニ",
+      "pop": "3",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "マイノワール",
+      "pop": "5",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 4,
+      "waku": "",
+      "num": "4",
+      "name": "アラレタバシル",
+      "pop": "4",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 10,
+      "waku": "",
+      "num": "12",
+      "name": "フルオール",
+      "pop": "8",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "中京12R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "コーラルクラウン",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "メイショウタムシバ",
+      "pop": "5",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "カルパ",
+      "pop": "6",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 11,
+      "waku": "",
+      "num": "4",
+      "name": "カレンワッツアップ",
+      "pop": "3",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "中山1R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "8",
+      "name": "クイーンズホリデー",
+      "pop": "4",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "サラサチャチャチャ",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "マスカルポーネ",
+      "pop": "9",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "中山2R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "ガルディーノ",
+      "pop": "14",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "アンチェーン",
+      "pop": "5",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "15",
+      "name": "ニンジャトットリ",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "中山4R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "トーセンブリラーレ",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "ピースフルマインド",
+      "pop": "6",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "ヤマメホープ",
+      "pop": "5",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 4,
+      "waku": "",
+      "num": "8",
+      "name": "ベルランコントル",
+      "pop": "4",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "中山5R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "2",
+      "name": "キンググローリー",
+      "pop": "5",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "ニシノヒノトリ",
+      "pop": "2",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "ゴンファロニエーレ",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "中山8R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "5",
+      "name": "ルイステソーロ",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "アースミューズ",
+      "pop": "11",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "ティピティーナ",
+      "pop": "5",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "中山9R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "ベンヴェヌータ",
+      "pop": "3",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "ドナルンバ",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "ランザワールド",
+      "pop": "2",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 5,
+      "waku": "",
+      "num": "4",
+      "name": "ユメシルベ",
+      "pop": "6",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "中山10R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "サウンドモリアーナ",
+      "pop": "7",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "カンシン",
+      "pop": "2",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "トーセンエスクード",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 9,
+      "waku": "",
+      "num": "3",
+      "name": "アンビバレント",
+      "pop": "4",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "中山12R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "トーセントラム",
+      "pop": "6",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "ビービーエフォート",
+      "pop": "2",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "5",
+      "name": "カリーシ",
+      "pop": "8",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "阪神5R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "5",
+      "name": "サイモンシャリオ",
+      "pop": "2",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "フレアオブセンス",
+      "pop": "3",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "チェファルー",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "阪神7R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "テーオーシュタイン",
+      "pop": "3",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "メイショウサチダケ",
+      "pop": "5",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "コルドンブルー",
+      "pop": "2",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 6,
+      "waku": "",
+      "num": "3",
+      "name": "ヴァージル",
+      "pop": "4",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 8,
+      "waku": "",
+      "num": "9",
+      "name": "ワンコールアウェイ",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "阪神8R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "エコテーラー",
+      "pop": "6",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "5",
+      "name": "ステラクラウン",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "キタサンハナビラ",
+      "pop": "2",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 5,
+      "waku": "",
+      "num": "6",
+      "name": "スターリングアップ",
+      "pop": "3",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "阪神9R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "テイエムパイロット",
+      "pop": "2",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "ビルンバウム",
+      "pop": "7",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "リアルフォルゴーレ",
+      "pop": "8",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 6,
+      "waku": "",
+      "num": "1",
+      "name": "メイショウオグマ",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "阪神10R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "ギャンブルルーム",
+      "pop": "6",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "2",
+      "name": "ベトルス",
+      "pop": "2",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "1",
+      "name": "コーチェラバレー",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "阪神11R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "ベラジオボンド",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "クランフォード",
+      "pop": "4",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "メイショウチタン",
+      "pop": "10",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 13,
+      "waku": "",
+      "num": "9",
+      "name": "ブルーミンデザイン",
+      "pop": "2",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ],
+  "阪神12R": [
+    {
+      "rank": 1,
+      "waku": "",
+      "num": "",
+      "name": "ハリーケーン",
+      "pop": "2",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 2,
+      "waku": "",
+      "num": "",
+      "name": "ドンパッショーネ",
+      "pop": "5",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 3,
+      "waku": "",
+      "num": "",
+      "name": "ズバットマサムネ",
+      "pop": "12",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    },
+    {
+      "rank": 4,
+      "waku": "",
+      "num": "5",
+      "name": "アスタールフナ",
+      "pop": "1",
+      "last3f": "",
+      "corner": "",
+      "horse_id": ""
+    }
+  ]
+}
