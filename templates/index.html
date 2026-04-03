@@ -284,7 +284,7 @@
     white-space: nowrap;
   }
   .anaba-badge {
-    background: #aa3300; color: white;
+    background: #cc4400; color: white;
     border-radius: 4px; padding: 1px 6px; font-size: 0.68rem; font-weight: 700;
     white-space: nowrap;
   }
@@ -493,7 +493,7 @@ function renderAnabaSection() {
   return `
     <div class="anaba-section">
       <div class="anaba-header">
-        🎯 期待値の高い穴馬（スコア3pt以上 × 5人気以下）
+        🔥 期待値の高い穴馬（スコア3pt以上 × 5人気以下）
         <span style="background:rgba(0,0,0,0.2);border-radius:10px;padding:1px 8px;font-size:0.78rem">${anaba.length}頭</span>
       </div>
       ${rows}
@@ -667,7 +667,7 @@ function renderPUCards(horses) {
     const popStr = h.today_pop
       ? `<span class="pop-badge${isAnaba ? ' low' : ''}">${h.today_pop}人気</span>` : '';
     const axisStr = isAxis ? `<span class="axis-badge">軸向け</span>` : '';
-    const anabaStr = isAnaba ? `<span class="anaba-badge">穴馬</span>` : '';
+    const anabaStr = isAnaba ? `<span class="anaba-badge">期待値🔥</span>` : '';
     const sankoStr = isSanko ? `<span class="sanko-badge">参考</span>` : '';
     return `
     <div class="scored-card">
