@@ -337,6 +337,7 @@
 <script>
 // ── 定数 ──────────────────────────────────────────────────────
 const VENUE_ORDER = ['東京','中山','京都','阪神','中京','新潟','福島','函館','札幌','小倉'];
+let EV_THRESHOLD = 5; // 期待値🔥閾値（APIから上書き）
 
 function venueRank(v) {
   const i = VENUE_ORDER.indexOf(v);
@@ -366,18 +367,34 @@ let currentPickup = null;
 async function loadDate(date) {
   document.getElementById('loading').style.display = 'block';
   document.getElementById('content').innerHTML = '';
-  const [main, pickup] = await Promise.all([
+  const [main, pickup, cfg] = await Promise.all([
     fetch('/api/data/' + date).then(r => r.json()),
     fetch('/api/pickup_all/' + date).then(r => r.json()).catch(() => null),
+    fetch('/api/threshold_config').then(r => r.json()).catch(() => null),
   ]);
+  if (cfg?.ev_threshold) EV_THRESHOLD = cfg.ev_threshold;
   currentData = main;
   currentPickup = pickup;
   document.getElementById('loading').style.display = 'none';
-  render(date);
+  render(date, cfg);
+}
+
+function renderThresholdBadge(cfg) {
+  if (!cfg?.ev_threshold) return '';
+  const stats = cfg.stats || {};
+  const t = String(cfg.ev_threshold);
+  const s = stats[t];
+  const rateStr = s ? `（過去${s.count}頭中${s.hit3}頭 3着内 ${Math.round(s.rate*100)}%）` : '';
+  const datesStr = cfg.dates_used?.length ? `検証: ${cfg.dates_used.join(', ')}` : '';
+  return `
+    <div style="background:#f0f4f8;border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:0.78rem;color:#555;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span>🔥 期待値閾値: <strong>${cfg.ev_threshold}pt以上</strong> ${rateStr}</span>
+      <span style="color:#aaa">${datesStr}</span>
+    </div>`;
 }
 
 // ── メインレンダー ────────────────────────────────────────────
-function render(date) {
+function render(date, cfg) {
   const { triple, summary } = currentData;
   const tripleCount = triple.length;
   const starCount = currentPickup?.races
@@ -387,6 +404,7 @@ function render(date) {
   document.getElementById('content').innerHTML = `
     ${renderTopPickup()}
     ${renderAnabaSection()}
+    ${renderThresholdBadge(cfg)}
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab(this,'triple')">
         ★重複馬<span style="background:#e8a000;color:white;border-radius:10px;padding:1px 6px;margin-left:4px;font-size:0.75rem">${tripleCount}</span>
@@ -457,7 +475,7 @@ function renderAnabaSection() {
   for (const [label, rdata] of Object.entries(currentPickup.races)) {
     for (const h of (rdata.scored || [])) {
       const pop = parseInt(h.today_pop || '0');
-      if (h.score >= 3 && pop >= 5) {
+      if (h.score >= EV_THRESHOLD && pop >= 5) {
         anaba.push({...h, race_label: label});
       }
     }
@@ -663,7 +681,7 @@ function renderPUCards(horses) {
     const isSanko = raceNum >= 1 && raceNum <= 3;
     const isAxis = h.score >= 5;
     const pop = parseInt(h.today_pop || '0');
-    const isAnaba = h.score >= 3 && pop >= 5;
+    const isAnaba = h.score >= EV_THRESHOLD && pop >= 5;
     const popStr = h.today_pop
       ? `<span class="pop-badge${isAnaba ? ' low' : ''}">${h.today_pop}人気</span>` : '';
     const axisStr = isAxis ? `<span class="axis-badge">軸向け</span>` : '';

@@ -141,6 +141,15 @@ def api_pickup_all(date):
         return jsonify(json.load(f))
 
 
+@app.route("/api/threshold_config")
+def api_threshold_config():
+    path = BASE_DIR / "output" / "threshold_config.json"
+    if not path.exists():
+        return jsonify({"ev_threshold": 5})
+    with open(path, encoding="utf-8") as f:
+        return jsonify(json.load(f))
+
+
 @app.route("/api/pickup", methods=["POST"])
 def api_pickup():
     data = request.get_json()
