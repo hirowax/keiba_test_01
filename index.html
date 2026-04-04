@@ -734,7 +734,7 @@ function renderPUCards(horses) {
           <div class="scored-name">
             <span class="race-tag">${h.race_label||''}</span>
             ${sankoStr}
-            ${h['馬名']}
+            <span class="horse-num" style="width:20px;height:20px;font-size:0.72rem;flex-shrink:0">${h['馬番']}</span>${h['馬名']}
             ${anabaStr}${popStr}
           </div>
           <div class="triple-idx">
