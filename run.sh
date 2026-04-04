@@ -15,6 +15,9 @@ python3 run_pickup_all.py "$DATE"
 echo "▶ 期待値閾値キャリブレーション実行..."
 python3 calibrate_threshold.py
 
+echo "▶ GitHub Pages用 JSON エクスポート..."
+python3 export_json.py "$DATE"
+
 echo "▶ GitHubにデータをpush中..."
 git add output/ summary/
 git commit -m "data: $DATE"
