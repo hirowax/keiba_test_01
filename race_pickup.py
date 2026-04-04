@@ -18,7 +18,7 @@ COOKIES_FILE = Path("cookies.json")
 
 
 # ─── スコアリング定義 ────────────────────────────────────────────
-SCORE_POSITION      = 3   # 推定ポジション有利馬（4コーナーAI）
+SCORE_POSITION      = 1   # 推定ポジション有利馬（4コーナーAI）
 SCORE_TOP3_EACH     = 1   # shutuba 各データ上位3頭 カテゴリー登場1回
 SCORE_PICKUP        = 2   # data_top データ分析ピックアップ3頭
 SCORE_ANALYSIS      = 1   # data_top 出走馬分析 カテゴリー登場1回
