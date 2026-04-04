@@ -560,9 +560,57 @@ function renderAnabaSection() {
   `;
 }
 
+// ── 単指数1位馬マップを summary から構築 ─────────────────────
+// 戻り値: {"中山_12R": [{num, name, avg, dist, crs, strong:[...]}], ...}
+function buildSingleTopMap(summary) {
+  const map = {};
+  if (!summary) return map;
+  for (const [venue, races] of Object.entries(summary)) {
+    for (const race of races) {
+      const key = `${venue}_${race.label}`;
+      const tripleNames = new Set((race.triple || []).map(h => h.name));
+      const seen = new Set();
+      const singles = [];
+
+      const categories = [
+        { key: 'average', label: '近走平均' },
+        { key: 'distance', label: '当該距離' },
+        { key: 'course',  label: '当該コース' },
+      ];
+
+      // 各指数の1位馬を収集（3指数重複に入っていない馬のみ）
+      for (const cat of categories) {
+        const top = (race[cat.key] || [])[0];
+        if (!top || tripleNames.has(top.name)) continue;
+        if (seen.has(top.name)) {
+          // 既出→strong に追加
+          const existing = singles.find(s => s.name === top.name);
+          if (existing) existing.strong.push(cat.label);
+          continue;
+        }
+        seen.add(top.name);
+        singles.push({
+          num:    top.num,
+          name:   top.name,
+          avg:    (race.average  || []).find(h => h.name === top.name),
+          dist:   (race.distance || []).find(h => h.name === top.name),
+          crs:    (race.course   || []).find(h => h.name === top.name),
+          strong: [cat.label],
+        });
+      }
+      if (singles.length) map[key] = singles;
+    }
+  }
+  return map;
+}
+
 // ── 3指数重複馬タブ ───────────────────────────────────────────
 function renderTripleAll(triple) {
-  if (!triple.length) return '<p class="empty" style="padding:16px">3指数重複馬はありません</p>';
+  const summary = currentData?.summary || {};
+  const singleMap = buildSingleTopMap(summary);
+
+  if (!triple.length && !Object.keys(singleMap).length)
+    return '<p class="empty" style="padding:16px">3指数重複馬はありません</p>';
 
   // 開催場ごとにグループ
   const byVenue = {};
@@ -573,13 +621,21 @@ function renderTripleAll(triple) {
     byVenue[r['開催場']][rn].push(r);
   });
 
+  // 単指数1位馬がある会場・レースも追加
+  for (const key of Object.keys(singleMap)) {
+    const [venue, rn] = key.split('_');
+    if (!byVenue[venue]) byVenue[venue] = {};
+    if (!byVenue[venue][rn]) byVenue[venue][rn] = [];
+  }
+
   const venueEntries = Object.entries(byVenue).sort((a,b) => venueRank(a[0]) - venueRank(b[0]));
   return venueEntries.map(([venue, raceMap]) => {
     const raceEntries = Object.entries(raceMap).sort((a,b) => raceNumOf(b[0]) - raceNumOf(a[0]));
     const total = Object.values(raceMap).flat().length;
-    const inner = raceEntries.map(([rn, horses]) => `
-      <div style="padding:10px 14px;border-bottom:1px solid #f5f5f5">
-        <div style="font-size:0.82rem;font-weight:700;color:#666;margin-bottom:6px">${venue}${rn}</div>
+    const inner = raceEntries.map(([rn, horses]) => {
+      const singles = singleMap[`${venue}_${rn}`] || [];
+
+      const tripleTable = horses.length ? `
         <table class="triple-table">
           <thead><tr>
             <th>馬番</th><th style="text-align:left">馬名</th>
@@ -594,9 +650,41 @@ function renderTripleAll(triple) {
               <td>${h['当該コース指数']}<br><small>${h['当該コース順位']}</small></td>
             </tr>`).join('')}
           </tbody>
-        </table>
-      </div>
-    `).join('');
+        </table>` : '';
+
+      const singleSection = singles.length ? `
+        <div style="margin-top:8px;padding:8px 10px;background:#f8f4ff;border-radius:8px;border-left:3px solid #8855cc">
+          <div style="font-size:0.72rem;font-weight:700;color:#8855cc;margin-bottom:6px">単指数1位（3指数重複外）</div>
+          <table class="triple-table" style="font-size:0.8rem">
+            <thead><tr>
+              <th>馬番</th><th style="text-align:left">馬名</th>
+              <th>近走平均</th><th>当該距離</th><th>当該コース</th>
+            </tr></thead>
+            <tbody>${singles.map(s => {
+              const avgVal  = s.avg  ? `${s.avg.val || '-'}<br><small>${s.avg  ? '1位' : '-'}</small>` : '<small style="color:#ccc">-</small>';
+              const distVal = s.dist ? `${s.dist.val || '-'}<br><small>${s.dist ? '1位' : '-'}</small>` : '<small style="color:#ccc">-</small>';
+              const crsVal  = s.crs  ? `${s.crs.val || '-'}<br><small>${s.crs  ? '1位' : '-'}</small>` : '<small style="color:#ccc">-</small>';
+              const badges  = s.strong.map(lb => `<span style="background:#8855cc;color:white;border-radius:3px;padding:0 4px;font-size:0.65rem">${lb}</span>`).join(' ');
+              return `
+              <tr>
+                <td><span class="horse-num" style="background:#8855cc">${s.num}</span></td>
+                <td class="horse-name">${s.name} ${badges}</td>
+                <td class="${s.strong.includes('近走平均')?'rank-1':''}">${avgVal}</td>
+                <td class="${s.strong.includes('当該距離')?'rank-1':''}">${distVal}</td>
+                <td class="${s.strong.includes('当該コース')?'rank-1':''}">${crsVal}</td>
+              </tr>`;
+            }).join('')}
+            </tbody>
+          </table>
+        </div>` : '';
+
+      return `
+      <div style="padding:10px 14px;border-bottom:1px solid #f5f5f5">
+        <div style="font-size:0.82rem;font-weight:700;color:#666;margin-bottom:6px">${venue}${rn}</div>
+        ${tripleTable}
+        ${singleSection}
+      </div>`;
+    }).join('');
     return `
       <div class="venue-block">
         <div class="venue-header">${venue} <span class="venue-badge-sm">${total}頭</span></div>

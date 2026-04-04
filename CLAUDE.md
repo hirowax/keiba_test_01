@@ -22,6 +22,7 @@ netkeiba/
 ├── scrape_prev_data.py # 馬別前走データ収集（horse_db.jsonキャッシュ使用）
 ├── calibrate_threshold.py # 期待値🔥閾値を過去データから自動キャリブレーション
 ├── export_json.py      # CSV/Excel → JSON変換 + dates.json生成（GitHub Pages用）
+├── scrape_results.py   # レース結果を包括的にスクレイプ（当日夜〜翌日実行）
 ├── analyze_hypotheses.py # 仮説検証スクリプト（統計分析用）
 ├── index.html          # GitHub Pages メインページ（静的・パスワードゲート付き）
 ├── app.py              # Flask Webアプリ（旧Render用・現在未使用）
@@ -72,7 +73,21 @@ python3 save_cookies.py
 
 ブラウザが開くので手動でログインして閉じる。
 
-### 3. 閾値を手動で再キャリブレーション
+### 3. レース結果を保存（当日夜〜翌日）
+
+```bash
+python3 scrape_results.py 20260404
+git add output/20260404/ && git commit -m "results: 20260404" && git push
+```
+
+保存先：
+- `output/{date}/race_results.json` — 全馬の着順・人気・オッズ・馬体重・騎手・上がり3F等
+- `output/{date}/race_conditions.json` — 馬場状態・天気・距離・クラス・頭数
+
+calibrate_threshold.py はこのデータを使って閾値を更新する。
+データが溜まれば `analyze_hypotheses.py` で10人気以上の馬券内パターン等を分析できる。
+
+### 4. 閾値を手動で再キャリブレーション
 
 ```bash
 python3 calibrate_threshold.py
@@ -81,7 +96,7 @@ python3 calibrate_threshold.py
 過去の pickup_scores.json + race_results.json を照合し、3着内率が TARGET_RATE(55%) 以上で
 馬数が最大になる閾値を選んで threshold_config.json に保存する。run.sh では自動実行される。
 
-### 4. 既存データを再スコアリング（コード変更後）
+### 5. 既存データを再スコアリング（コード変更後）
 
 ```bash
 python3 rescore.py 20260328

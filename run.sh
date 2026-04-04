@@ -23,4 +23,8 @@ git add output/ summary/
 git commit -m "data: $DATE"
 git push
 
-echo "✅ 完了！Renderが自動更新されます（1〜2分後にスマホで確認できます）"
+echo "✅ 完了！GitHub Pagesが自動更新されます（1〜2分後にスマホで確認できます）"
+echo ""
+echo "📝 レース終了後（当日夜〜翌日）に以下を実行するとデータが蓄積されます:"
+echo "   python3 scrape_results.py $DATE"
+echo "   git add output/$DATE/ && git commit -m 'results: $DATE' && git push"
