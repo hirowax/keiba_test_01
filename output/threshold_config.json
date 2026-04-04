@@ -1,6 +1,6 @@
 {
-  "ev_threshold": 5,
-  "calibrated_at": "2026-04-03",
+  "ev_threshold": 7,
+  "calibrated_at": "2026-04-05",
   "dates_used": [
     "20260328",
     "20260329"

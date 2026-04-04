@@ -19,7 +19,7 @@ OUTPUT_DIR = BASE_DIR / "output"
 # 閾値候補（降順に評価）
 THRESHOLDS = [9, 8, 7, 6, 5, 4, 3]
 # 3着内率の目標（これ以上であれば有効とみなす）
-TARGET_RATE = 0.55
+TARGET_RATE = 0.70
 # 最低サンプル数
 MIN_COUNT = 5
 
