@@ -438,7 +438,7 @@ function render(date, cfg) {
   const { triple, summary } = currentData;
   const tripleCount = triple.length;
   const starCount = currentPickup?.races
-    ? Object.values(currentPickup.races).flatMap(r => r.scored || []).filter(h => h.score >= 5).length
+    ? Object.values(currentPickup.races).flatMap(r => r.scored || []).filter(h => h.score >= EV_THRESHOLD).length
     : 0;
 
   document.getElementById('content').innerHTML = `
@@ -462,7 +462,7 @@ function renderTopPickup() {
   const allScored = [];
   for (const [label, rdata] of Object.entries(currentPickup.races)) {
     for (const h of (rdata.scored || [])) {
-      if (h.score >= 5) allScored.push({...h, race_label: label});
+      if (h.score >= EV_THRESHOLD) allScored.push({...h, race_label: label});
     }
   }
   if (!allScored.length) return '';
@@ -500,7 +500,7 @@ function renderTopPickup() {
   return `
     <div class="top-pickup">
       <div class="top-pickup-header">
-        🏆 最注目馬（5pt以上）
+        🏆 最注目馬（${EV_THRESHOLD}pt以上）
         <span style="background:rgba(0,0,0,0.2);border-radius:10px;padding:1px 8px;font-size:0.78rem">${allScored.length}頭</span>
       </div>
       ${rows}
@@ -771,7 +771,7 @@ function renderPickupAll(data, date) {
   }
 
   const counts = {
-    s5: allScored.filter(h => h.score >= 5).length,
+    s5: allScored.filter(h => h.score >= EV_THRESHOLD).length,
     s3: allScored.filter(h => h.score >= 3).length,
     all: allScored.length,
   };
@@ -781,13 +781,13 @@ function renderPickupAll(data, date) {
   return `
     <div class="pu-filter">
       <div class="pu-filter-btns">
-        <button class="pu-btn active-5" id="pbtn-5" onclick="filterPU(5)">★★★ ${counts.s5}頭</button>
+        <button class="pu-btn active-5" id="pbtn-5" onclick="filterPU(EV_THRESHOLD)">★★★(${EV_THRESHOLD}pt+) ${counts.s5}頭</button>
         <button class="pu-btn" id="pbtn-3" onclick="filterPU(3)">★★以上 ${counts.s3}頭</button>
         <button class="pu-btn" id="pbtn-0" onclick="filterPU(0)">全頭 ${counts.all}頭</button>
       </div>
       <div class="pu-meta">${data.generated_at?.slice(0,16).replace('T',' ')} 集計 / ${Object.keys(races).length}レース</div>
     </div>
-    <div id="pickup-cards">${renderPUCards(allScored.filter(h => h.score >= 5))}</div>
+    <div id="pickup-cards">${renderPUCards(allScored.filter(h => h.score >= EV_THRESHOLD))}</div>
   `;
 }
 
