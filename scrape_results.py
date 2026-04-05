@@ -21,6 +21,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+from typing import Optional
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
@@ -107,7 +108,7 @@ def parse_horse_weight(text: str) -> tuple:
     return 0, 0
 
 
-def scrape_race_result(page, race_id: str, race_label: str) -> dict | None:
+def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
     """1レースの結果をスクレイプ"""
     url = RESULT_URL.format(race_id=race_id)
     try:
