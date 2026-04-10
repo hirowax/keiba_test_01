@@ -1,6 +1,6 @@
 {
-  "ev_threshold": 7,
-  "calibrated_at": "2026-04-05",
+  "ev_threshold": 9,
+  "calibrated_at": "2026-04-10",
   "dates_used": [
     "20260328",
     "20260329",
@@ -9,39 +9,39 @@
   ],
   "stats": {
     "9": {
-      "count": 4,
-      "hit3": 3,
-      "rate": 0.75
+      "count": 38,
+      "hit3": 24,
+      "rate": 0.632
     },
     "8": {
-      "count": 15,
-      "hit3": 8,
-      "rate": 0.533
+      "count": 48,
+      "hit3": 30,
+      "rate": 0.625
     },
     "7": {
-      "count": 24,
-      "hit3": 16,
-      "rate": 0.667
+      "count": 61,
+      "hit3": 33,
+      "rate": 0.541
     },
     "6": {
-      "count": 34,
-      "hit3": 19,
-      "rate": 0.559
+      "count": 72,
+      "hit3": 35,
+      "rate": 0.486
     },
     "5": {
-      "count": 49,
-      "hit3": 25,
-      "rate": 0.51
+      "count": 86,
+      "hit3": 37,
+      "rate": 0.43
     },
     "4": {
-      "count": 70,
-      "hit3": 29,
-      "rate": 0.414
+      "count": 104,
+      "hit3": 39,
+      "rate": 0.375
     },
     "3": {
-      "count": 89,
-      "hit3": 36,
-      "rate": 0.404
+      "count": 125,
+      "hit3": 45,
+      "rate": 0.36
     }
   }
 }
