@@ -35,7 +35,8 @@ logger = logging.getLogger(__name__)
 COOKIES_FILE = Path("cookies.json")
 LOGIN_URL = "https://regist.netkeiba.com/account/?pid=login"
 RACE_LIST_URL = "https://race.netkeiba.com/top/race_list.html?kaisai_date={date}"
-SPEED_URL = "https://race.netkeiba.com/race/speed.html?race_id={race_id}&type=rank&mode={mode}"
+SPEED_URL      = "https://race.netkeiba.com/race/speed.html?race_id={race_id}&type=rank&mode={mode}"
+SPEED_URL_BASE = "https://race.netkeiba.com/race/speed.html?race_id={race_id}&rf=shutuba_submenu"
 MODES = {
     "average": "近走平均",
     "distance": "当該距離",
@@ -212,60 +213,215 @@ def _build_label(race_id: str, soup: BeautifulSoup, a_tag) -> str:
 
 
 # ─── タイム指数テーブルパース ──────────────────────────────────
+def _is_valid_speed_df(df: pd.DataFrame) -> bool:
+    """DataFrameが正しい指数ランキング表かチェック（会員プラン表でないか）"""
+    if df is None or df.empty:
+        return False
+    # 先頭列に "N位" 形式の行が存在するかどうか
+    first_col = df.iloc[:, 0].astype(str)
+    return first_col.str.match(r"^\d+位$").any()
+
+
+def preflight_premium_check(page, race_id: str) -> bool:
+    """プレミアムコンテンツにアクセスできるか検証（起動時1回だけ）。
+    type=rank ページが順位データを返すか確認する。"""
+    url = SPEED_URL.format(race_id=race_id, mode="average")
+    try:
+        page.goto(url, wait_until="domcontentloaded")
+        time.sleep(random.uniform(3.0, 5.0))
+    except Exception:
+        return False
+    soup = BeautifulSoup(page.content(), "html.parser")
+    tables = soup.find_all("table")
+    if not tables:
+        return False
+    target = max(tables, key=lambda t: len(t.find_all("tr")))
+    return "1位" in target.get_text()
+
+
 def parse_speed_table(page, race_id: str, mode: str) -> Optional[pd.DataFrame]:
+    """type=rank&mode={mode} でタイム指数ランキング表を取得。
+    データ未公開の場合(前日スクレイプ等)は None を返す。"""
     url = SPEED_URL.format(race_id=race_id, mode=mode)
     try:
-        # averageモードの初回だけ shutuba or race top を経由（自然な流れ）
         if mode == "average" and random.random() < 0.4:
             via = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
             human_browse(page, url, force_via=via)
         else:
             human_browse(page, url)
         _random_scroll(page)
-        page.wait_for_selector("table.Speed_Index_Table, table.RaceSpeed, .SpeedIndex, table", timeout=15000)
+        page.wait_for_selector("table", timeout=15000)
     except PlaywrightTimeoutError:
         logger.warning(f"テーブル待機タイムアウト: {url}")
 
     html = page.content()
     soup = BeautifulSoup(html, "html.parser")
 
-    # テーブルを探す（複数候補）
     tables = soup.find_all("table")
     if not tables:
-        logger.warning(f"テーブルが見つかりません: {url}")
         return None
 
-    # 最も行数の多いテーブルを選択
+    # 最大行数テーブルを候補とする
     target = max(tables, key=lambda t: len(t.find_all("tr")))
-
     rows = target.find_all("tr")
     if len(rows) < 2:
-        logger.warning(f"テーブル行数不足: {url}")
         return None
 
-    # ヘッダー
     header_cells = rows[0].find_all(["th", "td"])
     headers = [c.get_text(strip=True) for c in header_cells]
-
-    # データ行
     data = []
     for row in rows[1:]:
         cells = row.find_all(["th", "td"])
         if not cells:
             continue
         data.append([c.get_text(strip=True) for c in cells])
-
     if not data:
         return None
 
-    # 列数を揃える
     max_cols = max(len(headers), max(len(r) for r in data))
     headers += [f"col{i}" for i in range(len(headers), max_cols)]
     for row in data:
         row += [""] * (max_cols - len(row))
-
     df = pd.DataFrame(data, columns=headers[:max_cols])
+
+    # 会員プラン表などが返ってきた場合は None
+    if not _is_valid_speed_df(df):
+        logger.warning(f"指数ランキング表ではないコンテンツを取得: {url}")
+        return None
     return df
+
+
+def parse_speed_shutuba(page, race_id: str) -> Optional[Dict[str, pd.DataFrame]]:
+    """rf=shutuba_submenu URLから全3指数を一括取得。
+    type=rank が未公開(前日等)のときのフォールバック用。
+    Returns: {"average": df, "distance": df, "course": df} または None
+    各dfはtype=rank形式: 順位列(col0)="N位", 馬番(col2), 馬名(col4), 指数(col5)
+
+    CSSクラスで直接取得:
+      sk__umaban          → 馬番
+      Horse_Name          → 馬名 (<a>のテキスト)
+      sk__average_index   → ５走平均 (Sort_Function_Data_Hidden span)
+      sk__max_distance_index → 距離  (同上、"未"を含む場合はデータなし)
+      sk__max_course_index   → コ｜ス (同上)
+    """
+    url = SPEED_URL_BASE.format(race_id=race_id)
+    try:
+        human_browse(page, url)
+        _random_scroll(page)
+        page.wait_for_selector("table", timeout=15000)
+    except PlaywrightTimeoutError:
+        logger.warning(f"shutuba速度表タイムアウト: {url}")
+        return None
+
+    html = page.content()
+    soup = BeautifulSoup(html, "html.parser")
+
+    def _cell_score(cell) -> str:
+        """CSSセルから指数値を抽出。Sort_Function_Data_Hidden spanを優先。
+        "未"を含む場合はデータなし → "" を返す。"""
+        if cell is None:
+            return ""
+        full_text = cell.get_text(strip=True)
+        if "未" in full_text:
+            return ""
+        hidden = cell.find(class_="Sort_Function_Data_Hidden")
+        if hidden:
+            v = hidden.get_text(strip=True)
+            try:
+                return str(int(v))
+            except ValueError:
+                pass
+        # フォールバック: 先頭の整数を抽出
+        m = re.search(r"\d+", full_text)
+        return m.group() if m else ""
+
+    def _cell_name(cell) -> str:
+        """馬名セルからリンクテキストを取得（Sort_Function_Data_Hidden を除外）"""
+        if cell is None:
+            return ""
+        a = cell.find("a")
+        if a:
+            return re.sub(r"\s+", "", a.get_text())
+        # フォールバック: Sort_Function_Data_Hiddenを除いたテキスト
+        for hidden in cell.find_all(class_="Sort_Function_Data_Hidden"):
+            hidden.decompose()
+        return re.sub(r"\s+", "", cell.get_text())
+
+    # テーブル内のデータ行を走査
+    table = soup.find("table")
+    if not table:
+        logger.warning(f"shutuba: テーブルなし ({url})")
+        return None
+
+    horses = []
+    for tr in table.find_all("tr"):
+        # 馬番セルの有無でデータ行を判定
+        num_cell  = tr.find(class_=re.compile(r"sk__umaban|UmaBan"))
+        name_cell = tr.find(class_=re.compile(r"Horse_Name|sk__horse_name"))
+        if not num_cell or not name_cell:
+            continue
+        num = num_cell.get_text(strip=True)
+        if not num.isdigit():
+            continue
+        name = _cell_name(name_cell)
+        if not name:
+            continue
+
+        avg_cell  = tr.find(class_="sk__average_index")
+        dist_cell = tr.find(class_="sk__max_distance_index")
+        crs_cell  = tr.find(class_="sk__max_course_index")
+
+        horses.append({
+            "num":  num,
+            "name": name,
+            "avg":  _cell_score(avg_cell),
+            "dist": _cell_score(dist_cell),
+            "crs":  _cell_score(crs_cell),
+        })
+
+    if not horses:
+        logger.warning(f"shutuba: 馬データ取得失敗 ({url})")
+        return None
+
+    def make_rank_df(horses, val_key):
+        """指定列でソートしてtype=rank形式のDataFrameを作る"""
+        scored = []
+        for h in horses:
+            v = h[val_key]
+            try:
+                scored.append((float(v), h))
+            except (ValueError, TypeError):
+                scored.append((-1.0, h))  # 値なしは末尾
+        scored.sort(key=lambda x: -x[0])
+
+        rows_out = []
+        rank = 1
+        prev_score = None
+        rank_counter = 0
+        for score, h in scored:
+            rank_counter += 1
+            if score != prev_score and score > 0:
+                rank = rank_counter
+            prev_score = score
+            rank_str = f"{rank}位" if score > 0 else "-"
+            # type=rank形式: [順位, 枠(空), 馬番, 印(空), 馬名, 指数]
+            idx_val = str(int(score)) if score > 0 else "-"
+            rows_out.append([rank_str, "", h["num"], "", h["name"], idx_val])
+        headers = ["順位", "枠", "馬番", "印", "馬名", "指数"]
+        return pd.DataFrame(rows_out, columns=headers)
+
+    # 各モードのデータが1頭以上あれば結果に含める
+    result = {}
+    for key, val_key in [("average", "avg"), ("distance", "dist"), ("course", "crs")]:
+        if any(h[val_key] for h in horses):
+            result[key] = make_rank_df(horses, val_key)
+
+    if not result:
+        logger.warning(f"shutuba: 指数データなし ({url})")
+        return None
+
+    logger.info(f"shutuba fallback 成功: {race_id} ({len(horses)}頭, {list(result.keys())})")
+    return result
 
 
 # ─── Excel 書き出し ───────────────────────────────────────────
@@ -374,16 +530,14 @@ def write_excel(
 
 
 # ─── サマリー生成 ─────────────────────────────────────────────
-def _get_top5(df: pd.DataFrame) -> Optional[pd.DataFrame]:
-    """指数列を特定してトップ5を返す"""
-    # 「指数」列を探す（部分一致）
+def _get_topN(df: pd.DataFrame, n: int) -> Optional[pd.DataFrame]:
+    """指数列を特定して上位N頭を返す"""
     idx_col = None
     for col in df.columns:
         if "指数" in col:
             idx_col = col
             break
     if idx_col is None:
-        # 数値列の3列目付近を推定
         numeric_cols = df.select_dtypes(include="number").columns.tolist()
         if len(numeric_cols) >= 1:
             idx_col = numeric_cols[0]
@@ -391,20 +545,23 @@ def _get_top5(df: pd.DataFrame) -> Optional[pd.DataFrame]:
     if idx_col is None:
         return None
 
-    # 馬番・馬名列を探す
     horse_col = next((c for c in df.columns if "馬名" in c), None)
     num_col = next((c for c in df.columns if "馬番" in c), None)
 
-    # 数値変換
     df = df.copy()
     df[idx_col] = pd.to_numeric(df[idx_col], errors="coerce")
     df = df.dropna(subset=[idx_col])
-    df = df.sort_values(idx_col, ascending=False).head(5)
+    df = df.sort_values(idx_col, ascending=False).head(n)
 
     cols = [c for c in [num_col, horse_col, idx_col] if c is not None]
     if not cols:
         return None
     return df[cols].reset_index(drop=True)
+
+
+def _get_top5(df: pd.DataFrame) -> Optional[pd.DataFrame]:
+    """指数列を特定してトップ5を返す（Excel表示用）"""
+    return _get_topN(df, 5)
 
 
 def build_summary(dfs: Dict[str, Optional[pd.DataFrame]], label: str) -> pd.DataFrame:
@@ -435,8 +592,8 @@ def build_summary(dfs: Dict[str, Optional[pd.DataFrame]], label: str) -> pd.Data
         else:
             records.append({"セクション": "データなし", "馬番": "", "馬名": "", "近走平均": "", "当該距離": "", "当該コース": ""})
 
-    # ② 3指数すべてでトップ5に入っている馬
-    records.append({"セクション": "【3指数すべてトップ5入り馬】", "馬番": "", "馬名": "", "近走平均": "", "当該距離": "", "当該コース": ""})
+    # ② 3指数すべてでトップ3に入っている馬
+    records.append({"セクション": "【3指数すべてトップ3入り馬】", "馬番": "", "馬名": "", "近走平均": "", "当該距離": "", "当該コース": ""})
 
     triple_horses = _find_triple_top5(dfs)
     if triple_horses:
@@ -457,7 +614,7 @@ def build_summary(dfs: Dict[str, Optional[pd.DataFrame]], label: str) -> pd.Data
 
 def find_triple_top5_rows(label: str, dfs: Dict[str, Optional[pd.DataFrame]]) -> List[dict]:
     """
-    3指数すべてでトップ5（馬番一致）に入っている馬を返す。
+    3指数すべてでトップ3（馬番一致）に入っている馬を返す。
     Returns: [{"開催場", "レース番号", "馬番", "馬名",
                "近走平均指数", "近走平均順位", "当該距離指数", "当該距離順位",
                "当該コース指数", "当該コース順位"}, ...]
@@ -489,8 +646,8 @@ def find_triple_top5_rows(label: str, dfs: Dict[str, Optional[pd.DataFrame]]) ->
         table = {}
         for rank_0, row in work.iterrows():
             num = str(row[num_col]).strip()
-            if not num or rank_0 >= 5:  # トップ5のみ
-                if rank_0 >= 5:
+            if not num or rank_0 >= 3:  # トップ3のみ
+                if rank_0 >= 3:
                     break
             table[num] = {
                 "馬名": str(row[horse_col]).strip() if horse_col else "",
@@ -524,23 +681,23 @@ def find_triple_top5_rows(label: str, dfs: Dict[str, Optional[pd.DataFrame]]) ->
 
 
 def _find_triple_top5(dfs: Dict[str, Optional[pd.DataFrame]]) -> List[dict]:
-    """3指数すべてでトップ5入りの馬を返す"""
+    """3指数すべてでトップ3入りの馬を返す（サマリー表示用）"""
     top5_names: dict[str, set[str]] = {}
     top5_data: dict[str, dict[str, dict]] = {}  # mode -> {馬名: row_dict}
 
     for mode_key, mode_label in MODES.items():
         df = dfs.get(mode_key)
-        top5 = _get_top5(df) if df is not None else None
-        if top5 is None:
+        top3 = _get_topN(df, 3) if df is not None else None
+        if top3 is None:
             return []
 
         names = set()
         data = {}
-        for _, row in top5.iterrows():
+        for _, row in top3.iterrows():
             name = None
             num = None
             idx_val = None
-            for col in top5.columns:
+            for col in top3.columns:
                 if "馬名" in col:
                     name = str(row[col])
                 elif "馬番" in col:
@@ -578,23 +735,33 @@ def main():
     email, password = load_env()
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(
+            headless=True,
+            args=["--disable-blink-features=AutomationControlled"],
+        )
         context = browser.new_context(
             user_agent=(
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
                 "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/120.0.0.0 Safari/537.36"
-            )
+                "Chrome/124.0.0.0 Safari/537.36"
+            ),
+            viewport={"width": 1280, "height": 800},
+            locale="ja-JP",
+            timezone_id="Asia/Tokyo",
+        )
+        # headless 検出回避
+        context.add_init_script(
+            "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
         )
         page = context.new_page()
 
-        # ログイン処理
+        # ── cookiesのみ（自動ログインしない → プレミアムcookies保護） ──
         cookie_loaded = load_cookies(context)
-        if cookie_loaded and is_logged_in(page):
-            logger.info("cookies でログイン済みを確認")
-        else:
-            login(page, email, password)
-            save_cookies(context)
+        if not cookie_loaded:
+            logger.error("❌ cookies.json が見つかりません。")
+            logger.error("   → python3 save_cookies.py を実行してログインしてください")
+            browser.close()
+            return
 
         # レース一覧取得
         races = get_race_ids(page, date)
@@ -603,12 +770,23 @@ def main():
             browser.close()
             return
 
+        # ── プリフライトチェック: プレミアムコンテンツにアクセスできるか ──
+        test_race_id = races[0]["race_id"]
+        if not preflight_premium_check(page, test_race_id):
+            logger.error("❌ プレミアムコンテンツにアクセスできません（cookiesが期限切れの可能性）")
+            logger.error("   → python3 save_cookies.py を実行して再ログインしてください")
+            browser.close()
+            return
+        logger.info("✅ プリフライトチェック通過（プレミアムアクセス確認済み）")
+        human_sleep(5.0, 10.0)
+
         # venue -> race_label -> mode_label -> df
         all_data: Dict[str, Dict] = {}
         # venue -> race_label -> summary_df
         all_summaries: Dict[str, Dict] = {}
         # 全場 3指数重複馬の行リスト
         triple_rows: List[dict] = []
+        fallback_count = 0  # fallback 発動回数（大量発動ガード用）
 
         for race in races:
             race_id = race["race_id"]
@@ -629,6 +807,29 @@ def main():
                     dfs[mode_key] = None
                 finally:
                     human_sleep(3.0, 9.0)
+
+            # フォールバック: type=rank が全て None の場合 shutuba_submenu を試みる
+            if all(v is None for v in dfs.values()):
+                fallback_count += 1
+                logger.warning(f"type=rank 未公開 → shutuba fallback: {race_id}")
+                try:
+                    fallback = parse_speed_shutuba(page, race_id)
+                    if fallback:
+                        dfs.update(fallback)
+                        got = sum(1 for v in dfs.values() if v is not None)
+                        logger.info(f"{label}: shutuba fallback で {got}モード取得")
+                except Exception as e:
+                    logger.error(f"{label} shutuba fallback 失敗: {e}")
+                finally:
+                    human_sleep(3.0, 7.0)
+
+                # ── fallback 大量発動ガード ──
+                if fallback_count >= 3 and fallback_count >= len(races) * 0.5:
+                    logger.error("❌ 過半数のレースで type=rank が取得できません。")
+                    logger.error("   cookiesが期限切れか、プレミアム権限に問題があります。")
+                    logger.error("   → python3 save_cookies.py を実行して再ログインしてください")
+                    browser.close()
+                    return
 
             # mode_label をキーに変換して蓄積
             all_data.setdefault(venue, {})[label] = {

@@ -8,6 +8,7 @@ import json
 import time
 import random
 import re
+from datetime import datetime
 from pathlib import Path
 from typing import List, Dict
 
@@ -24,7 +25,12 @@ SCORE_PICKUP        = 2   # data_top データ分析ピックアップ3頭
 SCORE_ANALYSIS      = 1   # data_top 出走馬分析 カテゴリー登場1回
 SCORE_PREV_IDX_HIGH = 2   # 前走タイム指数90以上
 SCORE_PREV_IDX_MID  = 1   # 前走タイム指数70〜89
+SCORE_PREV_IDX_TOP1 = 1   # 前走タイム指数がレース内1位
+SCORE_RECENT_RACE   = 1   # 前走から28日以内（中4週以内）
+SCORE_FRONT_RUNNER  = 1   # 逃げ馬（コーナー通過順履歴から推定）
 SCORE_REVIVAL       = 2   # 前走1-3番人気かつ凡走(4着以下) 巻き返し馬
+SCORE_PREV_GOOD     = 2   # 前走1-6番人気かつ1-3着（好走確認）
+SCORE_SAME_DIST     = 1   # 前走と同距離（±100m以内）
 
 THRESHOLD_HIGH   = 5   # ★★★
 THRESHOLD_MID    = 3   # ★★
@@ -103,9 +109,11 @@ def scrape_shutuba(page, race_id: str) -> dict:
                 horse_map[num] = name[:4]  # 短縮名で補完
             if hid and num not in horse_id_map:
                 horse_id_map[num] = hid
-            # 人気（Popular class）
+            # 人気（Popular / Ninki class）
             if num not in pop_map:
-                pop_td = tr.find("td", class_=lambda c: c and "Popular" in c)
+                pop_td = tr.find("td", class_=lambda c: c and any(
+                    x in c for x in ["Popular", "Ninki", "ninki"]
+                ))
                 if pop_td:
                     val = re.sub(r"\s+", "", pop_td.get_text(strip=True))
                     if val.isdigit():
@@ -149,12 +157,48 @@ def scrape_shutuba(page, race_id: str) -> dict:
                 continue
             i += 1
 
+    # ── 人気フォールバック: shutuba.html に Ninki がなければ speed page から取得 ──
+    if not pop_map:
+        try:
+            speed_url = f"https://race.netkeiba.com/race/speed.html?race_id={race_id}&rf=shutuba_submenu"
+            page.goto(speed_url, wait_until="domcontentloaded")
+            time.sleep(random.uniform(2.0, 4.0))
+            speed_soup = BeautifulSoup(page.content(), "html.parser")
+            for tr in speed_soup.find_all("tr"):
+                num_td  = tr.find(class_=re.compile(r"sk__umaban|UmaBan"))
+                ninki_td = tr.find(class_="sk__ninki")
+                if num_td and ninki_td:
+                    num = num_td.get_text(strip=True)
+                    val = re.sub(r"\s+", "", ninki_td.get_text(strip=True))
+                    if num.isdigit() and val.isdigit():
+                        pop_map[num] = val
+        except Exception:
+            pass
+
+    # ── 予測ペース (S/M/H) ──
+    predicted_pace = None
+    pace_el = soup.find(class_="RacePace")
+    if pace_el:
+        m = re.search(r"[SMH]", pace_el.get_text())
+        if m:
+            predicted_pace = m.group()
+
+    # ── レース距離（RaceData01 から） ──
+    race_dist = None
+    rd1 = soup.find(class_="RaceData01")
+    if rd1:
+        m = re.search(r"(\d{3,4})m", rd1.get_text())
+        if m:
+            race_dist = int(m.group(1))
+
     return {
         "horse_map": horse_map,
         "horse_id_map": horse_id_map,
         "pop_map": pop_map,
         "position_nums": position_nums,
         "top3_hits": top3_hits,
+        "predicted_pace": predicted_pace,
+        "race_dist": race_dist,
     }
 
 
@@ -251,6 +295,10 @@ def score_horses(
     shutuba_data: dict,
     data_top_data: dict,
     prev_db: dict = None,
+    race_max_prev_idx: float = None,
+    race_date: str = None,
+    horse_style_db: dict = None,
+    race_dist: int = None,
 ) -> List[dict]:
     """
     triple_horses: [{馬番, 馬名, ...}]  ← (A) 3指数重複馬
@@ -294,6 +342,14 @@ def score_horses(
             score += pts
             breakdown.append({"label": f"出走馬分析 {acnt}条件該当", "pts": pts})
 
+        # ⑨ 逃げ馬（horse_style_db使用）
+        if horse_style_db is not None:
+            hid_style = horse_id_map.get(num, "")
+            style_entry = horse_style_db.get(hid_style, {}) if hid_style else {}
+            if style_entry.get("style") == "逃げ" and style_entry.get("n_races", 0) >= 2:
+                score += SCORE_FRONT_RUNNER
+                breakdown.append({"label": f"逃げ馬({style_entry['n_races']}走実績)", "pts": SCORE_FRONT_RUNNER})
+
         # ⑤ 前走タイム指数 / ⑥ 巻き返し馬（prev_db使用）
         if prev_db is not None:
             hid = horse_id_map.get(num, "")
@@ -308,18 +364,59 @@ def score_horses(
                 elif prev_idx >= 70:
                     score += SCORE_PREV_IDX_MID
                     breakdown.append({"label": f"前走指数{prev_idx:.0f}(70以上)", "pts": SCORE_PREV_IDX_MID})
+
+                # ⑦ 前走指数レース内1位
+                if (race_max_prev_idx is not None and race_max_prev_idx > 0
+                        and prev_idx == race_max_prev_idx):
+                    score += SCORE_PREV_IDX_TOP1
+                    breakdown.append({"label": f"前走指数レース内1位({prev_idx:.0f})", "pts": SCORE_PREV_IDX_TOP1})
             except (ValueError, TypeError):
                 pass
 
+            # ⑧ 前走から28日以内（中4週以内）
+            if race_date:
+                try:
+                    prev_date_str = prev.get("prev_date", "")
+                    if prev_date_str:
+                        pd_dt = datetime.strptime(prev_date_str.replace("/", ""), "%Y%m%d")
+                        rd_dt = datetime.strptime(race_date, "%Y%m%d")
+                        days = (rd_dt - pd_dt).days
+                        if 0 < days <= 28:
+                            score += SCORE_RECENT_RACE
+                            breakdown.append({"label": f"中4週以内({days}日)", "pts": SCORE_RECENT_RACE})
+                except (ValueError, TypeError):
+                    pass
+
             # ⑥ 巻き返し馬: 前走1-3番人気 かつ 前走4着以下
             try:
-                prev_pop_val  = int(prev.get("prev_pop", 99))
-                prev_rank_val = int(prev.get("prev_rank", 99))
+                prev_pop_val  = int(prev.get("prev_pop", "") or 99)
+                prev_rank_val = int(prev.get("prev_rank", "") or 99)
                 if prev_pop_val <= 3 and prev_rank_val >= 4:
                     score += SCORE_REVIVAL
                     breakdown.append({"label": f"巻き返し馬(前走{prev_pop_val}人気{prev_rank_val}着)", "pts": SCORE_REVIVAL})
             except (ValueError, TypeError):
+                prev_pop_val  = 99
+                prev_rank_val = 99
+
+            # ⑩ 前走好走: 前走1-6番人気 かつ 前走1-3着
+            try:
+                if 1 <= prev_pop_val <= 6 and 1 <= prev_rank_val <= 3:
+                    score += SCORE_PREV_GOOD
+                    breakdown.append({"label": f"前走好走(前走{prev_pop_val}人気{prev_rank_val}着)", "pts": SCORE_PREV_GOOD})
+            except (ValueError, TypeError):
                 pass
+
+            # ⑪ 同距離前走（±100m以内）
+            if race_dist:
+                try:
+                    prev_dist_str = prev.get("prev_dist", "")
+                    if prev_dist_str:
+                        m = re.search(r"(\d{3,4})", prev_dist_str)
+                        if m and abs(int(m.group(1)) - race_dist) <= 50:
+                            score += SCORE_SAME_DIST
+                            breakdown.append({"label": f"同距離前走({m.group(1)}m→{race_dist}m)", "pts": SCORE_SAME_DIST})
+                except (ValueError, TypeError):
+                    pass
 
         # 星ランク
         if score >= THRESHOLD_HIGH:

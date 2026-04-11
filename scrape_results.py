@@ -87,6 +87,27 @@ def parse_race_condition(soup) -> dict:
         text = d2.get_text(" ", strip=True)
         info["class_name"] = text[:60]  # クラス名（長い場合は切る）
 
+    # ペース (S/M/H)
+    pace_el = soup.find(class_="RapPace_Title")
+    if pace_el:
+        m = re.search(r"[SMH]", pace_el.get_text())
+        if m:
+            info["pace"] = m.group()
+
+    # ラップタイム（200m区間）
+    lap_table = soup.find("table", class_="Race_HaronTime")
+    if lap_table:
+        rows = lap_table.find_all("tr")
+        for tr in rows:
+            tds = [td.get_text(strip=True) for td in tr.find_all("td")]
+            # 区間ラップ行: 小数点を含む短い数値が並ぶ
+            if tds and all(re.match(r"^\d+\.\d$", t) for t in tds):
+                try:
+                    info["lap_times"] = [float(t) for t in tds]
+                except ValueError:
+                    pass
+                break
+
     # 出走頭数はhorseリストから後で設定
     return info
 
@@ -216,11 +237,8 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
         if margin_cell:
             margin = _text(margin_cell)
 
-        # 人気
+        # 人気（後でoddsから逆算するため仮0）
         pop = 0
-        pop_cell = tr.find("td", class_=re.compile(r"[Pp]opular|Ninki"))
-        if pop_cell:
-            pop = _int(_text(pop_cell))
 
         # 単勝オッズ
         odds = 0.0
@@ -273,6 +291,12 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
             "horse_weight_diff": hw_diff,
         })
 
+    # oddsから人気を逆算（odds昇順 = 人気順）
+    valid_odds = [h for h in horses if h["odds"] > 0]
+    sorted_by_odds = sorted(valid_odds, key=lambda h: h["odds"])
+    for rank_i, h in enumerate(sorted_by_odds, 1):
+        h["pop"] = rank_i
+
     condition["num_horses"] = len(horses)
     log.info(f"  {race_label}: {len(horses)}頭 馬場={condition.get('condition','?')} "
              f"距離={condition.get('distance','?')}m 天気={condition.get('weather','?')}")
@@ -308,20 +332,30 @@ def main():
     email, password = load_env()
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(
+            headless=True,
+            args=["--disable-blink-features=AutomationControlled"],
+        )
         context = browser.new_context(
             user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
                        "AppleWebKit/537.36 (KHTML, like Gecko) "
-                       "Chrome/122.0.0.0 Safari/537.36",
+                       "Chrome/124.0.0.0 Safari/537.36",
             viewport={"width": 1280, "height": 800},
+            locale="ja-JP",
+            timezone_id="Asia/Tokyo",
         )
-        page = browser.new_page()
+        context.add_init_script(
+            "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
+        )
+        page = context.new_page()
 
         if not load_cookies(context):
-            login(page, email, password)
-        else:
-            page.goto("https://www.netkeiba.com/", wait_until="domcontentloaded")
-            human_sleep(1.0, 2.0)
+            log.error("❌ cookies.json が見つかりません。")
+            log.error("   → python3 save_cookies.py を実行してログインしてください")
+            browser.close()
+            sys.exit(1)
+        page.goto("https://www.netkeiba.com/", wait_until="domcontentloaded")
+        human_sleep(1.0, 2.0)
 
         race_results = {}    # calibrate_threshold.py 互換: {label: [{rank,num,name,...}]}
         race_conditions = {} # レース条件: {label: {distance, surface, condition, ...}}

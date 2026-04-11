@@ -28,13 +28,21 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).parent
-HORSE_DB_PATH = BASE_DIR / "output" / "horse_db.json"
+HORSE_DB_PATH    = BASE_DIR / "output" / "horse_db.json"
+HORSE_STYLE_PATH = BASE_DIR / "output" / "horse_style.json"
 HORSE_DB_STALE_DAYS = 7  # キャッシュ有効期限（日）
 
 
 def load_horse_db() -> dict:
     if HORSE_DB_PATH.exists():
         with open(HORSE_DB_PATH, encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+
+def load_horse_style() -> dict:
+    if HORSE_STYLE_PATH.exists():
+        with open(HORSE_STYLE_PATH, encoding="utf-8") as f:
             return json.load(f)
     return {}
 
@@ -108,26 +116,37 @@ def main():
     # horse_db ロード
     horse_db = load_horse_db()
     logger.info(f"horse_db: {len(horse_db)}頭 キャッシュ済み")
+    horse_style_db = load_horse_style()
+    logger.info(f"horse_style: {len(horse_style_db)}頭")
 
     results = {}  # race_label -> 結果dict
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(
+            headless=True,
+            args=["--disable-blink-features=AutomationControlled"],
+        )
         context = browser.new_context(
             user_agent=(
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
                 "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/120.0.0.0 Safari/537.36"
-            )
+                "Chrome/124.0.0.0 Safari/537.36"
+            ),
+            viewport={"width": 1280, "height": 800},
+            locale="ja-JP",
+            timezone_id="Asia/Tokyo",
+        )
+        context.add_init_script(
+            "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
         )
         page = context.new_page()
 
-        # ログイン
-        if load_cookies(context) and is_logged_in(page):
-            logger.info("cookies でログイン済み")
-        else:
-            login(page, email, password)
-            save_cookies(context)
+        # cookiesのみ（自動ログインしない → プレミアムcookies保護）
+        if not load_cookies(context):
+            logger.error("❌ cookies.json が見つかりません。")
+            logger.error("   → python3 save_cookies.py を実行してログインしてください")
+            browser.close()
+            sys.exit(1)
 
         # レース一覧取得 → race_id マップ
         races_all = get_race_ids(page, date)
@@ -169,7 +188,23 @@ def main():
                         except Exception as e:
                             logger.warning(f"  前走データ取得失敗 {hid}: {e}")
 
-                scored = score_horses(triple_horses, shutuba_data, data_top_data, prev_db=horse_db)
+                # レース内の前走指数最大値を計算（出走全馬対象）
+                race_max_prev_idx = None
+                prev_idxs = []
+                for hid in horse_id_map.values():
+                    if hid in horse_db:
+                        try:
+                            prev_idxs.append(float(horse_db[hid].get("prev_idx", "")))
+                        except (ValueError, TypeError):
+                            pass
+                if prev_idxs:
+                    race_max_prev_idx = max(prev_idxs)
+
+                race_dist = shutuba_data.get("race_dist")
+                scored = score_horses(triple_horses, shutuba_data, data_top_data,
+                                      prev_db=horse_db, race_max_prev_idx=race_max_prev_idx,
+                                      race_date=date, horse_style_db=horse_style_db,
+                                      race_dist=race_dist)
 
                 has_any_bonus = any(h["score"] > 0 for h in scored)
                 advice = None
@@ -186,6 +221,8 @@ def main():
                     "top3_hits": shutuba_data["top3_hits"],
                     "pickup_nums": data_top_data["pickup_nums"],
                     "analysis_hits": data_top_data["analysis_hits"],
+                    "predicted_pace": shutuba_data.get("predicted_pace"),
+                    "race_dist": shutuba_data.get("race_dist"),
                     "advice": advice,
                 }
 
