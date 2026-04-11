@@ -631,8 +631,8 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
   const distBadge = dist ? `<span class="dist-badge">${dist}</span>` : '';
   const paceBadge = pace ? `<span class="pace-badge pace-${pace}">${pace}</span>` : '';
 
-  // スコア降順でソート
-  const sortedScored = [...scored].sort((a,b) => b.score - a.score);
+  // スコア降順でソート（0ptは非表示）
+  const sortedScored = [...scored].filter(h => h.score > 0).sort((a,b) => b.score - a.score);
 
   const horseRows = sortedScored.map(h => {
     const pop = parseInt(h.today_pop || '0');
