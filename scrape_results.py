@@ -202,22 +202,26 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
         if sa_cell:
             sex_age = _text(sa_cell)
 
-        # 斤量
+        # 斤量: Jockey_Info クラス（騎手と別セル）、なければ数値パターンで探す
         weight_carried = 0.0
-        wc_cell = tr.find("td", class_=re.compile(r"[Jj]ockey|Kinryo|weight_carry"))
-        # 斤量は数値セルを探す
-        for td in tds:
-            t = _text(td)
-            if re.match(r"^\d{2}\.\d$", t):
-                weight_carried = float(t)
-                break
+        wc_cell = tr.find("td", class_="Jockey_Info")
+        if wc_cell:
+            weight_carried = _float(_text(wc_cell))
+        else:
+            for td in tds:
+                t = _text(td)
+                if re.match(r"^\d{2}\.\d$", t):
+                    weight_carried = float(t)
+                    break
 
-        # 騎手
+        # 騎手: class="Jockey" のリンクテキスト（Jockey_Info は斤量なので除外）
         jockey = ""
-        j_cell = tr.find("td", class_=re.compile(r"[Jj]ockey"))
-        if j_cell:
-            j_a = j_cell.find("a")
-            jockey = _text(j_a or j_cell)
+        for td in tr.find_all("td"):
+            cls = td.get("class", [])
+            if "Jockey" in cls and "Jockey_Info" not in cls:
+                j_a = td.find("a")
+                jockey = _text(j_a or td)
+                break
 
         # 調教師
         trainer = ""
@@ -237,14 +241,21 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
         if margin_cell:
             margin = _text(margin_cell)
 
-        # 人気（後でoddsから逆算するため仮0）
+        # 人気: class="Odds Txt_C" または "Odds BgYellow Txt_C"
         pop = 0
+        for td in tr.find_all("td"):
+            cls = td.get("class", [])
+            if "Odds" in cls and "Txt_C" in cls:
+                pop = _int(_text(td))
+                break
 
-        # 単勝オッズ
+        # 単勝オッズ: class="Odds Txt_R"
         odds = 0.0
-        odds_cell = tr.find("td", class_=re.compile(r"[Oo]dds|Ninki_Odds"))
-        if odds_cell:
-            odds = _float(_text(odds_cell))
+        for td in tr.find_all("td"):
+            cls = td.get("class", [])
+            if "Odds" in cls and "Txt_R" in cls:
+                odds = _float(_text(td))
+                break
 
         # 上がり3F
         last3f = 0.0
@@ -290,12 +301,6 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
             "horse_weight":  hw,
             "horse_weight_diff": hw_diff,
         })
-
-    # oddsから人気を逆算（odds昇順 = 人気順）
-    valid_odds = [h for h in horses if h["odds"] > 0]
-    sorted_by_odds = sorted(valid_odds, key=lambda h: h["odds"])
-    for rank_i, h in enumerate(sorted_by_odds, 1):
-        h["pop"] = rank_i
 
     condition["num_horses"] = len(horses)
     log.info(f"  {race_label}: {len(horses)}頭 馬場={condition.get('condition','?')} "

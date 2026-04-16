@@ -32,6 +32,19 @@ def main():
     with open(horse_db_path, encoding="utf-8") as f:
         horse_db = json.load(f)
 
+    horse_style_path = BASE_DIR / "output" / "horse_style.json"
+    horse_style_db = {}
+    if horse_style_path.exists():
+        with open(horse_style_path, encoding="utf-8") as f:
+            horse_style_db = json.load(f)
+
+    # race_conditions.json から距離を取得
+    conditions_path = BASE_DIR / "output" / date / "race_conditions.json"
+    race_conditions = {}
+    if conditions_path.exists():
+        with open(conditions_path, encoding="utf-8") as f:
+            race_conditions = json.load(f)
+
     # race_results.json から 馬番→horse_id マップを構築（任意）
     horse_id_by_race = {}
     if results_path.exists():
@@ -66,8 +79,25 @@ def main():
         if not triple_horses:
             continue
 
+        # レース内の前走指数最大値を計算（出走全馬対象）
+        race_max_prev_idx = None
+        prev_idxs = []
+        for hid in horse_id_map.values():
+            if hid in horse_db:
+                try:
+                    prev_idxs.append(float(horse_db[hid].get("prev_idx", "")))
+                except (ValueError, TypeError):
+                    pass
+        if prev_idxs:
+            race_max_prev_idx = max(prev_idxs)
+
+        race_dist = race_conditions.get(race_label, {}).get("distance")
+
         # 再スコアリング
-        new_scored = score_horses(triple_horses, shutuba_data, data_top_data, prev_db=horse_db)
+        new_scored = score_horses(triple_horses, shutuba_data, data_top_data,
+                                  prev_db=horse_db, race_max_prev_idx=race_max_prev_idx,
+                                  race_date=date, horse_style_db=horse_style_db,
+                                  race_dist=race_dist)
         rdata["scored"] = new_scored
 
         max_score = max((h["score"] for h in new_scored), default=0)

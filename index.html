@@ -657,6 +657,21 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
       </div>`;
   }).join('');
 
+  // 穴馬ライン（前走1-2着 + idx80+ + 5-10番人気）
+  const anabaRows = (rdata?.anaba || []).map(a => {
+    return `
+      <div class="horse-pick-row" style="background:#fff8f4">
+        <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0;background:#cc4400">${a.num}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:600;font-size:0.88rem;display:flex;align-items:center;gap:4px;flex-wrap:wrap">
+            ${a.name} <span class="pop-badge low" style="font-size:0.7rem">${a.pop}人気</span>
+          </div>
+          <div class="pick-factors"><span>前走${a.prev_rank}着 指数${a.prev_idx}</span></div>
+        </div>
+        <span class="anaba-badge">穴</span>
+      </div>`;
+  }).join('');
+
   // 単指数1位馬（3指数重複外）
   const singleRows = singles.map(s => {
     const badges = s.strong.map(lb =>
@@ -672,14 +687,14 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
       </div>`;
   }).join('');
 
-  if (!horseRows && !singleRows) return '';
+  if (!horseRows && !singleRows && !anabaRows) return '';
 
   return `
     <div class="race-card">
       <div class="race-card-hd">
         <span>${rn}</span>${distBadge}${paceBadge}
       </div>
-      ${horseRows}${singleRows}
+      ${horseRows}${anabaRows}${singleRows}
     </div>`;
 }
 

@@ -6,8 +6,8 @@
       "name": "オリーブグリーン",
       "horse_id": "2022105694",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "58.0",
+      "odds": 6.1,
+      "jockey": "西村淳",
       "trainer": "矢作",
       "weight_carried": 58.0,
       "horse_weight": 528,
@@ -15,7 +15,12 @@
       "time": "1:53.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        3,
+        3,
+        5
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -25,8 +30,8 @@
       "name": "リザードアイランド",
       "horse_id": "2022105276",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "58.0",
+      "odds": 1.9,
+      "jockey": "横山和",
       "trainer": "田村",
       "weight_carried": 58.0,
       "horse_weight": 488,
@@ -34,7 +39,12 @@
       "time": "1:53.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        4,
+        3,
+        3
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -44,8 +54,8 @@
       "name": "ピコシー",
       "horse_id": "2022101716",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "58.0",
+      "odds": 8.4,
+      "jockey": "岩田康",
       "trainer": "奥村武",
       "weight_carried": 58.0,
       "horse_weight": 472,
@@ -53,7 +63,12 @@
       "time": "1:53.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        6,
+        6,
+        5
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -63,8 +78,8 @@
       "name": "セザンワールド",
       "horse_id": "2020106051",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "58.0",
+      "odds": 25.3,
+      "jockey": "柴田善",
       "trainer": "蛯名利",
       "weight_carried": 58.0,
       "horse_weight": 506,
@@ -72,7 +87,12 @@
       "time": "1:53.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        6,
+        3,
+        3
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -82,8 +102,8 @@
       "name": "フジレイメイ",
       "horse_id": "2022100306",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "58.0",
+      "odds": 18.8,
+      "jockey": "松岡",
       "trainer": "小笠",
       "weight_carried": 58.0,
       "horse_weight": 502,
@@ -91,7 +111,12 @@
       "time": "1:53.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        12,
+        12,
+        10
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -101,8 +126,8 @@
       "name": "ライジンマル",
       "horse_id": "2021101449",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "58.0",
+      "odds": 7.0,
+      "jockey": "木幡初",
       "trainer": "竹内",
       "weight_carried": 58.0,
       "horse_weight": 534,
@@ -110,7 +135,12 @@
       "time": "1:54.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1,
+        1,
+        2
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -120,8 +150,8 @@
       "name": "デルマタモン",
       "horse_id": "2018100976",
       "pop": 14,
-      "odds": 14.0,
-      "jockey": "58.0",
+      "odds": 233.9,
+      "jockey": "菊沢",
       "trainer": "勢司",
       "weight_carried": 58.0,
       "horse_weight": 512,
@@ -129,7 +159,12 @@
       "time": "1:54.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        14,
+        14,
+        13,
+        12
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -139,8 +174,8 @@
       "name": "サツキノジョウ",
       "horse_id": "2021105789",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "56.0",
+      "odds": 15.0,
+      "jockey": "丹内",
       "trainer": "武井",
       "weight_carried": 56.0,
       "horse_weight": 464,
@@ -148,7 +183,12 @@
       "time": "1:54.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        9,
+        6,
+        7
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -158,8 +198,8 @@
       "name": "ウインアルドーレ",
       "horse_id": "2021106192",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "58.0",
+      "odds": 15.4,
+      "jockey": "三浦",
       "trainer": "奥平",
       "weight_carried": 58.0,
       "horse_weight": 502,
@@ -167,7 +207,12 @@
       "time": "1:54.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2,
+        2,
+        1
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -177,8 +222,8 @@
       "name": "タリエシン",
       "horse_id": "2020102784",
       "pop": 15,
-      "odds": 15.0,
-      "jockey": "58.0",
+      "odds": 254.3,
+      "jockey": "野中",
       "trainer": "秋本",
       "weight_carried": 58.0,
       "horse_weight": 440,
@@ -186,7 +231,12 @@
       "time": "1:54.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        9,
+        10,
+        12
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -196,8 +246,8 @@
       "name": "ニシノブレイゼスト",
       "horse_id": "2022107011",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "58.0",
+      "odds": 20.8,
+      "jockey": "田辺",
       "trainer": "高木",
       "weight_carried": 58.0,
       "horse_weight": 508,
@@ -205,7 +255,12 @@
       "time": "1:54.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        11,
+        10,
+        10
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -215,8 +270,8 @@
       "name": "アベベ",
       "horse_id": "2021109113",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "58.0",
+      "odds": 188.5,
+      "jockey": "原",
       "trainer": "秋本",
       "weight_carried": 58.0,
       "horse_weight": 480,
@@ -224,7 +279,12 @@
       "time": "1:55.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        6,
+        9,
+        8
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -234,8 +294,8 @@
       "name": "エンプレスフレーム",
       "horse_id": "2022107254",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "56.0",
+      "odds": 107.7,
+      "jockey": "原田和",
       "trainer": "上原博",
       "weight_carried": 56.0,
       "horse_weight": 458,
@@ -243,7 +303,12 @@
       "time": "1:55.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4,
+        6,
+        8
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -253,8 +318,8 @@
       "name": "アースイオス",
       "horse_id": "2021102555",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "58.0",
+      "odds": 116.8,
+      "jockey": "横山琉",
       "trainer": "手塚徳",
       "weight_carried": 58.0,
       "horse_weight": 532,
@@ -263,6 +328,7 @@
       "margin": "",
       "last3f": 0.0,
       "corners": [
+        14,
         14,
         15,
         15
@@ -276,8 +342,8 @@
       "name": "スプレーフォール",
       "horse_id": "2021107266",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "58.0",
+      "odds": 161.8,
+      "jockey": "石川",
       "trainer": "相沢",
       "weight_carried": 58.0,
       "horse_weight": 472,
@@ -285,7 +351,12 @@
       "time": "1:56.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        13,
+        13,
+        13,
+        14
+      ],
       "sex_age": "",
       "gate": "1"
     }
@@ -297,8 +368,8 @@
       "name": "スズハローム",
       "horse_id": "2020105018",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "57.0",
+      "odds": 15.9,
+      "jockey": "藤懸",
       "trainer": "牧田",
       "weight_carried": 57.0,
       "horse_weight": 464,
@@ -306,7 +377,11 @@
       "time": "1:33.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        14,
+        15,
+        14
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -316,8 +391,8 @@
       "name": "サイルーン",
       "horse_id": "2019104838",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "57.0",
+      "odds": 12.4,
+      "jockey": "大野",
       "trainer": "堀",
       "weight_carried": 57.0,
       "horse_weight": 482,
@@ -325,7 +400,11 @@
       "time": "1:33.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        12,
+        11
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -335,8 +414,8 @@
       "name": "ファーヴェント",
       "horse_id": "2021104893",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "57.0",
+      "odds": 5.7,
+      "jockey": "横山武",
       "trainer": "藤原",
       "weight_carried": 57.0,
       "horse_weight": 514,
@@ -344,7 +423,11 @@
       "time": "1:33.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        8,
+        8
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -354,8 +437,8 @@
       "name": "ミニトランザット",
       "horse_id": "2022105230",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "56.0",
+      "odds": 6.0,
+      "jockey": "西村淳",
       "trainer": "杉山佳",
       "weight_carried": 56.0,
       "horse_weight": 476,
@@ -363,7 +446,11 @@
       "time": "1:33.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        7,
+        5
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -373,8 +460,8 @@
       "name": "イミグラントソング",
       "horse_id": "2022104697",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "57.0",
+      "odds": 13.3,
+      "jockey": "石川",
       "trainer": "辻",
       "weight_carried": 57.0,
       "horse_weight": 502,
@@ -382,7 +469,11 @@
       "time": "1:33.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        10,
+        10
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -392,8 +483,8 @@
       "name": "ブエナオンダ",
       "horse_id": "2021105454",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "58.0",
+      "odds": 13.1,
+      "jockey": "佐々木",
       "trainer": "須貝",
       "weight_carried": 58.0,
       "horse_weight": 460,
@@ -401,7 +492,11 @@
       "time": "1:33.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        9,
+        8
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -411,8 +506,8 @@
       "name": "ゾンニッヒ",
       "horse_id": "2018101343",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "57.5",
+      "odds": 14.7,
+      "jockey": "団野",
       "trainer": "池江",
       "weight_carried": 57.5,
       "horse_weight": 480,
@@ -420,7 +515,11 @@
       "time": "1:33.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4,
+        3
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -430,8 +529,8 @@
       "name": "エンペラーズソード",
       "horse_id": "2022106691",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "55.0",
+      "odds": 16.7,
+      "jockey": "丹内",
       "trainer": "高木",
       "weight_carried": 55.0,
       "horse_weight": 490,
@@ -439,7 +538,11 @@
       "time": "1:33.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -449,8 +552,8 @@
       "name": "メタルスピード",
       "horse_id": "2020101772",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "55.0",
+      "odds": 8.3,
+      "jockey": "岩田康",
       "trainer": "斎藤誠",
       "weight_carried": 55.0,
       "horse_weight": 524,
@@ -458,7 +561,11 @@
       "time": "1:34.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -468,8 +575,8 @@
       "name": "ケイアイセナ",
       "horse_id": "2019100318",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "57.5",
+      "odds": 6.8,
+      "jockey": "津村",
       "trainer": "平田",
       "weight_carried": 57.5,
       "horse_weight": 480,
@@ -477,7 +584,11 @@
       "time": "1:34.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        4,
+        7
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -487,8 +598,8 @@
       "name": "ジュンブロッサム",
       "horse_id": "2019105118",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "58.5",
+      "odds": 17.0,
+      "jockey": "荻野極",
       "trainer": "友道",
       "weight_carried": 58.5,
       "horse_weight": 478,
@@ -496,7 +607,11 @@
       "time": "1:34.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        12,
+        14
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -506,8 +621,8 @@
       "name": "エエヤン",
       "horse_id": "2020105295",
       "pop": 14,
-      "odds": 14.0,
-      "jockey": "57.0",
+      "odds": 115.1,
+      "jockey": "杉原",
       "trainer": "伊藤大",
       "weight_carried": 57.0,
       "horse_weight": 480,
@@ -515,7 +630,11 @@
       "time": "1:34.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        15,
+        12,
+        11
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -525,8 +644,8 @@
       "name": "シリウスコルト",
       "horse_id": "2021104094",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "58.0",
+      "odds": 9.1,
+      "jockey": "三浦",
       "trainer": "田中勝",
       "weight_carried": 58.0,
       "horse_weight": 502,
@@ -534,7 +653,11 @@
       "time": "1:34.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        3,
+        4
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -544,8 +667,8 @@
       "name": "ダディーズビビッド",
       "horse_id": "2018105610",
       "pop": 15,
-      "odds": 15.0,
-      "jockey": "57.5",
+      "odds": 154.2,
+      "jockey": "横山和",
       "trainer": "千田",
       "weight_carried": 57.5,
       "horse_weight": 514,
@@ -553,7 +676,11 @@
       "time": "1:35.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        10,
+        13
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -563,8 +690,8 @@
       "name": "マテンロウオリオン",
       "horse_id": "2019100965",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "56.0",
+      "odds": 25.0,
+      "jockey": "横山典",
       "trainer": "昆",
       "weight_carried": 56.0,
       "horse_weight": 474,
@@ -572,7 +699,11 @@
       "time": "1:35.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        4,
+        5
+      ],
       "sex_age": "",
       "gate": "3"
     }
@@ -584,8 +715,8 @@
       "name": "コパノヴィンセント",
       "horse_id": "2022107047",
       "pop": 15,
-      "odds": 15.0,
-      "jockey": "58.0",
+      "odds": 101.1,
+      "jockey": "柴田大",
       "trainer": "上原博",
       "weight_carried": 58.0,
       "horse_weight": 566,
@@ -593,7 +724,10 @@
       "time": "1:10.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -603,8 +737,8 @@
       "name": "ホウオウプレミア",
       "horse_id": "2019105041",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "58.0",
+      "odds": 14.7,
+      "jockey": "岩田康",
       "trainer": "奥村武",
       "weight_carried": 58.0,
       "horse_weight": 490,
@@ -612,7 +746,10 @@
       "time": "1:11.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        13,
+        10
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -622,8 +759,8 @@
       "name": "マクミランテソーロ",
       "horse_id": "2021102276",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "58.0",
+      "odds": 4.6,
+      "jockey": "菊沢",
       "trainer": "田中剛",
       "weight_carried": 58.0,
       "horse_weight": 480,
@@ -631,7 +768,10 @@
       "time": "1:11.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        3
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -641,8 +781,8 @@
       "name": "ドナカルナバル",
       "horse_id": "2022106568",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "56.0",
+      "odds": 22.5,
+      "jockey": "江田照",
       "trainer": "高木",
       "weight_carried": 56.0,
       "horse_weight": 486,
@@ -650,7 +790,10 @@
       "time": "1:11.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        5
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -660,8 +803,8 @@
       "name": "キョウエイカンフ",
       "horse_id": "2020100363",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "58.0",
+      "odds": 6.5,
+      "jockey": "横山和",
       "trainer": "勢司",
       "weight_carried": 58.0,
       "horse_weight": 526,
@@ -669,7 +812,10 @@
       "time": "1:11.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        15,
+        15
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -679,8 +825,8 @@
       "name": "タッカージーティー",
       "horse_id": "2022106261",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "56.0",
+      "odds": 40.6,
+      "jockey": "横山典",
       "trainer": "鈴木伸",
       "weight_carried": 56.0,
       "horse_weight": 480,
@@ -688,7 +834,10 @@
       "time": "1:11.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        6
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -698,8 +847,8 @@
       "name": "サンドブラスト",
       "horse_id": "2021106941",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "58.0",
+      "odds": 9.6,
+      "jockey": "丹内",
       "trainer": "鈴木慎",
       "weight_carried": 58.0,
       "horse_weight": 512,
@@ -707,7 +856,10 @@
       "time": "1:11.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -717,8 +869,8 @@
       "name": "タイセイピューマ",
       "horse_id": "2021106119",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "55.0",
+      "odds": 35.5,
+      "jockey": "▲石田",
       "trainer": "新開",
       "weight_carried": 55.0,
       "horse_weight": 494,
@@ -726,7 +878,10 @@
       "time": "1:11.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        10
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -736,8 +891,8 @@
       "name": "メッエフアパラ",
       "horse_id": "2021106066",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "58.0",
+      "odds": 59.8,
+      "jockey": "石橋脩",
       "trainer": "辻",
       "weight_carried": 58.0,
       "horse_weight": 464,
@@ -745,7 +900,10 @@
       "time": "1:11.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        13
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -755,8 +913,8 @@
       "name": "ヘルメース",
       "horse_id": "2021103710",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "55.0",
+      "odds": 46.3,
+      "jockey": "▲佐藤",
       "trainer": "伊藤圭",
       "weight_carried": 55.0,
       "horse_weight": 498,
@@ -764,7 +922,10 @@
       "time": "1:11.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        13,
+        13
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -774,8 +935,8 @@
       "name": "ショウナンラリー",
       "horse_id": "2022103924",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "56.0",
+      "odds": 22.7,
+      "jockey": "△舟山",
       "trainer": "嘉藤",
       "weight_carried": 56.0,
       "horse_weight": 496,
@@ -783,7 +944,10 @@
       "time": "1:11.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -793,8 +957,8 @@
       "name": "ダンケルド",
       "horse_id": "2022104722",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "58.0",
+      "odds": 3.2,
+      "jockey": "杉原",
       "trainer": "森一",
       "weight_carried": 58.0,
       "horse_weight": 510,
@@ -802,7 +966,10 @@
       "time": "1:12.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        8
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -812,8 +979,8 @@
       "name": "ラヴァグロウ",
       "horse_id": "2020103937",
       "pop": 16,
-      "odds": 16.0,
-      "jockey": "56.0",
+      "odds": 105.1,
+      "jockey": "丸田",
       "trainer": "畠山",
       "weight_carried": 56.0,
       "horse_weight": 446,
@@ -821,7 +988,10 @@
       "time": "1:12.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        16,
+        16
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -831,8 +1001,8 @@
       "name": "カツラノキサノキ",
       "horse_id": "2021101461",
       "pop": 14,
-      "odds": 14.0,
-      "jockey": "58.0",
+      "odds": 98.9,
+      "jockey": "木幡巧",
       "trainer": "庄野",
       "weight_carried": 58.0,
       "horse_weight": 494,
@@ -840,7 +1010,10 @@
       "time": "1:12.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        8
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -850,8 +1023,8 @@
       "name": "ビーコング",
       "horse_id": "2021103595",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "58.0",
+      "odds": 11.4,
+      "jockey": "横山武",
       "trainer": "小手川",
       "weight_carried": 58.0,
       "horse_weight": 510,
@@ -859,7 +1032,10 @@
       "time": "1:12.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        10
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -869,8 +1045,8 @@
       "name": "エコロネオ",
       "horse_id": "2021110131",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "58.0",
+      "odds": 9.7,
+      "jockey": "団野",
       "trainer": "森秀",
       "weight_carried": 58.0,
       "horse_weight": 492,
@@ -878,7 +1054,10 @@
       "time": "1:13.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        6
+      ],
       "sex_age": "",
       "gate": "5"
     }
@@ -890,8 +1069,8 @@
       "name": "カンレイスター",
       "horse_id": "2023105558",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "55.0",
+      "odds": 2.2,
+      "jockey": "横山武",
       "trainer": "矢野",
       "weight_carried": 55.0,
       "horse_weight": 440,
@@ -899,7 +1078,10 @@
       "time": "1:12.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        1
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -909,8 +1091,8 @@
       "name": "アドミ",
       "horse_id": "2023100283",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "55.0",
+      "odds": 6.9,
+      "jockey": "三浦",
       "trainer": "中川",
       "weight_carried": 55.0,
       "horse_weight": 448,
@@ -918,7 +1100,10 @@
       "time": "1:12.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        5
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -928,8 +1113,8 @@
       "name": "エコロセレナ",
       "horse_id": "2023107403",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "55.0",
+      "odds": 6.5,
+      "jockey": "岩田康",
       "trainer": "斎藤誠",
       "weight_carried": 55.0,
       "horse_weight": 460,
@@ -937,7 +1122,10 @@
       "time": "1:12.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -947,8 +1135,8 @@
       "name": "マーマレードスカイ",
       "horse_id": "2023103574",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "55.0",
+      "odds": 8.8,
+      "jockey": "松岡",
       "trainer": "堀内",
       "weight_carried": 55.0,
       "horse_weight": 408,
@@ -956,7 +1144,10 @@
       "time": "1:13.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        8
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -966,8 +1157,8 @@
       "name": "フェルアフリーゼ",
       "horse_id": "2023107029",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "52.0",
+      "odds": 10.3,
+      "jockey": "▲石神道",
       "trainer": "深山",
       "weight_carried": 52.0,
       "horse_weight": 440,
@@ -975,7 +1166,10 @@
       "time": "1:13.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        2
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -985,8 +1179,8 @@
       "name": "キタノシオン",
       "horse_id": "2023101411",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "55.0",
+      "odds": 174.9,
+      "jockey": "木幡初",
       "trainer": "本間",
       "weight_carried": 55.0,
       "horse_weight": 456,
@@ -994,7 +1188,10 @@
       "time": "1:14.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        9
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -1004,8 +1201,8 @@
       "name": "マメーアップル",
       "horse_id": "2023100924",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "52.5",
+      "odds": 25.6,
+      "jockey": "▲小林美",
       "trainer": "岩戸",
       "weight_carried": 52.5,
       "horse_weight": 436,
@@ -1013,7 +1210,10 @@
       "time": "1:14.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -1023,8 +1223,8 @@
       "name": "オレンジリバー",
       "horse_id": "2023103727",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "53.0",
+      "odds": 11.7,
+      "jockey": "△長浜",
       "trainer": "黒岩",
       "weight_carried": 53.0,
       "horse_weight": 432,
@@ -1032,7 +1232,10 @@
       "time": "1:14.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        5
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -1042,8 +1245,8 @@
       "name": "ウィザードオブマリ",
       "horse_id": "2023100805",
       "pop": 16,
-      "odds": 16.0,
-      "jockey": "52.0",
+      "odds": 400.7,
+      "jockey": "▲大久保",
       "trainer": "蛯名利",
       "weight_carried": 52.0,
       "horse_weight": 454,
@@ -1051,7 +1254,10 @@
       "time": "1:14.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        5
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -1061,8 +1267,8 @@
       "name": "ベイビーシスター",
       "horse_id": "2023103072",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "55.0",
+      "odds": 76.5,
+      "jockey": "伊藤",
       "trainer": "林",
       "weight_carried": 55.0,
       "horse_weight": 440,
@@ -1070,7 +1276,10 @@
       "time": "1:15.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        12
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -1080,8 +1289,8 @@
       "name": "マリノフォルトゥナ",
       "horse_id": "2023100808",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "53.0",
+      "odds": 78.0,
+      "jockey": "△舟山",
       "trainer": "水野",
       "weight_carried": 53.0,
       "horse_weight": 436,
@@ -1089,7 +1298,10 @@
       "time": "1:15.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        13,
+        12
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -1099,8 +1311,8 @@
       "name": "ハナムラサキ",
       "horse_id": "2023100723",
       "pop": 15,
-      "odds": 15.0,
-      "jockey": "55.0",
+      "odds": 385.4,
+      "jockey": "丸山",
       "trainer": "和田雄",
       "weight_carried": 55.0,
       "horse_weight": 456,
@@ -1108,7 +1320,10 @@
       "time": "1:15.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        9
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -1118,8 +1333,8 @@
       "name": "ジュンオルレアン",
       "horse_id": "2023104769",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "52.0",
+      "odds": 142.9,
+      "jockey": "▲石田",
       "trainer": "中舘",
       "weight_carried": 52.0,
       "horse_weight": 432,
@@ -1127,7 +1342,10 @@
       "time": "1:16.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        14,
+        14
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -1137,8 +1355,8 @@
       "name": "ニシノゲッパク",
       "horse_id": "2023106259",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "52.0",
+      "odds": 7.5,
+      "jockey": "▲遠藤",
       "trainer": "伊藤伸",
       "weight_carried": 52.0,
       "horse_weight": 458,
@@ -1146,7 +1364,10 @@
       "time": "1:16.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        9
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -1156,8 +1377,8 @@
       "name": "ピコラアルテ",
       "horse_id": "2023106021",
       "pop": 14,
-      "odds": 14.0,
-      "jockey": "52.0",
+      "odds": 259.6,
+      "jockey": "▲上里",
       "trainer": "上原博",
       "weight_carried": 52.0,
       "horse_weight": 426,
@@ -1165,7 +1386,10 @@
       "time": "1:17.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        15,
+        15
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -1175,8 +1399,8 @@
       "name": "アンパシオンス",
       "horse_id": "2023106055",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "52.0",
+      "odds": 215.5,
+      "jockey": "▲佐藤",
       "trainer": "田島",
       "weight_carried": 52.0,
       "horse_weight": 430,
@@ -1184,7 +1408,10 @@
       "time": "1:22.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        16,
+        16
+      ],
       "sex_age": "",
       "gate": "1"
     }
@@ -1196,8 +1423,8 @@
       "name": "アオハルブルース",
       "horse_id": "2023102313",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "57.0",
+      "odds": 1.9,
+      "jockey": "田辺",
       "trainer": "栗田",
       "weight_carried": 57.0,
       "horse_weight": 522,
@@ -1205,7 +1432,12 @@
       "time": "1:54.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -1215,8 +1447,8 @@
       "name": "ガーディアンテイル",
       "horse_id": "2023106958",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "57.0",
+      "odds": 4.3,
+      "jockey": "岩田康",
       "trainer": "小手川",
       "weight_carried": 57.0,
       "horse_weight": 512,
@@ -1224,7 +1456,12 @@
       "time": "1:55.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -1234,8 +1471,8 @@
       "name": "ゴールドドレッサ",
       "horse_id": "2023102432",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "52.0",
+      "odds": 45.9,
+      "jockey": "▲石田",
       "trainer": "中川",
       "weight_carried": 52.0,
       "horse_weight": 436,
@@ -1243,7 +1480,12 @@
       "time": "1:55.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        5,
+        3,
+        3
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -1253,8 +1495,8 @@
       "name": "ファントムヴォルト",
       "horse_id": "2023103502",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "57.0",
+      "odds": 129.8,
+      "jockey": "横山琉",
       "trainer": "松下",
       "weight_carried": 57.0,
       "horse_weight": 518,
@@ -1262,7 +1504,12 @@
       "time": "1:56.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        6,
+        4,
+        4
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -1272,8 +1519,8 @@
       "name": "トーセンアミューズ",
       "horse_id": "2023105959",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "57.0",
+      "odds": 24.4,
+      "jockey": "木幡巧",
       "trainer": "加藤征",
       "weight_carried": 57.0,
       "horse_weight": 452,
@@ -1281,7 +1528,12 @@
       "time": "1:56.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        3,
+        4,
+        4
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -1291,8 +1543,8 @@
       "name": "アドマイヤウルトラ",
       "horse_id": "2023106836",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "57.0",
+      "odds": 3.7,
+      "jockey": "丹内",
       "trainer": "宮田",
       "weight_carried": 57.0,
       "horse_weight": 508,
@@ -1300,7 +1552,12 @@
       "time": "1:57.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        11,
+        8,
+        9
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -1310,8 +1567,8 @@
       "name": "キョウエイシュバル",
       "horse_id": "2023100303",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "55.0",
+      "odds": 17.5,
+      "jockey": "△長浜",
       "trainer": "萱野",
       "weight_carried": 55.0,
       "horse_weight": 480,
@@ -1319,7 +1576,12 @@
       "time": "1:57.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        6,
+        8,
+        8
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -1329,8 +1591,8 @@
       "name": "ノーブルスアーク",
       "horse_id": "2023103651",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "55.0",
+      "odds": 274.2,
+      "jockey": "小林凌",
       "trainer": "尾形",
       "weight_carried": 55.0,
       "horse_weight": 436,
@@ -1338,7 +1600,12 @@
       "time": "1:57.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        8,
+        10,
+        10
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -1348,8 +1615,8 @@
       "name": "ケイジ",
       "horse_id": "2023100037",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "54.0",
+      "odds": 98.8,
+      "jockey": "▲遠藤",
       "trainer": "高柳瑞",
       "weight_carried": 54.0,
       "horse_weight": 502,
@@ -1357,7 +1624,12 @@
       "time": "1:57.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        11,
+        6,
+        6
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -1367,8 +1639,8 @@
       "name": "プリンセスダーコ",
       "horse_id": "2023109055",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "55.0",
+      "odds": 41.9,
+      "jockey": "原",
       "trainer": "清水英",
       "weight_carried": 55.0,
       "horse_weight": 456,
@@ -1376,7 +1648,12 @@
       "time": "1:57.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        3,
+        6,
+        6
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -1386,8 +1663,8 @@
       "name": "ノーブルジャッカル",
       "horse_id": "2023100056",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "57.0",
+      "odds": 31.9,
+      "jockey": "武藤",
       "trainer": "武藤",
       "weight_carried": 57.0,
       "horse_weight": 470,
@@ -1395,7 +1672,12 @@
       "time": "1:58.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        9,
+        10,
+        11
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -1405,8 +1687,8 @@
       "name": "ロードリュイール",
       "horse_id": "2023105831",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "55.0",
+      "odds": 26.2,
+      "jockey": "△舟山",
       "trainer": "田中博",
       "weight_carried": 55.0,
       "horse_weight": 430,
@@ -1414,7 +1696,12 @@
       "time": "1:58.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        9,
+        10,
+        12
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -1424,8 +1711,8 @@
       "name": "シシリアンキッス",
       "horse_id": "2023104616",
       "pop": 14,
-      "odds": 14.0,
-      "jockey": "55.0",
+      "odds": 349.9,
+      "jockey": "小林脩",
       "trainer": "佐藤吉",
       "weight_carried": 55.0,
       "horse_weight": 434,
@@ -1433,7 +1720,12 @@
       "time": "2:00.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        14,
+        14,
+        13,
+        12
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -1443,8 +1735,8 @@
       "name": "ドウドウファイト",
       "horse_id": "2023104738",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "57.0",
+      "odds": 258.4,
+      "jockey": "木幡初",
       "trainer": "武市",
       "weight_carried": 57.0,
       "horse_weight": 462,
@@ -1452,7 +1744,12 @@
       "time": "2:01.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        13,
+        13,
+        14
+      ],
       "sex_age": "",
       "gate": "8"
     }
@@ -1464,8 +1761,8 @@
       "name": "エコロバロン",
       "horse_id": "2023104992",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "57.0",
+      "odds": 7.5,
+      "jockey": "菊沢",
       "trainer": "菊沢",
       "weight_carried": 57.0,
       "horse_weight": 500,
@@ -1473,7 +1770,10 @@
       "time": "1:12.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        5
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -1483,8 +1783,8 @@
       "name": "クリオロゴールド",
       "horse_id": "2023105795",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "57.0",
+      "odds": 3.3,
+      "jockey": "横山武",
       "trainer": "高柳瑞",
       "weight_carried": 57.0,
       "horse_weight": 436,
@@ -1492,7 +1792,10 @@
       "time": "1:12.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        4
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -1502,8 +1805,8 @@
       "name": "ライカ",
       "horse_id": "2023104042",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "57.0",
+      "odds": 16.7,
+      "jockey": "大野",
       "trainer": "杉浦",
       "weight_carried": 57.0,
       "horse_weight": 442,
@@ -1511,7 +1814,10 @@
       "time": "1:12.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        8
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -1521,8 +1827,8 @@
       "name": "ビタミンドロップ",
       "horse_id": "2023105630",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "57.0",
+      "odds": 199.4,
+      "jockey": "野中",
       "trainer": "松山",
       "weight_carried": 57.0,
       "horse_weight": 502,
@@ -1530,7 +1836,10 @@
       "time": "1:12.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        2
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -1540,8 +1849,8 @@
       "name": "ココラッシー",
       "horse_id": "2023104040",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "57.0",
+      "odds": 9.3,
+      "jockey": "丹内",
       "trainer": "室井",
       "weight_carried": 57.0,
       "horse_weight": 444,
@@ -1549,7 +1858,10 @@
       "time": "1:12.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        16,
+        16
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -1559,8 +1871,8 @@
       "name": "ツクバアヴァロン",
       "horse_id": "2023102721",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "57.0",
+      "odds": 80.5,
+      "jockey": "小林脩",
       "trainer": "奥平",
       "weight_carried": 57.0,
       "horse_weight": 480,
@@ -1568,7 +1880,10 @@
       "time": "1:13.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        5
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -1578,8 +1893,8 @@
       "name": "コロッセウム",
       "horse_id": "2023103337",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "57.0",
+      "odds": 72.3,
+      "jockey": "石橋脩",
       "trainer": "清水英",
       "weight_carried": 57.0,
       "horse_weight": 454,
@@ -1587,7 +1902,10 @@
       "time": "1:13.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        15,
+        14
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -1597,8 +1915,8 @@
       "name": "カーボフリオ",
       "horse_id": "2023103404",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "55.0",
+      "odds": 18.7,
+      "jockey": "津村",
       "trainer": "高木",
       "weight_carried": 55.0,
       "horse_weight": 446,
@@ -1606,7 +1924,10 @@
       "time": "1:13.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -1616,8 +1937,8 @@
       "name": "ヨルヴィック",
       "horse_id": "2023107242",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "53.0",
+      "odds": 2.7,
+      "jockey": "△舟山",
       "trainer": "稲垣",
       "weight_carried": 53.0,
       "horse_weight": 456,
@@ -1625,7 +1946,10 @@
       "time": "1:13.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -1635,8 +1959,8 @@
       "name": "ヴィラロボス",
       "horse_id": "2023105663",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "55.0",
+      "odds": 21.0,
+      "jockey": "原",
       "trainer": "小手川",
       "weight_carried": 55.0,
       "horse_weight": 476,
@@ -1644,7 +1968,10 @@
       "time": "1:13.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        11
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -1654,8 +1981,8 @@
       "name": "スウィートラキ",
       "horse_id": "2023101489",
       "pop": 14,
-      "odds": 14.0,
-      "jockey": "53.0",
+      "odds": 312.0,
+      "jockey": "△長浜",
       "trainer": "堀内",
       "weight_carried": 53.0,
       "horse_weight": 430,
@@ -1663,7 +1990,10 @@
       "time": "1:14.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        13,
+        12
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -1673,8 +2003,8 @@
       "name": "ソーマッチ",
       "horse_id": "2023104870",
       "pop": 16,
-      "odds": 16.0,
-      "jockey": "52.0",
+      "odds": 432.4,
+      "jockey": "▲遠藤",
       "trainer": "鈴木伸",
       "weight_carried": 52.0,
       "horse_weight": 428,
@@ -1682,7 +2012,10 @@
       "time": "1:14.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        13,
+        14
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -1692,8 +2025,8 @@
       "name": "テンカラットレター",
       "horse_id": "2023104554",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "57.0",
+      "odds": 311.6,
+      "jockey": "木幡初",
       "trainer": "本間",
       "weight_carried": 57.0,
       "horse_weight": 464,
@@ -1701,7 +2034,10 @@
       "time": "1:14.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        9
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -1711,8 +2047,8 @@
       "name": "ホカミテダメ",
       "horse_id": "2023105780",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "55.0",
+      "odds": 12.5,
+      "jockey": "丸田",
       "trainer": "田中勝",
       "weight_carried": 55.0,
       "horse_weight": 462,
@@ -1720,7 +2056,10 @@
       "time": "1:14.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        7
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -1730,8 +2069,8 @@
       "name": "トコシエノヒトミ",
       "horse_id": "2023102699",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "55.0",
+      "odds": 15.1,
+      "jockey": "団野",
       "trainer": "小笠",
       "weight_carried": 55.0,
       "horse_weight": 404,
@@ -1739,7 +2078,10 @@
       "time": "1:15.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        9
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -1749,8 +2091,8 @@
       "name": "タツナナイロ",
       "horse_id": "2023104369",
       "pop": 15,
-      "odds": 15.0,
-      "jockey": "55.0",
+      "odds": 400.5,
+      "jockey": "江田照",
       "trainer": "的場",
       "weight_carried": 55.0,
       "horse_weight": 426,
@@ -1758,7 +2100,10 @@
       "time": "1:15.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        12
+      ],
       "sex_age": "",
       "gate": "6"
     }
@@ -1770,8 +2115,8 @@
       "name": "アビヤント",
       "horse_id": "2023104398",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "57.0",
+      "odds": 7.5,
+      "jockey": "三浦",
       "trainer": "鹿戸",
       "weight_carried": 57.0,
       "horse_weight": 504,
@@ -1779,7 +2124,12 @@
       "time": "1:53.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        3,
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -1789,8 +2139,8 @@
       "name": "メディチパワー",
       "horse_id": "2023100419",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "57.0",
+      "odds": 18.5,
+      "jockey": "木幡巧",
       "trainer": "中川",
       "weight_carried": 57.0,
       "horse_weight": 474,
@@ -1798,7 +2148,12 @@
       "time": "1:54.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        6,
+        6,
+        4
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -1808,8 +2163,8 @@
       "name": "ヴァンデスペランス",
       "horse_id": "2023107331",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "57.0",
+      "odds": 2.2,
+      "jockey": "岩田康",
       "trainer": "中舘",
       "weight_carried": 57.0,
       "horse_weight": 476,
@@ -1817,7 +2172,12 @@
       "time": "1:54.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        7,
+        4,
+        4
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -1827,8 +2187,8 @@
       "name": "ストーリーオブラブ",
       "horse_id": "2023106587",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "55.0",
+      "odds": 161.8,
+      "jockey": "小林脩",
       "trainer": "小野",
       "weight_carried": 55.0,
       "horse_weight": 426,
@@ -1836,7 +2196,12 @@
       "time": "1:54.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -1846,8 +2211,8 @@
       "name": "ジェイエルトランプ",
       "horse_id": "2023106316",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "55.0",
+      "odds": 32.5,
+      "jockey": "△長浜",
       "trainer": "平岩",
       "weight_carried": 55.0,
       "horse_weight": 472,
@@ -1855,7 +2220,12 @@
       "time": "1:55.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -1865,8 +2235,8 @@
       "name": "カシマライフウ",
       "horse_id": "2023105439",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "57.0",
+      "odds": 3.6,
+      "jockey": "松岡",
       "trainer": "伊藤伸",
       "weight_carried": 57.0,
       "horse_weight": 470,
@@ -1874,7 +2244,12 @@
       "time": "1:55.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        10,
+        11,
+        8
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -1884,8 +2259,8 @@
       "name": "コパノミラノ",
       "horse_id": "2023101578",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "57.0",
+      "odds": 32.5,
+      "jockey": "柴田大",
       "trainer": "上原博",
       "weight_carried": 57.0,
       "horse_weight": 486,
@@ -1893,7 +2268,12 @@
       "time": "1:55.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        7,
+        9,
+        8
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -1903,8 +2283,8 @@
       "name": "クアッドフォルツァ",
       "horse_id": "2023101301",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "54.0",
+      "odds": 6.3,
+      "jockey": "▲佐藤",
       "trainer": "伊藤圭",
       "weight_carried": 54.0,
       "horse_weight": 470,
@@ -1912,7 +2292,12 @@
       "time": "1:55.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        11,
+        6,
+        8
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -1922,8 +2307,8 @@
       "name": "トランセンコ",
       "horse_id": "2023104273",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "55.0",
+      "odds": 181.2,
+      "jockey": "木幡育",
       "trainer": "松永康",
       "weight_carried": 55.0,
       "horse_weight": 444,
@@ -1931,7 +2316,12 @@
       "time": "1:55.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        11,
+        12,
+        11
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -1941,8 +2331,8 @@
       "name": "ウインドオブヘヴン",
       "horse_id": "2023100734",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "57.0",
+      "odds": 18.0,
+      "jockey": "横山武",
       "trainer": "戸田",
       "weight_carried": 57.0,
       "horse_weight": 456,
@@ -1950,7 +2340,12 @@
       "time": "1:56.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4,
+        4,
+        4
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -1960,8 +2355,8 @@
       "name": "マツリダシリウス",
       "horse_id": "2023109058",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "57.0",
+      "odds": 79.3,
+      "jockey": "武藤",
       "trainer": "水野",
       "weight_carried": 57.0,
       "horse_weight": 468,
@@ -1969,7 +2364,12 @@
       "time": "1:56.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        7,
+        9,
+        11
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -1979,8 +2379,8 @@
       "name": "マイネルモンブラン",
       "horse_id": "2023106449",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "54.0",
+      "odds": 220.3,
+      "jockey": "▲石神道",
       "trainer": "鈴木慎",
       "weight_carried": 54.0,
       "horse_weight": 484,
@@ -1988,7 +2388,12 @@
       "time": "1:57.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        13,
+        13,
+        13,
+        13
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -1998,8 +2403,8 @@
       "name": "セーヌデローヴ",
       "horse_id": "2023102504",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "57.0",
+      "odds": 25.8,
+      "jockey": "丹内",
       "trainer": "黒岩",
       "weight_carried": 57.0,
       "horse_weight": 440,
@@ -2007,7 +2412,12 @@
       "time": "1:57.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4,
+        6,
+        4
+      ],
       "sex_age": "",
       "gate": "4"
     }
@@ -2019,8 +2429,8 @@
       "name": "マリアイリダータ",
       "horse_id": "2022105064",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "54.0",
+      "odds": 2.0,
+      "jockey": "△舟山",
       "trainer": "田中博",
       "weight_carried": 54.0,
       "horse_weight": 450,
@@ -2028,7 +2438,12 @@
       "time": "2:02.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        7,
+        9,
+        6
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -2038,8 +2453,8 @@
       "name": "ベネスピラ",
       "horse_id": "2022102745",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "58.0",
+      "odds": 27.0,
+      "jockey": "三浦",
       "trainer": "鹿戸",
       "weight_carried": 58.0,
       "horse_weight": 448,
@@ -2047,7 +2462,12 @@
       "time": "2:02.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        3,
+        3,
+        2
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -2057,8 +2477,8 @@
       "name": "アリスメティーク",
       "horse_id": "2022105796",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "56.0",
+      "odds": 4.8,
+      "jockey": "津村",
       "trainer": "大竹",
       "weight_carried": 56.0,
       "horse_weight": 448,
@@ -2066,7 +2486,12 @@
       "time": "2:02.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        7,
+        7,
+        4
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -2076,8 +2501,8 @@
       "name": "キューティリップ",
       "horse_id": "2022105131",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "56.0",
+      "odds": 7.2,
+      "jockey": "横山武",
       "trainer": "戸田",
       "weight_carried": 56.0,
       "horse_weight": 450,
@@ -2085,7 +2510,12 @@
       "time": "2:03.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        9,
+        10,
+        6
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -2095,8 +2525,8 @@
       "name": "ニシノエピカリ",
       "horse_id": "2022100724",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "56.0",
+      "odds": 48.8,
+      "jockey": "佐々木",
       "trainer": "秋本",
       "weight_carried": 56.0,
       "horse_weight": 406,
@@ -2104,7 +2534,12 @@
       "time": "2:03.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        3,
+        4,
+        5
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -2114,8 +2549,8 @@
       "name": "パストラーレ",
       "horse_id": "2021106068",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "58.0",
+      "odds": 5.2,
+      "jockey": "田辺",
       "trainer": "武市",
       "weight_carried": 58.0,
       "horse_weight": 502,
@@ -2123,7 +2558,12 @@
       "time": "2:03.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -2133,8 +2573,8 @@
       "name": "ウインファヴォリ",
       "horse_id": "2022106218",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "58.0",
+      "odds": 111.0,
+      "jockey": "原田和",
       "trainer": "松尾",
       "weight_carried": 58.0,
       "horse_weight": 484,
@@ -2142,7 +2582,12 @@
       "time": "2:03.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        9,
+        10,
+        11
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -2152,8 +2597,8 @@
       "name": "ジェシーテソーロ",
       "horse_id": "2022102260",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "58.0",
+      "odds": 53.6,
+      "jockey": "石橋脩",
       "trainer": "牧",
       "weight_carried": 58.0,
       "horse_weight": 496,
@@ -2161,7 +2606,12 @@
       "time": "2:03.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -2171,8 +2621,8 @@
       "name": "チョングク",
       "horse_id": "2022104533",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "58.0",
+      "odds": 126.8,
+      "jockey": "江田照",
       "trainer": "佐藤吉",
       "weight_carried": 58.0,
       "horse_weight": 486,
@@ -2180,7 +2630,12 @@
       "time": "2:03.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        5,
+        7,
+        6
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -2190,8 +2645,8 @@
       "name": "マイネルイグザルト",
       "horse_id": "2022106807",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "55.0",
+      "odds": 216.1,
+      "jockey": "▲石神道",
       "trainer": "佐藤吉",
       "weight_carried": 55.0,
       "horse_weight": 456,
@@ -2199,7 +2654,12 @@
       "time": "2:03.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        12,
+        4,
+        6
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -2209,8 +2669,8 @@
       "name": "ルージュカエラ",
       "horse_id": "2021104931",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "56.0",
+      "odds": 55.2,
+      "jockey": "団野",
       "trainer": "加藤征",
       "weight_carried": 56.0,
       "horse_weight": 442,
@@ -2218,7 +2678,12 @@
       "time": "2:03.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        11,
+        12,
+        11
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -2228,8 +2693,8 @@
       "name": "ロジャリーマイン",
       "horse_id": "2022105063",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "56.0",
+      "odds": 8.6,
+      "jockey": "岩田康",
       "trainer": "久保田",
       "weight_carried": 56.0,
       "horse_weight": 428,
@@ -2237,7 +2702,12 @@
       "time": "2:04.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        5,
+        4,
+        6
+      ],
       "sex_age": "",
       "gate": "2"
     }
@@ -2249,8 +2719,8 @@
       "name": "ロードソルスティス",
       "horse_id": "2022100650",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "58.0",
+      "odds": 9.1,
+      "jockey": "横山琉",
       "trainer": "斎藤誠",
       "weight_carried": 58.0,
       "horse_weight": 516,
@@ -2258,7 +2728,12 @@
       "time": "1:53.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -2268,8 +2743,8 @@
       "name": "ファルコンミノル",
       "horse_id": "2020104748",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "58.0",
+      "odds": 6.2,
+      "jockey": "田辺",
       "trainer": "中舘",
       "weight_carried": 58.0,
       "horse_weight": 444,
@@ -2277,7 +2752,12 @@
       "time": "1:53.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        5,
+        6,
+        5
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -2287,8 +2767,8 @@
       "name": "オウケンシルヴァー",
       "horse_id": "2021103017",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "58.0",
+      "odds": 9.7,
+      "jockey": "木幡育",
       "trainer": "松永康",
       "weight_carried": 58.0,
       "horse_weight": 498,
@@ -2296,7 +2776,12 @@
       "time": "1:53.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -2306,8 +2791,8 @@
       "name": "スモーキーゴッド",
       "horse_id": "2022104592",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "58.0",
+      "odds": 15.3,
+      "jockey": "武藤",
       "trainer": "萩原",
       "weight_carried": 58.0,
       "horse_weight": 458,
@@ -2315,7 +2800,12 @@
       "time": "1:54.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        10,
+        10,
+        10
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -2325,8 +2815,8 @@
       "name": "ニシノケンタマン",
       "horse_id": "2022106427",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "56.0",
+      "odds": 4.7,
+      "jockey": "△長浜",
       "trainer": "深山",
       "weight_carried": 56.0,
       "horse_weight": 470,
@@ -2334,7 +2824,12 @@
       "time": "1:54.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        7,
+        6,
+        5
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -2344,8 +2839,8 @@
       "name": "ノアヴィヴァーチェ",
       "horse_id": "2022102446",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "58.0",
+      "odds": 7.6,
+      "jockey": "原",
       "trainer": "鈴木慎",
       "weight_carried": 58.0,
       "horse_weight": 496,
@@ -2353,7 +2848,12 @@
       "time": "1:54.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        7,
+        8,
+        5
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -2363,8 +2863,8 @@
       "name": "ナムラジミー",
       "horse_id": "2022101814",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "58.0",
+      "odds": 55.1,
+      "jockey": "菊沢",
       "trainer": "武市",
       "weight_carried": 58.0,
       "horse_weight": 486,
@@ -2372,7 +2872,12 @@
       "time": "1:54.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        9,
+        8,
+        9
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -2382,8 +2887,8 @@
       "name": "インテルメディオ",
       "horse_id": "2021104922",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "58.0",
+      "odds": 2.5,
+      "jockey": "岩田康",
       "trainer": "浅利",
       "weight_carried": 58.0,
       "horse_weight": 538,
@@ -2391,7 +2896,12 @@
       "time": "1:54.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        3,
+        3,
+        3
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -2401,8 +2911,8 @@
       "name": "ロジルーラー",
       "horse_id": "2021105552",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "58.0",
+      "odds": 33.7,
+      "jockey": "松岡",
       "trainer": "稲垣",
       "weight_carried": 58.0,
       "horse_weight": 514,
@@ -2410,7 +2920,12 @@
       "time": "1:56.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        3,
+        3,
+        3
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -2420,8 +2935,8 @@
       "name": "グランプラネッタ",
       "horse_id": "2022107023",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "55.0",
+      "odds": 305.6,
+      "jockey": "▲遠藤",
       "trainer": "小島",
       "weight_carried": 55.0,
       "horse_weight": 482,
@@ -2429,7 +2944,12 @@
       "time": "1:56.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        11,
+        10,
+        11
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -2439,8 +2959,8 @@
       "name": "ツマヤ",
       "horse_id": "2021102707",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "58.0",
+      "odds": 29.4,
+      "jockey": "石橋脩",
       "trainer": "小野",
       "weight_carried": 58.0,
       "horse_weight": 530,
@@ -2448,7 +2968,12 @@
       "time": "1:56.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        5,
+        3,
+        5
+      ],
       "sex_age": "",
       "gate": "7"
     }
@@ -2460,8 +2985,8 @@
       "name": "ケントン",
       "horse_id": "2023103824",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "57.0",
+      "odds": 56.4,
+      "jockey": "武藤",
       "trainer": "田島",
       "weight_carried": 57.0,
       "horse_weight": 492,
@@ -2469,7 +2994,12 @@
       "time": "2:13.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4,
+        3,
+        2
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -2479,8 +3009,8 @@
       "name": "ポッドクロス",
       "horse_id": "2023103468",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "57.0",
+      "odds": 5.0,
+      "jockey": "荻野極",
       "trainer": "大竹",
       "weight_carried": 57.0,
       "horse_weight": 454,
@@ -2488,7 +3018,12 @@
       "time": "2:13.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        5,
+        5,
+        4
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -2498,8 +3033,8 @@
       "name": "イモータリス",
       "horse_id": "2023107032",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "57.0",
+      "odds": 4.1,
+      "jockey": "石川",
       "trainer": "手塚久",
       "weight_carried": 57.0,
       "horse_weight": 534,
@@ -2507,7 +3042,12 @@
       "time": "2:14.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2,
+        2,
+        3
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -2517,8 +3057,8 @@
       "name": "モウエエデショー",
       "horse_id": "2023105433",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "57.0",
+      "odds": 9.9,
+      "jockey": "原田和",
       "trainer": "萱野",
       "weight_carried": 57.0,
       "horse_weight": 470,
@@ -2526,7 +3066,12 @@
       "time": "2:14.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        12,
+        10,
+        9
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -2536,8 +3081,8 @@
       "name": "ブラウンバナナ",
       "horse_id": "2023103391",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "57.0",
+      "odds": 7.8,
+      "jockey": "津村",
       "trainer": "林",
       "weight_carried": 57.0,
       "horse_weight": 504,
@@ -2545,7 +3090,12 @@
       "time": "2:14.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        8,
+        8,
+        7
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -2555,8 +3105,8 @@
       "name": "ヤマニンヘルシェ",
       "horse_id": "2023104361",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "57.0",
+      "odds": 30.2,
+      "jockey": "大野",
       "trainer": "辻",
       "weight_carried": 57.0,
       "horse_weight": 482,
@@ -2564,7 +3114,12 @@
       "time": "2:14.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        8,
+        10,
+        11
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -2574,8 +3129,8 @@
       "name": "ヨカオウ",
       "horse_id": "2023102707",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "57.0",
+      "odds": 11.0,
+      "jockey": "岩田康",
       "trainer": "谷",
       "weight_carried": 57.0,
       "horse_weight": 468,
@@ -2583,7 +3138,12 @@
       "time": "2:14.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        3,
+        3,
+        4
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -2593,8 +3153,8 @@
       "name": "クラウンインジエア",
       "horse_id": "2023100814",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "57.0",
+      "odds": 14.1,
+      "jockey": "佐々木",
       "trainer": "藤岡健",
       "weight_carried": 57.0,
       "horse_weight": 488,
@@ -2602,7 +3162,12 @@
       "time": "2:14.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -2612,8 +3177,8 @@
       "name": "バリオス",
       "horse_id": "2023105354",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "57.0",
+      "odds": 7.4,
+      "jockey": "西村淳",
       "trainer": "武幸",
       "weight_carried": 57.0,
       "horse_weight": 528,
@@ -2621,7 +3186,12 @@
       "time": "2:15.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        5,
+        5,
+        4
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -2631,8 +3201,8 @@
       "name": "レイヒストリコ",
       "horse_id": "2023107163",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "57.0",
+      "odds": 5.5,
+      "jockey": "団野",
       "trainer": "黒岩",
       "weight_carried": 57.0,
       "horse_weight": 502,
@@ -2640,7 +3210,12 @@
       "time": "2:15.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        8,
+        8,
+        9
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -2650,8 +3225,8 @@
       "name": "グレーヌドジョワ",
       "horse_id": "2023103351",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "57.0",
+      "odds": 29.5,
+      "jockey": "丹内",
       "trainer": "今野",
       "weight_carried": 57.0,
       "horse_weight": 446,
@@ -2659,7 +3234,12 @@
       "time": "2:15.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        5,
+        7,
+        7
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -2669,8 +3249,8 @@
       "name": "トップオブザライン",
       "horse_id": "2023105338",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "57.0",
+      "odds": 38.4,
+      "jockey": "三浦",
       "trainer": "友道",
       "weight_carried": 57.0,
       "horse_weight": 490,
@@ -2678,7 +3258,12 @@
       "time": "2:18.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        11,
+        12,
+        12
+      ],
       "sex_age": "",
       "gate": "7"
     }
@@ -2690,8 +3275,8 @@
       "name": "キタノズエッジ",
       "horse_id": "2021100505",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "57.0",
+      "odds": 10.0,
+      "jockey": "古川吉",
       "trainer": "畑端",
       "weight_carried": 57.0,
       "horse_weight": 550,
@@ -2699,7 +3284,10 @@
       "time": "1:22.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        9
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -2709,8 +3297,8 @@
       "name": "ビダーヤ",
       "horse_id": "2021105537",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "58.0",
+      "odds": 2.5,
+      "jockey": "坂井",
       "trainer": "矢作",
       "weight_carried": 58.0,
       "horse_weight": 498,
@@ -2718,7 +3306,10 @@
       "time": "1:22.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        4
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -2728,8 +3319,8 @@
       "name": "ベルジュロネット",
       "horse_id": "2022106658",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "56.0",
+      "odds": 6.1,
+      "jockey": "鮫島駿",
       "trainer": "大久保",
       "weight_carried": 56.0,
       "horse_weight": 550,
@@ -2737,7 +3328,10 @@
       "time": "1:22.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        5
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -2747,8 +3341,8 @@
       "name": "バトゥーキ",
       "horse_id": "2020101373",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "56.0",
+      "odds": 35.2,
+      "jockey": "秋山稔",
       "trainer": "浜田",
       "weight_carried": 56.0,
       "horse_weight": 504,
@@ -2756,7 +3350,10 @@
       "time": "1:22.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        13,
+        12
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -2766,8 +3363,8 @@
       "name": "スマートサニー",
       "horse_id": "2020104304",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "55.0",
+      "odds": 19.3,
+      "jockey": "高杉",
       "trainer": "石橋",
       "weight_carried": 55.0,
       "horse_weight": 478,
@@ -2775,7 +3372,10 @@
       "time": "1:22.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        5
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -2785,8 +3385,8 @@
       "name": "ナイトアクアリウム",
       "horse_id": "2020103005",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "55.0",
+      "odds": 34.2,
+      "jockey": "長岡",
       "trainer": "杉山佳",
       "weight_carried": 55.0,
       "horse_weight": 498,
@@ -2794,7 +3394,10 @@
       "time": "1:22.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        16,
+        16
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -2804,8 +3407,8 @@
       "name": "クロジシジョー",
       "horse_id": "2019102238",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "59.0",
+      "odds": 52.6,
+      "jockey": "菱田",
       "trainer": "岡田",
       "weight_carried": 59.0,
       "horse_weight": 460,
@@ -2813,7 +3416,10 @@
       "time": "1:22.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        5
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -2823,8 +3429,8 @@
       "name": "サクセスローレル",
       "horse_id": "2019102454",
       "pop": 16,
-      "odds": 16.0,
-      "jockey": "52.0",
+      "odds": 311.4,
+      "jockey": "亀田",
       "trainer": "北出",
       "weight_carried": 52.0,
       "horse_weight": 538,
@@ -2832,7 +3438,10 @@
       "time": "1:22.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        15,
+        15
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -2842,8 +3451,8 @@
       "name": "バトルクライ",
       "horse_id": "2019103879",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "58.5",
+      "odds": 40.9,
+      "jockey": "北村友",
       "trainer": "高木",
       "weight_carried": 58.5,
       "horse_weight": 512,
@@ -2851,7 +3460,10 @@
       "time": "1:22.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        9
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -2861,8 +3473,8 @@
       "name": "アドバンスファラオ",
       "horse_id": "2020110106",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "56.0",
+      "odds": 24.4,
+      "jockey": "高倉",
       "trainer": "森秀",
       "weight_carried": 56.0,
       "horse_weight": 492,
@@ -2870,7 +3482,10 @@
       "time": "1:22.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -2880,8 +3495,8 @@
       "name": "ハセドン",
       "horse_id": "2019103593",
       "pop": 15,
-      "odds": 15.0,
-      "jockey": "56.0",
+      "odds": 176.8,
+      "jockey": "吉村",
       "trainer": "大和田",
       "weight_carried": 56.0,
       "horse_weight": 478,
@@ -2889,7 +3504,10 @@
       "time": "1:23.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        13,
+        12
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -2899,8 +3517,8 @@
       "name": "ヤマニンウルス",
       "horse_id": "2020105599",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "59.5",
+      "odds": 3.5,
+      "jockey": "武豊",
       "trainer": "斉藤崇",
       "weight_carried": 59.5,
       "horse_weight": 584,
@@ -2908,7 +3526,10 @@
       "time": "1:23.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -2918,8 +3539,8 @@
       "name": "ジュンウィンダム",
       "horse_id": "2020106062",
       "pop": 14,
-      "odds": 14.0,
-      "jockey": "53.0",
+      "odds": 142.9,
+      "jockey": "西塚",
       "trainer": "浜田",
       "weight_carried": 53.0,
       "horse_weight": 514,
@@ -2927,7 +3548,10 @@
       "time": "1:23.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        9
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -2937,8 +3561,8 @@
       "name": "セントメモリーズ",
       "horse_id": "2021104894",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "52.0",
+      "odds": 109.1,
+      "jockey": "富田",
       "trainer": "斎藤誠",
       "weight_carried": 52.0,
       "horse_weight": 478,
@@ -2946,7 +3570,10 @@
       "time": "1:23.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        12
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -2956,8 +3583,8 @@
       "name": "バグラダス",
       "horse_id": "2020106015",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "56.0",
+      "odds": 16.8,
+      "jockey": "岩田望",
       "trainer": "嘉藤",
       "weight_carried": 56.0,
       "horse_weight": 490,
@@ -2965,7 +3592,10 @@
       "time": "1:24.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        3
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -2975,8 +3605,8 @@
       "name": "ヴーレヴー",
       "horse_id": "2022104617",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "54.0",
+      "odds": 32.0,
+      "jockey": "浜中",
       "trainer": "武幸",
       "weight_carried": 54.0,
       "horse_weight": 496,
@@ -2984,7 +3614,10 @@
       "time": "1:25.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        5
+      ],
       "sex_age": "",
       "gate": "1"
     }
@@ -2996,8 +3629,8 @@
       "name": "アスクイキゴミ",
       "horse_id": "2023105267",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "57.0",
+      "odds": 13.8,
+      "jockey": "坂井",
       "trainer": "藤原",
       "weight_carried": 57.0,
       "horse_weight": 492,
@@ -3018,8 +3651,8 @@
       "name": "ユウファラオ",
       "horse_id": "2023110065",
       "pop": 14,
-      "odds": 14.0,
-      "jockey": "57.0",
+      "odds": 243.9,
+      "jockey": "松若",
       "trainer": "森秀",
       "weight_carried": 57.0,
       "horse_weight": 494,
@@ -3027,7 +3660,10 @@
       "time": "1:34.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -3037,8 +3673,8 @@
       "name": "バルセシート",
       "horse_id": "2023107241",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "57.0",
+      "odds": 6.9,
+      "jockey": "北村友",
       "trainer": "松下",
       "weight_carried": 57.0,
       "horse_weight": 460,
@@ -3046,7 +3682,10 @@
       "time": "1:34.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        10
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -3056,8 +3695,8 @@
       "name": "シーミハットク",
       "horse_id": "2023103532",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "57.0",
+      "odds": 18.1,
+      "jockey": "高杉",
       "trainer": "寺島",
       "weight_carried": 57.0,
       "horse_weight": 484,
@@ -3065,7 +3704,10 @@
       "time": "1:34.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        10
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -3075,8 +3717,8 @@
       "name": "サーディンラン",
       "horse_id": "2023103440",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "57.0",
+      "odds": 75.7,
+      "jockey": "松山",
       "trainer": "武英",
       "weight_carried": 57.0,
       "horse_weight": 462,
@@ -3084,7 +3726,10 @@
       "time": "1:34.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -3094,8 +3739,8 @@
       "name": "クールデイトナ",
       "horse_id": "2023100504",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "57.0",
+      "odds": 69.5,
+      "jockey": "吉村",
       "trainer": "宮地",
       "weight_carried": 57.0,
       "horse_weight": 480,
@@ -3103,7 +3748,10 @@
       "time": "1:34.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        14,
+        14
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -3113,8 +3761,8 @@
       "name": "ストームサンダー",
       "horse_id": "2023100772",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "57.0",
+      "odds": 75.7,
+      "jockey": "斎藤",
       "trainer": "安達",
       "weight_carried": 57.0,
       "horse_weight": 464,
@@ -3122,7 +3770,10 @@
       "time": "1:34.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        10
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -3132,8 +3783,8 @@
       "name": "アンドゥーリル",
       "horse_id": "2023103752",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "57.0",
+      "odds": 2.8,
+      "jockey": "川田",
       "trainer": "中内田",
       "weight_carried": 57.0,
       "horse_weight": 462,
@@ -3141,7 +3792,10 @@
       "time": "1:35.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -3151,8 +3805,8 @@
       "name": "リゾートアイランド",
       "horse_id": "2023106916",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "57.0",
+      "odds": 9.9,
+      "jockey": "武豊",
       "trainer": "上原佑",
       "weight_carried": 57.0,
       "horse_weight": 508,
@@ -3160,7 +3814,10 @@
       "time": "1:35.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        6
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -3170,8 +3827,8 @@
       "name": "メイショウソラリス",
       "horse_id": "2023103986",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "57.0",
+      "odds": 94.5,
+      "jockey": "角田和",
       "trainer": "角田",
       "weight_carried": 57.0,
       "horse_weight": 460,
@@ -3179,7 +3836,10 @@
       "time": "1:35.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -3189,8 +3849,8 @@
       "name": "エイシンティザー",
       "horse_id": "2023105516",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "57.0",
+      "odds": 20.8,
+      "jockey": "西塚",
       "trainer": "吉村",
       "weight_carried": 57.0,
       "horse_weight": 498,
@@ -3198,7 +3858,10 @@
       "time": "1:35.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        8
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -3208,8 +3871,8 @@
       "name": "サンダーストラック",
       "horse_id": "2023107053",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "57.0",
+      "odds": 2.8,
+      "jockey": "ルメー",
       "trainer": "木村",
       "weight_carried": 57.0,
       "horse_weight": 518,
@@ -3217,7 +3880,10 @@
       "time": "1:35.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        8
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -3227,8 +3893,8 @@
       "name": "サトノセプター",
       "horse_id": "2023106868",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "57.0",
+      "odds": 19.8,
+      "jockey": "岩田望",
       "trainer": "上村",
       "weight_carried": 57.0,
       "horse_weight": 452,
@@ -3236,7 +3902,10 @@
       "time": "1:35.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        6
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -3246,8 +3915,8 @@
       "name": "ファンクション",
       "horse_id": "2023103648",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "55.0",
+      "odds": 70.7,
+      "jockey": "鮫島駿",
       "trainer": "斎藤誠",
       "weight_carried": 55.0,
       "horse_weight": 430,
@@ -3255,7 +3924,10 @@
       "time": "1:36.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        10
+      ],
       "sex_age": "",
       "gate": "8"
     }
@@ -3267,8 +3939,8 @@
       "name": "テイエムヒショウ",
       "horse_id": "2020101216",
       "pop": 14,
-      "odds": 14.0,
-      "jockey": "55.0",
+      "odds": 252.4,
+      "jockey": "▲田山",
       "trainer": "浜田",
       "weight_carried": 55.0,
       "horse_weight": 510,
@@ -3276,7 +3948,10 @@
       "time": "1:22.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -3286,8 +3961,8 @@
       "name": "ポートデラメール",
       "horse_id": "2022105963",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "56.0",
+      "odds": 2.0,
+      "jockey": "ルメー",
       "trainer": "斉藤崇",
       "weight_carried": 56.0,
       "horse_weight": 450,
@@ -3295,7 +3970,10 @@
       "time": "1:22.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        5
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -3305,8 +3983,8 @@
       "name": "メイケイレイン",
       "horse_id": "2022101043",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "56.0",
+      "odds": 6.6,
+      "jockey": "△柴田裕",
       "trainer": "中竹",
       "weight_carried": 56.0,
       "horse_weight": 448,
@@ -3314,7 +3992,10 @@
       "time": "1:23.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        9
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -3324,8 +4005,8 @@
       "name": "プリンスノット",
       "horse_id": "2020102881",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "58.0",
+      "odds": 152.9,
+      "jockey": "菱田",
       "trainer": "小椋",
       "weight_carried": 58.0,
       "horse_weight": 482,
@@ -3333,7 +4014,10 @@
       "time": "1:23.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        12
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -3343,8 +4027,8 @@
       "name": "プチブール",
       "horse_id": "2021104205",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "56.0",
+      "odds": 27.8,
+      "jockey": "幸",
       "trainer": "松尾",
       "weight_carried": 56.0,
       "horse_weight": 450,
@@ -3352,7 +4036,10 @@
       "time": "1:23.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        9
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -3362,8 +4049,8 @@
       "name": "タマモナポリ",
       "horse_id": "2021106177",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "56.0",
+      "odds": 33.8,
+      "jockey": "酒井",
       "trainer": "河嶋",
       "weight_carried": 56.0,
       "horse_weight": 460,
@@ -3371,7 +4058,10 @@
       "time": "1:23.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -3381,8 +4071,8 @@
       "name": "ロードオルデン",
       "horse_id": "2019102656",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "58.0",
+      "odds": 52.7,
+      "jockey": "高杉",
       "trainer": "辻野",
       "weight_carried": 58.0,
       "horse_weight": 488,
@@ -3390,7 +4080,10 @@
       "time": "1:23.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        13,
+        14
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -3400,8 +4093,8 @@
       "name": "モズタチアガレ",
       "horse_id": "2022106010",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "58.0",
+      "odds": 8.2,
+      "jockey": "北村友",
       "trainer": "中尾",
       "weight_carried": 58.0,
       "horse_weight": 498,
@@ -3409,7 +4102,10 @@
       "time": "1:23.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        6
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -3419,8 +4115,8 @@
       "name": "テンクウジョー",
       "horse_id": "2021104464",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "58.0",
+      "odds": 125.5,
+      "jockey": "西塚",
       "trainer": "手塚徳",
       "weight_carried": 58.0,
       "horse_weight": 468,
@@ -3428,7 +4124,10 @@
       "time": "1:23.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        6
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -3438,8 +4137,8 @@
       "name": "ワンダーカモン",
       "horse_id": "2021100739",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "58.0",
+      "odds": 159.6,
+      "jockey": "川又",
       "trainer": "吉村",
       "weight_carried": 58.0,
       "horse_weight": 482,
@@ -3447,7 +4146,10 @@
       "time": "1:23.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        9
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -3457,8 +4159,8 @@
       "name": "ラヴオントップ",
       "horse_id": "2021104399",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "56.0",
+      "odds": 14.4,
+      "jockey": "吉村",
       "trainer": "西村",
       "weight_carried": 56.0,
       "horse_weight": 490,
@@ -3466,7 +4168,10 @@
       "time": "1:23.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        14,
+        15
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -3476,8 +4181,8 @@
       "name": "キボウノホシ",
       "horse_id": "2019101165",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "58.0",
+      "odds": 168.1,
+      "jockey": "長岡",
       "trainer": "奥平",
       "weight_carried": 58.0,
       "horse_weight": 476,
@@ -3485,7 +4190,10 @@
       "time": "1:24.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        6
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -3495,8 +4203,8 @@
       "name": "ツーネサーン",
       "horse_id": "2021105584",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "58.0",
+      "odds": 6.3,
+      "jockey": "岩田望",
       "trainer": "矢作",
       "weight_carried": 58.0,
       "horse_weight": 508,
@@ -3504,7 +4212,10 @@
       "time": "1:24.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -3514,8 +4225,8 @@
       "name": "ゴールデンエール",
       "horse_id": "2020104473",
       "pop": 15,
-      "odds": 15.0,
-      "jockey": "58.0",
+      "odds": 285.4,
+      "jockey": "荻野琢",
       "trainer": "杉浦",
       "weight_carried": 58.0,
       "horse_weight": 488,
@@ -3523,7 +4234,10 @@
       "time": "1:24.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        14,
+        13
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -3533,8 +4247,8 @@
       "name": "オーケアニス",
       "horse_id": "2022104883",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "56.0",
+      "odds": 6.5,
+      "jockey": "坂井",
       "trainer": "松永幹",
       "weight_carried": 56.0,
       "horse_weight": 480,
@@ -3542,7 +4256,10 @@
       "time": "1:27.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "4"
     }
@@ -3554,8 +4271,8 @@
       "name": "ペトリコール",
       "horse_id": "2023107141",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "55.0",
+      "odds": 1.4,
+      "jockey": "ルメー",
       "trainer": "上村",
       "weight_carried": 55.0,
       "horse_weight": 492,
@@ -3563,7 +4280,12 @@
       "time": "1:54.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -3573,8 +4295,8 @@
       "name": "ヤマニンエルファバ",
       "horse_id": "2023104362",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "55.0",
+      "odds": 15.3,
+      "jockey": "武豊",
       "trainer": "千田",
       "weight_carried": 55.0,
       "horse_weight": 462,
@@ -3582,7 +4304,12 @@
       "time": "1:54.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        8,
+        4,
+        4
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -3592,8 +4319,8 @@
       "name": "コイタマチャン",
       "horse_id": "2023100652",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "55.0",
+      "odds": 17.6,
+      "jockey": "松山",
       "trainer": "宮本",
       "weight_carried": 55.0,
       "horse_weight": 494,
@@ -3601,7 +4328,12 @@
       "time": "1:54.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -3611,8 +4343,8 @@
       "name": "ルージュエピック",
       "horse_id": "2023106616",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "55.0",
+      "odds": 5.8,
+      "jockey": "菱田",
       "trainer": "田中克",
       "weight_carried": 55.0,
       "horse_weight": 480,
@@ -3620,7 +4352,12 @@
       "time": "1:55.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        8,
+        9,
+        6
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -3630,8 +4367,8 @@
       "name": "グロリアス",
       "horse_id": "2023102891",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "52.0",
+      "odds": 13.6,
+      "jockey": "▲田山",
       "trainer": "新谷",
       "weight_carried": 52.0,
       "horse_weight": 452,
@@ -3639,7 +4376,12 @@
       "time": "1:55.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        12,
+        13,
+        10
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -3649,8 +4391,8 @@
       "name": "ハッピーリオン",
       "horse_id": "2023101899",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "55.0",
+      "odds": 50.5,
+      "jockey": "太宰",
       "trainer": "武英",
       "weight_carried": 55.0,
       "horse_weight": 464,
@@ -3658,7 +4400,12 @@
       "time": "1:55.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        3,
+        3,
+        3
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -3668,8 +4415,8 @@
       "name": "シャドウクライ",
       "horse_id": "2023103507",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "55.0",
+      "odds": 55.2,
+      "jockey": "北村友",
       "trainer": "杉山佳",
       "weight_carried": 55.0,
       "horse_weight": 456,
@@ -3677,7 +4424,12 @@
       "time": "1:56.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        10,
+        10,
+        10
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -3687,8 +4439,8 @@
       "name": "エンジェルグラース",
       "horse_id": "2023104979",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "55.0",
+      "odds": 86.7,
+      "jockey": "国分恭",
       "trainer": "高橋康",
       "weight_carried": 55.0,
       "horse_weight": 430,
@@ -3696,7 +4448,12 @@
       "time": "1:56.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        5,
+        6,
+        8
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -3706,8 +4463,8 @@
       "name": "ミヤジケリー",
       "horse_id": "2023104076",
       "pop": 16,
-      "odds": 16.0,
-      "jockey": "55.0",
+      "odds": 335.7,
+      "jockey": "秋山稔",
       "trainer": "高橋忠",
       "weight_carried": 55.0,
       "horse_weight": 444,
@@ -3715,7 +4472,12 @@
       "time": "1:57.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        5,
+        6,
+        8
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -3725,8 +4487,8 @@
       "name": "ブライトベリル",
       "horse_id": "2023100907",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "55.0",
+      "odds": 31.8,
+      "jockey": "岩田望",
       "trainer": "中内田",
       "weight_carried": 55.0,
       "horse_weight": 510,
@@ -3734,7 +4496,12 @@
       "time": "1:57.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        5,
+        6,
+        7
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -3744,8 +4511,8 @@
       "name": "モズギャクテン",
       "horse_id": "2023105731",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "55.0",
+      "odds": 55.0,
+      "jockey": "幸",
       "trainer": "飯田",
       "weight_carried": 55.0,
       "horse_weight": 472,
@@ -3753,7 +4520,12 @@
       "time": "1:57.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        14,
+        13,
+        12,
+        14
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -3763,8 +4535,8 @@
       "name": "ベリベリハッピー",
       "horse_id": "2023104441",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "51.0",
+      "odds": 162.7,
+      "jockey": "★河原田",
       "trainer": "渡辺",
       "weight_carried": 51.0,
       "horse_weight": 494,
@@ -3772,7 +4544,12 @@
       "time": "1:58.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        11,
+        10,
+        10
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -3782,8 +4559,8 @@
       "name": "ザタイムハズカム",
       "horse_id": "2023103736",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "55.0",
+      "odds": 10.4,
+      "jockey": "川田",
       "trainer": "福永",
       "weight_carried": 55.0,
       "horse_weight": 502,
@@ -3791,7 +4568,12 @@
       "time": "1:58.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        3,
+        4,
+        4
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -3801,8 +4583,8 @@
       "name": "ハギノデュア",
       "horse_id": "2023101882",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "55.0",
+      "odds": 265.6,
+      "jockey": "鮫島駿",
       "trainer": "高野",
       "weight_carried": 55.0,
       "horse_weight": 428,
@@ -3810,7 +4592,12 @@
       "time": "1:58.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        13,
+        13,
+        13,
+        13
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -3820,8 +4607,8 @@
       "name": "ルージュマシェリ",
       "horse_id": "2023105613",
       "pop": 15,
-      "odds": 15.0,
-      "jockey": "53.0",
+      "odds": 285.7,
+      "jockey": "◇永島",
       "trainer": "四位",
       "weight_carried": 53.0,
       "horse_weight": 438,
@@ -3829,7 +4616,12 @@
       "time": "1:58.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        16,
+        16,
+        15,
+        15
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -3839,8 +4631,8 @@
       "name": "メイショウルビー",
       "horse_id": "2023104987",
       "pop": 14,
-      "odds": 14.0,
-      "jockey": "52.0",
+      "odds": 273.7,
+      "jockey": "▲和田陽",
       "trainer": "鈴木孝",
       "weight_carried": 52.0,
       "horse_weight": 414,
@@ -3848,7 +4640,12 @@
       "time": "2:00.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        14,
+        13,
+        15,
+        15
+      ],
       "sex_age": "",
       "gate": "3"
     }
@@ -3860,8 +4657,8 @@
       "name": "バトルアックス",
       "horse_id": "2023102045",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "57.0",
+      "odds": 3.3,
+      "jockey": "坂井",
       "trainer": "今野",
       "weight_carried": 57.0,
       "horse_weight": 518,
@@ -3869,7 +4666,10 @@
       "time": "1:23.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        2
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -3879,8 +4679,8 @@
       "name": "モズプリフォール",
       "horse_id": "2023105738",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "57.0",
+      "odds": 8.1,
+      "jockey": "岩田望",
       "trainer": "矢作",
       "weight_carried": 57.0,
       "horse_weight": 508,
@@ -3888,7 +4688,10 @@
       "time": "1:24.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -3898,8 +4701,8 @@
       "name": "ジャーナーリア",
       "horse_id": "2023100596",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "57.0",
+      "odds": 6.1,
+      "jockey": "松山",
       "trainer": "本田",
       "weight_carried": 57.0,
       "horse_weight": 528,
@@ -3907,7 +4710,10 @@
       "time": "1:24.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -3917,8 +4723,8 @@
       "name": "モズジェネラル",
       "horse_id": "2023105727",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "54.0",
+      "odds": 27.6,
+      "jockey": "▲森田",
       "trainer": "田中克",
       "weight_carried": 54.0,
       "horse_weight": 502,
@@ -3926,7 +4732,10 @@
       "time": "1:25.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        6
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -3936,8 +4745,8 @@
       "name": "アニマレイ",
       "horse_id": "2023105279",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "57.0",
+      "odds": 2.6,
+      "jockey": "ルメー",
       "trainer": "須貝",
       "weight_carried": 57.0,
       "horse_weight": 476,
@@ -3945,7 +4754,10 @@
       "time": "1:25.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        7
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -3955,8 +4767,8 @@
       "name": "アメリカンサクラ",
       "horse_id": "2023110080",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "57.0",
+      "odds": 32.9,
+      "jockey": "北村友",
       "trainer": "矢作",
       "weight_carried": 57.0,
       "horse_weight": 518,
@@ -3964,7 +4776,10 @@
       "time": "1:26.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        4
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -3974,8 +4789,8 @@
       "name": "チャーチルデュース",
       "horse_id": "2023105320",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "57.0",
+      "odds": 9.5,
+      "jockey": "武豊",
       "trainer": "松永幹",
       "weight_carried": 57.0,
       "horse_weight": 470,
@@ -3983,7 +4798,10 @@
       "time": "1:26.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        7
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -3993,8 +4811,8 @@
       "name": "マカホウ",
       "horse_id": "2023110049",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "57.0",
+      "odds": 134.6,
+      "jockey": "角田和",
       "trainer": "田中克",
       "weight_carried": 57.0,
       "horse_weight": 486,
@@ -4002,7 +4820,10 @@
       "time": "1:26.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        9
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -4012,8 +4833,8 @@
       "name": "ミニュイ",
       "horse_id": "2023104866",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "54.0",
+      "odds": 126.7,
+      "jockey": "▲田山",
       "trainer": "秋山",
       "weight_carried": 54.0,
       "horse_weight": 484,
@@ -4021,7 +4842,10 @@
       "time": "1:26.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        11
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -4031,8 +4855,8 @@
       "name": "パイザナンバー",
       "horse_id": "2023100070",
       "pop": 14,
-      "odds": 14.0,
-      "jockey": "57.0",
+      "odds": 327.3,
+      "jockey": "城戸",
       "trainer": "畑端",
       "weight_carried": 57.0,
       "horse_weight": 436,
@@ -4040,7 +4864,10 @@
       "time": "1:26.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        14,
+        14
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -4050,8 +4877,8 @@
       "name": "グレイイメル",
       "horse_id": "2023103243",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "57.0",
+      "odds": 120.8,
+      "jockey": "高倉",
       "trainer": "武英",
       "weight_carried": 57.0,
       "horse_weight": 422,
@@ -4059,7 +4886,10 @@
       "time": "1:27.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        13,
+        13
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -4069,8 +4899,8 @@
       "name": "ガビーズデトワール",
       "horse_id": "2023106213",
       "pop": 15,
-      "odds": 15.0,
-      "jockey": "53.0",
+      "odds": 327.8,
+      "jockey": "◇古川奈",
       "trainer": "牧田",
       "weight_carried": 53.0,
       "horse_weight": 488,
@@ -4078,7 +4908,10 @@
       "time": "1:27.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        15,
+        15
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -4088,8 +4921,8 @@
       "name": "エクスマウス",
       "horse_id": "2023110009",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "55.0",
+      "odds": 93.4,
+      "jockey": "吉村",
       "trainer": "茶木",
       "weight_carried": 55.0,
       "horse_weight": 540,
@@ -4097,7 +4930,10 @@
       "time": "1:27.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        11
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -4107,8 +4943,8 @@
       "name": "ボトムレス",
       "horse_id": "2023103264",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "57.0",
+      "odds": 204.1,
+      "jockey": "酒井",
       "trainer": "四位",
       "weight_carried": 57.0,
       "horse_weight": 446,
@@ -4116,7 +4952,10 @@
       "time": "1:27.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        9
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -4126,8 +4965,8 @@
       "name": "ジューンレトリバー",
       "horse_id": "2023110028",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "57.0",
+      "odds": 14.9,
+      "jockey": "富田",
       "trainer": "長谷川",
       "weight_carried": 57.0,
       "horse_weight": 486,
@@ -4135,7 +4974,10 @@
       "time": "1:27.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        4
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -4145,8 +4987,8 @@
       "name": "クインテット",
       "horse_id": "2023100188",
       "pop": 16,
-      "odds": 16.0,
-      "jockey": "57.0",
+      "odds": 443.6,
+      "jockey": "荻野琢",
       "trainer": "秋山",
       "weight_carried": 57.0,
       "horse_weight": 474,
@@ -4154,7 +4996,10 @@
       "time": "1:32.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        15,
+        16
+      ],
       "sex_age": "",
       "gate": "2"
     }
@@ -4166,8 +5011,8 @@
       "name": "ゴンタ",
       "horse_id": "2023103245",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "57.0",
+      "odds": 14.0,
+      "jockey": "松若",
       "trainer": "小崎",
       "weight_carried": 57.0,
       "horse_weight": 514,
@@ -4175,7 +5020,12 @@
       "time": "1:54.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        14,
+        14,
+        12,
+        7
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -4185,8 +5035,8 @@
       "name": "マーゴットバディ",
       "horse_id": "2023105638",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "57.0",
+      "odds": 6.7,
+      "jockey": "小崎",
       "trainer": "石坂",
       "weight_carried": 57.0,
       "horse_weight": 496,
@@ -4194,7 +5044,12 @@
       "time": "1:54.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4,
+        5,
+        5
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -4204,8 +5059,8 @@
       "name": "グリーンゴー",
       "horse_id": "2023105294",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "57.0",
+      "odds": 1.5,
+      "jockey": "川田",
       "trainer": "福永",
       "weight_carried": 57.0,
       "horse_weight": 484,
@@ -4213,7 +5068,12 @@
       "time": "1:55.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        4,
+        5,
+        5
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -4223,8 +5083,8 @@
       "name": "オンザ",
       "horse_id": "2023104070",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "57.0",
+      "odds": 247.2,
+      "jockey": "富田",
       "trainer": "高橋一",
       "weight_carried": 57.0,
       "horse_weight": 494,
@@ -4232,7 +5092,12 @@
       "time": "1:55.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        10,
+        11,
+        7
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -4242,8 +5107,8 @@
       "name": "ドンテスタマスター",
       "horse_id": "2023105789",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "57.0",
+      "odds": 3.3,
+      "jockey": "坂井",
       "trainer": "杉山晴",
       "weight_carried": 57.0,
       "horse_weight": 520,
@@ -4251,7 +5116,12 @@
       "time": "1:55.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        3,
+        3,
+        3
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -4261,8 +5131,8 @@
       "name": "ハイビッグゴールド",
       "horse_id": "2023102773",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "55.0",
+      "odds": 71.9,
+      "jockey": "△柴田裕",
       "trainer": "谷",
       "weight_carried": 55.0,
       "horse_weight": 484,
@@ -4270,7 +5140,12 @@
       "time": "1:56.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        12,
+        3,
+        4
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -4280,8 +5155,8 @@
       "name": "メイショウイッカク",
       "horse_id": "2023102242",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "53.0",
+      "odds": 87.2,
+      "jockey": "★河原田",
       "trainer": "池添",
       "weight_carried": 53.0,
       "horse_weight": 480,
@@ -4289,7 +5164,12 @@
       "time": "1:56.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -4299,8 +5179,8 @@
       "name": "コカボムショット",
       "horse_id": "2023100984",
       "pop": 14,
-      "odds": 14.0,
-      "jockey": "57.0",
+      "odds": 342.8,
+      "jockey": "加藤",
       "trainer": "庄野",
       "weight_carried": 57.0,
       "horse_weight": 424,
@@ -4308,7 +5188,12 @@
       "time": "1:56.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        7,
+        8,
+        7
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -4318,8 +5203,8 @@
       "name": "テーオータウンズ",
       "horse_id": "2023102844",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "57.0",
+      "odds": 47.0,
+      "jockey": "高杉",
       "trainer": "藤岡健",
       "weight_carried": 57.0,
       "horse_weight": 502,
@@ -4327,7 +5212,12 @@
       "time": "1:57.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4,
+        5,
+        7
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -4337,8 +5227,8 @@
       "name": "メエメエ",
       "horse_id": "2023107466",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "53.0",
+      "odds": 133.7,
+      "jockey": "◇永島",
       "trainer": "高橋康",
       "weight_carried": 53.0,
       "horse_weight": 476,
@@ -4346,7 +5236,12 @@
       "time": "1:57.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        12,
+        12,
+        14,
+        13
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -4356,8 +5251,8 @@
       "name": "レットフィールマン",
       "horse_id": "2023102524",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "55.0",
+      "odds": 89.4,
+      "jockey": "角田和",
       "trainer": "角田",
       "weight_carried": 55.0,
       "horse_weight": 464,
@@ -4365,7 +5260,12 @@
       "time": "1:57.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        7,
+        8,
+        12
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -4375,8 +5275,8 @@
       "name": "バンブラボー",
       "horse_id": "2023104922",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "57.0",
+      "odds": 158.8,
+      "jockey": "幸",
       "trainer": "飯田",
       "weight_carried": 57.0,
       "horse_weight": 522,
@@ -4384,7 +5284,12 @@
       "time": "1:57.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        7,
+        8,
+        7
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -4394,8 +5299,8 @@
       "name": "キャリアハイ",
       "horse_id": "2023101234",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "57.0",
+      "odds": 80.5,
+      "jockey": "亀田",
       "trainer": "北出",
       "weight_carried": 57.0,
       "horse_weight": 532,
@@ -4403,7 +5308,12 @@
       "time": "1:58.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -4413,8 +5323,8 @@
       "name": "ファイヤーナイフ",
       "horse_id": "2023103599",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "54.0",
+      "odds": 223.1,
+      "jockey": "▲田山",
       "trainer": "中村",
       "weight_carried": 54.0,
       "horse_weight": 432,
@@ -4422,7 +5332,12 @@
       "time": "1:58.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        11,
+        10,
+        12,
+        13
+      ],
       "sex_age": "",
       "gate": "6"
     }
@@ -4434,8 +5349,8 @@
       "name": "メイショウゴールド",
       "horse_id": "2022103188",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "58.0",
+      "odds": 11.2,
+      "jockey": "幸",
       "trainer": "荒川",
       "weight_carried": 58.0,
       "horse_weight": 456,
@@ -4443,7 +5358,10 @@
       "time": "1:11.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        4
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -4453,8 +5371,8 @@
       "name": "ダイヤモンド",
       "horse_id": "2022101456",
       "pop": 10,
-      "odds": 10.0,
-      "jockey": "58.0",
+      "odds": 28.4,
+      "jockey": "酒井",
       "trainer": "清水久",
       "weight_carried": 58.0,
       "horse_weight": 528,
@@ -4462,7 +5380,10 @@
       "time": "1:12.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        1
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -4472,8 +5393,8 @@
       "name": "タケルハーロック",
       "horse_id": "2022100333",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "58.0",
+      "odds": 1.8,
+      "jockey": "鮫島駿",
       "trainer": "高柳大",
       "weight_carried": 58.0,
       "horse_weight": 498,
@@ -4481,7 +5402,10 @@
       "time": "1:12.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        8
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -4491,8 +5415,8 @@
       "name": "メイショウハッブル",
       "horse_id": "2021102550",
       "pop": 13,
-      "odds": 13.0,
-      "jockey": "58.0",
+      "odds": 109.1,
+      "jockey": "角田和",
       "trainer": "石橋",
       "weight_carried": 58.0,
       "horse_weight": 480,
@@ -4500,7 +5424,10 @@
       "time": "1:12.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        13,
+        12
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -4510,8 +5437,8 @@
       "name": "ワンウェイトゥヘル",
       "horse_id": "2022102701",
       "pop": 11,
-      "odds": 11.0,
-      "jockey": "58.0",
+      "odds": 31.1,
+      "jockey": "岩田望",
       "trainer": "中村",
       "weight_carried": 58.0,
       "horse_weight": 470,
@@ -4519,7 +5446,10 @@
       "time": "1:12.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        5
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -4529,8 +5459,8 @@
       "name": "ゼットスパンキー",
       "horse_id": "2021107255",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "58.0",
+      "odds": 6.3,
+      "jockey": "浜中",
       "trainer": "宮",
       "weight_carried": 58.0,
       "horse_weight": 470,
@@ -4538,7 +5468,10 @@
       "time": "1:12.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        14,
+        14
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -4548,8 +5481,8 @@
       "name": "シュネーグロッケン",
       "horse_id": "2022104944",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "58.0",
+      "odds": 21.8,
+      "jockey": "松山",
       "trainer": "清水久",
       "weight_carried": 58.0,
       "horse_weight": 500,
@@ -4557,7 +5490,10 @@
       "time": "1:12.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        8
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -4567,8 +5503,8 @@
       "name": "カネコメファミリー",
       "horse_id": "2021104151",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "56.0",
+      "odds": 11.5,
+      "jockey": "斎藤",
       "trainer": "中尾",
       "weight_carried": 56.0,
       "horse_weight": 514,
@@ -4576,7 +5512,10 @@
       "time": "1:12.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        2
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -4586,8 +5525,8 @@
       "name": "オースミライト",
       "horse_id": "2022103610",
       "pop": 14,
-      "odds": 14.0,
-      "jockey": "56.0",
+      "odds": 122.6,
+      "jockey": "加藤",
       "trainer": "宮本",
       "weight_carried": 56.0,
       "horse_weight": 480,
@@ -4595,7 +5534,10 @@
       "time": "1:13.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        5
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -4605,8 +5547,8 @@
       "name": "ランドブレイブ",
       "horse_id": "2022106943",
       "pop": 16,
-      "odds": 16.0,
-      "jockey": "58.0",
+      "odds": 349.4,
+      "jockey": "田口",
       "trainer": "安達",
       "weight_carried": 58.0,
       "horse_weight": 484,
@@ -4614,7 +5556,10 @@
       "time": "1:13.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        15,
+        15
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -4624,8 +5569,8 @@
       "name": "テーオーミリカン",
       "horse_id": "2022106705",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "55.0",
+      "odds": 14.9,
+      "jockey": "▲田山",
       "trainer": "宮",
       "weight_carried": 55.0,
       "horse_weight": 466,
@@ -4633,7 +5578,10 @@
       "time": "1:13.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        10,
+        10
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -4643,8 +5591,8 @@
       "name": "サンライズジュピタ",
       "horse_id": "2022103307",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "58.0",
+      "odds": 23.4,
+      "jockey": "高杉",
       "trainer": "石坂",
       "weight_carried": 58.0,
       "horse_weight": 520,
@@ -4652,7 +5600,10 @@
       "time": "1:13.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        12
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -4662,8 +5613,8 @@
       "name": "スカイブルー",
       "horse_id": "2022100136",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "58.0",
+      "odds": 20.9,
+      "jockey": "秋山稔",
       "trainer": "佐藤悠",
       "weight_carried": 58.0,
       "horse_weight": 516,
@@ -4671,7 +5622,10 @@
       "time": "1:13.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        2
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -4681,8 +5635,8 @@
       "name": "バトンロード",
       "horse_id": "2022103285",
       "pop": 15,
-      "odds": 15.0,
-      "jockey": "58.0",
+      "odds": 327.6,
+      "jockey": "太宰",
       "trainer": "石橋",
       "weight_carried": 58.0,
       "horse_weight": 476,
@@ -4690,7 +5644,10 @@
       "time": "1:13.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        16,
+        15
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -4700,8 +5657,8 @@
       "name": "ガビーズブラザー",
       "horse_id": "2022104448",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "58.0",
+      "odds": 13.8,
+      "jockey": "松若",
       "trainer": "牧田",
       "weight_carried": 58.0,
       "horse_weight": 532,
@@ -4709,7 +5666,10 @@
       "time": "1:14.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        10
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -4719,8 +5679,8 @@
       "name": "グリフォン",
       "horse_id": "2022103899",
       "pop": 12,
-      "odds": 12.0,
-      "jockey": "56.0",
+      "odds": 71.5,
+      "jockey": "小沢",
       "trainer": "小椋",
       "weight_carried": 56.0,
       "horse_weight": 436,
@@ -4728,7 +5688,10 @@
       "time": "1:15.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        5
+      ],
       "sex_age": "",
       "gate": "8"
     }
@@ -4740,8 +5703,8 @@
       "name": "アークドール",
       "horse_id": "2021110012",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "58.0",
+      "odds": 3.0,
+      "jockey": "武豊",
       "trainer": "松永幹",
       "weight_carried": 58.0,
       "horse_weight": 452,
@@ -4749,7 +5712,12 @@
       "time": "1:52.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        8,
+        7,
+        5
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -4759,8 +5727,8 @@
       "name": "ジーティーアメリカ",
       "horse_id": "2022104654",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "58.0",
+      "odds": 4.7,
+      "jockey": "北村友",
       "trainer": "吉岡",
       "weight_carried": 58.0,
       "horse_weight": 550,
@@ -4768,7 +5736,12 @@
       "time": "1:52.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        6,
+        5,
+        2
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -4778,8 +5751,8 @@
       "name": "エイユーファイヤー",
       "horse_id": "2022102710",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "58.0",
+      "odds": 2.7,
+      "jockey": "松山",
       "trainer": "森田",
       "weight_carried": 58.0,
       "horse_weight": 494,
@@ -4787,7 +5760,12 @@
       "time": "1:52.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        4,
+        5,
+        5
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -4797,8 +5775,8 @@
       "name": "ゴルデールスカー",
       "horse_id": "2020103625",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "58.0",
+      "odds": 21.7,
+      "jockey": "鮫島駿",
       "trainer": "加藤公",
       "weight_carried": 58.0,
       "horse_weight": 480,
@@ -4806,7 +5784,12 @@
       "time": "1:52.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        7,
+        7,
+        8
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -4816,8 +5799,8 @@
       "name": "ハイグッドワールド",
       "horse_id": "2021104474",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "56.0",
+      "odds": 33.3,
+      "jockey": "△柴田裕",
       "trainer": "谷",
       "weight_carried": 56.0,
       "horse_weight": 522,
@@ -4825,7 +5808,12 @@
       "time": "1:53.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        8,
+        9,
+        9
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -4835,8 +5823,8 @@
       "name": "バシリス",
       "horse_id": "2022106631",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "54.0",
+      "odds": 5.2,
+      "jockey": "◇今村",
       "trainer": "寺島",
       "weight_carried": 54.0,
       "horse_weight": 470,
@@ -4844,7 +5832,12 @@
       "time": "1:53.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -4854,8 +5847,8 @@
       "name": "マジックブルー",
       "horse_id": "2021103682",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "58.0",
+      "odds": 22.7,
+      "jockey": "幸",
       "trainer": "荒川",
       "weight_carried": 58.0,
       "horse_weight": 492,
@@ -4863,7 +5856,12 @@
       "time": "1:53.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4,
+        3,
+        2
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -4873,8 +5871,8 @@
       "name": "グリプトグラフィ",
       "horse_id": "2022105177",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "58.0",
+      "odds": 45.0,
+      "jockey": "亀田",
       "trainer": "武幸",
       "weight_carried": 58.0,
       "horse_weight": 560,
@@ -4882,7 +5880,12 @@
       "time": "1:55.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        3,
+        3,
+        5
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -4892,8 +5895,8 @@
       "name": "アカツキロットリー",
       "horse_id": "2020100081",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "54.0",
+      "odds": 229.9,
+      "jockey": "★河原田",
       "trainer": "的場",
       "weight_carried": 54.0,
       "horse_weight": 480,
@@ -4901,7 +5904,12 @@
       "time": "1:56.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "1"
     }
@@ -4913,8 +5921,8 @@
       "name": "ディアドコス",
       "horse_id": "2020105409",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "58.0",
+      "odds": 2.7,
+      "jockey": "吉村",
       "trainer": "羽月",
       "weight_carried": 58.0,
       "horse_weight": 496,
@@ -4922,7 +5930,10 @@
       "time": "1:08.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        6
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -4932,8 +5943,8 @@
       "name": "タガノアンファン",
       "horse_id": "2022106555",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "58.0",
+      "odds": 3.6,
+      "jockey": "高杉",
       "trainer": "石坂",
       "weight_carried": 58.0,
       "horse_weight": 474,
@@ -4941,7 +5952,10 @@
       "time": "1:08.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        5
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -4951,8 +5965,8 @@
       "name": "リリーフィールド",
       "horse_id": "2022105718",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "56.0",
+      "odds": 4.6,
+      "jockey": "武豊",
       "trainer": "小崎",
       "weight_carried": 56.0,
       "horse_weight": 436,
@@ -4960,7 +5974,10 @@
       "time": "1:09.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        3
+      ],
       "sex_age": "",
       "gate": "7"
     },
@@ -4970,8 +5987,8 @@
       "name": "クイーンズデイ",
       "horse_id": "2022100962",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "56.0",
+      "odds": 7.2,
+      "jockey": "国分恭",
       "trainer": "岡田",
       "weight_carried": 56.0,
       "horse_weight": 448,
@@ -4979,7 +5996,10 @@
       "time": "1:09.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -4989,8 +6009,8 @@
       "name": "ミロワール",
       "horse_id": "2019100566",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "56.0",
+      "odds": 37.0,
+      "jockey": "古川吉",
       "trainer": "柴田",
       "weight_carried": 56.0,
       "horse_weight": 476,
@@ -4998,7 +6018,10 @@
       "time": "1:09.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        8
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -5008,8 +6031,8 @@
       "name": "キントラダンサー",
       "horse_id": "2022104387",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "53.0",
+      "odds": 12.1,
+      "jockey": "▲田山",
       "trainer": "長谷川",
       "weight_carried": 53.0,
       "horse_weight": 470,
@@ -5017,7 +6040,10 @@
       "time": "1:09.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -5027,8 +6053,8 @@
       "name": "サンドロナイト",
       "horse_id": "2021110119",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "56.0",
+      "odds": 7.8,
+      "jockey": "松山",
       "trainer": "茶木",
       "weight_carried": 56.0,
       "horse_weight": 460,
@@ -5036,7 +6062,10 @@
       "time": "1:09.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -5046,8 +6075,8 @@
       "name": "レッドセニョール",
       "horse_id": "2021105779",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "58.0",
+      "odds": 62.2,
+      "jockey": "鮫島駿",
       "trainer": "矢嶋",
       "weight_carried": 58.0,
       "horse_weight": 490,
@@ -5055,7 +6084,10 @@
       "time": "1:10.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        6
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -5065,8 +6097,8 @@
       "name": "ブリーズオンチーク",
       "horse_id": "2021105958",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "56.0",
+      "odds": 111.8,
+      "jockey": "北村友",
       "trainer": "高野",
       "weight_carried": 56.0,
       "horse_weight": 484,
@@ -5074,7 +6106,10 @@
       "time": "1:10.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        8
+      ],
       "sex_age": "",
       "gate": "3"
     }
@@ -5086,8 +6121,8 @@
       "name": "ブラックオリンピア",
       "horse_id": "2023107168",
       "pop": 2,
-      "odds": 2.0,
-      "jockey": "57.0",
+      "odds": 2.9,
+      "jockey": "川田",
       "trainer": "友道",
       "weight_carried": 57.0,
       "horse_weight": 534,
@@ -5095,7 +6130,12 @@
       "time": "2:27.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        3,
+        3,
+        3,
+        3
+      ],
       "sex_age": "",
       "gate": "4"
     },
@@ -5105,8 +6145,8 @@
       "name": "アーレムアレス",
       "horse_id": "2023105223",
       "pop": 1,
-      "odds": 1.0,
-      "jockey": "57.0",
+      "odds": 1.8,
+      "jockey": "菱田",
       "trainer": "橋口",
       "weight_carried": 57.0,
       "horse_weight": 494,
@@ -5114,7 +6154,12 @@
       "time": "2:27.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        7,
+        7,
+        7,
+        6
+      ],
       "sex_age": "",
       "gate": "2"
     },
@@ -5124,8 +6169,8 @@
       "name": "カットソロ",
       "horse_id": "2023105404",
       "pop": 5,
-      "odds": 5.0,
-      "jockey": "57.0",
+      "odds": 15.6,
+      "jockey": "坂井",
       "trainer": "矢作",
       "weight_carried": 57.0,
       "horse_weight": 514,
@@ -5133,7 +6178,12 @@
       "time": "2:27.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        8,
+        8,
+        8,
+        8
+      ],
       "sex_age": "",
       "gate": "3"
     },
@@ -5143,8 +6193,8 @@
       "name": "タガノアルトゥーラ",
       "horse_id": "2023104315",
       "pop": 4,
-      "odds": 4.0,
-      "jockey": "57.0",
+      "odds": 14.1,
+      "jockey": "吉村",
       "trainer": "長谷川",
       "weight_carried": 57.0,
       "horse_weight": 484,
@@ -5152,7 +6202,12 @@
       "time": "2:27.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        6,
+        6,
+        5,
+        4
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -5162,8 +6217,8 @@
       "name": "ノンブルドール",
       "horse_id": "2023106941",
       "pop": 3,
-      "odds": 3.0,
-      "jockey": "57.0",
+      "odds": 7.4,
+      "jockey": "ルメー",
       "trainer": "西園翔",
       "weight_carried": 57.0,
       "horse_weight": 440,
@@ -5171,7 +6226,12 @@
       "time": "2:28.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        2,
+        2,
+        2,
+        1
+      ],
       "sex_age": "",
       "gate": "6"
     },
@@ -5181,8 +6241,8 @@
       "name": "サトノリシャール",
       "horse_id": "2023103894",
       "pop": 6,
-      "odds": 6.0,
-      "jockey": "57.0",
+      "odds": 21.0,
+      "jockey": "岩田望",
       "trainer": "福永",
       "weight_carried": 57.0,
       "horse_weight": 480,
@@ -5190,7 +6250,12 @@
       "time": "2:28.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        5,
+        4,
+        3,
+        4
+      ],
       "sex_age": "",
       "gate": "8"
     },
@@ -5200,8 +6265,8 @@
       "name": "サントルドパリ",
       "horse_id": "2023103761",
       "pop": 8,
-      "odds": 8.0,
-      "jockey": "57.0",
+      "odds": 34.9,
+      "jockey": "鮫島駿",
       "trainer": "小林",
       "weight_carried": 57.0,
       "horse_weight": 506,
@@ -5209,7 +6274,12 @@
       "time": "2:28.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        1,
+        1,
+        1,
+        2
+      ],
       "sex_age": "",
       "gate": "5"
     },
@@ -5219,8 +6289,8 @@
       "name": "ヘルメスギャング",
       "horse_id": "2023100729",
       "pop": 9,
-      "odds": 9.0,
-      "jockey": "57.0",
+      "odds": 225.0,
+      "jockey": "今村",
       "trainer": "武井",
       "weight_carried": 57.0,
       "horse_weight": 466,
@@ -5228,7 +6298,12 @@
       "time": "2:29.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        9,
+        9,
+        8,
+        9
+      ],
       "sex_age": "",
       "gate": "1"
     },
@@ -5238,8 +6313,8 @@
       "name": "ヴァロンブローサ",
       "horse_id": "2023106902",
       "pop": 7,
-      "odds": 7.0,
-      "jockey": "57.0",
+      "odds": 32.3,
+      "jockey": "幸",
       "trainer": "池添",
       "weight_carried": 57.0,
       "horse_weight": 442,
@@ -5247,7 +6322,12 @@
       "time": "2:29.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
+      "corners": [
+        4,
+        4,
+        5,
+        6
+      ],
       "sex_age": "",
       "gate": "7"
     }

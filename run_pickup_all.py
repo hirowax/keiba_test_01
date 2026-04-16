@@ -224,11 +224,51 @@ def main():
                 if not has_any_bonus:
                     advice = "3指数重複馬全員のボーナス点が0です。他の指標を参考にしてください。"
 
+                # ── 穴馬ライン: 前走1-2着 + 前走指数80+ + 今回5-10番人気 ──
+                scored_nums = {str(h["馬番"]) for h in scored}
+                pop_map = shutuba_data.get("pop_map", {})
+                horse_map = shutuba_data.get("horse_map", {})
+                anaba_list = []
+                for num, hid in horse_id_map.items():
+                    if num in scored_nums:
+                        continue  # 3指数重複馬は除外（既にスコアリング済み）
+                    pop_str = pop_map.get(num, "")
+                    if not pop_str:
+                        continue
+                    try:
+                        pop_val = int(pop_str)
+                    except (ValueError, TypeError):
+                        continue
+                    if not (5 <= pop_val <= 10):
+                        continue
+                    prev = horse_db.get(hid, {})
+                    try:
+                        prev_rank = int(prev.get("prev_rank", "") or 99)
+                    except (ValueError, TypeError):
+                        prev_rank = 99
+                    try:
+                        prev_idx = float(prev.get("prev_idx", "") or 0)
+                    except (ValueError, TypeError):
+                        prev_idx = 0
+                    if prev_rank <= 2 and prev_idx >= 80:
+                        anaba_list.append({
+                            "num": num,
+                            "name": horse_map.get(num, ""),
+                            "pop": pop_val,
+                            "prev_rank": prev_rank,
+                            "prev_idx": prev_idx,
+                        })
+                if anaba_list:
+                    anaba_list.sort(key=lambda x: x["prev_idx"], reverse=True)
+                    logger.info(f"  穴馬ライン: {len(anaba_list)}頭 "
+                                + ", ".join(f"{a['num']}番{a['name']}({a['pop']}人気)" for a in anaba_list))
+
                 results[race_label] = {
                     "race_id": race_id,
                     "venue": venue,
                     "race_num": race_num,
                     "scored": scored,
+                    "anaba": anaba_list,
                     "pop_map": shutuba_data.get("pop_map", {}),
                     "position_nums": shutuba_data["position_nums"],
                     "top3_hits": shutuba_data["top3_hits"],

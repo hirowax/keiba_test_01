@@ -21,14 +21,14 @@ COOKIES_FILE = Path("cookies.json")
 # ─── スコアリング定義 ────────────────────────────────────────────
 SCORE_POSITION      = 1   # 推定ポジション有利馬（4コーナーAI）
 SCORE_TOP3_EACH     = 1   # shutuba 各データ上位3頭 カテゴリー登場1回
-SCORE_PICKUP        = 2   # data_top データ分析ピックアップ3頭
+SCORE_PICKUP        = 1   # data_top データ分析ピックアップ3頭 (旧2→1: 組合せ依存、単体回収率66%)
 SCORE_ANALYSIS      = 1   # data_top 出走馬分析 カテゴリー登場1回
 SCORE_PREV_IDX_HIGH = 2   # 前走タイム指数90以上
 SCORE_PREV_IDX_MID  = 1   # 前走タイム指数70〜89
-SCORE_PREV_IDX_TOP1 = 1   # 前走タイム指数がレース内1位
+SCORE_PREV_IDX_TOP1 = 2   # 前走タイム指数がレース内1位 (旧1→2: N=73勝率29%回収146%)
 SCORE_RECENT_RACE   = 1   # 前走から28日以内（中4週以内）
 SCORE_FRONT_RUNNER  = 1   # 逃げ馬（コーナー通過順履歴から推定）
-SCORE_REVIVAL       = 2   # 前走1-3番人気かつ凡走(4着以下) 巻き返し馬
+SCORE_REVIVAL       = 0   # 前走1-3番人気かつ凡走(4着以下) 巻き返し馬 (旧2→0: N=83勝率2%回収10%)
 SCORE_PREV_GOOD     = 2   # 前走1-6番人気かつ1-3着（好走確認）
 SCORE_SAME_DIST     = 1   # 前走と同距離（±100m以内）
 
