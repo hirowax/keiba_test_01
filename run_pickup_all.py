@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 BASE_DIR = Path(__file__).parent
 HORSE_DB_PATH    = BASE_DIR / "output" / "horse_db.json"
 HORSE_STYLE_PATH = BASE_DIR / "output" / "horse_style.json"
-HORSE_DB_STALE_DAYS = 7  # キャッシュ有効期限（日）
+HORSE_DB_STALE_DAYS = 28  # キャッシュ有効期限（日）: 2週目以降のリクエスト数を大幅削減
 
 
 def load_horse_db() -> dict:
@@ -203,10 +203,18 @@ def main():
                 data_top_data = scrape_data_top(page, race_id, shutuba_data["horse_map"])
                 human_sleep(4.0, 10.0)
 
-                # 前走データ: キャッシュ確認 → 欠損馬のみスクレイプ
+                # 前走データ: 3指数重複馬のみスクレイプ（非重複馬はキャッシュのみ利用）
+                # → リクエスト数を最大16頭→3〜5頭に削減
                 horse_id_map = shutuba_data.get("horse_id_map", {})
+                triple_nums = {str(h["馬番"]) for h in triple_horses}
                 for num, hid in horse_id_map.items():
-                    if hid and (hid not in horse_db or not is_cache_fresh(horse_db[hid], date)):
+                    if not hid:
+                        continue
+                    in_cache = hid in horse_db and is_cache_fresh(horse_db[hid], date)
+                    is_triple = str(num) in triple_nums
+                    # 重複馬: キャッシュ切れなら必ずスクレイプ
+                    # 非重複馬: キャッシュがあれば使う、なければスキップ（race_max計算用のみ）
+                    if is_triple and not in_cache:
                         try:
                             prev = scrape_horse_prev_page(page, hid)
                             prev["scraped_at"] = date
@@ -215,7 +223,7 @@ def main():
                         except Exception as e:
                             logger.warning(f"  前走データ取得失敗 {hid}: {e}")
 
-                # レース内の前走指数最大値を計算（出走全馬対象）
+                # レース内の前走指数最大値を計算（キャッシュ済みデータのみ利用）
                 race_max_prev_idx = None
                 prev_idxs = []
                 for hid in horse_id_map.values():

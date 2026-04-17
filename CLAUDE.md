@@ -180,7 +180,7 @@ venue表示順：東京→中山→京都→阪神→中京→新潟→福島→
 
 - パス：`output/horse_db.json`
 - キー：horse_id（netkeiba の馬ID）
-- 有効期限：7日（`HORSE_DB_STALE_DAYS`）
+- 有効期限：28日（`HORSE_DB_STALE_DAYS`）: 2週目以降のリクエスト数を1/3以下に削減
 - 内容：`prev_date, prev_pop, prev_rank, prev_idx, prev_idx_m, prev_dist, scraped_at`
 - git にコミットして蓄積する（初回は scrape_prev_data.py で全馬取得 約30分）
 
