@@ -391,6 +391,8 @@ def score_horses(
 
             # ⑩ 前走好走: 前走1-6番人気 かつ 前走1-3着
             try:
+                prev_pop_val  = int(prev.get("prev_pop", "") or 99)
+                prev_rank_val = int(prev.get("prev_rank", "") or 99)
                 if 1 <= prev_pop_val <= 6 and 1 <= prev_rank_val <= 3:
                     score += SCORE_PREV_GOOD
                     breakdown.append({"label": f"前走好走(前走{prev_pop_val}人気{prev_rank_val}着)", "pts": SCORE_PREV_GOOD})
