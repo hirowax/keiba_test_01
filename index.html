@@ -559,21 +559,31 @@ function renderTopPickup() {
     const pop = parseInt(h.today_pop || '0');
     const isAnaba = pop >= 5;
     const popStr = h.today_pop ? `<span class="pop-badge${isAnaba?' low':''}">${h.today_pop}人気</span>` : '';
+    const rb2 = resultBadge(h.race_label, h['馬番']);
     if (isNext) return `
       <div class="next-row">
         <span class="tp-race" style="font-size:0.75rem;color:#aaa">${h.race_label}</span>
         <span class="horse-num" style="width:20px;height:20px;font-size:0.72rem;flex-shrink:0;background:#bbb">${h['馬番']}</span>
         <div style="flex:1;font-size:0.85rem;font-weight:600;display:flex;align-items:center;gap:4px;flex-wrap:wrap;color:#888">
-          ${h['馬名']}${popStr}${resultBadge(h.race_label, h['馬番'])}
+          ${h['馬名']}
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+          <span style="min-width:58px;text-align:right;font-size:0.7rem">${popStr}</span>
+          <span style="min-width:82px;text-align:right;font-size:0.65rem">${rb2}</span>
         </div>
         <span class="next-score">${h.score}pt</span>
       </div>`;
+    const rb = resultBadge(h.race_label, h['馬番']);
     return `
       <div class="top-pickup-row">
         <span class="tp-race">${h.race_label}</span>
         <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0">${h['馬番']}</span>
         <div style="flex:1;min-width:0;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-          <span class="tp-name">${h['馬名']}</span>${popStr}${resultBadge(h.race_label, h['馬番'])}
+          <span class="tp-name">${h['馬名']}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+          <span style="min-width:58px;text-align:right;font-size:0.7rem">${popStr}</span>
+          <span style="min-width:82px;text-align:right;font-size:0.65rem">${rb}</span>
         </div>
         <span class="tp-score">${h.score}pt</span>
       </div>`;
@@ -670,14 +680,19 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
     const factors = (h.breakdown||[]).map(b=>`<span>${b.label}</span>`).join('');
     const raceNum = raceNumOf(label);
     const sanko = raceNum >= 1 && raceNum <= 3 ? `<span class="sanko-badge">参考</span>` : '';
+    const rb = resultBadge(label, h['馬番']);
     return `
       <div class="horse-pick-row">
         <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0">${h['馬番']}</span>
         <div style="flex:1;min-width:0">
           <div style="font-weight:700;font-size:0.9rem;display:flex;align-items:center;gap:4px;flex-wrap:wrap">
-            ${h['馬名']}${evBadge}${sanko}${popStr}${resultBadge(label, h['馬番'])}
+            ${h['馬名']}${evBadge}${sanko}
           </div>
           ${factors ? `<div class="pick-factors">${factors}</div>` : ''}
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+          <span style="min-width:58px;text-align:right;font-size:0.7rem">${popStr}</span>
+          <span style="min-width:82px;text-align:right;font-size:0.65rem">${rb}</span>
         </div>
         <span class="pick-score ${sc}">${h.score}pt</span>
       </div>`;
