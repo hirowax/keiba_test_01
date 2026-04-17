@@ -1,18 +1,21 @@
 #!/bin/bash
-# レース結果を当日18:30に自動取得してpushするcronラッパー
-# crontab: 30 18 * * * ~/Desktop/netkeiba/run_results_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1
+# レース結果を当日18:30(夏19:30)に自動取得してpushするcronラッパー
+# crontab:
+#   30 18 * 1-6,10-12 * ~/Desktop/netkeiba/run_results_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1
+#   30 19 * 7-9 *       ~/Desktop/netkeiba/run_results_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1
 #
 # 動作: 今日がJRA開催日なら scrape_results.py を実行してpush
 
-set -e
 cd "$(dirname "$0")"
 
 # .env 読み込み
 if [ -f .env ]; then
-    export $(grep -v '^#' .env | xargs)
+    set -a
+    source .env
+    set +a
 fi
 
-# LINE通知関数
+# LINE通知関数（通知自体の失敗は無視）
 notify_line() {
     local msg="$1"
     if [ -n "$LINE_TOKEN" ] && [ -n "$LINE_USER_ID" ]; then
@@ -20,7 +23,7 @@ notify_line() {
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer $LINE_TOKEN" \
             -d "{\"to\": \"$LINE_USER_ID\", \"messages\": [{\"type\": \"text\", \"text\": \"$msg\"}]}" \
-            > /dev/null 2>&1
+            > /dev/null 2>&1 || true
     fi
 }
 
@@ -35,6 +38,7 @@ echo "  対象日: $TODAY"
 # カレンダーファイル確認
 if [ ! -f "$CALENDAR" ]; then
     echo "  ✗ カレンダーファイルなし: $CALENDAR → スキップ"
+    notify_line "[netkeiba] カレンダーファイルなし: $CALENDAR"
     exit 0
 fi
 
@@ -47,16 +51,23 @@ sys.exit(0 if '$TODAY' in dates else 1)
 "; then
     echo "  ✓ $TODAY はJRA開催日 → scrape_results.py 実行"
 
-    if python3 scrape_results.py "$TODAY"; then
-        git add "output/${TODAY}/"
-        git commit -m "results: ${TODAY}" || echo "  (変更なし)"
-        git push
+    # scrape_results.py 実行
+    if ! python3 scrape_results.py "$TODAY"; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') scrape_results.py 失敗"
+        notify_line "[netkeiba] $TODAY のレース結果取得が失敗しました ✗ cron.logを確認してください"
+        exit 1
+    fi
 
+    # git commit & push（各ステップの失敗を個別ハンドリング）
+    git add "output/${TODAY}/"
+    git commit -m "results: ${TODAY}" || echo "  (変更なし — コミットスキップ)"
+
+    if git push; then
         echo "$(date '+%Y-%m-%d %H:%M:%S') 完了"
         notify_line "[netkeiba] $TODAY のレース結果を取得・公開しました ✓"
     else
-        echo "$(date '+%Y-%m-%d %H:%M:%S') 失敗"
-        notify_line "[netkeiba] $TODAY のレース結果取得が失敗しました ✗\ncron.logを確認してください"
+        echo "$(date '+%Y-%m-%d %H:%M:%S') git push 失敗"
+        notify_line "[netkeiba] $TODAY の結果は取得済みですがpushに失敗しました ✗ 手動で git push してください"
     fi
 else
     echo "  - $TODAY は非開催日 → スキップ"

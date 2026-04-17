@@ -14,13 +14,17 @@ DOW_NAMES=("" "月" "火" "水" "木" "金" "土" "日")
 echo "▶ 本日の日付: ${TODAY_ACTUAL} (${DOW_NAMES[$DOW]}曜日)"
 echo "▶ 処理対象日: $DATE"
 
-# 土日以外の場合は警告
+# 土日以外の場合は警告（--auto フラグで対話スキップ）
 if [ "$DOW" -ne 6 ] && [ "$DOW" -ne 7 ]; then
     echo "⚠️  今日は平日 (${DOW_NAMES[$DOW]}曜日) です。指数データが未公開の可能性があります。"
-    read -p "続行しますか？ [y/N]: " confirm
-    if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
-        echo "中止しました。"
-        exit 1
+    if [ "$AUTO_MODE" = "1" ]; then
+        echo "▶ 自動モード: 続行"
+    else
+        read -p "続行しますか？ [y/N]: " confirm
+        if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
+            echo "中止しました。"
+            exit 1
+        fi
     fi
 fi
 
@@ -37,7 +41,7 @@ echo "▶ GitHub Pages用 JSON エクスポート..."
 python3 export_json.py "$DATE"
 
 echo "▶ GitHubにデータをpush中..."
-git add output/ summary/
+git add output/ summary/ --ignore-errors
 git commit -m "data: $DATE"
 git push
 

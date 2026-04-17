@@ -564,7 +564,7 @@ function renderTopPickup() {
         <span class="tp-race" style="font-size:0.75rem;color:#aaa">${h.race_label}</span>
         <span class="horse-num" style="width:20px;height:20px;font-size:0.72rem;flex-shrink:0;background:#bbb">${h['馬番']}</span>
         <div style="flex:1;font-size:0.85rem;font-weight:600;display:flex;align-items:center;gap:4px;flex-wrap:wrap;color:#888">
-          ${h['馬名']}${popStr}
+          ${h['馬名']}${popStr}${resultBadge(h.race_label, h['馬番'])}
         </div>
         <span class="next-score">${h.score}pt</span>
       </div>`;

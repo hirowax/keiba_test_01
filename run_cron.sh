@@ -5,15 +5,16 @@
 # 動作: 翌日がJRA開催日なら run.sh を実行、そうでなければスキップ
 # 失敗時はLINEに通知
 
-set -e
 cd "$(dirname "$0")"
 
 # .env 読み込み
 if [ -f .env ]; then
-    export $(grep -v '^#' .env | xargs)
+    set -a
+    source .env
+    set +a
 fi
 
-# LINE通知関数
+# LINE通知関数（通知自体の失敗は無視）
 notify_line() {
     local msg="$1"
     if [ -n "$LINE_TOKEN" ] && [ -n "$LINE_USER_ID" ]; then
@@ -21,7 +22,7 @@ notify_line() {
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer $LINE_TOKEN" \
             -d "{\"to\": \"$LINE_USER_ID\", \"messages\": [{\"type\": \"text\", \"text\": \"$msg\"}]}" \
-            > /dev/null 2>&1
+            > /dev/null 2>&1 || true
     fi
 }
 
@@ -54,8 +55,8 @@ sys.exit(0 if '$TOMORROW' in dates else 1)
         echo "$(date '+%Y-%m-%d %H:%M:%S') 完了"
         notify_line "[netkeiba] $TOMORROW のデータ準備完了 ✓"
     else
-        echo "$(date '+%Y-%m-%d %H:%M:%S') 失敗"
-        notify_line "[netkeiba] $TOMORROW の処理が失敗しました ✗\ncron.logを確認してください"
+        echo "$(date '+%Y-%m-%d %H:%M:%S') 失敗 (exit code: $?)"
+        notify_line "[netkeiba] $TOMORROW の処理が失敗しました ✗ cron.logを確認してください"
     fi
 else
     echo "  - $TOMORROW は非開催日 → スキップ"
