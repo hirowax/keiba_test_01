@@ -250,6 +250,18 @@ python3 save_cookies.py
 
 ---
 
+## 自動実行（cron）
+
+毎日17:00に翌日がJRA開催日なら自動でデータ取得→push。詳細は `docs/cron_setup.md`。
+
+- **pmset**: 毎日16:55にMac自動スリープ解除
+- **crontab**: `0 17 * * * ~/Desktop/netkeiba/run_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1`
+- **カレンダー**: `jra_calendar_2026.json`（JRA公式ICSから108開催日）
+- **LINE通知**: 成功/失敗をMessaging APIでpush（`.env` に TOKEN/USER_ID）
+- **年末作業**: 翌年の `jra_calendar_YYYY.json` を取得する
+
+---
+
 ## 注意事項
 
 - `.env` と `cookies.json` は **gitignore 済み**（スクレイプはローカルのみ）

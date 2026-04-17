@@ -464,21 +464,47 @@ function sortRaceLabelDesc(labelMap) {
 // ── データロード ──────────────────────────────────────────────
 let currentData = null;
 let currentPickup = null;
+let currentResults = null; // race_results.json: { "中山10R": [{num, rank, odds, ...}] }
 
 async function loadDate(date) {
   document.getElementById('loading').style.display = 'block';
   document.getElementById('content').innerHTML = '';
-  const [triple, summary, pickup, cfg] = await Promise.all([
+  const [triple, summary, pickup, cfg, results] = await Promise.all([
     fetch(`output/${date}/triple.json`).then(r => r.json()).catch(() => []),
     fetch(`summary/${date}.json`).then(r => r.json()).catch(() => ({})),
     fetch(`output/${date}/pickup_scores.json`).then(r => r.json()).catch(() => null),
     fetch('output/threshold_config.json').then(r => r.json()).catch(() => null),
+    fetch(`output/${date}/race_results.json`).then(r => r.ok ? r.json() : null).catch(() => null),
   ]);
   if (cfg?.ev_threshold) EV_THRESHOLD = cfg.ev_threshold;
   currentData = { triple, summary };
   currentPickup = pickup;
+  // 馬番→着順マップを構築: { "中山10R": { "5": {rank:1, odds:9.3} } }
+  currentResults = {};
+  if (results) {
+    for (const [label, horses] of Object.entries(results)) {
+      currentResults[label] = {};
+      for (const h of horses) {
+        currentResults[label][String(h.num)] = { rank: h.rank, odds: h.odds };
+      }
+    }
+  }
   document.getElementById('loading').style.display = 'none';
   render(date, cfg);
+}
+
+function resultBadge(raceLabel, num) {
+  if (!currentResults || !currentResults[raceLabel]) return '';
+  const r = currentResults[raceLabel][String(num)];
+  if (!r || !r.rank) return '';
+  const styles = {
+    1: 'background:#c8a000;color:white',
+    2: 'background:#888;color:white',
+    3: 'background:#a05020;color:white',
+  };
+  const style = styles[r.rank] || 'background:#ddd;color:#666';
+  const oddsStr = r.rank <= 3 ? ` ${r.odds}倍` : '';
+  return `<span style="${style};border-radius:3px;padding:0 5px;font-size:0.65rem;font-weight:700;flex-shrink:0">${r.rank}着${oddsStr}</span>`;
 }
 
 function renderThresholdBadge(cfg) {
@@ -547,7 +573,7 @@ function renderTopPickup() {
         <span class="tp-race">${h.race_label}</span>
         <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0">${h['馬番']}</span>
         <div style="flex:1;min-width:0;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-          <span class="tp-name">${h['馬名']}</span>${popStr}
+          <span class="tp-name">${h['馬名']}</span>${popStr}${resultBadge(h.race_label, h['馬番'])}
         </div>
         <span class="tp-score">${h.score}pt</span>
       </div>`;
@@ -649,7 +675,7 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
         <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0">${h['馬番']}</span>
         <div style="flex:1;min-width:0">
           <div style="font-weight:700;font-size:0.9rem;display:flex;align-items:center;gap:4px;flex-wrap:wrap">
-            ${h['馬名']}${evBadge}${sanko}${popStr}
+            ${h['馬名']}${evBadge}${sanko}${popStr}${resultBadge(label, h['馬番'])}
           </div>
           ${factors ? `<div class="pick-factors">${factors}</div>` : ''}
         </div>
