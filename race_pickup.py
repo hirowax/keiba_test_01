@@ -387,16 +387,7 @@ def score_horses(
                 except (ValueError, TypeError):
                     pass
 
-            # ⑥ 巻き返し馬: 前走1-3番人気 かつ 前走4着以下
-            try:
-                prev_pop_val  = int(prev.get("prev_pop", "") or 99)
-                prev_rank_val = int(prev.get("prev_rank", "") or 99)
-                if prev_pop_val <= 3 and prev_rank_val >= 4:
-                    score += SCORE_REVIVAL
-                    breakdown.append({"label": f"巻き返し馬(前走{prev_pop_val}人気{prev_rank_val}着)", "pts": SCORE_REVIVAL})
-            except (ValueError, TypeError):
-                prev_pop_val  = 99
-                prev_rank_val = 99
+            # ⑥ 巻き返し馬: 廃止 (N=83 勝率2% 回収10% → SCORE_REVIVAL=0)
 
             # ⑩ 前走好走: 前走1-6番人気 かつ 前走1-3着
             try:
