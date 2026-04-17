@@ -60,8 +60,8 @@ def main():
         if "error" in rdata:
             continue
 
-        # horse_id_map を race_results から補完
-        horse_id_map = horse_id_by_race.get(race_label, {})
+        # horse_id_map: pickup_scores.json に保存済みなら優先使用、なければ race_results から補完
+        horse_id_map = rdata.get("horse_id_map") or horse_id_by_race.get(race_label, {})
 
         # shutuba_data / data_top_data を既存データから復元
         shutuba_data = {

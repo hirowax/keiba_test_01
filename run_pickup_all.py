@@ -292,6 +292,7 @@ def main():
                     "scored": scored,
                     "anaba": anaba_list,
                     "pop_map": shutuba_data.get("pop_map", {}),
+                    "horse_id_map": horse_id_map,
                     "position_nums": shutuba_data["position_nums"],
                     "top3_hits": shutuba_data["top3_hits"],
                     "pickup_nums": data_top_data["pickup_nums"],
