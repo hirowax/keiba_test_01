@@ -31,6 +31,9 @@ fi
 echo "▶ スクレイパー実行: $DATE"
 python3 scraper.py "$DATE"
 
+echo "▶ スクレイパー完了後3分間休憩（netkeiba IPブロック対策）..."
+sleep 180
+
 echo "▶ 注目馬ピックアップ実行: $DATE"
 python3 run_pickup_all.py "$DATE"
 

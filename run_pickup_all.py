@@ -17,7 +17,7 @@ from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeo
 
 from scraper import (
     load_env, load_cookies, save_cookies, is_logged_in, login,
-    get_race_ids, human_sleep, human_browse, _random_scroll,
+    get_race_ids, human_sleep, human_browse, _random_scroll, is_ip_blocked,
 )
 from race_pickup import scrape_shutuba, scrape_data_top, score_horses
 
@@ -157,7 +157,10 @@ def main():
         race_groups = list(triple_df.groupby(["開催場", "レース番号"]))
         logger.info(f"処理対象: {len(race_groups)}レース")
 
-        for (venue, race_num_raw), group in race_groups:
+        REST_EVERY = 5   # N レースごとに長休憩
+        REST_SEC   = 90  # 長休憩の秒数
+
+        for race_idx, ((venue, race_num_raw), group) in enumerate(race_groups):
             # "2R" / "10R" など正規化
             race_num = race_num_raw.strip()
             race_label = f"{venue}{race_num}"
@@ -167,11 +170,22 @@ def main():
                 logger.warning(f"{race_label}: race_id が見つかりません (スキップ)")
                 continue
 
+            # 5レースごとに長休憩
+            if race_idx > 0 and race_idx % REST_EVERY == 0:
+                logger.info(f"  [{race_idx}/{len(race_groups)}] {REST_SEC}秒休憩中...")
+                time.sleep(REST_SEC)
+
             logger.info(f"処理中: {race_label} ({race_id})")
             triple_horses = group.to_dict(orient="records")
 
             try:
                 shutuba_data = scrape_shutuba(page, race_id)
+
+                # ブロック検知
+                if is_ip_blocked(page):
+                    logger.error("❌ IPブロック検知 → 処理中断")
+                    logger.error("   24時間待ってから再実行してください")
+                    break
 
                 # shutuba が空データなら page を再作成してリトライ
                 if not shutuba_data.get("horse_map"):

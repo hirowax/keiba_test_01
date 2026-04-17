@@ -63,6 +63,26 @@ def human_sleep(min_sec: float = 3.0, max_sec: float = 8.0) -> None:
     time.sleep(t)
 
 
+def is_ip_blocked(page) -> bool:
+    """現在のページがIPブロック/アクセス拒否状態か判定する"""
+    try:
+        url = page.url or ""
+        content = page.content()
+    except Exception:
+        return False
+    block_signals = [
+        "アクセスが集中",
+        "ただいまアクセスが",
+        "ご利用いただけません",
+        "Access Denied",
+        "403 Forbidden",
+        "Too Many Requests",
+        "接続できません",
+        "お使いのIPアドレス",
+    ]
+    return any(sig in content for sig in block_signals)
+
+
 def _random_scroll(page) -> None:
     """ページをランダムにスクロール（人間らしい読み込み動作）"""
     try:
