@@ -129,6 +129,42 @@ def parse_horse_weight(text: str) -> tuple:
     return 0, 0
 
 
+def parse_place_odds(soup) -> dict:
+    """払い戻し表から複勝オッズを取得 → {馬番: 複勝オッズ}
+    netkeiba の複勝表示: 馬番は個別セル（7, 12, 13）、
+    金額は1つのセルに連結（"240円110円170円"）、その後に人気（5人気1人気2人気）。
+    """
+    result = {}
+
+    # ページ全テキストから複勝〜次賭式の区間を抽出
+    full_text = soup.get_text("\n")
+    m = re.search(
+        r"複勝\s*([\s\S]*?)(?:枠連|馬連|ワイド|馬単|3連複|3連単)",
+        full_text
+    )
+    if not m:
+        return result
+
+    segment = m.group(1)
+
+    # 金額が最初に出現する位置より前の部分から馬番を抽出
+    # → 人気数字（"1人気"の"1"等）との衝突を回避
+    first_yen = re.search(r"\d{2,5}円", segment)
+    pre_amounts = segment[:first_yen.start()] if first_yen else segment
+
+    nums = re.findall(r"(?<!\d)(\d{1,2})(?!\d)", pre_amounts)
+    # 金額: XXX円 の形式（複数連結されている場合も含む）を抽出
+    amounts = re.findall(r"(\d{2,5})円", segment)
+
+    for num, amount in zip(nums, amounts):
+        try:
+            result[num] = round(int(amount) / 100, 1)
+        except ValueError:
+            pass
+
+    return result
+
+
 def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
     """1レースの結果をスクレイプ"""
     url = RESULT_URL.format(race_id=race_id)
@@ -143,6 +179,7 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
     soup = BeautifulSoup(html, "html.parser")
 
     condition = parse_race_condition(soup)
+    place_odds_map = parse_place_odds(soup)
 
     horses = []
 
@@ -296,6 +333,7 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
             "margin":        margin,
             "pop":           pop,
             "odds":          odds,
+            "place_odds":    place_odds_map.get(num),
             "last3f":        last3f,
             "corners":       corners,
             "horse_weight":  hw,
@@ -388,6 +426,7 @@ def main():
                     "horse_id":          h["horse_id"],
                     "pop":               h["pop"],
                     "odds":              h["odds"],
+                    "place_odds":        h["place_odds"],
                     "jockey":            h["jockey"],
                     "trainer":           h["trainer"],
                     "weight_carried":    h["weight_carried"],
