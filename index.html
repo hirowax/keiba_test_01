@@ -64,23 +64,25 @@
   }
   .top-pickup-row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
-    padding: 13px 14px;
+    padding: 12px 14px;
     border-bottom: 1px solid #f5f5f5;
     cursor: pointer;
     transition: background 0.15s;
   }
   .top-pickup-row:last-child { border-bottom: none; }
   .top-pickup-row:hover { background: #fffbee; }
-  .tp-race { min-width: 54px; font-size: 0.78rem; font-weight: 700; color: #666; }
-  .tp-name { flex: 1; font-weight: 700; font-size: 0.95rem; }
+  .tp-race { min-width: 52px; font-size: 0.78rem; font-weight: 700; color: #666; padding-top: 2px; }
+  .tp-name { font-weight: 700; font-size: 0.95rem; display: block; }
+  .tp-sub { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 3px; }
   .tp-score {
     font-weight: 800;
     font-size: 1rem;
     color: #e8a000;
     min-width: 36px;
     text-align: right;
+    padding-top: 2px;
   }
   .tp-bd { display: none; }
 
@@ -88,11 +90,11 @@
   .next-pickup { border-top: 1px solid #f0e8c8; padding-top: 2px; }
   .next-pickup-label { font-size: 0.7rem; color: #bbb; padding: 5px 14px 2px; font-weight: 600; }
   .next-row {
-    display: flex; align-items: center; gap: 8px;
-    padding: 10px 14px; border-bottom: 1px solid #fafafa;
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 9px 14px; border-bottom: 1px solid #fafafa;
   }
   .next-row:last-child { border-bottom: none; }
-  .next-score { font-weight: 700; font-size: 0.85rem; color: #bbb; min-width: 32px; text-align: right; }
+  .next-score { font-weight: 700; font-size: 0.85rem; color: #bbb; min-width: 32px; text-align: right; padding-top: 2px; }
 
   /* ── 開催場タブ ── */
   .venue-tabs {
@@ -131,10 +133,11 @@
   .pace-H { background: #e0f0ff; color: #0044aa; }
   .pace-M { background: #f0f0f0; color: #888; }
   .horse-pick-row {
-    display: flex; align-items: center; gap: 8px;
-    padding: 12px 12px; border-bottom: 1px solid #f5f5f5;
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 10px 12px; border-bottom: 1px solid #f5f5f5;
   }
   .horse-pick-row:last-child { border-bottom: none; }
+  .pick-sub { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 3px; }
   .pick-score {
     font-weight: 800; font-size: 0.95rem; color: #e8a000;
     min-width: 34px; text-align: right; flex-shrink: 0;
@@ -562,14 +565,11 @@ function renderTopPickup() {
     const rb2 = resultBadge(h.race_label, h['馬番']);
     if (isNext) return `
       <div class="next-row">
-        <span class="tp-race" style="font-size:0.75rem;color:#aaa">${h.race_label}</span>
-        <span class="horse-num" style="width:20px;height:20px;font-size:0.72rem;flex-shrink:0;background:#bbb">${h['馬番']}</span>
-        <div style="flex:1;font-size:0.85rem;font-weight:600;display:flex;align-items:center;gap:4px;flex-wrap:wrap;color:#888">
-          ${h['馬名']}
-        </div>
-        <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
-          <span style="min-width:58px;text-align:right;font-size:0.7rem">${popStr}</span>
-          <span style="min-width:82px;text-align:right;font-size:0.65rem">${rb2}</span>
+        <span class="tp-race" style="font-size:0.75rem;color:#aaa;padding-top:2px">${h.race_label}</span>
+        <span class="horse-num" style="width:20px;height:20px;font-size:0.72rem;flex-shrink:0;background:#bbb;margin-top:1px">${h['馬番']}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:0.85rem;font-weight:600;color:#888">${h['馬名']}</div>
+          <div class="tp-sub">${popStr}${rb2}</div>
         </div>
         <span class="next-score">${h.score}pt</span>
       </div>`;
@@ -577,13 +577,10 @@ function renderTopPickup() {
     return `
       <div class="top-pickup-row">
         <span class="tp-race">${h.race_label}</span>
-        <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0">${h['馬番']}</span>
-        <div style="flex:1;min-width:0;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0;margin-top:1px">${h['馬番']}</span>
+        <div style="flex:1;min-width:0">
           <span class="tp-name">${h['馬名']}</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
-          <span style="min-width:58px;text-align:right;font-size:0.7rem">${popStr}</span>
-          <span style="min-width:82px;text-align:right;font-size:0.65rem">${rb}</span>
+          <div class="tp-sub">${popStr}${rb}</div>
         </div>
         <span class="tp-score">${h.score}pt</span>
       </div>`;
@@ -683,16 +680,15 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
     const rb = resultBadge(label, h['馬番']);
     return `
       <div class="horse-pick-row">
-        <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0">${h['馬番']}</span>
+        <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0;margin-top:1px">${h['馬番']}</span>
         <div style="flex:1;min-width:0">
           <div style="font-weight:700;font-size:0.9rem;display:flex;align-items:center;gap:4px;flex-wrap:wrap">
             ${h['馬名']}${evBadge}${sanko}
           </div>
-          ${factors ? `<div class="pick-factors">${factors}</div>` : ''}
-        </div>
-        <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
-          <span style="min-width:58px;text-align:right;font-size:0.7rem">${popStr}</span>
-          <span style="min-width:82px;text-align:right;font-size:0.65rem">${rb}</span>
+          <div class="pick-sub">
+            ${popStr}${rb}
+            ${factors ? `<div class="pick-factors" style="margin-top:0">${factors}</div>` : ''}
+          </div>
         </div>
         <span class="pick-score ${sc}">${h.score}pt</span>
       </div>`;
@@ -702,12 +698,13 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
   const anabaRows = (rdata?.anaba || []).map(a => {
     return `
       <div class="horse-pick-row" style="background:#fff8f4">
-        <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0;background:#cc4400">${a.num}</span>
+        <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0;background:#cc4400;margin-top:1px">${a.num}</span>
         <div style="flex:1;min-width:0">
-          <div style="font-weight:600;font-size:0.88rem;display:flex;align-items:center;gap:4px;flex-wrap:wrap">
-            ${a.name} <span class="pop-badge low" style="font-size:0.7rem">${a.pop}人気</span>
+          <div style="font-weight:600;font-size:0.88rem">${a.name}</div>
+          <div class="pick-sub">
+            <span class="pop-badge low" style="font-size:0.7rem">${a.pop}人気</span>
+            <span class="pick-factors" style="margin-top:0"><span>前走${a.prev_rank}着 指数${a.prev_idx}</span></span>
           </div>
-          <div class="pick-factors"><span>前走${a.prev_rank}着 指数${a.prev_idx}</span></div>
         </div>
         <span class="anaba-badge">穴</span>
       </div>`;
@@ -720,11 +717,12 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
     ).join(' ');
     return `
       <div class="horse-pick-row" style="background:#faf7ff">
-        <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0;background:#8855cc">${s.num}</span>
-        <div style="flex:1;font-size:0.88rem;font-weight:600;display:flex;align-items:center;gap:4px;flex-wrap:wrap">
-          ${s.name} ${badges}
+        <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0;background:#8855cc;margin-top:1px">${s.num}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:0.88rem;font-weight:600">${s.name}</div>
+          <div class="pick-sub">${badges}</div>
         </div>
-        <span style="font-size:0.7rem;color:#8855cc;font-weight:700;flex-shrink:0">単指数1位</span>
+        <span style="font-size:0.7rem;color:#8855cc;font-weight:700;flex-shrink:0;padding-top:2px">単指数1位</span>
       </div>`;
   }).join('');
 
