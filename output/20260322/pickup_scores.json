@@ -1,5 +1,186 @@
 {
   "date": "20260322",
   "generated_at": "2026-04-18T01:03:37.767027",
-  "races": {}
+  "races": {
+    "中山1R": {
+      "race_id": "202606020801",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中山2R": {
+      "race_id": "202606020802",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中山3R": {
+      "race_id": "202606020803",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中山4R": {
+      "race_id": "202606020804",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中山5R": {
+      "race_id": "202606020805",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中山6R": {
+      "race_id": "202606020806",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中山7R": {
+      "race_id": "202606020807",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中山8R": {
+      "race_id": "202606020808",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中山9R": {
+      "race_id": "202606020809",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中山10R": {
+      "race_id": "202606020810",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中山11R": {
+      "race_id": "202606020811",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中山12R": {
+      "race_id": "202606020812",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "阪神1R": {
+      "race_id": "202609011001",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "阪神2R": {
+      "race_id": "202609011002",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "阪神3R": {
+      "race_id": "202609011003",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "阪神4R": {
+      "race_id": "202609011004",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "阪神5R": {
+      "race_id": "202609011005",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "阪神6R": {
+      "race_id": "202609011006",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "阪神7R": {
+      "race_id": "202609011007",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "阪神8R": {
+      "race_id": "202609011008",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "阪神9R": {
+      "race_id": "202609011009",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "阪神10R": {
+      "race_id": "202609011010",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "阪神11R": {
+      "race_id": "202609011011",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "阪神12R": {
+      "race_id": "202609011012",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中京1R": {
+      "race_id": "202607010401",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中京2R": {
+      "race_id": "202607010402",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中京3R": {
+      "race_id": "202607010403",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中京4R": {
+      "race_id": "202607010404",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中京5R": {
+      "race_id": "202607010405",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中京6R": {
+      "race_id": "202607010406",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中京7R": {
+      "race_id": "202607010407",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中京8R": {
+      "race_id": "202607010408",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中京9R": {
+      "race_id": "202607010409",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中京10R": {
+      "race_id": "202607010410",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中京11R": {
+      "race_id": "202607010411",
+      "scored": [],
+      "error": "no_pickup_data"
+    },
+    "中京12R": {
+      "race_id": "202607010412",
+      "scored": [],
+      "error": "no_pickup_data"
+    }
+  }
 }
