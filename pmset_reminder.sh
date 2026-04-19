@@ -27,12 +27,12 @@ notify_line() {
 
 if [ "$MODE" = "summer" ]; then
     echo "$(date '+%Y-%m-%d %H:%M:%S') 夏季pmsetリマインド送信"
-    notify_line "[netkeiba] 🌞 夏季開催（7月〜）が近づいています。
-pmsetを18:29:55に変更してください:
-sudo pmset repeat wakepoweron MTWRFSU 18:29:55"
+    notify_line "[netkeiba] 🌞 競走時間帯拡大（7/25〜8/30）が近づいています。
+pmsetを19:29:55に変更してください:
+sudo pmset repeat wakepoweron MTWRFSU 19:29:55"
 elif [ "$MODE" = "winter" ]; then
     echo "$(date '+%Y-%m-%d %H:%M:%S') 夏季終了pmsetリマインド送信"
-    notify_line "[netkeiba] 🍂 夏季開催終了（10月〜）です。
+    notify_line "[netkeiba] 🍂 競走時間帯拡大終了（8/30まで）です。
 pmsetを16:59:55に戻してください:
 sudo pmset repeat wakepoweron MTWRFSU 16:59:55"
 else
