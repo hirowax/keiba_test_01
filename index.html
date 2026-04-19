@@ -516,11 +516,9 @@ function renderThresholdBadge(cfg) {
   const t = String(cfg.ev_threshold);
   const s = stats[t];
   const rateStr = s ? `（過去${s.count}頭中${s.hit3}頭 3着内 ${Math.round(s.rate*100)}%）` : '';
-  const datesStr = cfg.dates_used?.length ? `検証: ${cfg.dates_used.join(', ')}` : '';
   return `
     <div style="background:#f0f4f8;border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:0.78rem;color:#555;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
       <span>🔥 期待値閾値: <strong>${cfg.ev_threshold}pt以上</strong> ${rateStr}</span>
-      <span style="color:#aaa">${datesStr}</span>
     </div>`;
 }
 
