@@ -106,7 +106,7 @@ def scrape_shutuba(page, race_id: str) -> dict:
             num = next((t.get_text(strip=True) for t in tds if t.get_text(strip=True).isdigit()), "")
         if num.isdigit():
             if num not in horse_map:
-                horse_map[num] = name[:4]  # 短縮名で補完
+                horse_map[num] = name  # フルネームで補完
             if hid and num not in horse_id_map:
                 horse_id_map[num] = hid
             # 人気（Popular / Ninki class）
