@@ -694,6 +694,7 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
 
   // 穴馬ライン（前走1-2着 + idx80+ + 5-10番人気）
   const anabaRows = (rdata?.anaba || []).map(a => {
+    const rb = resultBadge(label, a.num);
     return `
       <div class="horse-pick-row" style="background:#fff8f4">
         <span class="horse-num" style="width:24px;height:24px;font-size:0.78rem;flex-shrink:0;background:#cc4400;margin-top:1px">${a.num}</span>
@@ -701,6 +702,7 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
           <div style="font-weight:600;font-size:0.88rem">${a.name}</div>
           <div class="pick-sub">
             <span class="pop-badge low" style="font-size:0.7rem">${a.pop}人気</span>
+            ${rb}
             <span class="pick-factors" style="margin-top:0"><span>前走${a.prev_rank}着 指数${a.prev_idx}</span></span>
           </div>
         </div>
