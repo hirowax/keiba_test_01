@@ -8,6 +8,9 @@
 
 cd "$(dirname "$0")"
 
+# スリープ防止
+/usr/bin/caffeinate -s -w $$ &
+
 # .env 読み込み
 if [ -f .env ]; then
     set -a
