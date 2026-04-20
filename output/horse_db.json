@@ -26335,5 +26335,50 @@
     "prev_idx_m": "77",
     "prev_dist": "ダ1200",
     "scraped_at": "20260419"
+  },
+  "2018103677": {
+    "prev_date": "2026/03/14",
+    "prev_pop": "2",
+    "prev_rank": "6",
+    "prev_idx": "",
+    "prev_idx_m": "",
+    "prev_dist": "障3900",
+    "scraped_at": "20251227"
+  },
+  "2021100225": {
+    "prev_date": "2026/01/24",
+    "prev_pop": "12",
+    "prev_rank": "14",
+    "prev_idx": "82",
+    "prev_idx_m": "82",
+    "prev_dist": "ダ1900",
+    "scraped_at": "20251227"
+  },
+  "2023105904": {
+    "prev_date": "2025/12/27",
+    "prev_pop": "2",
+    "prev_rank": "16",
+    "prev_idx": "64",
+    "prev_idx_m": "64",
+    "prev_dist": "芝2000",
+    "scraped_at": "20251227"
+  },
+  "2019103036": {
+    "prev_date": "2026/01/12",
+    "prev_pop": "16",
+    "prev_rank": "16",
+    "prev_idx": "73",
+    "prev_idx_m": "65",
+    "prev_dist": "ダ1800",
+    "scraped_at": "20251227"
+  },
+  "2022103684": {
+    "prev_date": "2026/04/05",
+    "prev_pop": "2",
+    "prev_rank": "4",
+    "prev_idx": "112",
+    "prev_idx_m": "112",
+    "prev_dist": "ダ1400",
+    "scraped_at": "20251227"
   }
 }
