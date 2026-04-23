@@ -81,13 +81,13 @@
     "scraped_at": "20260314"
   },
   "2021105056": {
-    "prev_date": "2026/01/12",
-    "prev_pop": "7",
-    "prev_rank": "12",
-    "prev_idx": "80",
-    "prev_idx_m": "80",
-    "prev_dist": "芝2400",
-    "scraped_at": "20260328"
+    "prev_date": "2026/03/28",
+    "prev_pop": "5",
+    "prev_rank": "10",
+    "prev_idx": "68",
+    "prev_idx_m": "68",
+    "prev_dist": "芝2200",
+    "scraped_at": "20251214"
   },
   "2018105462": {
     "prev_date": "2026/01/18",
@@ -18789,7 +18789,7 @@
     "prev_idx": "",
     "prev_idx_m": "",
     "prev_dist": "障2860",
-    "scraped_at": "20260207"
+    "scraped_at": "20251214"
   },
   "2019105808": {
     "prev_date": "2026/02/28",
@@ -19284,7 +19284,7 @@
     "prev_idx": "92",
     "prev_idx_m": "92",
     "prev_dist": "ダ1900",
-    "scraped_at": "20260214"
+    "scraped_at": "20251214"
   },
   "2019104636": {
     "prev_date": "2026/02/14",
@@ -22704,7 +22704,7 @@
     "prev_idx": "91",
     "prev_idx_m": "91",
     "prev_dist": "ダ1800",
-    "scraped_at": "20260228"
+    "scraped_at": "20251214"
   },
   "2020103199": {
     "prev_date": "2026/03/07",
@@ -23172,7 +23172,7 @@
     "prev_idx": "105",
     "prev_idx_m": "103",
     "prev_dist": "ダ1800",
-    "scraped_at": "20260308"
+    "scraped_at": "20251214"
   },
   "2023104346": {
     "prev_date": "2026/03/08",
@@ -23829,7 +23829,7 @@
     "prev_idx": "76",
     "prev_idx_m": "76",
     "prev_dist": "ダ1200",
-    "scraped_at": "20260314"
+    "scraped_at": "20251214"
   },
   "2021107224": {
     "prev_date": "2026/03/14",
@@ -26578,5 +26578,23 @@
     "prev_idx_m": "64",
     "prev_dist": "ダ1200",
     "scraped_at": "20251213"
+  },
+  "2019100774": {
+    "prev_date": "2025/12/14",
+    "prev_pop": "7",
+    "prev_rank": "6",
+    "prev_idx": "78",
+    "prev_idx_m": "78",
+    "prev_dist": "芝2200",
+    "scraped_at": "20251214"
+  },
+  "2022100106": {
+    "prev_date": "2026/01/24",
+    "prev_pop": "8",
+    "prev_rank": "7",
+    "prev_idx": "91",
+    "prev_idx_m": "91",
+    "prev_dist": "芝1600",
+    "scraped_at": "20251214"
   }
 }
