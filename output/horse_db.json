@@ -10884,7 +10884,7 @@
     "prev_idx": "89",
     "prev_idx_m": "85",
     "prev_dist": "芝1800",
-    "scraped_at": "20260111"
+    "scraped_at": "20260503"
   },
   "2020103929": {
     "prev_date": "2026/03/14",
@@ -11244,7 +11244,7 @@
     "prev_idx": "45",
     "prev_idx_m": "45",
     "prev_dist": "ダ1400",
-    "scraped_at": "20260111"
+    "scraped_at": "20260503"
   },
   "2023104700": {
     "prev_date": "2026/01/11",
@@ -22695,7 +22695,7 @@
     "prev_idx": "94",
     "prev_idx_m": "94",
     "prev_dist": "ダ1800",
-    "scraped_at": "20260228"
+    "scraped_at": "20260503"
   },
   "2021106618": {
     "prev_date": "2026/03/21",
@@ -26929,5 +26929,62 @@
     "prev_idx_m": "85",
     "prev_dist": "ダ1600",
     "scraped_at": "20260502"
+  },
+  "2023105329": {
+    "prev_date": "2026/04/18",
+    "prev_pop": "7",
+    "prev_rank": "4",
+    "prev_idx": "76",
+    "prev_idx_m": "76",
+    "prev_dist": "ダ2000",
+    "scraped_at": "20260503"
+  },
+  "2023107477": {
+    "prev_date": "2026/03/29",
+    "prev_pop": "10",
+    "prev_rank": "4",
+    "prev_idx": "65",
+    "prev_idx_m": "65",
+    "prev_dist": "ダ1800",
+    "scraped_at": "20260503"
+  },
+  "2023103901": {
+    "prev_date": "2026/03/22",
+    "prev_pop": "2",
+    "prev_rank": "3",
+    "prev_idx": "74",
+    "prev_idx_m": "74",
+    "prev_dist": "芝2400",
+    "scraped_at": "20260503"
+  },
+  "2020101579": {
+    "prev_date": "2026/03/22",
+    "prev_pop": "13",
+    "prev_rank": "8",
+    "prev_idx": "93",
+    "prev_idx_m": "95",
+    "prev_dist": "ダ1800",
+    "scraped_at": "20260503"
+  },
+  "2021104874": {
+    "prev_date": "2026/04/11",
+    "prev_pop": "8",
+    "prev_rank": "2",
+    "prev_idx": "93",
+    "prev_idx_m": "93",
+    "prev_dist": "ダ1200",
+    "scraped_at": "20260503"
+  },
+  "2023107200": {
+    "scraped_at": "20260503"
+  },
+  "2021105367": {
+    "prev_date": "2026/02/15",
+    "prev_pop": "8",
+    "prev_rank": "7",
+    "prev_idx": "92",
+    "prev_idx_m": "92",
+    "prev_dist": "芝1600",
+    "scraped_at": "20260503"
   }
 }
