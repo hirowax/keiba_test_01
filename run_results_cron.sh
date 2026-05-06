@@ -84,12 +84,13 @@ from datetime import datetime, timedelta
 today = datetime.today()
 cutoff = (today - timedelta(days=14)).strftime('%Y%m%d')
 today_str = today.strftime('%Y%m%d')
-year = today.strftime('%Y')
-cal_file = Path(f'jra_calendar_{year}.json')
-if not cal_file.exists():
-    sys.exit(0)
-cal = json.loads(cal_file.read_text())
-for d in sorted(cal['dates']):
+years = {cutoff[:4], today.strftime('%Y')}
+all_dates = []
+for y in years:
+    cf = Path(f'jra_calendar_{y}.json')
+    if cf.exists():
+        all_dates.extend(json.loads(cf.read_text())['dates'])
+for d in sorted(set(all_dates)):
     if cutoff <= d < today_str and not Path(f'output/{d}/race_results.json').exists():
         print(d)
         break
