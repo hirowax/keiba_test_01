@@ -75,3 +75,36 @@ sys.exit(0 if '$TODAY' in dates else 1)
 else
     echo "  - $TODAY は非開催日 → スキップ"
 fi
+
+# ── カレンダー照合: 直近14日のレース結果欠損を1日分補完 ──────────────────
+MISSING_RESULTS=$(python3 -c "
+import json, sys
+from pathlib import Path
+from datetime import datetime, timedelta
+today = datetime.today()
+cutoff = (today - timedelta(days=14)).strftime('%Y%m%d')
+today_str = today.strftime('%Y%m%d')
+year = today.strftime('%Y')
+cal_file = Path(f'jra_calendar_{year}.json')
+if not cal_file.exists():
+    sys.exit(0)
+cal = json.loads(cal_file.read_text())
+for d in sorted(cal['dates']):
+    if cutoff <= d < today_str and not Path(f'output/{d}/race_results.json').exists():
+        print(d)
+        break
+" 2>/dev/null)
+
+if [ -n "$MISSING_RESULTS" ]; then
+    echo "────────────────────────────────────"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') レース結果欠損補完: $MISSING_RESULTS"
+    if python3 scrape_results.py "$MISSING_RESULTS"; then
+        git add "output/${MISSING_RESULTS}/"
+        git commit -m "results: ${MISSING_RESULTS} (catchup)" || true
+        git push || true
+        notify_line "[netkeiba] 過去結果補完完了: $MISSING_RESULTS ✓"
+    else
+        echo "  補完失敗: $MISSING_RESULTS"
+        notify_line "[netkeiba] 過去結果補完失敗: $MISSING_RESULTS ✗"
+    fi
+fi

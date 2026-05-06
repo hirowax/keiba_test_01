@@ -64,3 +64,33 @@ sys.exit(0 if '$TOMORROW' in dates else 1)
 else
     echo "  - $TOMORROW は非開催日 → スキップ"
 fi
+
+# ── カレンダー照合: 直近14日のピックアップ欠損を1日分補完 ──────────────────
+MISSING_PICKUP=$(python3 -c "
+import json, sys
+from pathlib import Path
+from datetime import datetime, timedelta
+today = datetime.today()
+cutoff = (today - timedelta(days=14)).strftime('%Y%m%d')
+today_str = today.strftime('%Y%m%d')
+year = today.strftime('%Y')
+cal_file = Path(f'jra_calendar_{year}.json')
+if not cal_file.exists():
+    sys.exit(0)
+cal = json.loads(cal_file.read_text())
+for d in sorted(cal['dates']):
+    if cutoff <= d < today_str and not Path(f'output/{d}/pickup_scores.json').exists():
+        print(d)
+        break
+" 2>/dev/null)
+
+if [ -n "$MISSING_PICKUP" ]; then
+    echo "────────────────────────────────────"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') ピックアップ欠損補完: $MISSING_PICKUP"
+    if AUTO_MODE=1 ./run.sh "$MISSING_PICKUP"; then
+        notify_line "[netkeiba] 過去データ補完完了: $MISSING_PICKUP ✓"
+    else
+        echo "  補完失敗: $MISSING_PICKUP"
+        notify_line "[netkeiba] 過去データ補完失敗: $MISSING_PICKUP ✗"
+    fi
+fi
