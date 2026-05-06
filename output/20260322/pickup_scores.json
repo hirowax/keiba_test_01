@@ -182,5 +182,7 @@
       "scored": [],
       "error": "no_pickup_data"
     }
-  }
+  },
+  "scoring_version": "v5",
+  "rescored_at": "2026-05-04T10:52:51.938471"
 }

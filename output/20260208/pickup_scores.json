@@ -278,5 +278,7 @@
       "race_dist": 1200,
       "advice": null
     }
-  }
+  },
+  "scoring_version": "v5",
+  "rescored_at": "2026-05-04T10:52:47.728495"
 }
