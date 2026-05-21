@@ -128,50 +128,68 @@ horse_db.json のキャッシュを使い、未取得の馬のみスクレイプ
 
 「過去開催の1週末分スクレイプして」と言われたら以下の手順で実行する。
 
-#### ① 未取得週末を特定する
+> **重要**: JRA開催は土日2日とは限らない。祝日がある週は土日月の3日開催、日月のみ、日のみ等がある。
+> **必ずJRAカレンダーを参照して開催日を確認してから実行すること。**
+
+#### ① 未取得週末を特定し、開催日を確認する
+
+**2026年の場合**（jra_calendar_2026.json を使用）:
 
 ```python
-import json, os
-# 2026年のJRAカレンダーと照合
+import json, os, itertools
 with open('jra_calendar_2026.json') as f:
-    dates = json.load(f)['dates']
-missing = [d for d in dates if not os.path.exists(f'output/{d}/pickup_scores.json')]
-print(missing[:10])
+    all_dates = sorted(json.load(f)['dates'])
+missing = [d for d in all_dates if not os.path.exists(f'output/{d}/pickup_scores.json')]
+# 最古の未取得日が属する「週」（連続開催日グループ）を特定
+# 同一週末の日付は通常3日以内に連続している
+print('未取得の開催日（先頭10件）:', missing[:10])
 ```
 
-**2025年以前のカレンダー**: `jra_calendar_2025.json` は存在しない。
-代わりに output/ ディレクトリ内の最古の pickup ファイルを確認し、その直前の土日を候補にする。
-開催日かどうかは `race.netkeiba.com/top/race_list.html?kaisai_date=YYYYMMDD` でレース数が 0 なら非開催。
+**2025年以前の場合**（カレンダーファイルなし）:
 
 ```bash
-# 現在の最古データ確認
+# 最古のpickupデータを確認
 find output -name "pickup_scores.json" | sort | head -5
 ```
 
-#### ② 1週末分（土日2日）をスクレイプ
+その直前の週のサタ〜月（4日分）について、以下で開催確認:
+
+```python
+from playwright.sync_api import sync_playwright
+from scraper import load_cookies, get_race_ids, load_env
+load_env()
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=True)
+    ctx = browser.new_context(); load_cookies(ctx)
+    page = ctx.new_page()
+    for d in ['20251025', '20251026', '20251027']:  # 候補日を列挙
+        races = get_race_ids(page, d)
+        print(d, len(races), '件')
+    browser.close()
+```
+
+レース数 > 0 の日が開催日。それらが「1週末」のセット。
+
+#### ② 開催日ごとに順番にスクレイプ（1日ずつ）
 
 ```bash
-AUTO_MODE=1 bash run.sh YYYYMMDD  # 土曜
-AUTO_MODE=1 bash run.sh YYYYMMDD  # 日曜
+AUTO_MODE=1 bash run.sh YYYYMMDD  # 1日目（完了を待ってから2日目へ）
+AUTO_MODE=1 bash run.sh YYYYMMDD  # 2日目
+AUTO_MODE=1 bash run.sh YYYYMMDD  # 3日目（3日開催の場合のみ）
 ```
 
 - **平日実行でも OK**（`AUTO_MODE=1` が警告をスキップ）
 - 過去レース（約6ヶ月以上前）は `type=rank` がサブスク誘導ページを返す仕様だが、
   `shutuba fallback` が自動で使われるため正常動作する（scraper.py 修正済み 2026-05-21）
+- run.sh は 1 日ずつ順番に実行する（同時実行不可）
 
-#### ③ レース結果をスクレイプ
+#### ③ レース結果をスクレイプしてpush
 
 ```bash
-python3 scrape_results.py YYYYMMDD  # 土曜
-python3 scrape_results.py YYYYMMDD  # 日曜
-git add output/YYYYMMDD_土/ output/YYYYMMDD_日/ && git commit -m "results: YYYYMMDD YYYYMMDD" && git push
+python3 scrape_results.py YYYYMMDD  # 開催日ごとに実行
+# 全日完了後まとめてpush
+git add output/ && git commit -m "results: YYYYMMDD YYYYMMDD ..." && git push
 ```
-
-#### 注意事項
-
-- run.sh は 1 日ずつ実行する（同時実行不可）
-- 連続実行は IPブロックのリスクがあるため、1 日目完了後に 2 日目を実行する
-- `get_race_ids()` が 0 件を返せば非開催日（スクレイプ不要）
 
 ---
 
