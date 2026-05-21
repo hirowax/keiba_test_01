@@ -133,26 +133,29 @@ horse_db.json のキャッシュを使い、未取得の馬のみスクレイプ
 
 #### ① 未取得週末を特定し、開催日を確認する
 
-**2026年の場合**（jra_calendar_2026.json を使用）:
+カレンダーファイル（`jra_calendar_YYYY.json`）が対象年に存在すれば使う。なければ netkeiba で直接確認。
 
 ```python
-import json, os, itertools
-with open('jra_calendar_2026.json') as f:
-    all_dates = sorted(json.load(f)['dates'])
-missing = [d for d in all_dates if not os.path.exists(f'output/{d}/pickup_scores.json')]
-# 最古の未取得日が属する「週」（連続開催日グループ）を特定
-# 同一週末の日付は通常3日以内に連続している
-print('未取得の開催日（先頭10件）:', missing[:10])
+import json, os, glob
+from pathlib import Path
+
+# 最古の未取得データを確認
+have = sorted(p.parent.name for p in Path('output').glob('*/pickup_scores.json') if p.parent.name.isdigit())
+print('最古pickup:', have[0] if have else 'なし')
+
+# 対象年のカレンダーファイルがあれば使う
+year = '2025'  # 対象年に合わせて変更
+cal_file = f'jra_calendar_{year}.json'
+if os.path.exists(cal_file):
+    with open(cal_file) as f:
+        all_dates = sorted(json.load(f)['dates'])
+    missing = [d for d in all_dates if not os.path.exists(f'output/{d}/pickup_scores.json')]
+    print('未取得の開催日:', missing[:10])
+else:
+    print(f'{cal_file} なし → get_race_ids で確認が必要')
 ```
 
-**2025年以前の場合**（カレンダーファイルなし）:
-
-```bash
-# 最古のpickupデータを確認
-find output -name "pickup_scores.json" | sort | head -5
-```
-
-その直前の週のサタ〜月（4日分）について、以下で開催確認:
+**カレンダーファイルがない年の開催日確認**（候補の土〜月を直接問い合わせ）:
 
 ```python
 from playwright.sync_api import sync_playwright
@@ -162,7 +165,7 @@ with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
     ctx = browser.new_context(); load_cookies(ctx)
     page = ctx.new_page()
-    for d in ['20251025', '20251026', '20251027']:  # 候補日を列挙
+    for d in ['YYYYMMDD', 'YYYYMMDD', 'YYYYMMDD']:  # 候補の土・日・月を列挙
         races = get_race_ids(page, d)
         print(d, len(races), '件')
     browser.close()
