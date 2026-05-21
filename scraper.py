@@ -244,7 +244,7 @@ def _is_valid_speed_df(df: pd.DataFrame) -> bool:
 
 def preflight_premium_check(page, race_id: str) -> bool:
     """プレミアムコンテンツにアクセスできるか検証（起動時1回だけ）。
-    type=rank ページが順位データを返すか確認する。"""
+    type=rank で確認し、取れない場合は shutuba fallback も試す（過去レース対応）。"""
     url = SPEED_URL.format(race_id=race_id, mode="average")
     try:
         page.goto(url, wait_until="domcontentloaded")
@@ -253,10 +253,25 @@ def preflight_premium_check(page, race_id: str) -> bool:
         return False
     soup = BeautifulSoup(page.content(), "html.parser")
     tables = soup.find_all("table")
+    if tables:
+        target = max(tables, key=lambda t: len(t.find_all("tr")))
+        if "1位" in target.get_text():
+            return True
+
+    # type=rank が取れない場合（過去レース等）は shutuba fallback を試す
+    try:
+        url_sb = SPEED_URL_BASE.format(race_id=race_id)
+        page.goto(url_sb, wait_until="domcontentloaded")
+        time.sleep(random.uniform(2.0, 4.0))
+    except Exception:
+        return False
+    soup = BeautifulSoup(page.content(), "html.parser")
+    tables = soup.find_all("table")
     if not tables:
         return False
     target = max(tables, key=lambda t: len(t.find_all("tr")))
-    return "1位" in target.get_text()
+    txt = target.get_text()
+    return any(kw in txt for kw in ("平均", "距離", "コース", "指数"))
 
 
 def parse_speed_table(page, race_id: str, mode: str) -> Optional[pd.DataFrame]:
@@ -806,7 +821,7 @@ def main():
         all_summaries: Dict[str, Dict] = {}
         # 全場 3指数重複馬の行リスト
         triple_rows: List[dict] = []
-        fallback_count = 0  # fallback 発動回数（大量発動ガード用）
+        total_fail_count = 0  # type=rank・shutuba 両方失敗した回数（cookie切れ検知用）
 
         for race in races:
             race_id = race["race_id"]
@@ -830,22 +845,26 @@ def main():
 
             # フォールバック: type=rank が全て None の場合 shutuba_submenu を試みる
             if all(v is None for v in dfs.values()):
-                fallback_count += 1
                 logger.warning(f"type=rank 未公開 → shutuba fallback: {race_id}")
+                shutuba_ok = False
                 try:
                     fallback = parse_speed_shutuba(page, race_id)
                     if fallback:
                         dfs.update(fallback)
                         got = sum(1 for v in dfs.values() if v is not None)
                         logger.info(f"{label}: shutuba fallback で {got}モード取得")
+                        shutuba_ok = True
                 except Exception as e:
                     logger.error(f"{label} shutuba fallback 失敗: {e}")
                 finally:
                     human_sleep(3.0, 7.0)
 
                 # ── fallback 大量発動ガード ──
-                if fallback_count >= 3 and fallback_count >= len(races) * 0.5:
-                    logger.error("❌ 過半数のレースで type=rank が取得できません。")
+                # shutuba も取れなかった場合のみカウント（過去レースはtype=rank不可が正常）
+                if not shutuba_ok:
+                    total_fail_count += 1
+                if total_fail_count >= 3 and total_fail_count >= len(races) * 0.5:
+                    logger.error("❌ 過半数のレースでデータを取得できません。")
                     logger.error("   cookiesが期限切れか、プレミアム権限に問題があります。")
                     logger.error("   → python3 save_cookies.py を実行して再ログインしてください")
                     browser.close()
