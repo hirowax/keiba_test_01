@@ -25,6 +25,11 @@ netkeiba/
 ├── calibrate_threshold.py # 期待値🔥閾値を過去データから自動キャリブレーション
 ├── export_json.py        # CSV/Excel → JSON変換 + dates.json生成（GitHub Pages用）
 ├── analyze_hypotheses.py # 仮説検証スクリプト（統計分析用）
+├── build_horse_style.py  # race_results.jsonのコーナー通過順から脚質推定・horse_style.json更新
+├── compare_scores.py     # 旧スコアvs新スコアの前後比較（コード変更の効果検証用）
+├── rerun_failed_pickup.py # エラーレースのみ再ピックアップ・pickup_scores.jsonにマージ
+├── rescrape_results_all.py # 全日付のrace_results.jsonを再スクレイプ（フィールド追加時等に使用）
+├── run_history_batch.py  # 過去日付のXLSX+pickup_scores.json一括生成（完了済みはスキップ）
 ├── index.html            # GitHub Pages メインページ（静的・パスワードゲート付き）
 ├── app.py                # 旧Flask Webアプリ（Render移行前・現在未使用）
 ├── save_cookies.py       # 初回ログイン・クッキー保存用
@@ -44,7 +49,8 @@ netkeiba/
 │   │   ├── triple.json           # 3指数重複馬（GitHub Pages用JSON）
 │   │   ├── race_results.json     # 全馬着順・人気・馬体重等（scrape_results.py出力）
 │   │   └── race_conditions.json  # 馬場・天気・距離・クラス等（scrape_results.py出力）
-│   ├── horse_db.json         # 馬別前走データ グローバルキャッシュ（7日有効）
+│   ├── horse_db.json         # 馬別前走データ グローバルキャッシュ（28日有効）
+│   ├── horse_style.json      # 馬別脚質データ（build_horse_style.pyが出力・run_pickup_all.pyが参照）
 │   ├── dates.json            # 利用可能な日付一覧（GitHub Pages用）
 │   └── threshold_config.json # 期待値🔥閾値設定（calibrate_threshold.pyが更新）
 └── summary/
@@ -118,6 +124,55 @@ python3 scrape_prev_data.py 20260404
 
 horse_db.json のキャッシュを使い、未取得の馬のみスクレイプ。
 
+### 7. 過去開催のスクレイプ（未取得週末の遡及）
+
+「過去開催の1週末分スクレイプして」と言われたら以下の手順で実行する。
+
+#### ① 未取得週末を特定する
+
+```python
+import json, os
+# 2026年のJRAカレンダーと照合
+with open('jra_calendar_2026.json') as f:
+    dates = json.load(f)['dates']
+missing = [d for d in dates if not os.path.exists(f'output/{d}/pickup_scores.json')]
+print(missing[:10])
+```
+
+**2025年以前のカレンダー**: `jra_calendar_2025.json` は存在しない。
+代わりに output/ ディレクトリ内の最古の pickup ファイルを確認し、その直前の土日を候補にする。
+開催日かどうかは `race.netkeiba.com/top/race_list.html?kaisai_date=YYYYMMDD` でレース数が 0 なら非開催。
+
+```bash
+# 現在の最古データ確認
+find output -name "pickup_scores.json" | sort | head -5
+```
+
+#### ② 1週末分（土日2日）をスクレイプ
+
+```bash
+AUTO_MODE=1 bash run.sh YYYYMMDD  # 土曜
+AUTO_MODE=1 bash run.sh YYYYMMDD  # 日曜
+```
+
+- **平日実行でも OK**（`AUTO_MODE=1` が警告をスキップ）
+- 過去レース（約6ヶ月以上前）は `type=rank` がサブスク誘導ページを返す仕様だが、
+  `shutuba fallback` が自動で使われるため正常動作する（scraper.py 修正済み 2026-05-21）
+
+#### ③ レース結果をスクレイプ
+
+```bash
+python3 scrape_results.py YYYYMMDD  # 土曜
+python3 scrape_results.py YYYYMMDD  # 日曜
+git add output/YYYYMMDD_土/ output/YYYYMMDD_日/ && git commit -m "results: YYYYMMDD YYYYMMDD" && git push
+```
+
+#### 注意事項
+
+- run.sh は 1 日ずつ実行する（同時実行不可）
+- 連続実行は IPブロックのリスクがあるため、1 日目完了後に 2 日目を実行する
+- `get_race_ids()` が 0 件を返せば非開催日（スクレイプ不要）
+
 ---
 
 ## スコアリングロジック（race_pickup.py）
@@ -126,20 +181,23 @@ horse_db.json のキャッシュを使い、未取得の馬のみスクレイプ
 
 | 項目 | 点数 | 内容 |
 |------|------|------|
-| 推定ポジション有利馬 | +1 | shutuba のAI展開図 4コーナー有利馬 |
-| 各データ上位3頭 | +1/カテゴリー | shutuba の各データ上位3頭に登場した回数分 |
+| 推定ポジション有利馬 | 0（廃止） | N=68 勝率11.8% 単勝回収率34.6% → 廃止 |
+| 各データ上位3頭 | +1/カテゴリー（上限2pt） | shutuba の各データ上位3頭に登場した回数分 |
 | データ分析ピックアップ | +1 | data_top のピックアップ3頭（旧+2→+1: 単体回収率66%、組合せ依存） |
 | 出走馬分析 | +1/条件 | data_top の出走馬分析テーブル登場数 |
 | 前走タイム指数90以上 | +2 | horse_db から取得 |
 | 前走タイム指数70〜89 | +1 | horse_db から取得 |
 | 前走指数レース内1位 | +2 | horse_db × 出走全馬比較（旧+1→+2: N=73勝率29%回収146%） |
-| 中4週以内（前走28日以内） | +1 | horse_db の prev_date から計算 |
-| 逃げ馬（2走以上実績） | +1 | horse_style.json のコーナー通過順履歴から推定 |
+| 中4週以内（前走28日以内） | +2 | horse_db の prev_date から計算（旧+1→+2: N=65 単勝回収率283.7%） |
+| 逃げ馬（Sペース予測時のみ・2走以上実績） | +1 | horse_style.json のコーナー通過順履歴から推定。Sペース(スロー)のときのみ加点 |
 | 巻き返し馬 | 0（廃止） | 前走1〜3番人気かつ4着以下（N=83勝率2%回収10%→廃止） |
 | 前走好走 | +2 | 前走1〜6番人気かつ1〜3着（horse_db使用） |
 | 同距離前走（±50m） | +1 | horse_db の prev_dist と当日距離を比較 |
 
-最高合計: **14pt**
+最高合計: **12pt**
+※「前走指数HIGH/MID」と「前走指数レース内1位」は合算上限3pt（重複加点ガード）
+
+スコアリングバージョン: `race_pickup.py` の `SCORING_VERSION` 定数で管理。pickup_scores.json の `scoring_version` フィールドに埋め込まれる。`rescore.py` 実行時も更新される。`analyze_roi.py` の【10】セクションでバージョン別比較が可能。
 
 `scrape_shutuba()` は `pop_map: {馬番: 人気}` も取得し、各馬の `today_pop` フィールドに格納。
 人気取得: shutuba.html の `td.Ninki` → 取れない場合 speed.html (`rf=shutuba_submenu`) の `sk__ninki` から取得。
@@ -171,8 +229,10 @@ venue表示順：東京→中山→京都→阪神→中京→新潟→福島→
 - `ev_threshold`：期待値🔥マークを付ける最低スコア（現在 **8pt**）
 - `calibrate_threshold.py` が run.sh 実行時に毎回自動更新
 - ロジック：過去データで **3着内率70%以上**・サンプル5頭以上を満たす最低閾値を採用
-- 実績（2026-04-11時点、8日分）：
-  - 8pt以上：51頭 → 3着内32頭（63%） ← 現在の閾値
+- 実績（2026-05-04時点・v5・38日分 2025-12-13〜2026-05-03）：
+  - 9pt以上：31頭 → 3着内26頭（83.9%）
+  - 8pt以上：64頭 → 3着内48頭（75.0%） ← 現在の閾値
+  - 7pt以上：115頭 → 3着内80頭（69.6%）
 
 ---
 
@@ -253,13 +313,20 @@ python3 save_cookies.py
 
 ## 自動実行（cron）
 
-毎日17:00に翌日がJRA開催日なら自動でデータ取得→push。詳細は `docs/cron_setup.md`。
+詳細は `docs/cron_setup.md`。
 
 - **pmset**: 毎日16:55にMac自動スリープ解除
-- **crontab**: `0 17 * * * ~/Desktop/netkeiba/run_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1`
-- **カレンダー**: `jra_calendar_2026.json`（JRA公式ICSから108開催日）
-- **LINE通知**: 成功/失敗をMessaging APIでpush（`.env` に TOKEN/USER_ID）
+- **crontab（データ取得）**: `0 17 * * * ~/Desktop/netkeiba/run_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1`
+  - 翌日がJRA開催日なら `run.sh` を実行してデータ取得→push
+- **crontab（結果取得）**:
+  - `30 18 * 1-6,10-12 * ~/Desktop/netkeiba/run_results_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1`（通常期：18:30）
+  - `30 19 * 7-9 *       ~/Desktop/netkeiba/run_results_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1`（夏期7〜9月：19:30）
+  - 当日がJRA開催日なら `scrape_results.py` を実行して結果→push
+  - `pickup_scores.json` がない場合でもレース一覧ページから race_id を取得してフォールバック
+- **カレンダー**: `jra_calendar_YYYY.json`（JRA公式ICSから取得）
+- **LINE通知**: 成功/失敗をMessaging APIでpush（`.env` に LINE_TOKEN / LINE_USER_ID）
 - **年末作業**: 翌年の `jra_calendar_YYYY.json` を取得する
+- **cookies期限切れ時**: cronが `❌ プレミアムコンテンツにアクセスできません` で失敗→手動で `python3 save_cookies.py` を実行してから再実行
 
 ---
 
