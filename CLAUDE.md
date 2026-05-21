@@ -143,16 +143,13 @@ from pathlib import Path
 have = sorted(p.parent.name for p in Path('output').glob('*/pickup_scores.json') if p.parent.name.isdigit())
 print('最古pickup:', have[0] if have else 'なし')
 
-# 対象年のカレンダーファイルがあれば使う
-year = '2025'  # 対象年に合わせて変更
-cal_file = f'jra_calendar_{year}.json'
-if os.path.exists(cal_file):
+# 全カレンダーファイルを検索し、未取得日を列挙
+for cal_file in sorted(glob.glob('jra_calendar_????.json')):
     with open(cal_file) as f:
         all_dates = sorted(json.load(f)['dates'])
     missing = [d for d in all_dates if not os.path.exists(f'output/{d}/pickup_scores.json')]
-    print('未取得の開催日:', missing[:10])
-else:
-    print(f'{cal_file} なし → get_race_ids で確認が必要')
+    if missing:
+        print(f'{cal_file}: 未取得 {len(missing)}日 → 先頭: {missing[:5]}')
 ```
 
 **カレンダーファイルがない年の開催日確認**（候補の土〜月を直接問い合わせ）:
