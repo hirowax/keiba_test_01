@@ -244,7 +244,8 @@ def _is_valid_speed_df(df: pd.DataFrame) -> bool:
 
 def preflight_premium_check(page, race_id: str) -> bool:
     """プレミアムコンテンツにアクセスできるか検証（起動時1回だけ）。
-    type=rank で確認し、取れない場合は shutuba fallback も試す（過去レース対応）。"""
+    type=rank で確認し、取れない場合は shutuba fallback も試す（過去レース対応）。
+    shutuba は4頭以上取れることを必須とする（3頭以下はログアウト時のプレビュー版）。"""
     url = SPEED_URL.format(race_id=race_id, mode="average")
     try:
         page.goto(url, wait_until="domcontentloaded")
@@ -266,6 +267,11 @@ def preflight_premium_check(page, race_id: str) -> bool:
     except Exception:
         return False
     soup = BeautifulSoup(page.content(), "html.parser")
+    # 馬番セル数で実体を判定（ヘッダー含むので4以下なら3頭以下=プレビュー）
+    num_cells = soup.find_all(class_=re.compile(r"sk__umaban|UmaBan"))
+    if len(num_cells) <= 4:
+        logger.error(f"shutuba 馬番セル {len(num_cells)} 個 = プレビュー版（ログアウト）の可能性")
+        return False
     tables = soup.find_all("table")
     if not tables:
         return False
@@ -850,10 +856,16 @@ def main():
                 try:
                     fallback = parse_speed_shutuba(page, race_id)
                     if fallback:
-                        dfs.update(fallback)
-                        got = sum(1 for v in dfs.values() if v is not None)
-                        logger.info(f"{label}: shutuba fallback で {got}モード取得")
-                        shutuba_ok = True
+                        # 取得頭数チェック（最初のdfの行数）。3頭以下はプレビュー版で破棄
+                        first_df = next(iter(fallback.values()))
+                        n_horses = len(first_df) if first_df is not None else 0
+                        if n_horses <= 3:
+                            logger.warning(f"{label} shutuba fallback {n_horses}頭 = プレビュー版疑い → 破棄")
+                        else:
+                            dfs.update(fallback)
+                            got = sum(1 for v in dfs.values() if v is not None)
+                            logger.info(f"{label}: shutuba fallback で {got}モード取得 ({n_horses}頭)")
+                            shutuba_ok = True
                 except Exception as e:
                     logger.error(f"{label} shutuba fallback 失敗: {e}")
                 finally:
