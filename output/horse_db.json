@@ -28933,5 +28933,32 @@
     "prev_idx_m": "",
     "prev_dist": "ダ1500",
     "scraped_at": "20251013"
+  },
+  "2020101543": {
+    "prev_date": "2026/03/15",
+    "prev_pop": "4",
+    "prev_rank": "13",
+    "prev_idx": "91",
+    "prev_idx_m": "87",
+    "prev_dist": "芝1200",
+    "scraped_at": "20251004"
+  },
+  "2019110001": {
+    "prev_date": "2026/04/26",
+    "prev_pop": "14",
+    "prev_rank": "5",
+    "prev_idx": "94",
+    "prev_idx_m": "92",
+    "prev_dist": "芝1200",
+    "scraped_at": "20251004"
+  },
+  "2020100301": {
+    "prev_date": "2026/03/29",
+    "prev_pop": "2",
+    "prev_rank": "4",
+    "prev_idx": "",
+    "prev_idx_m": "",
+    "prev_dist": "障2970",
+    "scraped_at": "20251004"
   }
 }
