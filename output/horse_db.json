@@ -3276,13 +3276,13 @@
     "scraped_at": "20260329"
   },
   "2023104140": {
-    "prev_date": "2026/03/01",
-    "prev_pop": "9",
+    "prev_date": "2026/05/12",
+    "prev_pop": "7",
     "prev_rank": "3",
-    "prev_idx": "76",
-    "prev_idx_m": "76",
-    "prev_dist": "芝1200",
-    "scraped_at": "20260329"
+    "prev_idx": "64",
+    "prev_idx_m": "",
+    "prev_dist": "ダ1500",
+    "scraped_at": "20260531"
   },
   "2023103250": {
     "prev_date": "2025/12/21",
@@ -3354,7 +3354,7 @@
     "prev_idx": "96",
     "prev_idx_m": "96",
     "prev_dist": "芝2200",
-    "scraped_at": "20260314"
+    "scraped_at": "20260531"
   },
   "2019105490": {
     "prev_date": "2026/03/29",
@@ -4905,7 +4905,7 @@
     "prev_idx": "87",
     "prev_idx_m": "87",
     "prev_dist": "芝2000",
-    "scraped_at": "20251115"
+    "scraped_at": "20260531"
   },
   "2021105102": {
     "prev_date": "2026/01/25",
@@ -7182,13 +7182,13 @@
     "scraped_at": "20260405"
   },
   "2021105598": {
-    "prev_date": "2026/01/17",
-    "prev_pop": "5",
+    "prev_date": "2026/04/05",
+    "prev_pop": "6",
     "prev_rank": "13",
-    "prev_idx": "74",
-    "prev_idx_m": "74",
+    "prev_idx": "96",
+    "prev_idx_m": "96",
     "prev_dist": "ダ1400",
-    "scraped_at": "20260405"
+    "scraped_at": "20260531"
   },
   "2020110120": {
     "prev_date": "2026/04/05",
@@ -7977,13 +7977,13 @@
     "scraped_at": "20260411"
   },
   "2021104924": {
-    "prev_date": "2026/03/07",
+    "prev_date": "2026/04/11",
     "prev_pop": "4",
-    "prev_rank": "8",
+    "prev_rank": "3",
     "prev_idx": "",
     "prev_idx_m": "",
     "prev_dist": "障3200",
-    "scraped_at": "20260411"
+    "scraped_at": "20260531"
   },
   "2023102805": {
     "scraped_at": "20260411"
@@ -18078,13 +18078,13 @@
     "scraped_at": "20260215"
   },
   "2022104688": {
-    "prev_date": "2026/04/11",
-    "prev_pop": "3",
-    "prev_rank": "4",
-    "prev_idx": "",
-    "prev_idx_m": "",
-    "prev_dist": "芝1800",
-    "scraped_at": "20260222"
+    "prev_date": "2026/05/10",
+    "prev_pop": "2",
+    "prev_rank": "9",
+    "prev_idx": "96",
+    "prev_idx_m": "96",
+    "prev_dist": "芝2200",
+    "scraped_at": "20260531"
   },
   "2022104658": {
     "prev_date": "2026/02/01",
@@ -22329,13 +22329,13 @@
     "scraped_at": "20260228"
   },
   "2021105455": {
-    "prev_date": "2026/02/28",
-    "prev_pop": "11",
-    "prev_rank": "5",
+    "prev_date": "2026/04/25",
+    "prev_pop": "5",
+    "prev_rank": "2",
     "prev_idx": "",
     "prev_idx_m": "",
-    "prev_dist": "障2860",
-    "scraped_at": "20260228"
+    "prev_dist": "障3170",
+    "scraped_at": "20260531"
   },
   "2021101088": {
     "prev_date": "2026/04/12",
@@ -29041,5 +29041,62 @@
     "prev_idx_m": "75",
     "prev_dist": "芝1600",
     "scraped_at": "20260530"
+  },
+  "2023106552": {
+    "prev_date": "2026/05/10",
+    "prev_pop": "10",
+    "prev_rank": "5",
+    "prev_idx": "67",
+    "prev_idx_m": "61",
+    "prev_dist": "ダ1800",
+    "scraped_at": "20260531"
+  },
+  "2023101639": {
+    "scraped_at": "20260531"
+  },
+  "2023105513": {
+    "prev_date": "2026/05/10",
+    "prev_pop": "3",
+    "prev_rank": "6",
+    "prev_idx": "92",
+    "prev_idx_m": "92",
+    "prev_dist": "芝1600",
+    "scraped_at": "20260531"
+  },
+  "2023102400": {
+    "prev_date": "2026/03/29",
+    "prev_pop": "6",
+    "prev_rank": "10",
+    "prev_idx": "43",
+    "prev_idx_m": "43",
+    "prev_dist": "ダ1800",
+    "scraped_at": "20260531"
+  },
+  "2023104671": {
+    "prev_date": "2026/04/05",
+    "prev_pop": "8",
+    "prev_rank": "8",
+    "prev_idx": "63",
+    "prev_idx_m": "63",
+    "prev_dist": "ダ1800",
+    "scraped_at": "20260531"
+  },
+  "2023106583": {
+    "prev_date": "2026/05/24",
+    "prev_pop": "4",
+    "prev_rank": "14",
+    "prev_idx": "41",
+    "prev_idx_m": "41",
+    "prev_dist": "芝1200",
+    "scraped_at": "20260531"
+  },
+  "2018101989": {
+    "prev_date": "2026/04/19",
+    "prev_pop": "6",
+    "prev_rank": "6",
+    "prev_idx": "94",
+    "prev_idx_m": "90",
+    "prev_dist": "ダ1200",
+    "scraped_at": "20260531"
   }
 }
