@@ -3,21 +3,31 @@
 回収率分析スクリプト
 pickup_scores.json × race_results.json を突合し、
 各種条件での的中率・回収率（単勝ベース）を算出する。
+
+デフォルトでは CLEAN_START（2026-03-28）以降のみ集計する。
+それより前は前走系ファクター汚染あり（docs/factor_audit_202606.md）。
+全期間を見る場合: python3 analyze_roi.py --all
 """
 import json
 import re
+import sys
 from pathlib import Path
 from collections import defaultdict
 
 BASE_DIR = Path(__file__).parent
 OUTPUT_DIR = BASE_DIR / "output"
 
+# これより前は前走系ファクター汚染のため除外（docs/factor_audit_202606.md）
+CLEAN_START = "20260328"
 
-def load_all_data():
+
+def load_all_data(include_contaminated: bool = False):
     """全日付のpickup_scores + race_resultsを突合して馬リストを返す"""
     horses = []
     dates = sorted(d.name for d in OUTPUT_DIR.iterdir()
                    if d.is_dir() and re.match(r"^\d{8}$", d.name))
+    if not include_contaminated:
+        dates = [d for d in dates if d >= CLEAN_START]
 
     for date in dates:
         ps_path = OUTPUT_DIR / date / "pickup_scores.json"
@@ -161,8 +171,10 @@ def print_stats(stats, min_n=5):
 
 
 def main():
-    horses = load_all_data()
-    print(f"総データ: {len(horses)}頭 / {len(set(h['date'] for h in horses))}日")
+    include_all = "--all" in sys.argv
+    horses = load_all_data(include_contaminated=include_all)
+    scope = "全期間（汚染期間込み・参考値）" if include_all else f"クリーン窓のみ（{CLEAN_START}以降）"
+    print(f"総データ: {len(horses)}頭 / {len(set(h['date'] for h in horses))}日  [{scope}]")
     print()
 
     # ──────────────────────────────────────

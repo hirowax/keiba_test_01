@@ -22,6 +22,8 @@ THRESHOLDS = [9, 8, 7, 6, 5, 4, 3]
 TARGET_RATE = 0.70
 # 最低サンプル数
 MIN_COUNT = 5
+# これより前は前走系ファクター汚染のため除外（docs/factor_audit_202606.md）
+CLEAN_START = "20260328"
 
 
 def load_pairs():
@@ -29,6 +31,8 @@ def load_pairs():
     pairs = []
     for date_dir in sorted(OUTPUT_DIR.iterdir()):
         if not date_dir.is_dir():
+            continue
+        if date_dir.name < CLEAN_START:
             continue
         pickup_path = date_dir / "pickup_scores.json"
         results_path = date_dir / "race_results.json"
