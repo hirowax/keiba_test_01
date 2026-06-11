@@ -149,6 +149,7 @@
     display: flex; gap: 3px; flex-wrap: wrap; margin-top: 2px;
   }
   .pick-factors span { background: #f5f5f5; border-radius: 3px; padding: 1px 4px; }
+  .pick-factors span.minus { background: #fdecec; color: #c0392b; }
 
   /* ── タブ ── */
   .tabs {
@@ -672,7 +673,7 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
     const evBadge = h.score >= EV_THRESHOLD
       ? `<span style="background:#e8a000;color:white;border-radius:3px;padding:0 5px;font-size:0.65rem;font-weight:700">🔥</span>` : '';
     const sc = h.score >= EV_THRESHOLD ? '' : h.score >= 3 ? 'mid' : 'low';
-    const factors = (h.breakdown||[]).map(b=>`<span>${b.label}</span>`).join('');
+    const factors = (h.breakdown||[]).map(b=>`<span${b.pts < 0 ? ' class="minus"' : ''}>${b.label}</span>`).join('');
     const raceNum = raceNumOf(label);
     const sanko = raceNum >= 1 && raceNum <= 3 ? `<span class="sanko-badge">参考</span>` : '';
     const rb = resultBadge(label, h['馬番']);

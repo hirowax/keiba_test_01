@@ -21,7 +21,8 @@ COOKIES_FILE = Path("cookies.json")
 # v1: 初期版  v2: 巻き返し廃止・ピックアップ+2→+1
 # v3: 前走指数1位+1→+2・前走好走追加  v4: 中4週以内+1→+2(2026-05-04)
 # v5: ポジション廃止・上位3頭上限2pt・前走指数合算上限3pt・逃げ馬Sペース連動(2026-05-04)
-SCORING_VERSION = "v5"
+# v6: 3指数すべて1位+1・距離延長>50m -1・前走10着以下-1・中4週+2→+1(2026-06-11, docs/factor_audit_202606.md)
+SCORING_VERSION = "v6"
 
 
 # ─── スコアリング定義 ────────────────────────────────────────────
@@ -32,11 +33,14 @@ SCORE_ANALYSIS      = 1   # data_top 出走馬分析 カテゴリー登場1回
 SCORE_PREV_IDX_HIGH = 2   # 前走タイム指数90以上
 SCORE_PREV_IDX_MID  = 1   # 前走タイム指数70〜89
 SCORE_PREV_IDX_TOP1 = 2   # 前走タイム指数がレース内1位 (旧1→2: N=73勝率29%回収146%)
-SCORE_RECENT_RACE   = 2   # 前走から28日以内（中4週以内）(旧1→2: N=65 勝率20% 3着内47.7% 単勝回収率283.7%)
+SCORE_RECENT_RACE   = 1   # 前走から28日以内（中4週以内）(旧2→1: クリーン窓で2/3期間liftマイナス、回収283.7%は汚染データ由来で再現せず)
 SCORE_FRONT_RUNNER  = 1   # 逃げ馬（コーナー通過順履歴から推定）
 SCORE_REVIVAL       = 0   # 前走1-3番人気かつ凡走(4着以下) 巻き返し馬 (旧2→0: N=83勝率2%回収10%)
 SCORE_PREV_GOOD     = 2   # 前走1-6番人気かつ1-3着（好走確認）
 SCORE_SAME_DIST     = 1   # 前走と同距離（±50m以内）
+SCORE_TRIPLE_RANK1  = 1   # 【v6新設】3指数すべて1位 (N=225 3着内48.9% lift全期間+10pp以上)
+SCORE_DIST_EXTEND   = -1  # 【v6新設】距離延長>50m (N=150 3着内24.0% lift全期間マイナス)
+SCORE_PREV_BAD      = -1  # 【v6新設】前走10着以下 (N=126 3着内20.6% lift全期間マイナス)
 
 THRESHOLD_HIGH   = 5   # ★★★
 THRESHOLD_MID    = 3   # ★★
@@ -51,6 +55,11 @@ def _load_cookies(context):
 def _norm_name(s: str) -> str:
     """短縮名の空白・全半角を正規化"""
     return re.sub(r"\s+", "", s).strip()
+
+
+def _is_rank1(v) -> bool:
+    """トリプルCSVの順位フィールド（'1位' / '1位タイ' 等）が1位か"""
+    return bool(re.match(r"^1位", str(v or "").strip()))
 
 
 def _extract_race_id(url: str) -> str:
@@ -325,6 +334,13 @@ def score_horses(
         score = 0
         breakdown = []
 
+        # ⓪ 3指数すべて1位（v6新設・トリプルCSV由来の順位フィールド）
+        if (_is_rank1(horse.get("近走平均順位"))
+                and _is_rank1(horse.get("当該距離順位"))
+                and _is_rank1(horse.get("当該コース順位"))):
+            score += SCORE_TRIPLE_RANK1
+            breakdown.append({"label": "3指数すべて1位", "pts": SCORE_TRIPLE_RANK1})
+
         # ① 推定ポジション有利馬（廃止: SCORE_POSITION=0）
         if num in position_nums and SCORE_POSITION > 0:
             score += SCORE_POSITION
@@ -362,6 +378,12 @@ def score_horses(
         if prev_db is not None:
             hid = horse_id_map.get(num, "")
             prev = prev_db.get(hid, {}) if hid else {}
+
+            # 汚染ガード: prev_date が対象日以降（=未来の前走）なら前走データを使わない
+            if prev and race_date:
+                _pd = (prev.get("prev_date") or "").replace("/", "")
+                if len(_pd) == 8 and _pd.isdigit() and _pd >= race_date:
+                    prev = {}
 
             # ⑤⑦ 前走タイム指数 + レース内1位（合算上限3pt）
             try:
@@ -417,15 +439,30 @@ def score_horses(
             except (ValueError, TypeError):
                 pass
 
-            # ⑪ 同距離前走（±50m以内）
+            # ⑫ 前走大敗（10着以下）減点（v6新設）
+            try:
+                prev_rank_val = int(prev.get("prev_rank", "") or 0)
+                if prev_rank_val >= 10:
+                    score += SCORE_PREV_BAD
+                    breakdown.append({"label": f"前走大敗({prev_rank_val}着)", "pts": SCORE_PREV_BAD})
+            except (ValueError, TypeError):
+                pass
+
+            # ⑪ 同距離前走（±50m以内）/ 距離延長>50m 減点（v6新設）
+            # ※距離短縮はliftマイナスだが不安定のため加減点なし（docs/factor_audit_202606.md）
             if race_dist:
                 try:
                     prev_dist_str = prev.get("prev_dist", "")
                     if prev_dist_str:
                         m = re.search(r"(\d{3,4})", prev_dist_str)
-                        if m and abs(int(m.group(1)) - race_dist) <= 50:
-                            score += SCORE_SAME_DIST
-                            breakdown.append({"label": f"同距離前走({m.group(1)}m→{race_dist}m)", "pts": SCORE_SAME_DIST})
+                        if m:
+                            diff = race_dist - int(m.group(1))
+                            if abs(diff) <= 50:
+                                score += SCORE_SAME_DIST
+                                breakdown.append({"label": f"同距離前走({m.group(1)}m→{race_dist}m)", "pts": SCORE_SAME_DIST})
+                            elif diff > 50:
+                                score += SCORE_DIST_EXTEND
+                                breakdown.append({"label": f"距離延長({m.group(1)}m→{race_dist}m)", "pts": SCORE_DIST_EXTEND})
                 except (ValueError, TypeError):
                     pass
 
