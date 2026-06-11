@@ -52,7 +52,14 @@ def is_cache_fresh(entry: dict, date: str) -> bool:
         return False
 
 
-def scrape_horse_prev(page, horse_id: str) -> dict:
+def _prev_is_valid(entry: dict, date: str) -> bool:
+    """キャッシュの prev_date が対象日より前か（未来の前走=汚染データを弾く）"""
+    pd_str = (entry.get("prev_date") or "").replace("/", "")
+    return len(pd_str) == 8 and pd_str.isdigit() and pd_str < date
+
+
+def scrape_horse_prev(page, horse_id: str, target_date: str) -> dict:
+    """db.netkeiba の馬ページから target_date より前の直近レースを取得（date-aware）"""
     url = f"https://db.netkeiba.com/horse/{horse_id}/"
     page.goto(url, wait_until="domcontentloaded")
     time.sleep(2)
@@ -67,7 +74,17 @@ def scrape_horse_prev(page, horse_id: str) -> dict:
     if not data_rows:
         return {}
 
-    cells = [c.get_text(strip=True) for c in data_rows[0].find_all("td")]
+    target_row = None
+    for row in data_rows:
+        cells_tmp = [c.get_text(strip=True) for c in row.find_all("td")]
+        race_date_str = (cells_tmp[0] if cells_tmp else "").replace("/", "")
+        if len(race_date_str) == 8 and race_date_str.isdigit() and race_date_str < target_date:
+            target_row = row
+            break
+    if target_row is None:
+        return {}
+
+    cells = [c.get_text(strip=True) for c in target_row.find_all("td")]
 
     def safe(idx):
         try: return cells[idx]
@@ -111,7 +128,9 @@ def main():
     # 新規/期限切れの馬を特定
     need_scrape = {
         hid: name for hid, name in horse_ids.items()
-        if hid not in horse_db or not is_cache_fresh(horse_db[hid], date)
+        if (hid not in horse_db
+            or not is_cache_fresh(horse_db[hid], date)
+            or not _prev_is_valid(horse_db[hid], date))
     }
     logger.info(f"新規取得が必要: {len(need_scrape)}頭 (キャッシュ利用: {len(horse_ids) - len(need_scrape)}頭)")
 
@@ -145,7 +164,7 @@ def main():
         for i, (hid, name) in enumerate(need_scrape.items(), 1):
             logger.info(f"[{i}/{total}] {name} ({hid})")
             try:
-                data = scrape_horse_prev(page, hid)
+                data = scrape_horse_prev(page, hid, date)
                 data["scraped_at"] = date
                 horse_db[hid] = data
                 logger.info(f"  → 前走: {data.get('prev_date','')} 人気{data.get('prev_pop','')} 着順{data.get('prev_rank','')} 指数{data.get('prev_idx','')}")

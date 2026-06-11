@@ -15,7 +15,10 @@ from playwright.sync_api import sync_playwright
 
 from scraper import load_env, load_cookies, get_race_ids, human_sleep, human_browse, _random_scroll
 from race_pickup import scrape_shutuba, scrape_data_top, score_horses
-from run_pickup_all import load_horse_db, load_horse_style, save_horse_db, is_cache_fresh, scrape_horse_prev_page
+from run_pickup_all import (
+    load_horse_db, load_horse_style, save_horse_db,
+    is_cache_fresh, _prev_is_valid, scrape_horse_prev_page,
+)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
@@ -129,9 +132,11 @@ def main():
                 # 前走データ
                 horse_id_map = shutuba_data.get("horse_id_map", {})
                 for num, hid in horse_id_map.items():
-                    if hid and (hid not in horse_db or not is_cache_fresh(horse_db[hid], date)):
+                    if hid and (hid not in horse_db
+                                or not is_cache_fresh(horse_db[hid], date)
+                                or not _prev_is_valid(horse_db[hid], date)):
                         try:
-                            prev = scrape_horse_prev_page(page, hid)
+                            prev = scrape_horse_prev_page(page, hid, date)
                             prev["scraped_at"] = date
                             horse_db[hid] = prev
                             human_sleep(2.0, 6.0)
@@ -141,7 +146,7 @@ def main():
                 race_max_prev_idx = None
                 prev_idxs = []
                 for hid in horse_id_map.values():
-                    if hid in horse_db:
+                    if hid in horse_db and _prev_is_valid(horse_db[hid], date):
                         try:
                             prev_idxs.append(float(horse_db[hid].get("prev_idx", "")))
                         except (ValueError, TypeError):
@@ -196,6 +201,24 @@ def main():
         json.dump(existing, f, ensure_ascii=False, indent=2, default=str)
 
     logger.info(f"マージ保存完了: {pickup_path}")
+
+    # per-date prev_data.json スナップショット（既存があればマージして上書き）
+    prev_data_path = pickup_path.parent / "prev_data.json"
+    snapshot = {}
+    if prev_data_path.exists():
+        with open(prev_data_path, encoding="utf-8") as f:
+            snapshot = json.load(f)
+    all_hids = set()
+    for rdata in existing["races"].values():
+        if isinstance(rdata, dict):
+            all_hids.update(v for v in rdata.get("horse_id_map", {}).values() if v)
+    # 既存スナップショット（当日時点の正データ）を優先し、欠けている馬のみ追加
+    for hid in all_hids:
+        if hid in horse_db and hid not in snapshot:
+            snapshot[hid] = horse_db[hid]
+    with open(prev_data_path, "w", encoding="utf-8") as f:
+        json.dump(snapshot, f, ensure_ascii=False, indent=2)
+    logger.info(f"prev_data.json 保存: {len(snapshot)}頭")
 
     # サマリー
     for label in sorted(failed_labels):

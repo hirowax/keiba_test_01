@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 """
-既存の pickup_scores.json を新スコアリング(H1/H2)で再計算する
+既存の pickup_scores.json を新スコアリングで再計算する
 horse_id_map は race_results.json から補完
-usage: python3 rescore.py [YYYYMMDD]
+usage: python3 rescore.py [YYYYMMDD] [--allow-global-db]
+
+前走データは per-date の output/{date}/prev_data.json を使う（採点当日のスナップショット）。
+prev_data.json がない日付はグローバル horse_db.json だと「未来の前走」で汚染されるため停止する。
+どうしても強行する場合のみ --allow-global-db を付ける（クリーン境界 20260328 以降の直近日付のみ推奨。
+その場合も prev_date >= 対象日 のエントリは除外される）。
 """
 
 import sys
@@ -15,22 +20,47 @@ from race_pickup import score_horses, SCORING_VERSION
 BASE_DIR = Path(__file__).parent
 
 
+def _prev_is_valid(entry: dict, date: str) -> bool:
+    """prev_date が対象日より前か（未来の前走=汚染データを弾く）"""
+    pd_str = (entry.get("prev_date") or "").replace("/", "")
+    return len(pd_str) == 8 and pd_str.isdigit() and pd_str < date
+
+
 def main():
-    date = sys.argv[1] if len(sys.argv) >= 2 else datetime.now().strftime("%Y%m%d")
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    allow_global_db = "--allow-global-db" in sys.argv
+    date = args[0] if args else datetime.now().strftime("%Y%m%d")
 
     pickup_path  = BASE_DIR / "output" / date / "pickup_scores.json"
     results_path = BASE_DIR / "output" / date / "race_results.json"
+    prev_data_path = BASE_DIR / "output" / date / "prev_data.json"
     horse_db_path = BASE_DIR / "output" / "horse_db.json"
 
     if not pickup_path.exists():
         print(f"pickup_scores.json が見つかりません: {pickup_path}"); return
-    if not horse_db_path.exists():
-        print(f"horse_db.json が見つかりません: {horse_db_path}"); return
 
     with open(pickup_path, encoding="utf-8") as f:
         pickup_data = json.load(f)
-    with open(horse_db_path, encoding="utf-8") as f:
-        horse_db = json.load(f)
+
+    # 前走データソースの選択（per-date スナップショット優先）
+    if prev_data_path.exists():
+        with open(prev_data_path, encoding="utf-8") as f:
+            horse_db = json.load(f)
+        print(f"prev_data.json 使用: {len(horse_db)}頭（採点当日スナップショット）")
+    elif allow_global_db:
+        if not horse_db_path.exists():
+            print(f"horse_db.json が見つかりません: {horse_db_path}"); return
+        with open(horse_db_path, encoding="utf-8") as f:
+            horse_db = json.load(f)
+        before = len(horse_db)
+        horse_db = {hid: e for hid, e in horse_db.items() if _prev_is_valid(e, date)}
+        print(f"⚠️  グローバル horse_db 使用（--allow-global-db）: "
+              f"{before}頭中 prev_date>={date} の{before - len(horse_db)}頭を除外 → {len(horse_db)}頭")
+    else:
+        print(f"❌ {date} に prev_data.json がありません。")
+        print(f"   グローバル horse_db での再スコアは前走データ汚染を起こすため中止します。")
+        print(f"   （強行する場合: --allow-global-db。クリーン境界 20260328 以降の直近日付のみ推奨）")
+        return
 
     horse_style_path = BASE_DIR / "output" / "horse_style.json"
     horse_style_db = {}

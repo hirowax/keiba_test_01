@@ -66,8 +66,18 @@ def is_cache_fresh(entry: dict, date: str) -> bool:
         return False
 
 
-def scrape_horse_prev_page(page, horse_id: str) -> dict:
-    """db.netkeiba の馬ページから前走データを取得"""
+def _prev_is_valid(entry: dict, date: str) -> bool:
+    """キャッシュの prev_date が対象日より前か（未来の前走=汚染データを弾く）"""
+    pd_str = (entry.get("prev_date") or "").replace("/", "")
+    return len(pd_str) == 8 and pd_str.isdigit() and pd_str < date
+
+
+def scrape_horse_prev_page(page, horse_id: str, target_date: str) -> dict:
+    """db.netkeiba の馬ページから target_date より前の直近レースを取得
+
+    最新行固定だと過去日付の遡及生成・rescore時に「未来のレース」が前走になるため、
+    対象日より前の最初の行を選ぶ（date-aware）。
+    """
     from bs4 import BeautifulSoup as BS
     url = f"https://db.netkeiba.com/horse/{horse_id}/"
     human_browse(page, url)
@@ -83,7 +93,17 @@ def scrape_horse_prev_page(page, horse_id: str) -> dict:
     if not data_rows:
         return {}
 
-    cells = [c.get_text(strip=True) for c in data_rows[0].find_all("td")]
+    target_row = None
+    for row in data_rows:
+        cells_tmp = [c.get_text(strip=True) for c in row.find_all("td")]
+        race_date_str = (cells_tmp[0] if cells_tmp else "").replace("/", "")
+        if len(race_date_str) == 8 and race_date_str.isdigit() and race_date_str < target_date:
+            target_row = row
+            break
+    if target_row is None:
+        return {}
+
+    cells = [c.get_text(strip=True) for c in target_row.find_all("td")]
 
     def safe(idx):
         try: return cells[idx]
@@ -210,13 +230,15 @@ def main():
                 for num, hid in horse_id_map.items():
                     if not hid:
                         continue
-                    in_cache = hid in horse_db and is_cache_fresh(horse_db[hid], date)
+                    in_cache = (hid in horse_db
+                                and is_cache_fresh(horse_db[hid], date)
+                                and _prev_is_valid(horse_db[hid], date))
                     is_triple = str(num) in triple_nums
                     # 重複馬: キャッシュ切れなら必ずスクレイプ
                     # 非重複馬: キャッシュがあれば使う、なければスキップ（race_max計算用のみ）
                     if is_triple and not in_cache:
                         try:
-                            prev = scrape_horse_prev_page(page, hid)
+                            prev = scrape_horse_prev_page(page, hid, date)
                             prev["scraped_at"] = date
                             horse_db[hid] = prev
                             human_sleep(2.0, 6.0)
@@ -227,7 +249,7 @@ def main():
                 race_max_prev_idx = None
                 prev_idxs = []
                 for hid in horse_id_map.values():
-                    if hid in horse_db:
+                    if hid in horse_db and _prev_is_valid(horse_db[hid], date):
                         try:
                             prev_idxs.append(float(horse_db[hid].get("prev_idx", "")))
                         except (ValueError, TypeError):
@@ -265,6 +287,8 @@ def main():
                     if pop_val < 5:
                         continue
                     prev = horse_db.get(hid, {})
+                    if prev and not _prev_is_valid(prev, date):
+                        continue  # 未来の前走（汚染キャッシュ）は使わない
                     try:
                         prev_rank = int(prev.get("prev_rank", "") or 99)
                     except (ValueError, TypeError):
@@ -327,6 +351,17 @@ def main():
     # JSON 保存
     out_dir = BASE_DIR / "output" / date
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    # per-date スナップショット（rescore.py が後日参照する。グローバルhorse_dbの汚染防止）
+    all_hids = set()
+    for rdata in results.values():
+        if isinstance(rdata, dict):
+            all_hids.update(v for v in rdata.get("horse_id_map", {}).values() if v)
+    snapshot = {hid: horse_db[hid] for hid in all_hids if hid in horse_db}
+    prev_data_path = out_dir / "prev_data.json"
+    with open(prev_data_path, "w", encoding="utf-8") as f:
+        json.dump(snapshot, f, ensure_ascii=False, indent=2)
+    logger.info(f"prev_data.json 保存: {len(snapshot)}頭")
     out_path = out_dir / "pickup_scores.json"
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(
