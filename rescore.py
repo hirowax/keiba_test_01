@@ -10,7 +10,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-from race_pickup import score_horses
+from race_pickup import score_horses, SCORING_VERSION
 
 BASE_DIR = Path(__file__).parent
 
@@ -97,7 +97,8 @@ def main():
         new_scored = score_horses(triple_horses, shutuba_data, data_top_data,
                                   prev_db=horse_db, race_max_prev_idx=race_max_prev_idx,
                                   race_date=date, horse_style_db=horse_style_db,
-                                  race_dist=race_dist)
+                                  race_dist=race_dist,
+                                  predicted_pace=rdata.get("predicted_pace"))
         rdata["scored"] = new_scored
 
         max_score = max((h["score"] for h in new_scored), default=0)
@@ -105,10 +106,12 @@ def main():
         print(f"{race_label}: 最高{max_score}pt ({top_horse})")
         updated += 1
 
+    pickup_data["scoring_version"] = SCORING_VERSION
+    pickup_data["rescored_at"] = datetime.now().isoformat()
     with open(pickup_path, "w", encoding="utf-8") as f:
         json.dump(pickup_data, f, ensure_ascii=False, indent=2, default=str)
 
-    print(f"\n再スコアリング完了: {updated}レース → {pickup_path}")
+    print(f"\n再スコアリング完了: {updated}レース ({SCORING_VERSION}) → {pickup_path}")
 
 
 if __name__ == "__main__":

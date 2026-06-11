@@ -153,7 +153,8 @@ def main():
                 scored = score_horses(triple_horses, shutuba_data, data_top_data,
                                       prev_db=horse_db, race_max_prev_idx=race_max_prev_idx,
                                       race_date=date, horse_style_db=horse_style_db,
-                                      race_dist=race_dist)
+                                      race_dist=race_dist,
+                                      predicted_pace=shutuba_data.get("predicted_pace"))
 
                 has_any_bonus = any(h["score"] > 0 for h in scored)
                 advice = None

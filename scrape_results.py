@@ -26,7 +26,7 @@ from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
 # scraper.py の共通ユーティリティを流用
-from scraper import human_sleep, human_browse, load_cookies, login, load_env, COOKIES_FILE
+from scraper import human_sleep, human_browse, load_cookies, login, load_env, COOKIES_FILE, get_race_ids
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger(__name__)
@@ -352,25 +352,20 @@ def main():
     out_dir = OUTPUT_DIR / date
     pickup_path = out_dir / "pickup_scores.json"
 
-    if not pickup_path.exists():
-        log.error(f"pickup_scores.json が見つかりません: {pickup_path}")
-        sys.exit(1)
-
-    with open(pickup_path, encoding="utf-8") as f:
-        pickup = json.load(f)
-
-    # race_id マップを pickup から取得
-    race_id_map = {
-        label: rdata["race_id"]
-        for label, rdata in pickup.get("races", {}).items()
-        if rdata.get("race_id")
-    }
-
-    if not race_id_map:
-        log.error("pickup_scores.json に race_id がありません")
-        sys.exit(1)
-
-    log.info(f"対象レース数: {len(race_id_map)}")
+    # race_id マップ: pickup_scores.json があればそこから、なければレース一覧ページから取得
+    race_id_map = {}
+    if pickup_path.exists():
+        with open(pickup_path, encoding="utf-8") as f:
+            pickup = json.load(f)
+        race_id_map = {
+            label: rdata["race_id"]
+            for label, rdata in pickup.get("races", {}).items()
+            if rdata.get("race_id")
+        }
+        if race_id_map:
+            log.info(f"pickup_scores.json から {len(race_id_map)} レース取得")
+    else:
+        log.info("pickup_scores.json なし → レース一覧ページから取得します")
 
     email, password = load_env()
 
@@ -399,6 +394,16 @@ def main():
             sys.exit(1)
         page.goto("https://www.netkeiba.com/", wait_until="domcontentloaded")
         human_sleep(1.0, 2.0)
+
+        # pickup_scores.json がなかった場合、レース一覧ページから race_id を取得
+        if not race_id_map:
+            races = get_race_ids(page, date)
+            race_id_map = {r["label"]: r["race_id"] for r in races}
+            log.info(f"レース一覧ページから {len(race_id_map)} レース取得")
+            if not race_id_map:
+                log.error("レースが見つかりません")
+                browser.close()
+                sys.exit(1)
 
         race_results = {}    # calibrate_threshold.py 互換: {label: [{rank,num,name,...}]}
         race_conditions = {} # レース条件: {label: {distance, surface, condition, ...}}
@@ -448,6 +453,7 @@ def main():
         browser.close()
 
     # 保存
+    out_dir.mkdir(parents=True, exist_ok=True)
     results_path = out_dir / "race_results.json"
     conditions_path = out_dir / "race_conditions.json"
 

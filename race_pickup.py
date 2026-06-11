@@ -17,20 +17,26 @@ from playwright.sync_api import sync_playwright
 
 COOKIES_FILE = Path("cookies.json")
 
+# スコアリングバージョン: pickup_scores.json に埋め込む
+# v1: 初期版  v2: 巻き返し廃止・ピックアップ+2→+1
+# v3: 前走指数1位+1→+2・前走好走追加  v4: 中4週以内+1→+2(2026-05-04)
+# v5: ポジション廃止・上位3頭上限2pt・前走指数合算上限3pt・逃げ馬Sペース連動(2026-05-04)
+SCORING_VERSION = "v5"
+
 
 # ─── スコアリング定義 ────────────────────────────────────────────
-SCORE_POSITION      = 1   # 推定ポジション有利馬（4コーナーAI）
+SCORE_POSITION      = 0   # 推定ポジション有利馬（4コーナーAI）(N=68 勝率11.8% 単勝回収率34.6% → 廃止)
 SCORE_TOP3_EACH     = 1   # shutuba 各データ上位3頭 カテゴリー登場1回
 SCORE_PICKUP        = 1   # data_top データ分析ピックアップ3頭 (旧2→1: 組合せ依存、単体回収率66%)
 SCORE_ANALYSIS      = 1   # data_top 出走馬分析 カテゴリー登場1回
 SCORE_PREV_IDX_HIGH = 2   # 前走タイム指数90以上
 SCORE_PREV_IDX_MID  = 1   # 前走タイム指数70〜89
 SCORE_PREV_IDX_TOP1 = 2   # 前走タイム指数がレース内1位 (旧1→2: N=73勝率29%回収146%)
-SCORE_RECENT_RACE   = 1   # 前走から28日以内（中4週以内）
+SCORE_RECENT_RACE   = 2   # 前走から28日以内（中4週以内）(旧1→2: N=65 勝率20% 3着内47.7% 単勝回収率283.7%)
 SCORE_FRONT_RUNNER  = 1   # 逃げ馬（コーナー通過順履歴から推定）
 SCORE_REVIVAL       = 0   # 前走1-3番人気かつ凡走(4着以下) 巻き返し馬 (旧2→0: N=83勝率2%回収10%)
 SCORE_PREV_GOOD     = 2   # 前走1-6番人気かつ1-3着（好走確認）
-SCORE_SAME_DIST     = 1   # 前走と同距離（±100m以内）
+SCORE_SAME_DIST     = 1   # 前走と同距離（±50m以内）
 
 THRESHOLD_HIGH   = 5   # ★★★
 THRESHOLD_MID    = 3   # ★★
@@ -299,6 +305,7 @@ def score_horses(
     race_date: str = None,
     horse_style_db: dict = None,
     race_dist: int = None,
+    predicted_pace: str = None,
 ) -> List[dict]:
     """
     triple_horses: [{馬番, 馬名, ...}]  ← (A) 3指数重複馬
@@ -318,15 +325,15 @@ def score_horses(
         score = 0
         breakdown = []
 
-        # ① 推定ポジション有利馬
-        if num in position_nums:
+        # ① 推定ポジション有利馬（廃止: SCORE_POSITION=0）
+        if num in position_nums and SCORE_POSITION > 0:
             score += SCORE_POSITION
             breakdown.append({"label": "推定ポジション有利馬", "pts": SCORE_POSITION})
 
-        # ② 各データ上位3頭（shutuba）
+        # ② 各データ上位3頭（shutuba）上限2pt
         cnt = top3_hits.get(num, 0)
         if cnt > 0:
-            pts = cnt * SCORE_TOP3_EACH
+            pts = min(cnt * SCORE_TOP3_EACH, 2)
             score += pts
             breakdown.append({"label": f"各データ上位3頭 {cnt}カテゴリー", "pts": pts})
 
@@ -342,34 +349,45 @@ def score_horses(
             score += pts
             breakdown.append({"label": f"出走馬分析 {acnt}条件該当", "pts": pts})
 
-        # ⑨ 逃げ馬（horse_style_db使用）
+        # ⑨ 逃げ馬（Sペース予測時のみ加点）
         if horse_style_db is not None:
             hid_style = horse_id_map.get(num, "")
             style_entry = horse_style_db.get(hid_style, {}) if hid_style else {}
             if style_entry.get("style") == "逃げ" and style_entry.get("n_races", 0) >= 2:
-                score += SCORE_FRONT_RUNNER
-                breakdown.append({"label": f"逃げ馬({style_entry['n_races']}走実績)", "pts": SCORE_FRONT_RUNNER})
+                if predicted_pace == "S":
+                    score += SCORE_FRONT_RUNNER
+                    breakdown.append({"label": f"逃げ馬({style_entry['n_races']}走実績・Sペース)", "pts": SCORE_FRONT_RUNNER})
 
         # ⑤ 前走タイム指数 / ⑥ 巻き返し馬（prev_db使用）
         if prev_db is not None:
             hid = horse_id_map.get(num, "")
             prev = prev_db.get(hid, {}) if hid else {}
 
-            # ⑤ 前走タイム指数
+            # ⑤⑦ 前走タイム指数 + レース内1位（合算上限3pt）
             try:
                 prev_idx = float(prev.get("prev_idx", ""))
-                if prev_idx >= 90:
-                    score += SCORE_PREV_IDX_HIGH
-                    breakdown.append({"label": f"前走指数{prev_idx:.0f}(90以上)", "pts": SCORE_PREV_IDX_HIGH})
-                elif prev_idx >= 70:
-                    score += SCORE_PREV_IDX_MID
-                    breakdown.append({"label": f"前走指数{prev_idx:.0f}(70以上)", "pts": SCORE_PREV_IDX_MID})
+                prev_idx_score = 0
+                prev_idx_labels = []
 
-                # ⑦ 前走指数レース内1位
+                if prev_idx >= 90:
+                    prev_idx_score += SCORE_PREV_IDX_HIGH
+                    prev_idx_labels.append(f"前走指数{prev_idx:.0f}(90以上)")
+                elif prev_idx >= 70:
+                    prev_idx_score += SCORE_PREV_IDX_MID
+                    prev_idx_labels.append(f"前走指数{prev_idx:.0f}(70以上)")
+
                 if (race_max_prev_idx is not None and race_max_prev_idx > 0
                         and prev_idx == race_max_prev_idx):
-                    score += SCORE_PREV_IDX_TOP1
-                    breakdown.append({"label": f"前走指数レース内1位({prev_idx:.0f})", "pts": SCORE_PREV_IDX_TOP1})
+                    prev_idx_score += SCORE_PREV_IDX_TOP1
+                    prev_idx_labels.append(f"前走指数レース内1位({prev_idx:.0f})")
+
+                if prev_idx_score > 3:
+                    prev_idx_score = 3
+                    prev_idx_labels.append("(合算上限3pt)")
+
+                if prev_idx_score > 0:
+                    score += prev_idx_score
+                    breakdown.append({"label": " + ".join(prev_idx_labels), "pts": prev_idx_score})
             except (ValueError, TypeError):
                 pass
 
@@ -399,7 +417,7 @@ def score_horses(
             except (ValueError, TypeError):
                 pass
 
-            # ⑪ 同距離前走（±100m以内）
+            # ⑪ 同距離前走（±50m以内）
             if race_dist:
                 try:
                     prev_dist_str = prev.get("prev_dist", "")

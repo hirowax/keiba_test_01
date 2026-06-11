@@ -19,7 +19,7 @@ from scraper import (
     load_env, load_cookies, save_cookies, is_logged_in, login,
     get_race_ids, human_sleep, human_browse, _random_scroll, is_ip_blocked,
 )
-from race_pickup import scrape_shutuba, scrape_data_top, score_horses
+from race_pickup import scrape_shutuba, scrape_data_top, score_horses, SCORING_VERSION
 
 logging.basicConfig(
     level=logging.INFO,
@@ -239,7 +239,8 @@ def main():
                 scored = score_horses(triple_horses, shutuba_data, data_top_data,
                                       prev_db=horse_db, race_max_prev_idx=race_max_prev_idx,
                                       race_date=date, horse_style_db=horse_style_db,
-                                      race_dist=race_dist)
+                                      race_dist=race_dist,
+                                      predicted_pace=shutuba_data.get("predicted_pace"))
 
                 has_any_bonus = any(h["score"] > 0 for h in scored)
                 advice = None
@@ -261,7 +262,7 @@ def main():
                         pop_val = int(pop_str)
                     except (ValueError, TypeError):
                         continue
-                    if not (5 <= pop_val <= 10):
+                    if pop_val < 5:
                         continue
                     prev = horse_db.get(hid, {})
                     try:
@@ -329,7 +330,8 @@ def main():
     out_path = out_dir / "pickup_scores.json"
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(
-            {"date": date, "generated_at": datetime.now().isoformat(), "races": results},
+            {"date": date, "generated_at": datetime.now().isoformat(),
+             "scoring_version": SCORING_VERSION, "races": results},
             f, ensure_ascii=False, indent=2, default=str
         )
 

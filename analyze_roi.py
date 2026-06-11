@@ -30,6 +30,7 @@ def load_all_data():
         with open(rr_path, encoding="utf-8") as f:
             rr = json.load(f)
 
+        scoring_version = ps.get("scoring_version", "v3")  # 旧ファイルはv3扱い
         races = ps.get("races", ps)  # top-level or nested
 
         for race_label, rdata in races.items():
@@ -71,33 +72,33 @@ def load_all_data():
                 # breakdown labels
                 bd_labels = [b["label"] for b in breakdown]
 
-                # 各ファクターフラグ
+                # 各ファクターフラグ（v5���降は��合ラベルあるためelifではなくifで独立判定）
                 factors = set()
                 for b in breakdown:
                     lb = b["label"]
-                    if "前走指数" in lb and "90以上" in lb:
+                    if "90以上" in lb:
                         factors.add("prev_idx_90")
-                    elif "前走指数" in lb and "70" in lb:
+                    if "70以上" in lb:
                         factors.add("prev_idx_70")
-                    elif "前走指数レース内1位" in lb:
+                    if "前走指数レース内1位" in lb:
                         factors.add("prev_idx_race_top")
-                    elif "巻き返し" in lb:
+                    if "巻き返し" in lb:
                         factors.add("makikaeshi")
-                    elif "前走好走" in lb:
+                    if "前走好走" in lb:
                         factors.add("prev_good")
-                    elif "逃げ馬" in lb:
+                    if "逃げ馬" in lb:
                         factors.add("nige")
-                    elif "中4週以内" in lb:
+                    if "中4週以内" in lb:
                         factors.add("interval_short")
-                    elif "同距離" in lb:
+                    if "同距離" in lb:
                         factors.add("same_dist")
-                    elif "ポジション有利" in lb:
+                    if "ポジション有利" in lb:
                         factors.add("position")
-                    elif "データ分析ピックアップ" in lb:
+                    if "データ分析ピックアップ" in lb:
                         factors.add("data_pickup")
-                    elif "各データ上位" in lb:
+                    if "各データ上位" in lb:
                         factors.add("top3_data")
-                    elif "出走馬分析" in lb:
+                    if "出走馬分析" in lb:
                         factors.add("analysis")
 
                 try:
@@ -122,6 +123,7 @@ def load_all_data():
                     "bd_labels": bd_labels,
                     "is_win": rank == 1,
                     "is_top3": rank is not None and rank <= 3,
+                    "scoring_version": scoring_version,
                 })
 
     return horses
@@ -302,10 +304,27 @@ def main():
     print()
 
     # ──────────────────────────────────────
-    # 10. 高回収率パターン探索
+    # 10. スコアリングバージョン別比較
     # ──────────────────────────────────────
     print("=" * 100)
-    print("【10】高回収率パターン探索（回収率80%以上 & N>=5）")
+    print("【10】スコアリングバージョン別（全馬 & スコア閾値別）")
+    print("=" * 100)
+    versions = sorted(set(h["scoring_version"] for h in horses))
+    for ver in versions:
+        dates_in_ver = sorted(set(h["date"] for h in horses if h["scoring_version"] == ver))
+        sub_all = [h for h in horses if h["scoring_version"] == ver]
+        print(f"\n  [{ver}]  {dates_in_ver[0]}〜{dates_in_ver[-1]}  ({len(dates_in_ver)}日 / {len(sub_all)}頭)")
+        for threshold in [1, 3, 5, 7, 8, 9]:
+            sub = [h for h in sub_all if h["score"] >= threshold]
+            print_stats(calc_stats(sub, f"  {ver} スコア{threshold}pt以上"))
+
+    print()
+
+    # ──────────────────────────────────────
+    # 11. 高回収率パターン探索
+    # ──────────────────────────────────────
+    print("=" * 100)
+    print("【11】高回収率パターン探索（回収率80%以上 & N>=5）")
     print("=" * 100)
     patterns = []
 
