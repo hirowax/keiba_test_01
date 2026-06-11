@@ -233,9 +233,9 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
         if not name or not num.isdigit():
             continue
 
-        # 性齢
+        # 性齢: 専用クラスがなく td.Horse_Info.Txt_C（馬名セルは Horse_Info のみ）
         sex_age = ""
-        sa_cell = tr.find("td", class_=re.compile(r"[Bb]arei|Sex|sex_age"))
+        sa_cell = tr.find("td", class_=re.compile(r"[Bb]arei|Sex|sex_age")) or tr.select_one("td.Horse_Info.Txt_C")
         if sa_cell:
             sex_age = _text(sa_cell)
 
@@ -294,11 +294,14 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
                 odds = _float(_text(td))
                 break
 
-        # 上がり3F
+        # 上がり3F: 後3Fセルに専用クラスはなく class "Time"（ハイライト時 BgBlue02 等が付く）。
+        # 行内の Time セル群の末尾（タイム→着差→後3F の順）を取り、妥当範囲のみ採用
         last3f = 0.0
-        l3f_cell = tr.find("td", class_=re.compile(r"[Ll]ast3[Ff]|Agari|agari"))
-        if l3f_cell:
-            last3f = _float(_text(l3f_cell))
+        time_cells = [td for td in tds if "Time" in (td.get("class") or [])]
+        if time_cells:
+            v = _float(_text(time_cells[-1]))
+            if 25.0 <= v <= 50.0:
+                last3f = v
 
         # コーナー通過順
         corners = []
@@ -465,6 +468,16 @@ def main():
     log.info(f"保存完了: {results_path}")
     log.info(f"保存完了: {conditions_path}")
     log.info(f"取得レース数: {len(race_results)} / {len(race_id_map)}")
+
+    # データ品質チェック（cronログで気づけるように WARNING を出す）
+    all_horses = [h for rows in race_results.values() for h in rows]
+    if all_horses:
+        n_corner = sum(1 for h in all_horses if h.get("corners"))
+        n_last3f = sum(1 for h in all_horses if h.get("last3f"))
+        if n_corner == 0:
+            log.warning(f"⚠️  コーナー通過順が全馬空です（掲載前の可能性）。後日 scrape_results.py {date} で再取得を推奨")
+        if n_last3f == 0:
+            log.warning(f"⚠️  上がり3Fが全馬空です。ページ構造変更の可能性を確認してください")
 
 
 if __name__ == "__main__":
