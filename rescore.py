@@ -46,7 +46,18 @@ def main():
     if prev_data_path.exists():
         with open(prev_data_path, encoding="utf-8") as f:
             horse_db = json.load(f)
-        print(f"prev_data.json 使用: {len(horse_db)}頭（採点当日スナップショット）")
+        n_snap = len(horse_db)
+        # スナップショットの欠損馬（スクレイプ失敗等で空）はグローバルDBから
+        # prev_date < 対象日 のエントリのみ補完する
+        n_fill = 0
+        if horse_db_path.exists():
+            with open(horse_db_path, encoding="utf-8") as f:
+                global_db = json.load(f)
+            for hid, e in global_db.items():
+                if not horse_db.get(hid, {}).get("prev_date") and _prev_is_valid(e, date):
+                    horse_db[hid] = e
+                    n_fill += 1
+        print(f"prev_data.json 使用: {n_snap}頭（採点当日スナップショット）+ グローバルDB補完{n_fill}頭")
     elif allow_global_db:
         if not horse_db_path.exists():
             print(f"horse_db.json が見つかりません: {horse_db_path}"); return
