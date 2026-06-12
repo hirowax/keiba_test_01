@@ -15,9 +15,12 @@
       "horse_weight_diff": -2,
       "time": "1:11.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.4,
+      "corners": [
+        11,
+        11
+      ],
+      "sex_age": "牡4",
       "gate": "3"
     },
     {
@@ -35,9 +38,12 @@
       "horse_weight_diff": -4,
       "time": "1:11.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.5,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝4",
       "gate": "8"
     },
     {
@@ -55,9 +61,12 @@
       "horse_weight_diff": 0,
       "time": "1:11.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.0,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝4",
       "gate": "7"
     },
     {
@@ -75,9 +84,12 @@
       "horse_weight_diff": 2,
       "time": "1:11.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.6,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡4",
       "gate": "2"
     },
     {
@@ -95,9 +107,12 @@
       "horse_weight_diff": 6,
       "time": "1:11.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.5,
+      "corners": [
+        7,
+        8
+      ],
+      "sex_age": "牡5",
       "gate": "4"
     },
     {
@@ -115,9 +130,12 @@
       "horse_weight_diff": -4,
       "time": "1:11.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        15,
+        14
+      ],
+      "sex_age": "牝5",
       "gate": "1"
     },
     {
@@ -135,9 +153,12 @@
       "horse_weight_diff": -8,
       "time": "1:11.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.6,
+      "corners": [
+        12,
+        12
+      ],
+      "sex_age": "牡4",
       "gate": "1"
     },
     {
@@ -155,9 +176,12 @@
       "horse_weight_diff": 4,
       "time": "1:11.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.4,
+      "corners": [
+        13,
+        12
+      ],
+      "sex_age": "牡5",
       "gate": "2"
     },
     {
@@ -175,9 +199,12 @@
       "horse_weight_diff": -4,
       "time": "1:11.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.6,
+      "corners": [
+        7,
+        6
+      ],
+      "sex_age": "牝4",
       "gate": "7"
     },
     {
@@ -195,9 +222,12 @@
       "horse_weight_diff": 0,
       "time": "1:11.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.1,
+      "corners": [
+        10,
+        8
+      ],
+      "sex_age": "牡5",
       "gate": "8"
     },
     {
@@ -215,9 +245,12 @@
       "horse_weight_diff": -8,
       "time": "1:12.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.6,
+      "corners": [
+        9,
+        8
+      ],
+      "sex_age": "牡4",
       "gate": "6"
     },
     {
@@ -235,9 +268,12 @@
       "horse_weight_diff": 0,
       "time": "1:12.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.2,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝4",
       "gate": "3"
     },
     {
@@ -255,9 +291,12 @@
       "horse_weight_diff": 12,
       "time": "1:12.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.9,
+      "corners": [
+        13,
+        14
+      ],
+      "sex_age": "牝5",
       "gate": "5"
     },
     {
@@ -275,9 +314,12 @@
       "horse_weight_diff": 2,
       "time": "1:12.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.6,
+      "corners": [
+        16,
+        16
+      ],
+      "sex_age": "牡5",
       "gate": "6"
     },
     {
@@ -295,9 +337,12 @@
       "horse_weight_diff": 4,
       "time": "1:13.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.9,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝4",
       "gate": "4"
     },
     {
@@ -315,9 +360,12 @@
       "horse_weight_diff": 2,
       "time": "1:13.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.4,
+      "corners": [
+        6,
+        6
+      ],
+      "sex_age": "牝5",
       "gate": "5"
     }
   ],
@@ -337,9 +385,12 @@
       "horse_weight_diff": 2,
       "time": "1:20.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.9,
+      "corners": [
+        12,
+        11
+      ],
+      "sex_age": "牡3",
       "gate": "2"
     },
     {
@@ -357,9 +408,12 @@
       "horse_weight_diff": -6,
       "time": "1:20.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.5,
+      "corners": [
+        6,
+        7
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -377,9 +431,12 @@
       "horse_weight_diff": 4,
       "time": "1:20.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.7,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -397,9 +454,12 @@
       "horse_weight_diff": 2,
       "time": "1:20.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        3,
+        2
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -417,9 +477,12 @@
       "horse_weight_diff": -6,
       "time": "1:20.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        3,
+        4
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -437,9 +500,12 @@
       "horse_weight_diff": 2,
       "time": "1:20.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.5,
+      "corners": [
+        12,
+        11
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -457,9 +523,12 @@
       "horse_weight_diff": 8,
       "time": "1:21.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.9,
+      "corners": [
+        9,
+        8
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -477,9 +546,12 @@
       "horse_weight_diff": 14,
       "time": "1:21.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.4,
+      "corners": [
+        14,
+        14
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -497,9 +569,12 @@
       "horse_weight_diff": 2,
       "time": "1:21.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.4,
+      "corners": [
+        6,
+        5
+      ],
+      "sex_age": "牝3",
       "gate": "3"
     },
     {
@@ -517,9 +592,12 @@
       "horse_weight_diff": 4,
       "time": "1:21.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.6,
+      "corners": [
+        15,
+        15
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -537,9 +615,12 @@
       "horse_weight_diff": 2,
       "time": "1:21.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.4,
+      "corners": [
+        11,
+        9
+      ],
+      "sex_age": "牝3",
       "gate": "8"
     },
     {
@@ -557,9 +638,12 @@
       "horse_weight_diff": 4,
       "time": "1:22.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.9,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
@@ -577,9 +661,12 @@
       "horse_weight_diff": -6,
       "time": "1:22.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.1,
+      "corners": [
+        6,
+        9
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
@@ -597,9 +684,12 @@
       "horse_weight_diff": 2,
       "time": "1:22.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.3,
+      "corners": [
+        16,
+        16
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     },
     {
@@ -617,9 +707,12 @@
       "horse_weight_diff": 0,
       "time": "1:22.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        17,
+        17
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     },
     {
@@ -637,9 +730,12 @@
       "horse_weight_diff": 22,
       "time": "1:23.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.0,
+      "corners": [
+        9,
+        11
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     },
     {
@@ -657,9 +753,12 @@
       "horse_weight_diff": -2,
       "time": "1:23.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.0,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     }
   ],
@@ -679,9 +778,14 @@
       "horse_weight_diff": 0,
       "time": "2:25.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.0,
+      "corners": [
+        13,
+        13,
+        1,
+        1
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -699,9 +803,14 @@
       "horse_weight_diff": 0,
       "time": "2:25.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.3,
+      "corners": [
+        10,
+        10,
+        2,
+        2
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -719,9 +828,14 @@
       "horse_weight_diff": 10,
       "time": "2:25.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.8,
+      "corners": [
+        15,
+        14,
+        12,
+        9
+      ],
+      "sex_age": "牡3",
       "gate": "2"
     },
     {
@@ -739,9 +853,14 @@
       "horse_weight_diff": 0,
       "time": "2:26.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        17,
+        17,
+        8,
+        6
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -759,9 +878,14 @@
       "horse_weight_diff": -2,
       "time": "2:26.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.4,
+      "corners": [
+        14,
+        14,
+        5,
+        4
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -779,9 +903,14 @@
       "horse_weight_diff": 2,
       "time": "2:26.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.3,
+      "corners": [
+        3,
+        3,
+        5,
+        6
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
@@ -799,9 +928,14 @@
       "horse_weight_diff": 2,
       "time": "2:26.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.3,
+      "corners": [
+        6,
+        6,
+        8,
+        9
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -819,9 +953,14 @@
       "horse_weight_diff": -2,
       "time": "2:26.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.0,
+      "corners": [
+        6,
+        6,
+        3,
+        3
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -839,9 +978,14 @@
       "horse_weight_diff": 2,
       "time": "2:27.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.8,
+      "corners": [
+        8,
+        6,
+        12,
+        13
+      ],
+      "sex_age": "牡3",
       "gate": "2"
     },
     {
@@ -859,9 +1003,14 @@
       "horse_weight_diff": -6,
       "time": "2:27.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.0,
+      "corners": [
+        8,
+        6,
+        12,
+        16
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
@@ -879,9 +1028,14 @@
       "horse_weight_diff": -2,
       "time": "2:27.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.0,
+      "corners": [
+        11,
+        10,
+        15,
+        14
+      ],
+      "sex_age": "牡3",
       "gate": "1"
     },
     {
@@ -899,9 +1053,14 @@
       "horse_weight_diff": 6,
       "time": "2:27.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.6,
+      "corners": [
+        3,
+        3,
+        8,
+        9
+      ],
+      "sex_age": "牝3",
       "gate": "8"
     },
     {
@@ -919,9 +1078,14 @@
       "horse_weight_diff": -2,
       "time": "2:27.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.0,
+      "corners": [
+        2,
+        2,
+        3,
+        4
+      ],
+      "sex_age": "牝3",
       "gate": "8"
     },
     {
@@ -939,9 +1103,14 @@
       "horse_weight_diff": -8,
       "time": "2:27.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.2,
+      "corners": [
+        16,
+        16,
+        16,
+        14
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -959,9 +1128,14 @@
       "horse_weight_diff": 0,
       "time": "2:28.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.2,
+      "corners": [
+        3,
+        3,
+        8,
+        12
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -979,9 +1153,14 @@
       "horse_weight_diff": 8,
       "time": "2:28.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.2,
+      "corners": [
+        18,
+        18,
+        18,
+        18
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
@@ -999,9 +1178,14 @@
       "horse_weight_diff": -4,
       "time": "2:28.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.0,
+      "corners": [
+        11,
+        12,
+        16,
+        17
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
@@ -1019,9 +1203,14 @@
       "horse_weight_diff": -8,
       "time": "2:29.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.2,
+      "corners": [
+        1,
+        1,
+        5,
+        8
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     }
   ],
@@ -1041,9 +1230,14 @@
       "horse_weight_diff": 4,
       "time": "1:52.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.6,
+      "corners": [
+        6,
+        6,
+        5,
+        3
+      ],
+      "sex_age": "牡4",
       "gate": "5"
     },
     {
@@ -1061,9 +1255,14 @@
       "horse_weight_diff": 0,
       "time": "1:52.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.8,
+      "corners": [
+        8,
+        8,
+        8,
+        6
+      ],
+      "sex_age": "牡5",
       "gate": "3"
     },
     {
@@ -1081,9 +1280,14 @@
       "horse_weight_diff": 8,
       "time": "1:53.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.8,
+      "corners": [
+        9,
+        10,
+        9,
+        8
+      ],
+      "sex_age": "牡4",
       "gate": "5"
     },
     {
@@ -1101,9 +1305,14 @@
       "horse_weight_diff": 6,
       "time": "1:53.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.9,
+      "corners": [
+        2,
+        2,
+        1,
+        1
+      ],
+      "sex_age": "牝4",
       "gate": "8"
     },
     {
@@ -1121,9 +1330,14 @@
       "horse_weight_diff": 0,
       "time": "1:53.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.6,
+      "corners": [
+        5,
+        4,
+        3,
+        3
+      ],
+      "sex_age": "牡4",
       "gate": "2"
     },
     {
@@ -1141,9 +1355,14 @@
       "horse_weight_diff": -8,
       "time": "1:53.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.0,
+      "corners": [
+        9,
+        8,
+        9,
+        10
+      ],
+      "sex_age": "牡5",
       "gate": "7"
     },
     {
@@ -1161,9 +1380,14 @@
       "horse_weight_diff": -4,
       "time": "1:53.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.4,
+      "corners": [
+        7,
+        6,
+        7,
+        6
+      ],
+      "sex_age": "牡4",
       "gate": "4"
     },
     {
@@ -1181,9 +1405,14 @@
       "horse_weight_diff": 6,
       "time": "1:53.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.7,
+      "corners": [
+        12,
+        12,
+        12,
+        11
+      ],
+      "sex_age": "牡4",
       "gate": "1"
     },
     {
@@ -1201,9 +1430,14 @@
       "horse_weight_diff": -4,
       "time": "1:53.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.1,
+      "corners": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "sex_age": "セ5",
       "gate": "8"
     },
     {
@@ -1221,9 +1455,14 @@
       "horse_weight_diff": 4,
       "time": "1:53.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.4,
+      "corners": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "sex_age": "牡4",
       "gate": "6"
     },
     {
@@ -1241,9 +1480,14 @@
       "horse_weight_diff": 6,
       "time": "1:53.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.2,
+      "corners": [
+        11,
+        10,
+        11,
+        11
+      ],
+      "sex_age": "牝4",
       "gate": "7"
     },
     {
@@ -1261,9 +1505,14 @@
       "horse_weight_diff": 0,
       "time": "1:55.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.0,
+      "corners": [
+        3,
+        4,
+        5,
+        8
+      ],
+      "sex_age": "牝4",
       "gate": "6"
     }
   ],
@@ -1283,9 +1532,12 @@
       "horse_weight_diff": 0,
       "time": "1:33.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.6,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牡4",
       "gate": "1"
     },
     {
@@ -1303,9 +1555,12 @@
       "horse_weight_diff": -4,
       "time": "1:33.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.3,
+      "corners": [
+        4,
+        3
+      ],
+      "sex_age": "牡4",
       "gate": "2"
     },
     {
@@ -1323,9 +1578,12 @@
       "horse_weight_diff": -2,
       "time": "1:33.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.8,
+      "corners": [
+        10,
+        12
+      ],
+      "sex_age": "牡4",
       "gate": "4"
     },
     {
@@ -1343,9 +1601,12 @@
       "horse_weight_diff": -12,
       "time": "1:33.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.4,
+      "corners": [
+        6,
+        5
+      ],
+      "sex_age": "牡4",
       "gate": "7"
     },
     {
@@ -1363,9 +1624,12 @@
       "horse_weight_diff": 0,
       "time": "1:33.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.1,
+      "corners": [
+        10,
+        10
+      ],
+      "sex_age": "牝4",
       "gate": "8"
     },
     {
@@ -1383,9 +1647,12 @@
       "horse_weight_diff": 0,
       "time": "1:33.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.5,
+      "corners": [
+        15,
+        13
+      ],
+      "sex_age": "牝4",
       "gate": "6"
     },
     {
@@ -1403,9 +1670,12 @@
       "horse_weight_diff": 0,
       "time": "1:33.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.2,
+      "corners": [
+        12,
+        10
+      ],
+      "sex_age": "牝4",
       "gate": "8"
     },
     {
@@ -1423,9 +1693,12 @@
       "horse_weight_diff": 4,
       "time": "1:33.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.0,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝4",
       "gate": "2"
     },
     {
@@ -1443,9 +1716,12 @@
       "horse_weight_diff": 8,
       "time": "1:33.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.4,
+      "corners": [
+        8,
+        9
+      ],
+      "sex_age": "牡4",
       "gate": "3"
     },
     {
@@ -1463,9 +1739,12 @@
       "horse_weight_diff": 2,
       "time": "1:33.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.6,
+      "corners": [
+        8,
+        7
+      ],
+      "sex_age": "牡4",
       "gate": "5"
     },
     {
@@ -1483,9 +1762,12 @@
       "horse_weight_diff": 2,
       "time": "1:34.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.8,
+      "corners": [
+        6,
+        7
+      ],
+      "sex_age": "牡5",
       "gate": "3"
     },
     {
@@ -1503,9 +1785,12 @@
       "horse_weight_diff": -8,
       "time": "1:34.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.6,
+      "corners": [
+        14,
+        15
+      ],
+      "sex_age": "牡4",
       "gate": "4"
     },
     {
@@ -1523,9 +1808,12 @@
       "horse_weight_diff": 2,
       "time": "1:34.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.8,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝4",
       "gate": "5"
     },
     {
@@ -1543,9 +1831,12 @@
       "horse_weight_diff": 6,
       "time": "1:34.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.0,
+      "corners": [
+        12,
+        13
+      ],
+      "sex_age": "牝4",
       "gate": "7"
     },
     {
@@ -1563,9 +1854,12 @@
       "horse_weight_diff": -6,
       "time": "1:34.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.8,
+      "corners": [
+        4,
+        5
+      ],
+      "sex_age": "牝4",
       "gate": "6"
     }
   ],
@@ -1585,9 +1879,12 @@
       "horse_weight_diff": 0,
       "time": "1:20.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.6,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牡4",
       "gate": "2"
     },
     {
@@ -1605,9 +1902,12 @@
       "horse_weight_diff": 8,
       "time": "1:20.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.1,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝5",
       "gate": "1"
     },
     {
@@ -1625,9 +1925,12 @@
       "horse_weight_diff": 2,
       "time": "1:20.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.1,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牝4",
       "gate": "6"
     },
     {
@@ -1645,9 +1948,12 @@
       "horse_weight_diff": -2,
       "time": "1:21.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.5,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝4",
       "gate": "5"
     },
     {
@@ -1665,9 +1971,12 @@
       "horse_weight_diff": 0,
       "time": "1:21.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.2,
+      "corners": [
+        8,
+        7
+      ],
+      "sex_age": "牝4",
       "gate": "6"
     },
     {
@@ -1685,9 +1994,12 @@
       "horse_weight_diff": 4,
       "time": "1:21.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.4,
+      "corners": [
+        5,
+        3
+      ],
+      "sex_age": "牡4",
       "gate": "3"
     },
     {
@@ -1705,9 +2017,12 @@
       "horse_weight_diff": 2,
       "time": "1:21.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.3,
+      "corners": [
+        9,
+        7
+      ],
+      "sex_age": "牝4",
       "gate": "7"
     },
     {
@@ -1725,9 +2040,12 @@
       "horse_weight_diff": -2,
       "time": "1:21.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.6,
+      "corners": [
+        4,
+        5
+      ],
+      "sex_age": "牝5",
       "gate": "8"
     },
     {
@@ -1745,9 +2063,12 @@
       "horse_weight_diff": 0,
       "time": "1:21.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.5,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡4",
       "gate": "5"
     },
     {
@@ -1765,9 +2086,12 @@
       "horse_weight_diff": 2,
       "time": "1:21.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.4,
+      "corners": [
+        10,
+        10
+      ],
+      "sex_age": "牝8",
       "gate": "8"
     },
     {
@@ -1785,9 +2109,12 @@
       "horse_weight_diff": 4,
       "time": "1:21.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.2,
+      "corners": [
+        11,
+        12
+      ],
+      "sex_age": "牝4",
       "gate": "7"
     },
     {
@@ -1805,9 +2132,12 @@
       "horse_weight_diff": 0,
       "time": "1:21.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.8,
+      "corners": [
+        11,
+        10
+      ],
+      "sex_age": "牡6",
       "gate": "4"
     }
   ],
@@ -1827,9 +2157,14 @@
       "horse_weight_diff": 2,
       "time": "1:50.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.8,
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -1847,9 +2182,14 @@
       "horse_weight_diff": 0,
       "time": "1:50.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.4,
+      "corners": [
+        9,
+        9,
+        8,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
@@ -1867,9 +2207,14 @@
       "horse_weight_diff": -2,
       "time": "1:50.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.1,
+      "corners": [
+        5,
+        5,
+        4,
+        3
+      ],
+      "sex_age": "牡3",
       "gate": "2"
     },
     {
@@ -1887,9 +2232,14 @@
       "horse_weight_diff": -6,
       "time": "1:51.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.6,
+      "corners": [
+        7,
+        7,
+        7,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "1"
     },
     {
@@ -1907,9 +2257,14 @@
       "horse_weight_diff": -4,
       "time": "1:51.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.7,
+      "corners": [
+        6,
+        6,
+        3,
+        3
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -1927,9 +2282,14 @@
       "horse_weight_diff": 6,
       "time": "1:51.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.8,
+      "corners": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -1947,9 +2307,14 @@
       "horse_weight_diff": 2,
       "time": "1:51.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.8,
+      "corners": [
+        8,
+        8,
+        8,
+        9
+      ],
+      "sex_age": "セ3",
       "gate": "6"
     },
     {
@@ -1967,9 +2332,14 @@
       "horse_weight_diff": 4,
       "time": "1:52.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.4,
+      "corners": [
+        2,
+        2,
+        4,
+        5
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -1987,9 +2357,14 @@
       "horse_weight_diff": 2,
       "time": "1:52.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.3,
+      "corners": [
+        3,
+        3,
+        6,
+        5
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     }
   ],
@@ -2009,9 +2384,12 @@
       "horse_weight_diff": 0,
       "time": "1:32.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.3,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牡4",
       "gate": "8"
     },
     {
@@ -2029,9 +2407,12 @@
       "horse_weight_diff": -4,
       "time": "1:32.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.3,
+      "corners": [
+        4,
+        3
+      ],
+      "sex_age": "牡4",
       "gate": "8"
     },
     {
@@ -2049,9 +2430,12 @@
       "horse_weight_diff": 4,
       "time": "1:32.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.2,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡4",
       "gate": "2"
     },
     {
@@ -2069,9 +2453,12 @@
       "horse_weight_diff": 10,
       "time": "1:32.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 32.8,
+      "corners": [
+        9,
+        9
+      ],
+      "sex_age": "牝4",
       "gate": "1"
     },
     {
@@ -2089,9 +2476,12 @@
       "horse_weight_diff": -8,
       "time": "1:32.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.9,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "セ4",
       "gate": "6"
     },
     {
@@ -2109,9 +2499,12 @@
       "horse_weight_diff": 2,
       "time": "1:33.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.0,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牡5",
       "gate": "6"
     },
     {
@@ -2129,9 +2522,12 @@
       "horse_weight_diff": -6,
       "time": "1:33.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.7,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡4",
       "gate": "7"
     },
     {
@@ -2149,9 +2545,12 @@
       "horse_weight_diff": 0,
       "time": "1:33.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.3,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡5",
       "gate": "4"
     },
     {
@@ -2169,9 +2568,12 @@
       "horse_weight_diff": -4,
       "time": "1:33.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.9,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "セ5",
       "gate": "7"
     },
     {
@@ -2189,9 +2591,12 @@
       "horse_weight_diff": 4,
       "time": "1:34.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.8,
+      "corners": [
+        11,
+        11
+      ],
+      "sex_age": "牡4",
       "gate": "5"
     },
     {
@@ -2209,9 +2614,12 @@
       "horse_weight_diff": 6,
       "time": "1:34.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.3,
+      "corners": [
+        10,
+        10
+      ],
+      "sex_age": "牝4",
       "gate": "3"
     }
   ],
@@ -2231,9 +2639,12 @@
       "horse_weight_diff": 0,
       "time": "1:35.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.0,
+      "corners": [
+        4,
+        4
+      ],
+      "sex_age": "牡5",
       "gate": "8"
     },
     {
@@ -2251,9 +2662,12 @@
       "horse_weight_diff": 0,
       "time": "1:35.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.5,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡5",
       "gate": "2"
     },
     {
@@ -2271,9 +2685,12 @@
       "horse_weight_diff": -4,
       "time": "1:35.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.1,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牡5",
       "gate": "6"
     },
     {
@@ -2291,9 +2708,12 @@
       "horse_weight_diff": 2,
       "time": "1:35.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.8,
+      "corners": [
+        14,
+        14
+      ],
+      "sex_age": "牡4",
       "gate": "5"
     },
     {
@@ -2311,9 +2731,12 @@
       "horse_weight_diff": -2,
       "time": "1:36.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        16,
+        16
+      ],
+      "sex_age": "牡6",
       "gate": "4"
     },
     {
@@ -2331,9 +2754,12 @@
       "horse_weight_diff": -4,
       "time": "1:36.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.5,
+      "corners": [
+        8,
+        7
+      ],
+      "sex_age": "牡5",
       "gate": "7"
     },
     {
@@ -2351,9 +2777,12 @@
       "horse_weight_diff": 4,
       "time": "1:36.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.6,
+      "corners": [
+        8,
+        7
+      ],
+      "sex_age": "セ6",
       "gate": "6"
     },
     {
@@ -2371,9 +2800,12 @@
       "horse_weight_diff": -10,
       "time": "1:36.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.8,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牡6",
       "gate": "4"
     },
     {
@@ -2391,9 +2823,12 @@
       "horse_weight_diff": -12,
       "time": "1:36.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.8,
+      "corners": [
+        2,
+        3
+      ],
+      "sex_age": "セ5",
       "gate": "1"
     },
     {
@@ -2411,9 +2846,12 @@
       "horse_weight_diff": 0,
       "time": "1:36.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.8,
+      "corners": [
+        11,
+        11
+      ],
+      "sex_age": "牡5",
       "gate": "7"
     },
     {
@@ -2431,9 +2869,12 @@
       "horse_weight_diff": 2,
       "time": "1:36.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.7,
+      "corners": [
+        13,
+        12
+      ],
+      "sex_age": "牡6",
       "gate": "2"
     },
     {
@@ -2451,9 +2892,12 @@
       "horse_weight_diff": -4,
       "time": "1:36.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.1,
+      "corners": [
+        15,
+        15
+      ],
+      "sex_age": "牡8",
       "gate": "5"
     },
     {
@@ -2471,9 +2915,12 @@
       "horse_weight_diff": -2,
       "time": "1:36.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.3,
+      "corners": [
+        8,
+        7
+      ],
+      "sex_age": "牝5",
       "gate": "3"
     },
     {
@@ -2491,9 +2938,12 @@
       "horse_weight_diff": 14,
       "time": "1:37.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.6,
+      "corners": [
+        5,
+        7
+      ],
+      "sex_age": "セ5",
       "gate": "1"
     },
     {
@@ -2511,9 +2961,12 @@
       "horse_weight_diff": 4,
       "time": "1:37.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.3,
+      "corners": [
+        11,
+        12
+      ],
+      "sex_age": "牡5",
       "gate": "3"
     },
     {
@@ -2531,9 +2984,12 @@
       "horse_weight_diff": -12,
       "time": "1:39.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.4,
+      "corners": [
+        5,
+        6
+      ],
+      "sex_age": "牡6",
       "gate": "8"
     }
   ],
@@ -2553,9 +3009,14 @@
       "horse_weight_diff": 0,
       "time": "2:11.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.4,
+      "corners": [
+        10,
+        8,
+        3,
+        3
+      ],
+      "sex_age": "牡4",
       "gate": "7"
     },
     {
@@ -2573,9 +3034,14 @@
       "horse_weight_diff": 0,
       "time": "2:12.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.4,
+      "corners": [
+        3,
+        3,
+        3,
+        4
+      ],
+      "sex_age": "牡6",
       "gate": "6"
     },
     {
@@ -2593,9 +3059,14 @@
       "horse_weight_diff": 2,
       "time": "2:12.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.7,
+      "corners": [
+        6,
+        6,
+        7,
+        4
+      ],
+      "sex_age": "牡5",
       "gate": "7"
     },
     {
@@ -2613,9 +3084,14 @@
       "horse_weight_diff": 6,
       "time": "2:12.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.3,
+      "corners": [
+        14,
+        13,
+        12,
+        10
+      ],
+      "sex_age": "牡4",
       "gate": "2"
     },
     {
@@ -2633,9 +3109,14 @@
       "horse_weight_diff": 6,
       "time": "2:12.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.3,
+      "corners": [
+        16,
+        16,
+        14,
+        13
+      ],
+      "sex_age": "牝5",
       "gate": "4"
     },
     {
@@ -2653,9 +3134,14 @@
       "horse_weight_diff": 0,
       "time": "2:13.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.2,
+      "corners": [
+        6,
+        5,
+        7,
+        8
+      ],
+      "sex_age": "牝5",
       "gate": "5"
     },
     {
@@ -2673,9 +3159,14 @@
       "horse_weight_diff": 0,
       "time": "2:13.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.6,
+      "corners": [
+        10,
+        10,
+        5,
+        4
+      ],
+      "sex_age": "セ4",
       "gate": "4"
     },
     {
@@ -2693,9 +3184,14 @@
       "horse_weight_diff": -6,
       "time": "2:13.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.0,
+      "corners": [
+        13,
+        13,
+        13,
+        13
+      ],
+      "sex_age": "セ6",
       "gate": "8"
     },
     {
@@ -2713,9 +3209,14 @@
       "horse_weight_diff": -4,
       "time": "2:13.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.7,
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "sex_age": "牝5",
       "gate": "1"
     },
     {
@@ -2733,9 +3234,14 @@
       "horse_weight_diff": 10,
       "time": "2:14.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.8,
+      "corners": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "sex_age": "牡6",
       "gate": "5"
     },
     {
@@ -2753,9 +3259,14 @@
       "horse_weight_diff": 4,
       "time": "2:14.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 41.4,
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sex_age": "牡4",
       "gate": "2"
     },
     {
@@ -2773,9 +3284,14 @@
       "horse_weight_diff": 0,
       "time": "2:14.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 41.1,
+      "corners": [
+        4,
+        3,
+        5,
+        7
+      ],
+      "sex_age": "セ5",
       "gate": "1"
     },
     {
@@ -2793,9 +3309,14 @@
       "horse_weight_diff": -4,
       "time": "2:14.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.6,
+      "corners": [
+        15,
+        15,
+        16,
+        15
+      ],
+      "sex_age": "牡8",
       "gate": "8"
     },
     {
@@ -2813,9 +3334,14 @@
       "horse_weight_diff": 4,
       "time": "2:15.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 41.1,
+      "corners": [
+        8,
+        8,
+        9,
+        8
+      ],
+      "sex_age": "セ6",
       "gate": "3"
     },
     {
@@ -2833,9 +3359,14 @@
       "horse_weight_diff": -2,
       "time": "2:15.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.3,
+      "corners": [
+        4,
+        7,
+        14,
+        16
+      ],
+      "sex_age": "セ5",
       "gate": "3"
     },
     {
@@ -2853,9 +3384,14 @@
       "horse_weight_diff": 0,
       "time": "2:15.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 41.3,
+      "corners": [
+        8,
+        10,
+        10,
+        10
+      ],
+      "sex_age": "牡7",
       "gate": "6"
     }
   ],
@@ -2875,9 +3411,12 @@
       "horse_weight_diff": 2,
       "time": "1:26.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.9,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     },
     {
@@ -2895,9 +3434,12 @@
       "horse_weight_diff": 8,
       "time": "1:26.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.8,
+      "corners": [
+        5,
+        3
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -2915,9 +3457,12 @@
       "horse_weight_diff": 2,
       "time": "1:27.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.8,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -2935,9 +3480,12 @@
       "horse_weight_diff": 4,
       "time": "1:27.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.3,
+      "corners": [
+        15,
+        10
+      ],
+      "sex_age": "牡3",
       "gate": "2"
     },
     {
@@ -2955,9 +3503,12 @@
       "horse_weight_diff": 2,
       "time": "1:27.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.8,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
@@ -2975,9 +3526,12 @@
       "horse_weight_diff": 6,
       "time": "1:27.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.7,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -2995,9 +3549,12 @@
       "horse_weight_diff": -2,
       "time": "1:27.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.8,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牡3",
       "gate": "2"
     },
     {
@@ -3015,9 +3572,12 @@
       "horse_weight_diff": 6,
       "time": "1:27.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.8,
+      "corners": [
+        5,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -3035,9 +3595,12 @@
       "horse_weight_diff": 4,
       "time": "1:28.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.3,
+      "corners": [
+        11,
+        10
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -3055,9 +3618,12 @@
       "horse_weight_diff": -8,
       "time": "1:28.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.4,
+      "corners": [
+        11,
+        9
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
@@ -3075,9 +3641,12 @@
       "horse_weight_diff": 0,
       "time": "1:28.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.1,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -3095,9 +3664,12 @@
       "horse_weight_diff": 3,
       "time": "1:28.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.2,
+      "corners": [
+        10,
+        10
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -3115,9 +3687,12 @@
       "horse_weight_diff": -8,
       "time": "1:29.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.0,
+      "corners": [
+        13,
+        15
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
@@ -3135,9 +3710,12 @@
       "horse_weight_diff": 0,
       "time": "1:29.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.0,
+      "corners": [
+        16,
+        16
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -3155,9 +3733,12 @@
       "horse_weight_diff": -6,
       "time": "1:30.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.6,
+      "corners": [
+        13,
+        14
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     },
     {
@@ -3175,9 +3756,12 @@
       "horse_weight_diff": 14,
       "time": "1:31.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.5,
+      "corners": [
+        9,
+        10
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     }
   ],
@@ -3197,9 +3781,14 @@
       "horse_weight_diff": 2,
       "time": "2:24.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.7,
+      "corners": [
+        4,
+        3,
+        4,
+        4
+      ],
+      "sex_age": "牡3",
       "gate": "1"
     },
     {
@@ -3217,9 +3806,14 @@
       "horse_weight_diff": 12,
       "time": "2:25.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.4,
+      "corners": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -3237,9 +3831,14 @@
       "horse_weight_diff": 10,
       "time": "2:25.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.4,
+      "corners": [
+        10,
+        12,
+        10,
+        8
+      ],
+      "sex_age": "牝3",
       "gate": "3"
     },
     {
@@ -3257,9 +3856,14 @@
       "horse_weight_diff": 2,
       "time": "2:25.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        3,
+        3,
+        4,
+        5
+      ],
+      "sex_age": "牡3",
       "gate": "1"
     },
     {
@@ -3277,9 +3881,14 @@
       "horse_weight_diff": 2,
       "time": "2:25.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.5,
+      "corners": [
+        14,
+        13,
+        11,
+        11
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
@@ -3297,9 +3906,14 @@
       "horse_weight_diff": -8,
       "time": "2:25.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.7,
+      "corners": [
+        8,
+        9,
+        9,
+        10
+      ],
+      "sex_age": "牡3",
       "gate": "2"
     },
     {
@@ -3317,9 +3931,14 @@
       "horse_weight_diff": 10,
       "time": "2:25.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.0,
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
@@ -3337,9 +3956,14 @@
       "horse_weight_diff": 8,
       "time": "2:26.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.5,
+      "corners": [
+        14,
+        15,
+        14,
+        14
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -3357,9 +3981,14 @@
       "horse_weight_diff": -2,
       "time": "2:26.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.7,
+      "corners": [
+        12,
+        9,
+        2,
+        3
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -3377,9 +4006,14 @@
       "horse_weight_diff": 4,
       "time": "2:26.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.1,
+      "corners": [
+        5,
+        5,
+        6,
+        6
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
@@ -3397,9 +4031,14 @@
       "horse_weight_diff": -6,
       "time": "2:26.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.5,
+      "corners": [
+        6,
+        6,
+        6,
+        6
+      ],
+      "sex_age": "牝3",
       "gate": "3"
     },
     {
@@ -3417,9 +4056,14 @@
       "horse_weight_diff": -2,
       "time": "2:27.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.4,
+      "corners": [
+        10,
+        9,
+        11,
+        13
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -3437,9 +4081,14 @@
       "horse_weight_diff": 4,
       "time": "2:27.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.8,
+      "corners": [
+        12,
+        14,
+        13,
+        12
+      ],
+      "sex_age": "牡3",
       "gate": "2"
     },
     {
@@ -3457,9 +4106,14 @@
       "horse_weight_diff": -2,
       "time": "2:27.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.1,
+      "corners": [
+        16,
+        16,
+        15,
+        15
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -3477,9 +4131,14 @@
       "horse_weight_diff": 0,
       "time": "2:27.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.0,
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     }
   ],
@@ -3499,9 +4158,12 @@
       "horse_weight_diff": 2,
       "time": "1:21.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.5,
+      "corners": [
+        2,
+        1
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -3519,9 +4181,12 @@
       "horse_weight_diff": 2,
       "time": "1:21.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.2,
+      "corners": [
+        12,
+        14
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -3539,9 +4204,12 @@
       "horse_weight_diff": 10,
       "time": "1:21.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.4,
+      "corners": [
+        4,
+        4
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -3559,9 +4227,12 @@
       "horse_weight_diff": -8,
       "time": "1:21.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.7,
+      "corners": [
+        11,
+        11
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -3579,9 +4250,12 @@
       "horse_weight_diff": -2,
       "time": "1:21.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.8,
+      "corners": [
+        12,
+        12
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
@@ -3599,9 +4273,12 @@
       "horse_weight_diff": 2,
       "time": "1:21.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.3,
+      "corners": [
+        6,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
@@ -3619,9 +4296,12 @@
       "horse_weight_diff": -2,
       "time": "1:21.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.0,
+      "corners": [
+        1,
+        2
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     },
     {
@@ -3639,9 +4319,12 @@
       "horse_weight_diff": -10,
       "time": "1:21.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.6,
+      "corners": [
+        8,
+        6
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -3659,9 +4342,12 @@
       "horse_weight_diff": 4,
       "time": "1:21.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.4,
+      "corners": [
+        8,
+        10
+      ],
+      "sex_age": "牡3",
       "gate": "1"
     },
     {
@@ -3679,9 +4365,12 @@
       "horse_weight_diff": 2,
       "time": "1:21.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.7,
+      "corners": [
+        16,
+        15
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -3699,9 +4388,12 @@
       "horse_weight_diff": 0,
       "time": "1:21.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.6,
+      "corners": [
+        17,
+        16
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -3719,9 +4411,12 @@
       "horse_weight_diff": 2,
       "time": "1:22.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.9,
+      "corners": [
+        6,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
@@ -3739,9 +4434,12 @@
       "horse_weight_diff": 4,
       "time": "1:22.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        4,
+        4
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -3759,9 +4457,12 @@
       "horse_weight_diff": 0,
       "time": "1:22.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.8,
+      "corners": [
+        12,
+        12
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -3779,9 +4480,12 @@
       "horse_weight_diff": 12,
       "time": "1:22.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        8,
+        9
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -3799,9 +4503,12 @@
       "horse_weight_diff": -8,
       "time": "1:22.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.8,
+      "corners": [
+        18,
+        18
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -3819,9 +4526,12 @@
       "horse_weight_diff": 0,
       "time": "1:23.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.7,
+      "corners": [
+        15,
+        17
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -3839,9 +4549,12 @@
       "horse_weight_diff": -8,
       "time": "1:23.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.1,
+      "corners": [
+        2,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "3"
     }
   ],
@@ -3861,9 +4574,12 @@
       "horse_weight_diff": -6,
       "time": "1:37.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.4,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
@@ -3881,9 +4597,12 @@
       "horse_weight_diff": 2,
       "time": "1:37.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.7,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡3",
       "gate": "1"
     },
     {
@@ -3901,9 +4620,12 @@
       "horse_weight_diff": 6,
       "time": "1:37.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.0,
+      "corners": [
+        12,
+        12
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
@@ -3921,9 +4643,12 @@
       "horse_weight_diff": -2,
       "time": "1:38.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.0,
+      "corners": [
+        6,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -3941,9 +4666,12 @@
       "horse_weight_diff": -10,
       "time": "1:38.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.3,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -3961,9 +4689,12 @@
       "horse_weight_diff": -2,
       "time": "1:38.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.0,
+      "corners": [
+        9,
+        9
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -3981,9 +4712,12 @@
       "horse_weight_diff": -2,
       "time": "1:38.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.3,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -4001,9 +4735,12 @@
       "horse_weight_diff": 6,
       "time": "1:39.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.1,
+      "corners": [
+        6,
+        5
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -4021,9 +4758,12 @@
       "horse_weight_diff": 0,
       "time": "1:39.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.4,
+      "corners": [
+        10,
+        9
+      ],
+      "sex_age": "牡3",
       "gate": "2"
     },
     {
@@ -4041,9 +4781,12 @@
       "horse_weight_diff": 0,
       "time": "1:40.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.0,
+      "corners": [
+        8,
+        7
+      ],
+      "sex_age": "セ3",
       "gate": "5"
     },
     {
@@ -4061,9 +4804,12 @@
       "horse_weight_diff": -2,
       "time": "1:40.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.2,
+      "corners": [
+        10,
+        9
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
@@ -4081,9 +4827,12 @@
       "horse_weight_diff": -4,
       "time": "1:43.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 44.0,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝3",
       "gate": "3"
     }
   ],
@@ -4103,9 +4852,12 @@
       "horse_weight_diff": -4,
       "time": "1:20.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.2,
+      "corners": [
+        4,
+        4
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -4123,9 +4875,12 @@
       "horse_weight_diff": 4,
       "time": "1:20.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.8,
+      "corners": [
+        8,
+        9
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -4143,9 +4898,12 @@
       "horse_weight_diff": -4,
       "time": "1:20.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.3,
+      "corners": [
+        6,
+        6
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -4163,9 +4921,12 @@
       "horse_weight_diff": 6,
       "time": "1:20.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.6,
+      "corners": [
+        4,
+        4
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -4183,9 +4944,12 @@
       "horse_weight_diff": -2,
       "time": "1:20.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.9,
+      "corners": [
+        10,
+        9
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -4203,9 +4967,12 @@
       "horse_weight_diff": 2,
       "time": "1:20.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.4,
+      "corners": [
+        8,
+        8
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     },
     {
@@ -4223,9 +4990,12 @@
       "horse_weight_diff": 0,
       "time": "1:21.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.6,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -4243,9 +5013,12 @@
       "horse_weight_diff": 4,
       "time": "1:21.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.9,
+      "corners": [
+        3,
+        2
+      ],
+      "sex_age": "牝3",
       "gate": "8"
     },
     {
@@ -4263,9 +5036,12 @@
       "horse_weight_diff": 0,
       "time": "1:21.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.6,
+      "corners": [
+        11,
+        11
+      ],
+      "sex_age": "牡3",
       "gate": "1"
     },
     {
@@ -4283,9 +5059,12 @@
       "horse_weight_diff": 8,
       "time": "1:21.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.6,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝3",
       "gate": "8"
     },
     {
@@ -4303,9 +5082,12 @@
       "horse_weight_diff": 6,
       "time": "1:22.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.3,
+      "corners": [
+        11,
+        11
+      ],
+      "sex_age": "牝3",
       "gate": "3"
     },
     {
@@ -4323,9 +5105,12 @@
       "horse_weight_diff": -2,
       "time": "1:22.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.1,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     }
   ],
@@ -4345,9 +5130,12 @@
       "horse_weight_diff": -6,
       "time": "1:37.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.4,
+      "corners": [
+        4,
+        4
+      ],
+      "sex_age": "牡4",
       "gate": "3"
     },
     {
@@ -4365,9 +5153,12 @@
       "horse_weight_diff": 4,
       "time": "1:38.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.6,
+      "corners": [
+        9,
+        9
+      ],
+      "sex_age": "牡4",
       "gate": "5"
     },
     {
@@ -4385,9 +5176,12 @@
       "horse_weight_diff": -2,
       "time": "1:38.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.0,
+      "corners": [
+        4,
+        4
+      ],
+      "sex_age": "牡4",
       "gate": "7"
     },
     {
@@ -4405,9 +5199,12 @@
       "horse_weight_diff": 10,
       "time": "1:38.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.5,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝4",
       "gate": "1"
     },
     {
@@ -4425,9 +5222,12 @@
       "horse_weight_diff": 10,
       "time": "1:38.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.7,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牡4",
       "gate": "5"
     },
     {
@@ -4445,9 +5245,12 @@
       "horse_weight_diff": 2,
       "time": "1:38.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.7,
+      "corners": [
+        15,
+        14
+      ],
+      "sex_age": "牡5",
       "gate": "6"
     },
     {
@@ -4465,9 +5268,12 @@
       "horse_weight_diff": 3,
       "time": "1:39.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.4,
+      "corners": [
+        7,
+        6
+      ],
+      "sex_age": "牡4",
       "gate": "3"
     },
     {
@@ -4485,9 +5291,12 @@
       "horse_weight_diff": 2,
       "time": "1:39.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.3,
+      "corners": [
+        12,
+        11
+      ],
+      "sex_age": "牡4",
       "gate": "7"
     },
     {
@@ -4505,9 +5314,12 @@
       "horse_weight_diff": -6,
       "time": "1:39.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.0,
+      "corners": [
+        8,
+        8
+      ],
+      "sex_age": "牝5",
       "gate": "4"
     },
     {
@@ -4525,9 +5337,12 @@
       "horse_weight_diff": -2,
       "time": "1:39.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.4,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牡4",
       "gate": "8"
     },
     {
@@ -4545,9 +5360,12 @@
       "horse_weight_diff": 2,
       "time": "1:40.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.5,
+      "corners": [
+        9,
+        9
+      ],
+      "sex_age": "牡5",
       "gate": "8"
     },
     {
@@ -4565,9 +5383,12 @@
       "horse_weight_diff": 4,
       "time": "1:40.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.2,
+      "corners": [
+        14,
+        14
+      ],
+      "sex_age": "牝4",
       "gate": "2"
     },
     {
@@ -4585,9 +5406,12 @@
       "horse_weight_diff": 0,
       "time": "1:40.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.3,
+      "corners": [
+        13,
+        11
+      ],
+      "sex_age": "牡4",
       "gate": "6"
     },
     {
@@ -4605,9 +5429,12 @@
       "horse_weight_diff": 0,
       "time": "1:40.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.1,
+      "corners": [
+        16,
+        16
+      ],
+      "sex_age": "牝4",
       "gate": "2"
     },
     {
@@ -4625,9 +5452,12 @@
       "horse_weight_diff": 8,
       "time": "1:40.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.2,
+      "corners": [
+        6,
+        6
+      ],
+      "sex_age": "牝4",
       "gate": "1"
     },
     {
@@ -4645,9 +5475,12 @@
       "horse_weight_diff": 2,
       "time": "1:42.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.2,
+      "corners": [
+        9,
+        11
+      ],
+      "sex_age": "セ5",
       "gate": "4"
     }
   ]

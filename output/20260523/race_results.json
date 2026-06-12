@@ -1,930 +1,4 @@
 {
-  "京都10R": [
-    {
-      "rank": 1,
-      "num": "15",
-      "name": "タガノアビー",
-      "horse_id": "2022106562",
-      "pop": 3,
-      "odds": 5.0,
-      "place_odds": 2.0,
-      "jockey": "岩田望",
-      "trainer": "千田",
-      "weight_carried": 56.0,
-      "horse_weight": 514,
-      "horse_weight_diff": 10,
-      "time": "1:59.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 2,
-      "num": "1",
-      "name": "ハニーコム",
-      "horse_id": "2021100789",
-      "pop": 12,
-      "odds": 91.0,
-      "place_odds": 6.9,
-      "jockey": "酒井",
-      "trainer": "蛯名正",
-      "weight_carried": 56.0,
-      "horse_weight": 434,
-      "horse_weight_diff": -4,
-      "time": "1:59.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 3,
-      "num": "4",
-      "name": "シャドウメテオ",
-      "horse_id": "2022105454",
-      "pop": 5,
-      "odds": 15.3,
-      "place_odds": 3.9,
-      "jockey": "戸崎圭",
-      "trainer": "金成",
-      "weight_carried": 56.0,
-      "horse_weight": 462,
-      "horse_weight_diff": 0,
-      "time": "1:59.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 4,
-      "num": "10",
-      "name": "エルフストラック",
-      "horse_id": "2021105616",
-      "pop": 9,
-      "odds": 28.2,
-      "place_odds": null,
-      "jockey": "坂井",
-      "trainer": "中村",
-      "weight_carried": 56.0,
-      "horse_weight": 488,
-      "horse_weight_diff": -2,
-      "time": "1:59.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 5,
-      "num": "16",
-      "name": "キーパフォーマー",
-      "horse_id": "2021104948",
-      "pop": 8,
-      "odds": 23.9,
-      "place_odds": null,
-      "jockey": "浜中",
-      "trainer": "辻野",
-      "weight_carried": 56.0,
-      "horse_weight": 468,
-      "horse_weight_diff": 0,
-      "time": "1:59.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 6,
-      "num": "8",
-      "name": "サクソンジェンヌ",
-      "horse_id": "2021106993",
-      "pop": 7,
-      "odds": 16.6,
-      "place_odds": null,
-      "jockey": "武豊",
-      "trainer": "高橋忠",
-      "weight_carried": 56.0,
-      "horse_weight": 474,
-      "horse_weight_diff": 6,
-      "time": "1:59.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 7,
-      "num": "13",
-      "name": "タイセイフェリーク",
-      "horse_id": "2020103713",
-      "pop": 15,
-      "odds": 134.6,
-      "place_odds": null,
-      "jockey": "松若",
-      "trainer": "田中克",
-      "weight_carried": 56.0,
-      "horse_weight": 438,
-      "horse_weight_diff": 12,
-      "time": "1:59.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 8,
-      "num": "6",
-      "name": "リンクスティップ",
-      "horse_id": "2022105815",
-      "pop": 1,
-      "odds": 2.6,
-      "place_odds": null,
-      "jockey": "西村淳",
-      "trainer": "西村",
-      "weight_carried": 56.0,
-      "horse_weight": 492,
-      "horse_weight_diff": 8,
-      "time": "1:59.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 9,
-      "num": "12",
-      "name": "アレナリア",
-      "horse_id": "2019105824",
-      "pop": 16,
-      "odds": 149.4,
-      "place_odds": null,
-      "jockey": "鮫島駿",
-      "trainer": "藤野",
-      "weight_carried": 56.0,
-      "horse_weight": 442,
-      "horse_weight_diff": 2,
-      "time": "2:00.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 10,
-      "num": "9",
-      "name": "テリオスサラ",
-      "horse_id": "2021104189",
-      "pop": 13,
-      "odds": 108.0,
-      "place_odds": null,
-      "jockey": "吉村",
-      "trainer": "高柳瑞",
-      "weight_carried": 56.0,
-      "horse_weight": 484,
-      "horse_weight_diff": 0,
-      "time": "2:00.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 11,
-      "num": "7",
-      "name": "ノーランサンライズ",
-      "horse_id": "2022102219",
-      "pop": 14,
-      "odds": 133.0,
-      "place_odds": null,
-      "jockey": "小崎",
-      "trainer": "佐藤悠",
-      "weight_carried": 56.0,
-      "horse_weight": 502,
-      "horse_weight_diff": 4,
-      "time": "2:00.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 12,
-      "num": "11",
-      "name": "マカナ",
-      "horse_id": "2022100019",
-      "pop": 4,
-      "odds": 8.4,
-      "place_odds": null,
-      "jockey": "菅原明",
-      "trainer": "伊藤大",
-      "weight_carried": 56.0,
-      "horse_weight": 474,
-      "horse_weight_diff": 6,
-      "time": "2:00.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 13,
-      "num": "5",
-      "name": "コンドゥイア",
-      "horse_id": "2022100201",
-      "pop": 11,
-      "odds": 83.3,
-      "place_odds": null,
-      "jockey": "Ｍデム",
-      "trainer": "井上",
-      "weight_carried": 56.0,
-      "horse_weight": 490,
-      "horse_weight_diff": 6,
-      "time": "2:00.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 14,
-      "num": "3",
-      "name": "アラベラ",
-      "horse_id": "2022104638",
-      "pop": 10,
-      "odds": 36.9,
-      "place_odds": null,
-      "jockey": "北村友",
-      "trainer": "上村",
-      "weight_carried": 56.0,
-      "horse_weight": 454,
-      "horse_weight_diff": 4,
-      "time": "2:00.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 15,
-      "num": "14",
-      "name": "マトラコーニッシュ",
-      "horse_id": "2022102500",
-      "pop": 6,
-      "odds": 15.6,
-      "place_odds": null,
-      "jockey": "池添",
-      "trainer": "池添",
-      "weight_carried": 56.0,
-      "horse_weight": 432,
-      "horse_weight_diff": -2,
-      "time": "2:00.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 16,
-      "num": "2",
-      "name": "ラブリージャブリー",
-      "horse_id": "2022105442",
-      "pop": 2,
-      "odds": 4.6,
-      "place_odds": null,
-      "jockey": "松山",
-      "trainer": "蛯名正",
-      "weight_carried": 56.0,
-      "horse_weight": 420,
-      "horse_weight_diff": -4,
-      "time": "2:00.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    }
-  ],
-  "京都11R": [
-    {
-      "rank": 1,
-      "num": "14",
-      "name": "ロードクロンヌ",
-      "horse_id": "2021100169",
-      "pop": 1,
-      "odds": 2.5,
-      "place_odds": 1.2,
-      "jockey": "横山和",
-      "trainer": "四位",
-      "weight_carried": 58.0,
-      "horse_weight": 500,
-      "horse_weight_diff": 0,
-      "time": "1:56.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 2,
-      "num": "5",
-      "name": "ヴァルツァーシャル",
-      "horse_id": "2019102437",
-      "pop": 8,
-      "odds": 25.9,
-      "place_odds": 4.3,
-      "jockey": "斎藤",
-      "trainer": "高木",
-      "weight_carried": 57.0,
-      "horse_weight": 508,
-      "horse_weight_diff": -2,
-      "time": "1:57.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 3,
-      "num": "11",
-      "name": "タイトニット",
-      "horse_id": "2020102750",
-      "pop": 4,
-      "odds": 11.3,
-      "place_odds": 2.8,
-      "jockey": "川田",
-      "trainer": "今野",
-      "weight_carried": 57.0,
-      "horse_weight": 548,
-      "horse_weight_diff": -4,
-      "time": "1:57.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 4,
-      "num": "9",
-      "name": "メリークリスマス",
-      "horse_id": "2022100394",
-      "pop": 10,
-      "odds": 32.4,
-      "place_odds": null,
-      "jockey": "三浦",
-      "trainer": "小手川",
-      "weight_carried": 57.0,
-      "horse_weight": 504,
-      "horse_weight_diff": 6,
-      "time": "1:58.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 5,
-      "num": "8",
-      "name": "ヴァンヤール",
-      "horse_id": "2018101087",
-      "pop": 14,
-      "odds": 50.2,
-      "place_odds": null,
-      "jockey": "角田和",
-      "trainer": "庄野",
-      "weight_carried": 57.0,
-      "horse_weight": 534,
-      "horse_weight_diff": 0,
-      "time": "1:58.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 6,
-      "num": "12",
-      "name": "サイモンザナドゥ",
-      "horse_id": "2020104497",
-      "pop": 12,
-      "odds": 34.1,
-      "place_odds": null,
-      "jockey": "池添",
-      "trainer": "小林",
-      "weight_carried": 57.0,
-      "horse_weight": 474,
-      "horse_weight_diff": -8,
-      "time": "1:58.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 7,
-      "num": "1",
-      "name": "ポッドロゴ",
-      "horse_id": "2021104873",
-      "pop": 13,
-      "odds": 43.4,
-      "place_odds": null,
-      "jockey": "岩田望",
-      "trainer": "西園翔",
-      "weight_carried": 57.0,
-      "horse_weight": 480,
-      "horse_weight_diff": 0,
-      "time": "1:58.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 8,
-      "num": "15",
-      "name": "ナルカミ",
-      "horse_id": "2022101638",
-      "pop": 2,
-      "odds": 4.4,
-      "place_odds": null,
-      "jockey": "戸崎圭",
-      "trainer": "田中博",
-      "weight_carried": 59.0,
-      "horse_weight": 504,
-      "horse_weight_diff": -3,
-      "time": "1:58.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 9,
-      "num": "7",
-      "name": "ゼットリアン",
-      "horse_id": "2020104760",
-      "pop": 5,
-      "odds": 17.5,
-      "place_odds": null,
-      "jockey": "団野",
-      "trainer": "吉田",
-      "weight_carried": 57.0,
-      "horse_weight": 448,
-      "horse_weight_diff": 0,
-      "time": "1:58.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 10,
-      "num": "10",
-      "name": "シュラザック",
-      "horse_id": "2022102117",
-      "pop": 11,
-      "odds": 33.8,
-      "place_odds": null,
-      "jockey": "幸",
-      "trainer": "大根田",
-      "weight_carried": 57.0,
-      "horse_weight": 494,
-      "horse_weight_diff": -4,
-      "time": "1:58.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 11,
-      "num": "4",
-      "name": "ジューンアヲニヨシ",
-      "horse_id": "2020100912",
-      "pop": 7,
-      "odds": 24.7,
-      "place_odds": null,
-      "jockey": "浜中",
-      "trainer": "松下",
-      "weight_carried": 57.0,
-      "horse_weight": 490,
-      "horse_weight_diff": -2,
-      "time": "1:58.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 12,
-      "num": "3",
-      "name": "リアライズカミオン",
-      "horse_id": "2022105702",
-      "pop": 3,
-      "odds": 6.2,
-      "place_odds": null,
-      "jockey": "坂井",
-      "trainer": "堀",
-      "weight_carried": 57.0,
-      "horse_weight": 518,
-      "horse_weight_diff": -4,
-      "time": "1:59.1",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 13,
-      "num": "13",
-      "name": "チュウワクリスエス",
-      "horse_id": "2022102280",
-      "pop": 15,
-      "odds": 52.5,
-      "place_odds": null,
-      "jockey": "武豊",
-      "trainer": "栗田",
-      "weight_carried": 57.0,
-      "horse_weight": 500,
-      "horse_weight_diff": -2,
-      "time": "2:00.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 14,
-      "num": "16",
-      "name": "アクションプラン",
-      "horse_id": "2020100116",
-      "pop": 6,
-      "odds": 20.1,
-      "place_odds": null,
-      "jockey": "松山",
-      "trainer": "池上",
-      "weight_carried": 57.0,
-      "horse_weight": 512,
-      "horse_weight_diff": -2,
-      "time": "2:01.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 15,
-      "num": "2",
-      "name": "キョウキランブ",
-      "horse_id": "2022103115",
-      "pop": 16,
-      "odds": 128.7,
-      "place_odds": null,
-      "jockey": "菅原明",
-      "trainer": "古賀慎",
-      "weight_carried": 57.0,
-      "horse_weight": 514,
-      "horse_weight_diff": -10,
-      "time": "2:01.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 16,
-      "num": "6",
-      "name": "ハグ",
-      "horse_id": "2022106925",
-      "pop": 9,
-      "odds": 26.2,
-      "place_odds": null,
-      "jockey": "高杉",
-      "trainer": "藤岡健",
-      "weight_carried": 57.0,
-      "horse_weight": 514,
-      "horse_weight_diff": -4,
-      "time": "2:01.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    }
-  ],
-  "京都12R": [
-    {
-      "rank": 1,
-      "num": "4",
-      "name": "ヨリノレジェンド",
-      "horse_id": "2022102202",
-      "pop": 1,
-      "odds": 2.5,
-      "place_odds": 1.3,
-      "jockey": "団野",
-      "trainer": "奥村豊",
-      "weight_carried": 58.0,
-      "horse_weight": 458,
-      "horse_weight_diff": 4,
-      "time": "1:23.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 2,
-      "num": "7",
-      "name": "マイティマイティー",
-      "horse_id": "2021103708",
-      "pop": 4,
-      "odds": 7.9,
-      "place_odds": 2.5,
-      "jockey": "坂井",
-      "trainer": "河嶋",
-      "weight_carried": 58.0,
-      "horse_weight": 496,
-      "horse_weight_diff": 4,
-      "time": "1:23.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 3,
-      "num": "6",
-      "name": "ダノンキラウェア",
-      "horse_id": "2021100171",
-      "pop": 2,
-      "odds": 4.7,
-      "place_odds": 1.6,
-      "jockey": "西村淳",
-      "trainer": "中内田",
-      "weight_carried": 58.0,
-      "horse_weight": 474,
-      "horse_weight_diff": 0,
-      "time": "1:24.1",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 4,
-      "num": "14",
-      "name": "ヴリトラハン",
-      "horse_id": "2022105302",
-      "pop": 3,
-      "odds": 4.7,
-      "place_odds": null,
-      "jockey": "川田",
-      "trainer": "千田",
-      "weight_carried": 58.0,
-      "horse_weight": 486,
-      "horse_weight_diff": 6,
-      "time": "1:24.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 5,
-      "num": "10",
-      "name": "ハリウッドブルース",
-      "horse_id": "2021104514",
-      "pop": 8,
-      "odds": 28.5,
-      "place_odds": null,
-      "jockey": "藤懸",
-      "trainer": "浜田",
-      "weight_carried": 58.0,
-      "horse_weight": 468,
-      "horse_weight_diff": -2,
-      "time": "1:24.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 6,
-      "num": "8",
-      "name": "ユウトザレン",
-      "horse_id": "2022101016",
-      "pop": 5,
-      "odds": 11.9,
-      "place_odds": null,
-      "jockey": "吉村",
-      "trainer": "千田",
-      "weight_carried": 58.0,
-      "horse_weight": 488,
-      "horse_weight_diff": -2,
-      "time": "1:24.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 7,
-      "num": "5",
-      "name": "ウィップスティッチ",
-      "horse_id": "2021105253",
-      "pop": 10,
-      "odds": 50.5,
-      "place_odds": null,
-      "jockey": "北村友",
-      "trainer": "庄野",
-      "weight_carried": 56.0,
-      "horse_weight": 512,
-      "horse_weight_diff": 16,
-      "time": "1:24.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 8,
-      "num": "13",
-      "name": "アスゴッド",
-      "horse_id": "2022103704",
-      "pop": 9,
-      "odds": 41.2,
-      "place_odds": null,
-      "jockey": "高杉",
-      "trainer": "矢作",
-      "weight_carried": 58.0,
-      "horse_weight": 506,
-      "horse_weight_diff": 2,
-      "time": "1:24.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 9,
-      "num": "9",
-      "name": "プリンスノット",
-      "horse_id": "2020102881",
-      "pop": 13,
-      "odds": 155.9,
-      "place_odds": null,
-      "jockey": "菱田",
-      "trainer": "小椋",
-      "weight_carried": 58.0,
-      "horse_weight": 488,
-      "horse_weight_diff": 0,
-      "time": "1:24.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 10,
-      "num": "1",
-      "name": "ジョウゲンノツキ",
-      "horse_id": "2021102755",
-      "pop": 11,
-      "odds": 105.3,
-      "place_odds": null,
-      "jockey": "松若",
-      "trainer": "牧田",
-      "weight_carried": 56.0,
-      "horse_weight": 456,
-      "horse_weight_diff": 0,
-      "time": "1:24.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 11,
-      "num": "11",
-      "name": "ホウオウフロイト",
-      "horse_id": "2021103549",
-      "pop": 14,
-      "odds": 201.0,
-      "place_odds": null,
-      "jockey": "田山",
-      "trainer": "加藤和",
-      "weight_carried": 58.0,
-      "horse_weight": 440,
-      "horse_weight_diff": -6,
-      "time": "1:24.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 12,
-      "num": "3",
-      "name": "ズバットマサムネ",
-      "horse_id": "2021105711",
-      "pop": 12,
-      "odds": 134.8,
-      "place_odds": null,
-      "jockey": "荻野琢",
-      "trainer": "杉山佳",
-      "weight_carried": 58.0,
-      "horse_weight": 492,
-      "horse_weight_diff": -2,
-      "time": "1:24.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 13,
-      "num": "12",
-      "name": "ダイヤモンドハンズ",
-      "horse_id": "2020103647",
-      "pop": 6,
-      "odds": 13.0,
-      "place_odds": null,
-      "jockey": "岩田望",
-      "trainer": "池江",
-      "weight_carried": 58.0,
-      "horse_weight": 510,
-      "horse_weight_diff": -6,
-      "time": "1:24.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 14,
-      "num": "2",
-      "name": "リアルスター",
-      "horse_id": "2022103290",
-      "pop": 7,
-      "odds": 18.8,
-      "place_odds": null,
-      "jockey": "田口",
-      "trainer": "大橋",
-      "weight_carried": 58.0,
-      "horse_weight": 562,
-      "horse_weight_diff": 4,
-      "time": "1:25.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    }
-  ],
   "京都1R": [
     {
       "rank": 1,
@@ -941,9 +15,12 @@
       "horse_weight_diff": -2,
       "time": "1:11.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.6,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -961,9 +38,12 @@
       "horse_weight_diff": 4,
       "time": "1:11.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.8,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -981,9 +61,12 @@
       "horse_weight_diff": 6,
       "time": "1:12.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.8,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
@@ -1001,9 +84,12 @@
       "horse_weight_diff": 8,
       "time": "1:12.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.4,
+      "corners": [
+        10,
+        8
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     },
     {
@@ -1021,9 +107,12 @@
       "horse_weight_diff": -4,
       "time": "1:12.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.9,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -1041,9 +130,12 @@
       "horse_weight_diff": -10,
       "time": "1:12.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.8,
+      "corners": [
+        8,
+        8
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -1061,9 +153,12 @@
       "horse_weight_diff": 2,
       "time": "1:12.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.3,
+      "corners": [
+        3,
+        4
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -1081,9 +176,12 @@
       "horse_weight_diff": -2,
       "time": "1:12.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.1,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -1101,9 +199,12 @@
       "horse_weight_diff": 6,
       "time": "1:12.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.4,
+      "corners": [
+        11,
+        11
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -1121,9 +222,12 @@
       "horse_weight_diff": 2,
       "time": "1:13.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.5,
+      "corners": [
+        13,
+        11
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -1141,9 +245,12 @@
       "horse_weight_diff": 0,
       "time": "1:13.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.1,
+      "corners": [
+        15,
+        15
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -1161,9 +268,12 @@
       "horse_weight_diff": 2,
       "time": "1:13.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.6,
+      "corners": [
+        9,
+        10
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
@@ -1181,9 +291,12 @@
       "horse_weight_diff": -2,
       "time": "1:14.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.0,
+      "corners": [
+        13,
+        13
+      ],
+      "sex_age": "牡3",
       "gate": "2"
     },
     {
@@ -1201,9 +314,12 @@
       "horse_weight_diff": -4,
       "time": "1:15.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.6,
+      "corners": [
+        5,
+        7
+      ],
+      "sex_age": "牝3",
       "gate": "3"
     },
     {
@@ -1221,9 +337,12 @@
       "horse_weight_diff": 0,
       "time": "1:15.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.9,
+      "corners": [
+        11,
+        13
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -1241,9 +360,12 @@
       "horse_weight_diff": -4,
       "time": "1:18.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.9,
+      "corners": [
+        16,
+        16
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     }
   ],
@@ -1263,9 +385,14 @@
       "horse_weight_diff": -4,
       "time": "1:54.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.0,
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "sex_age": "セ3",
       "gate": "6"
     },
     {
@@ -1283,9 +410,14 @@
       "horse_weight_diff": 0,
       "time": "1:54.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.2,
+      "corners": [
+        11,
+        11,
+        5,
+        4
+      ],
+      "sex_age": "セ3",
       "gate": "2"
     },
     {
@@ -1303,9 +435,14 @@
       "horse_weight_diff": 14,
       "time": "1:55.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.1,
+      "corners": [
+        5,
+        4,
+        5,
+        4
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
@@ -1323,9 +460,14 @@
       "horse_weight_diff": 0,
       "time": "1:55.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.4,
+      "corners": [
+        5,
+        4,
+        5,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -1343,9 +485,14 @@
       "horse_weight_diff": 4,
       "time": "1:55.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.5,
+      "corners": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -1363,9 +510,14 @@
       "horse_weight_diff": 6,
       "time": "1:56.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 41.0,
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
@@ -1383,9 +535,14 @@
       "horse_weight_diff": -14,
       "time": "1:56.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.7,
+      "corners": [
+        14,
+        13,
+        4,
+        4
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -1403,9 +560,14 @@
       "horse_weight_diff": -8,
       "time": "1:56.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.5,
+      "corners": [
+        11,
+        11,
+        11,
+        9
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -1423,9 +585,14 @@
       "horse_weight_diff": -2,
       "time": "1:56.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.2,
+      "corners": [
+        7,
+        7,
+        8,
+        8
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -1443,9 +610,14 @@
       "horse_weight_diff": 4,
       "time": "1:56.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.5,
+      "corners": [
+        8,
+        7,
+        11,
+        11
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
@@ -1463,9 +635,14 @@
       "horse_weight_diff": -6,
       "time": "1:56.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.0,
+      "corners": [
+        8,
+        7,
+        9,
+        10
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
@@ -1483,9 +660,14 @@
       "horse_weight_diff": -6,
       "time": "1:58.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.2,
+      "corners": [
+        11,
+        13,
+        13,
+        13
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
@@ -1503,352 +685,737 @@
       "horse_weight_diff": 4,
       "time": "1:58.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 41.5,
+      "corners": [
+        10,
+        7,
+        9,
+        12
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     }
   ],
-  "京都4R": [
+  "京都3R": [
     {
       "rank": 1,
-      "num": "1",
-      "name": "エトワールブーケ",
-      "horse_id": "2023105993",
-      "pop": 6,
-      "odds": 11.0,
-      "place_odds": 3.0,
-      "jockey": "横山和",
-      "trainer": "昆",
-      "weight_carried": 55.0,
-      "horse_weight": 440,
-      "horse_weight_diff": 6,
-      "time": "1:46.2",
+      "num": "4",
+      "name": "ヤマニンフェイエル",
+      "horse_id": "2023104358",
+      "pop": 3,
+      "odds": 6.3,
+      "place_odds": 2.0,
+      "jockey": "岩田望",
+      "trainer": "中村",
+      "weight_carried": 57.0,
+      "horse_weight": 460,
+      "horse_weight_diff": 4,
+      "time": "1:08.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
+      "last3f": 34.5,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牡3",
+      "gate": "2"
     },
     {
       "rank": 2,
-      "num": "5",
-      "name": "アンビエントポップ",
-      "horse_id": "2023103524",
-      "pop": 2,
-      "odds": 4.9,
+      "num": "7",
+      "name": "カルロット",
+      "horse_id": "2023105339",
+      "pop": 4,
+      "odds": 6.4,
       "place_odds": 2.6,
-      "jockey": "岩田望",
-      "trainer": "上村",
-      "weight_carried": 55.0,
-      "horse_weight": 486,
-      "horse_weight_diff": 0,
-      "time": "1:46.3",
+      "jockey": "武豊",
+      "trainer": "武幸",
+      "weight_carried": 57.0,
+      "horse_weight": 512,
+      "horse_weight_diff": -2,
+      "time": "1:08.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
+      "last3f": 33.5,
+      "corners": [
+        13,
+        13
+      ],
+      "sex_age": "牡3",
+      "gate": "4"
     },
     {
       "rank": 3,
-      "num": "13",
-      "name": "エイカイコバチ",
-      "horse_id": "2023107144",
-      "pop": 9,
-      "odds": 32.7,
-      "place_odds": 8.0,
-      "jockey": "吉村",
-      "trainer": "藤原",
+      "num": "11",
+      "name": "スッサンエア",
+      "horse_id": "2023102151",
+      "pop": 13,
+      "odds": 61.4,
+      "place_odds": 1.3,
+      "jockey": "鮫島駿",
+      "trainer": "河嶋",
       "weight_carried": 55.0,
-      "horse_weight": 452,
-      "horse_weight_diff": 6,
-      "time": "1:46.7",
+      "horse_weight": 436,
+      "horse_weight_diff": 10,
+      "time": "1:08.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
+      "last3f": 34.3,
+      "corners": [
+        5,
+        6
+      ],
+      "sex_age": "牝3",
+      "gate": "6"
     },
     {
       "rank": 4,
-      "num": "14",
-      "name": "トラカイキャッスル",
-      "horse_id": "2023103412",
+      "num": "15",
+      "name": "コスモファーブロス",
+      "horse_id": "2023106420",
       "pop": 7,
-      "odds": 13.8,
+      "odds": 17.2,
       "place_odds": null,
-      "jockey": "田口",
-      "trainer": "西村",
+      "jockey": "戸崎圭",
+      "trainer": "吉田",
       "weight_carried": 55.0,
-      "horse_weight": 430,
-      "horse_weight_diff": -4,
-      "time": "1:46.7",
+      "horse_weight": 416,
+      "horse_weight_diff": 4,
+      "time": "1:08.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
+      "last3f": 33.5,
+      "corners": [
+        12,
+        13
+      ],
+      "sex_age": "牝3",
+      "gate": "8"
     },
     {
       "rank": 5,
-      "num": "17",
-      "name": "ルナティックブルー",
-      "horse_id": "2023106517",
+      "num": "8",
+      "name": "グレンセロース",
+      "horse_id": "2023103794",
+      "pop": 6,
+      "odds": 13.9,
+      "place_odds": null,
+      "jockey": "池添",
+      "trainer": "池添",
+      "weight_carried": 55.0,
+      "horse_weight": 442,
+      "horse_weight_diff": -2,
+      "time": "1:08.7",
+      "margin": "",
+      "last3f": 34.7,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝3",
+      "gate": "4"
+    },
+    {
+      "rank": 6,
+      "num": "9",
+      "name": "フルムーン",
+      "horse_id": "2023100610",
+      "pop": 1,
+      "odds": 2.7,
+      "place_odds": null,
+      "jockey": "高杉",
+      "trainer": "藤岡健",
+      "weight_carried": 57.0,
+      "horse_weight": 468,
+      "horse_weight_diff": 0,
+      "time": "1:08.8",
+      "margin": "",
+      "last3f": 33.9,
+      "corners": [
+        11,
+        10
+      ],
+      "sex_age": "牡3",
+      "gate": "5"
+    },
+    {
+      "rank": 7,
+      "num": "2",
+      "name": "リヴァイ",
+      "horse_id": "2023103585",
+      "pop": 2,
+      "odds": 5.6,
+      "place_odds": null,
+      "jockey": "西村淳",
+      "trainer": "高野",
+      "weight_carried": 57.0,
+      "horse_weight": 512,
+      "horse_weight_diff": 10,
+      "time": "1:08.8",
+      "margin": "",
+      "last3f": 34.6,
+      "corners": [
+        5,
+        3
+      ],
+      "sex_age": "牡3",
+      "gate": "1"
+    },
+    {
+      "rank": 8,
+      "num": "13",
+      "name": "ヒッグスボソン",
+      "horse_id": "2023101122",
+      "pop": 8,
+      "odds": 17.6,
+      "place_odds": null,
+      "jockey": "斎藤",
+      "trainer": "高橋忠",
+      "weight_carried": 57.0,
+      "horse_weight": 424,
+      "horse_weight_diff": -4,
+      "time": "1:08.9",
+      "margin": "",
+      "last3f": 34.0,
+      "corners": [
+        13,
+        11
+      ],
+      "sex_age": "牡3",
+      "gate": "7"
+    },
+    {
+      "rank": 9,
+      "num": "14",
+      "name": "エコロデュラン",
+      "horse_id": "2023103623",
       "pop": 12,
-      "odds": 103.3,
+      "odds": 56.5,
+      "place_odds": null,
+      "jockey": "坂井",
+      "trainer": "矢作",
+      "weight_carried": 57.0,
+      "horse_weight": 456,
+      "horse_weight_diff": -4,
+      "time": "1:09.0",
+      "margin": "",
+      "last3f": 34.5,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牡3",
+      "gate": "7"
+    },
+    {
+      "rank": 10,
+      "num": "10",
+      "name": "ジューンオアシス",
+      "horse_id": "2023101722",
+      "pop": 11,
+      "odds": 49.0,
+      "place_odds": null,
+      "jockey": "菱田",
+      "trainer": "飯田",
+      "weight_carried": 57.0,
+      "horse_weight": 466,
+      "horse_weight_diff": -2,
+      "time": "1:09.0",
+      "margin": "",
+      "last3f": 33.5,
+      "corners": [
+        16,
+        15
+      ],
+      "sex_age": "牡3",
+      "gate": "5"
+    },
+    {
+      "rank": 11,
+      "num": "16",
+      "name": "ダノンステート",
+      "horse_id": "2023105024",
+      "pop": 10,
+      "odds": 49.0,
+      "place_odds": null,
+      "jockey": "横山和",
+      "trainer": "千田",
+      "weight_carried": 57.0,
+      "horse_weight": 482,
+      "horse_weight_diff": 10,
+      "time": "1:09.2",
+      "margin": "",
+      "last3f": 33.8,
+      "corners": [
+        15,
+        15
+      ],
+      "sex_age": "牡3",
+      "gate": "8"
+    },
+    {
+      "rank": 12,
+      "num": "6",
+      "name": "ヴィゴラスガイア",
+      "horse_id": "2023105113",
+      "pop": 16,
+      "odds": 343.1,
+      "place_odds": null,
+      "jockey": "吉村",
+      "trainer": "武英",
+      "weight_carried": 55.0,
+      "horse_weight": 404,
+      "horse_weight_diff": 0,
+      "time": "1:09.2",
+      "margin": "",
+      "last3f": 34.7,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牝3",
+      "gate": "3"
+    },
+    {
+      "rank": 13,
+      "num": "1",
+      "name": "ルナーマンス",
+      "horse_id": "2023101176",
+      "pop": 9,
+      "odds": 22.4,
+      "place_odds": null,
+      "jockey": "団野",
+      "trainer": "斉藤崇",
+      "weight_carried": 55.0,
+      "horse_weight": 438,
+      "horse_weight_diff": -2,
+      "time": "1:09.2",
+      "margin": "",
+      "last3f": 35.1,
+      "corners": [
+        4,
+        3
+      ],
+      "sex_age": "牝3",
+      "gate": "1"
+    },
+    {
+      "rank": 14,
+      "num": "12",
+      "name": "メイショウジーニー",
+      "horse_id": "2023106566",
+      "pop": 15,
+      "odds": 228.1,
+      "place_odds": null,
+      "jockey": "幸",
+      "trainer": "秋山",
+      "weight_carried": 55.0,
+      "horse_weight": 400,
+      "horse_weight_diff": 10,
+      "time": "1:09.5",
+      "margin": "",
+      "last3f": 35.5,
+      "corners": [
+        2,
+        3
+      ],
+      "sex_age": "牝3",
+      "gate": "6"
+    },
+    {
+      "rank": 15,
+      "num": "5",
+      "name": "レガリアーナ",
+      "horse_id": "2023103763",
+      "pop": 14,
+      "odds": 199.8,
       "place_odds": null,
       "jockey": "松若",
-      "trainer": "今野",
+      "trainer": "安達",
       "weight_carried": 55.0,
-      "horse_weight": 432,
-      "horse_weight_diff": -4,
-      "time": "1:46.8",
+      "horse_weight": 376,
+      "horse_weight_diff": 2,
+      "time": "1:09.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.9,
+      "corners": [
+        10,
+        11
+      ],
+      "sex_age": "牝3",
+      "gate": "3"
+    },
+    {
+      "rank": 16,
+      "num": "3",
+      "name": "リフルフォース",
+      "horse_id": "2023105788",
+      "pop": 5,
+      "odds": 12.9,
+      "place_odds": null,
+      "jockey": "北村友",
+      "trainer": "上村",
+      "weight_carried": 55.0,
+      "horse_weight": 466,
+      "horse_weight_diff": -2,
+      "time": "1:09.8",
+      "margin": "",
+      "last3f": 35.4,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牝3",
+      "gate": "2"
+    }
+  ],
+  "京都5R": [
+    {
+      "rank": 1,
+      "num": "10",
+      "name": "パンチャマハブータ",
+      "horse_id": "2023101404",
+      "pop": 7,
+      "odds": 23.2,
+      "place_odds": 4.1,
+      "jockey": "池添",
+      "trainer": "吉田",
+      "weight_carried": 55.0,
+      "horse_weight": 406,
+      "horse_weight_diff": -2,
+      "time": "2:14.3",
+      "margin": "",
+      "last3f": 35.3,
+      "corners": [
+        11,
+        10,
+        9,
+        7
+      ],
+      "sex_age": "牝3",
+      "gate": "6"
+    },
+    {
+      "rank": 2,
+      "num": "6",
+      "name": "ペガサスジルシ",
+      "horse_id": "2023107350",
+      "pop": 1,
+      "odds": 2.6,
+      "place_odds": 1.5,
+      "jockey": "川田",
+      "trainer": "新谷",
+      "weight_carried": 55.0,
+      "horse_weight": 430,
+      "horse_weight_diff": 4,
+      "time": "2:14.3",
+      "margin": "",
+      "last3f": 35.5,
+      "corners": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "sex_age": "牝3",
+      "gate": "4"
+    },
+    {
+      "rank": 3,
+      "num": "14",
+      "name": "ルクスディグニティ",
+      "horse_id": "2023100669",
+      "pop": 8,
+      "odds": 32.3,
+      "place_odds": 6.8,
+      "jockey": "横山和",
+      "trainer": "昆",
+      "weight_carried": 57.0,
+      "horse_weight": 456,
+      "horse_weight_diff": 4,
+      "time": "2:14.5",
+      "margin": "",
+      "last3f": 35.3,
+      "corners": [
+        13,
+        13,
+        11,
+        10
+      ],
+      "sex_age": "牡3",
       "gate": "8"
+    },
+    {
+      "rank": 4,
+      "num": "4",
+      "name": "ダノンオブアイデア",
+      "horse_id": "2023103398",
+      "pop": 6,
+      "odds": 8.1,
+      "place_odds": null,
+      "jockey": "松山",
+      "trainer": "藤原",
+      "weight_carried": 57.0,
+      "horse_weight": 514,
+      "horse_weight_diff": 4,
+      "time": "2:14.9",
+      "margin": "",
+      "last3f": 36.1,
+      "corners": [
+        3,
+        4,
+        5,
+        4
+      ],
+      "sex_age": "牡3",
+      "gate": "3"
+    },
+    {
+      "rank": 5,
+      "num": "2",
+      "name": "サンタカタリナ",
+      "horse_id": "2023104879",
+      "pop": 9,
+      "odds": 34.7,
+      "place_odds": null,
+      "jockey": "鮫島駿",
+      "trainer": "杉山晴",
+      "weight_carried": 55.0,
+      "horse_weight": 462,
+      "horse_weight_diff": -4,
+      "time": "2:15.0",
+      "margin": "",
+      "last3f": 36.4,
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sex_age": "牝3",
+      "gate": "2"
     },
     {
       "rank": 6,
       "num": "8",
-      "name": "テンダーワーズ",
-      "horse_id": "2023103359",
-      "pop": 5,
-      "odds": 8.0,
+      "name": "スウィーティーベル",
+      "horse_id": "2023100938",
+      "pop": 4,
+      "odds": 7.7,
       "place_odds": null,
       "jockey": "団野",
-      "trainer": "中尾",
+      "trainer": "田中克",
       "weight_carried": 55.0,
-      "horse_weight": 440,
-      "horse_weight_diff": -4,
-      "time": "1:47.2",
+      "horse_weight": 398,
+      "horse_weight_diff": -2,
+      "time": "2:15.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
+      "last3f": 36.2,
+      "corners": [
+        9,
+        8,
+        7,
+        7
+      ],
+      "sex_age": "牝3",
+      "gate": "5"
     },
     {
       "rank": 7,
-      "num": "11",
-      "name": "インフィオラータ",
-      "horse_id": "2023102923",
-      "pop": 4,
-      "odds": 7.1,
+      "num": "9",
+      "name": "キーテーマ",
+      "horse_id": "2023101946",
+      "pop": 10,
+      "odds": 35.1,
       "place_odds": null,
-      "jockey": "△田山",
-      "trainer": "須貝",
-      "weight_carried": 53.0,
-      "horse_weight": 444,
-      "horse_weight_diff": 2,
-      "time": "1:47.2",
+      "jockey": "菱田",
+      "trainer": "宮",
+      "weight_carried": 55.0,
+      "horse_weight": 440,
+      "horse_weight_diff": -2,
+      "time": "2:15.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.7,
+      "corners": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
       "rank": 8,
-      "num": "10",
-      "name": "ジャージーテーラー",
-      "horse_id": "2023103070",
-      "pop": 17,
-      "odds": 391.5,
+      "num": "12",
+      "name": "レットミーテイク",
+      "horse_id": "2023101934",
+      "pop": 12,
+      "odds": 128.0,
       "place_odds": null,
-      "jockey": "中井",
-      "trainer": "緒方",
-      "weight_carried": 55.0,
-      "horse_weight": 416,
-      "horse_weight_diff": -2,
-      "time": "1:47.3",
+      "jockey": "加藤",
+      "trainer": "庄野",
+      "weight_carried": 57.0,
+      "horse_weight": 502,
+      "horse_weight_diff": 0,
+      "time": "2:15.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
+      "last3f": 36.0,
+      "corners": [
+        14,
+        14,
+        14,
+        13
+      ],
+      "sex_age": "牡3",
+      "gate": "7"
     },
     {
       "rank": 9,
-      "num": "6",
-      "name": "ダンツアラーム",
-      "horse_id": "2023104027",
-      "pop": 8,
-      "odds": 21.6,
-      "place_odds": null,
-      "jockey": "太宰",
-      "trainer": "本田",
-      "weight_carried": 55.0,
-      "horse_weight": 428,
-      "horse_weight_diff": 0,
-      "time": "1:47.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 10,
-      "num": "15",
-      "name": "サンダーバード",
-      "horse_id": "2023105292",
-      "pop": 1,
-      "odds": 3.2,
-      "place_odds": null,
-      "jockey": "浜中",
-      "trainer": "武幸",
-      "weight_carried": 55.0,
-      "horse_weight": 436,
-      "horse_weight_diff": -4,
-      "time": "1:47.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 11,
-      "num": "12",
-      "name": "ラヴィングチャンプ",
-      "horse_id": "2023103918",
-      "pop": 16,
-      "odds": 273.6,
-      "place_odds": null,
-      "jockey": "鮫島駿",
-      "trainer": "河嶋",
-      "weight_carried": 55.0,
-      "horse_weight": 466,
-      "horse_weight_diff": 2,
-      "time": "1:47.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 12,
-      "num": "2",
-      "name": "ペスキエーラ",
-      "horse_id": "2023107311",
-      "pop": 10,
-      "odds": 47.1,
-      "place_odds": null,
-      "jockey": "西村淳",
-      "trainer": "須貝",
-      "weight_carried": 55.0,
-      "horse_weight": 468,
-      "horse_weight_diff": -4,
-      "time": "1:47.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 13,
-      "num": "3",
-      "name": "ハクサンモッピー",
-      "horse_id": "2023105696",
+      "num": "5",
+      "name": "ブリックアブラック",
+      "horse_id": "2023102410",
       "pop": 14,
-      "odds": 129.5,
+      "odds": 191.0,
       "place_odds": null,
-      "jockey": "藤懸",
-      "trainer": "高橋康",
-      "weight_carried": 55.0,
-      "horse_weight": 486,
-      "horse_weight_diff": -4,
-      "time": "1:47.8",
+      "jockey": "菅原明",
+      "trainer": "高木",
+      "weight_carried": 57.0,
+      "horse_weight": 454,
+      "horse_weight_diff": 2,
+      "time": "2:15.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 14,
-      "num": "9",
-      "name": "ラッキーシグネチャ",
-      "horse_id": "2023105302",
-      "pop": 13,
-      "odds": 113.4,
-      "place_odds": null,
-      "jockey": "菱田",
-      "trainer": "矢作",
-      "weight_carried": 55.0,
-      "horse_weight": 440,
-      "horse_weight_diff": 0,
-      "time": "1:48.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 15,
-      "num": "4",
-      "name": "ポリキポリキ",
-      "horse_id": "2023105680",
-      "pop": 11,
-      "odds": 81.6,
-      "place_odds": null,
-      "jockey": "北村友",
-      "trainer": "藤原",
-      "weight_carried": 55.0,
-      "horse_weight": 410,
-      "horse_weight_diff": 0,
-      "time": "1:48.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 16,
-      "num": "7",
-      "name": "ファビュラスベガス",
-      "horse_id": "2023103545",
-      "pop": 15,
-      "odds": 208.6,
-      "place_odds": null,
-      "jockey": "斎藤",
-      "trainer": "前川",
-      "weight_carried": 55.0,
-      "horse_weight": 416,
-      "horse_weight_diff": -4,
-      "time": "1:48.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.2,
+      "corners": [
+        11,
+        10,
+        11,
+        13
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
-      "rank": 17,
-      "num": "16",
-      "name": "アサリア",
-      "horse_id": "2023103538",
+      "rank": 10,
+      "num": "1",
+      "name": "カデナボニータ",
+      "horse_id": "2023105200",
+      "pop": 5,
+      "odds": 8.1,
+      "place_odds": null,
+      "jockey": "高杉",
+      "trainer": "小椋",
+      "weight_carried": 55.0,
+      "horse_weight": 436,
+      "horse_weight_diff": 18,
+      "time": "2:15.6",
+      "margin": "",
+      "last3f": 37.1,
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "sex_age": "牝3",
+      "gate": "1"
+    },
+    {
+      "rank": 11,
+      "num": "13",
+      "name": "バディ",
+      "horse_id": "2023101891",
+      "pop": 2,
+      "odds": 5.8,
+      "place_odds": null,
+      "jockey": "太宰",
+      "trainer": "四位",
+      "weight_carried": 57.0,
+      "horse_weight": 382,
+      "horse_weight_diff": -4,
+      "time": "2:15.8",
+      "margin": "",
+      "last3f": 36.6,
+      "corners": [
+        10,
+        10,
+        11,
+        10
+      ],
+      "sex_age": "牡3",
+      "gate": "8"
+    },
+    {
+      "rank": 12,
+      "num": "11",
+      "name": "フローマジック",
+      "horse_id": "2023105252",
       "pop": 3,
-      "odds": 5.9,
+      "odds": 5.8,
       "place_odds": null,
       "jockey": "武豊",
-      "trainer": "藤原",
+      "trainer": "辻野",
       "weight_carried": 55.0,
-      "horse_weight": 472,
-      "horse_weight_diff": -4,
-      "time": "1:49.4",
+      "horse_weight": 460,
+      "horse_weight_diff": 4,
+      "time": "2:16.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
+      "last3f": 37.4,
+      "corners": [
+        6,
+        6,
+        3,
+        4
+      ],
+      "sex_age": "牝3",
+      "gate": "7"
+    },
+    {
+      "rank": 13,
+      "num": "7",
+      "name": "ドントゥール",
+      "horse_id": "2023102949",
+      "pop": 13,
+      "odds": 180.4,
+      "place_odds": null,
+      "jockey": "酒井",
+      "trainer": "杉山晴",
+      "weight_carried": 55.0,
+      "horse_weight": 474,
+      "horse_weight_diff": 0,
+      "time": "2:16.1",
+      "margin": "",
+      "last3f": 37.1,
+      "corners": [
+        6,
+        6,
+        7,
+        9
+      ],
+      "sex_age": "牝3",
+      "gate": "5"
+    },
+    {
+      "rank": 14,
+      "num": "3",
+      "name": "サンタカリス",
+      "horse_id": "2023100986",
+      "pop": 11,
+      "odds": 113.6,
+      "place_odds": null,
+      "jockey": "△田山",
+      "trainer": "秋山",
+      "weight_carried": 53.0,
+      "horse_weight": 428,
+      "horse_weight_diff": 0,
+      "time": "2:16.8",
+      "margin": "",
+      "last3f": 37.5,
+      "corners": [
+        6,
+        8,
+        9,
+        10
+      ],
+      "sex_age": "牝3",
+      "gate": "3"
     }
   ],
   "京都6R": [
@@ -1867,9 +1434,12 @@
       "horse_weight_diff": 2,
       "time": "1:24.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.0,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -1887,9 +1457,12 @@
       "horse_weight_diff": -2,
       "time": "1:24.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.1,
+      "corners": [
+        14,
+        13
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -1907,9 +1480,12 @@
       "horse_weight_diff": -4,
       "time": "1:24.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.5,
+      "corners": [
+        8,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -1927,9 +1503,12 @@
       "horse_weight_diff": 0,
       "time": "1:24.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.3,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -1947,9 +1526,12 @@
       "horse_weight_diff": -6,
       "time": "1:24.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.7,
+      "corners": [
+        6,
+        4
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -1967,9 +1549,12 @@
       "horse_weight_diff": -2,
       "time": "1:24.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.5,
+      "corners": [
+        10,
+        10
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     },
     {
@@ -1987,9 +1572,12 @@
       "horse_weight_diff": 4,
       "time": "1:24.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.7,
+      "corners": [
+        8,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "1"
     },
     {
@@ -2007,9 +1595,12 @@
       "horse_weight_diff": -10,
       "time": "1:24.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.6,
+      "corners": [
+        10,
+        10
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     },
     {
@@ -2027,9 +1618,12 @@
       "horse_weight_diff": 2,
       "time": "1:24.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.4,
+      "corners": [
+        13,
+        13
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
@@ -2047,9 +1641,12 @@
       "horse_weight_diff": 0,
       "time": "1:24.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.4,
+      "corners": [
+        15,
+        15
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -2067,9 +1664,12 @@
       "horse_weight_diff": -10,
       "time": "1:24.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.5,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -2087,9 +1687,12 @@
       "horse_weight_diff": 6,
       "time": "1:25.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.7,
+      "corners": [
+        4,
+        4
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -2107,9 +1710,12 @@
       "horse_weight_diff": 4,
       "time": "1:25.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.8,
+      "corners": [
+        4,
+        4
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
@@ -2127,9 +1733,12 @@
       "horse_weight_diff": 6,
       "time": "1:25.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.5,
+      "corners": [
+        10,
+        12
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -2147,9 +1756,12 @@
       "horse_weight_diff": 2,
       "time": "1:26.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.1,
+      "corners": [
+        16,
+        16
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
@@ -2167,332 +1779,13 @@
       "horse_weight_diff": 8,
       "time": "1:26.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.1,
+      "corners": [
+        6,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "7"
-    }
-  ],
-  "京都7R": [
-    {
-      "rank": 1,
-      "num": "3",
-      "name": "ビルンバウム",
-      "horse_id": "2021104872",
-      "pop": 3,
-      "odds": 6.0,
-      "place_odds": 2.2,
-      "jockey": "松若",
-      "trainer": "渡辺",
-      "weight_carried": 58.0,
-      "horse_weight": 560,
-      "horse_weight_diff": 6,
-      "time": "1:52.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 2,
-      "num": "5",
-      "name": "ポイントネモ",
-      "horse_id": "2022101622",
-      "pop": 1,
-      "odds": 2.6,
-      "place_odds": 1.4,
-      "jockey": "坂井",
-      "trainer": "大久保",
-      "weight_carried": 58.0,
-      "horse_weight": 498,
-      "horse_weight_diff": 6,
-      "time": "1:53.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 3,
-      "num": "12",
-      "name": "メイショウコナン",
-      "horse_id": "2021103064",
-      "pop": 5,
-      "odds": 8.7,
-      "place_odds": 1.8,
-      "jockey": "団野",
-      "trainer": "荒川",
-      "weight_carried": 58.0,
-      "horse_weight": 524,
-      "horse_weight_diff": 2,
-      "time": "1:53.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 4,
-      "num": "7",
-      "name": "サマーナイト",
-      "horse_id": "2022104729",
-      "pop": 7,
-      "odds": 18.9,
-      "place_odds": null,
-      "jockey": "小崎",
-      "trainer": "寺島",
-      "weight_carried": 58.0,
-      "horse_weight": 490,
-      "horse_weight_diff": 0,
-      "time": "1:53.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 5,
-      "num": "6",
-      "name": "ブレスドナイル",
-      "horse_id": "2022110061",
-      "pop": 13,
-      "odds": 104.4,
-      "place_odds": null,
-      "jockey": "吉村",
-      "trainer": "茶木",
-      "weight_carried": 56.0,
-      "horse_weight": 446,
-      "horse_weight_diff": 6,
-      "time": "1:54.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 6,
-      "num": "14",
-      "name": "ロックウイズユー",
-      "horse_id": "2022103143",
-      "pop": 9,
-      "odds": 47.0,
-      "place_odds": null,
-      "jockey": "高杉",
-      "trainer": "橋田",
-      "weight_carried": 58.0,
-      "horse_weight": 460,
-      "horse_weight_diff": 8,
-      "time": "1:54.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 7,
-      "num": "9",
-      "name": "バレンシア",
-      "horse_id": "2022106663",
-      "pop": 10,
-      "odds": 47.6,
-      "place_odds": null,
-      "jockey": "Ｍデム",
-      "trainer": "笹田",
-      "weight_carried": 56.0,
-      "horse_weight": 460,
-      "horse_weight_diff": 8,
-      "time": "1:54.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 8,
-      "num": "8",
-      "name": "デルマサクラサク",
-      "horse_id": "2022105343",
-      "pop": 2,
-      "odds": 5.7,
-      "place_odds": null,
-      "jockey": "鮫島駿",
-      "trainer": "牧田",
-      "weight_carried": 56.0,
-      "horse_weight": 494,
-      "horse_weight_diff": 6,
-      "time": "1:54.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 9,
-      "num": "16",
-      "name": "ガーデンカメリア",
-      "horse_id": "2021110139",
-      "pop": 8,
-      "odds": 19.0,
-      "place_odds": null,
-      "jockey": "▲川端",
-      "trainer": "佐藤悠",
-      "weight_carried": 53.0,
-      "horse_weight": 474,
-      "horse_weight_diff": 6,
-      "time": "1:54.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 10,
-      "num": "15",
-      "name": "シーリュウシー",
-      "horse_id": "2021106180",
-      "pop": 11,
-      "odds": 72.6,
-      "place_odds": null,
-      "jockey": "菱田",
-      "trainer": "岡田",
-      "weight_carried": 58.0,
-      "horse_weight": 504,
-      "horse_weight_diff": -2,
-      "time": "1:54.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 11,
-      "num": "1",
-      "name": "ロケベンドラ",
-      "horse_id": "2022105558",
-      "pop": 4,
-      "odds": 6.8,
-      "place_odds": null,
-      "jockey": "松山",
-      "trainer": "西園翔",
-      "weight_carried": 56.0,
-      "horse_weight": 450,
-      "horse_weight_diff": 6,
-      "time": "1:55.1",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 12,
-      "num": "13",
-      "name": "シゲルオトヒメ",
-      "horse_id": "2019102986",
-      "pop": 15,
-      "odds": 133.0,
-      "place_odds": null,
-      "jockey": "酒井",
-      "trainer": "谷",
-      "weight_carried": 56.0,
-      "horse_weight": 446,
-      "horse_weight_diff": 0,
-      "time": "1:55.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 13,
-      "num": "4",
-      "name": "リリーアロー",
-      "horse_id": "2019100689",
-      "pop": 16,
-      "odds": 355.2,
-      "place_odds": null,
-      "jockey": "藤懸",
-      "trainer": "平田",
-      "weight_carried": 58.0,
-      "horse_weight": 500,
-      "horse_weight_diff": 0,
-      "time": "1:55.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 14,
-      "num": "10",
-      "name": "スリーラーケン",
-      "horse_id": "2022102312",
-      "pop": 6,
-      "odds": 12.3,
-      "place_odds": null,
-      "jockey": "国分恭",
-      "trainer": "高橋忠",
-      "weight_carried": 58.0,
-      "horse_weight": 512,
-      "horse_weight_diff": 20,
-      "time": "1:55.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 15,
-      "num": "11",
-      "name": "ニホンピロマリンバ",
-      "horse_id": "2021103841",
-      "pop": 12,
-      "odds": 98.5,
-      "place_odds": null,
-      "jockey": "△田山",
-      "trainer": "安達",
-      "weight_carried": 54.0,
-      "horse_weight": 520,
-      "horse_weight_diff": 8,
-      "time": "1:56.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 16,
-      "num": "2",
-      "name": "サンディエゴ",
-      "horse_id": "2022104982",
-      "pop": 14,
-      "odds": 123.3,
-      "place_odds": null,
-      "jockey": "斎藤",
-      "trainer": "清水久",
-      "weight_carried": 58.0,
-      "horse_weight": 490,
-      "horse_weight_diff": 2,
-      "time": "1:57.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
     }
   ],
   "京都8R": [
@@ -2511,9 +1804,12 @@
       "horse_weight_diff": 16,
       "time": "1:47.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.3,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牝4",
       "gate": "6"
     },
     {
@@ -2531,9 +1827,12 @@
       "horse_weight_diff": 4,
       "time": "1:47.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.5,
+      "corners": [
+        3,
+        2
+      ],
+      "sex_age": "牡5",
       "gate": "2"
     },
     {
@@ -2551,9 +1850,12 @@
       "horse_weight_diff": 0,
       "time": "1:47.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.9,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牡4",
       "gate": "5"
     },
     {
@@ -2571,9 +1873,12 @@
       "horse_weight_diff": 2,
       "time": "1:47.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.2,
+      "corners": [
+        14,
+        14
+      ],
+      "sex_age": "牝4",
       "gate": "4"
     },
     {
@@ -2591,9 +1896,12 @@
       "horse_weight_diff": 4,
       "time": "1:47.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.8,
+      "corners": [
+        7,
+        5
+      ],
+      "sex_age": "牝4",
       "gate": "2"
     },
     {
@@ -2611,9 +1919,12 @@
       "horse_weight_diff": 0,
       "time": "1:47.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.6,
+      "corners": [
+        11,
+        11
+      ],
+      "sex_age": "牡4",
       "gate": "8"
     },
     {
@@ -2631,9 +1942,12 @@
       "horse_weight_diff": -2,
       "time": "1:47.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.7,
+      "corners": [
+        9,
+        8
+      ],
+      "sex_age": "牡4",
       "gate": "5"
     },
     {
@@ -2651,9 +1965,12 @@
       "horse_weight_diff": -14,
       "time": "1:47.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.8,
+      "corners": [
+        9,
+        8
+      ],
+      "sex_age": "牡4",
       "gate": "7"
     },
     {
@@ -2671,9 +1988,12 @@
       "horse_weight_diff": 0,
       "time": "1:47.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.3,
+      "corners": [
+        3,
+        2
+      ],
+      "sex_age": "牡4",
       "gate": "6"
     },
     {
@@ -2691,9 +2011,12 @@
       "horse_weight_diff": -22,
       "time": "1:48.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.2,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡5",
       "gate": "3"
     },
     {
@@ -2711,9 +2034,12 @@
       "horse_weight_diff": 8,
       "time": "1:48.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.5,
+      "corners": [
+        15,
+        15
+      ],
+      "sex_age": "牡6",
       "gate": "3"
     },
     {
@@ -2731,9 +2057,12 @@
       "horse_weight_diff": 2,
       "time": "1:48.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.9,
+      "corners": [
+        11,
+        12
+      ],
+      "sex_age": "牝4",
       "gate": "7"
     },
     {
@@ -2751,9 +2080,12 @@
       "horse_weight_diff": 2,
       "time": "1:48.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.1,
+      "corners": [
+        13,
+        12
+      ],
+      "sex_age": "牝6",
       "gate": "1"
     },
     {
@@ -2771,9 +2103,12 @@
       "horse_weight_diff": -18,
       "time": "1:48.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.6,
+      "corners": [
+        7,
+        8
+      ],
+      "sex_age": "牡5",
       "gate": "8"
     },
     {
@@ -2791,9 +2126,12 @@
       "horse_weight_diff": 4,
       "time": "1:49.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.5,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝4",
       "gate": "4"
     }
   ],
@@ -2813,9 +2151,12 @@
       "horse_weight_diff": 0,
       "time": "1:32.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.5,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -2833,9 +2174,12 @@
       "horse_weight_diff": -4,
       "time": "1:33.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.9,
+      "corners": [
+        8,
+        8
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -2853,9 +2197,12 @@
       "horse_weight_diff": 4,
       "time": "1:33.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.2,
+      "corners": [
+        4,
+        3
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
@@ -2873,9 +2220,12 @@
       "horse_weight_diff": 0,
       "time": "1:33.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.0,
+      "corners": [
+        10,
+        9
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     },
     {
@@ -2893,9 +2243,12 @@
       "horse_weight_diff": -2,
       "time": "1:33.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.7,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -2913,9 +2266,12 @@
       "horse_weight_diff": 4,
       "time": "1:33.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.8,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝3",
       "gate": "8"
     },
     {
@@ -2933,9 +2289,12 @@
       "horse_weight_diff": 10,
       "time": "1:33.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.5,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -2953,9 +2312,12 @@
       "horse_weight_diff": 4,
       "time": "1:33.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.4,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
@@ -2973,9 +2335,12 @@
       "horse_weight_diff": 6,
       "time": "1:33.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.8,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡3",
       "gate": "1"
     },
     {
@@ -2993,9 +2358,12 @@
       "horse_weight_diff": 0,
       "time": "1:33.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.6,
+      "corners": [
+        8,
+        9
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
@@ -3013,312 +2381,13 @@
       "horse_weight_diff": 4,
       "time": "1:34.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.7,
+      "corners": [
+        11,
+        11
+      ],
+      "sex_age": "牝3",
       "gate": "7"
-    }
-  ],
-  "新潟10R": [
-    {
-      "rank": 1,
-      "num": "9",
-      "name": "マイネルアズーロ",
-      "horse_id": "2022100274",
-      "pop": 1,
-      "odds": 4.1,
-      "place_odds": 1.8,
-      "jockey": "杉原",
-      "trainer": "鹿戸",
-      "weight_carried": 58.0,
-      "horse_weight": 470,
-      "horse_weight_diff": -2,
-      "time": "2:00.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 2,
-      "num": "2",
-      "name": "トゥルーサクセサー",
-      "horse_id": "2021103537",
-      "pop": 5,
-      "odds": 8.1,
-      "place_odds": 2.3,
-      "jockey": "西塚",
-      "trainer": "高木",
-      "weight_carried": 58.0,
-      "horse_weight": 472,
-      "horse_weight_diff": -2,
-      "time": "2:00.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 3,
-      "num": "8",
-      "name": "ミッドセンチュリー",
-      "horse_id": "2022103308",
-      "pop": 10,
-      "odds": 35.0,
-      "place_odds": 6.5,
-      "jockey": "嶋田",
-      "trainer": "松山",
-      "weight_carried": 58.0,
-      "horse_weight": 474,
-      "horse_weight_diff": -8,
-      "time": "2:00.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 4,
-      "num": "14",
-      "name": "マイネルモメンタム",
-      "horse_id": "2021106811",
-      "pop": 8,
-      "odds": 24.4,
-      "place_odds": null,
-      "jockey": "横山琉",
-      "trainer": "相沢",
-      "weight_carried": 58.0,
-      "horse_weight": 492,
-      "horse_weight_diff": -2,
-      "time": "2:00.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 5,
-      "num": "10",
-      "name": "エテルニータ",
-      "horse_id": "2022106344",
-      "pop": 3,
-      "odds": 5.3,
-      "place_odds": null,
-      "jockey": "丹内",
-      "trainer": "稲垣",
-      "weight_carried": 58.0,
-      "horse_weight": 486,
-      "horse_weight_diff": -2,
-      "time": "2:01.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 6,
-      "num": "5",
-      "name": "シンドリームシン",
-      "horse_id": "2021105382",
-      "pop": 2,
-      "odds": 4.5,
-      "place_odds": null,
-      "jockey": "吉田隼",
-      "trainer": "武幸",
-      "weight_carried": 58.0,
-      "horse_weight": 506,
-      "horse_weight_diff": 8,
-      "time": "2:01.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 7,
-      "num": "11",
-      "name": "オプレントジュエル",
-      "horse_id": "2022105365",
-      "pop": 6,
-      "odds": 8.7,
-      "place_odds": null,
-      "jockey": "ゴンサ",
-      "trainer": "田村",
-      "weight_carried": 56.0,
-      "horse_weight": 520,
-      "horse_weight_diff": -6,
-      "time": "2:01.1",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 8,
-      "num": "15",
-      "name": "クラウディアイ",
-      "horse_id": "2022100099",
-      "pop": 4,
-      "odds": 7.2,
-      "place_odds": null,
-      "jockey": "小沢",
-      "trainer": "橋口",
-      "weight_carried": 58.0,
-      "horse_weight": 442,
-      "horse_weight_diff": -4,
-      "time": "2:01.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 9,
-      "num": "4",
-      "name": "ドーギッド",
-      "horse_id": "2022105766",
-      "pop": 11,
-      "odds": 74.6,
-      "place_odds": null,
-      "jockey": "古川奈",
-      "trainer": "矢作",
-      "weight_carried": 56.0,
-      "horse_weight": 470,
-      "horse_weight_diff": 2,
-      "time": "2:01.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 10,
-      "num": "1",
-      "name": "サイレントグルーヴ",
-      "horse_id": "2021105274",
-      "pop": 12,
-      "odds": 100.3,
-      "place_odds": null,
-      "jockey": "松本",
-      "trainer": "角田",
-      "weight_carried": 56.0,
-      "horse_weight": 488,
-      "horse_weight_diff": -2,
-      "time": "2:02.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 11,
-      "num": "7",
-      "name": "タマモランプ",
-      "horse_id": "2021101557",
-      "pop": 7,
-      "odds": 12.4,
-      "place_odds": null,
-      "jockey": "舟山",
-      "trainer": "池添",
-      "weight_carried": 58.0,
-      "horse_weight": 446,
-      "horse_weight_diff": -8,
-      "time": "2:02.1",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 12,
-      "num": "12",
-      "name": "フォーグッド",
-      "horse_id": "2019105076",
-      "pop": 9,
-      "odds": 29.0,
-      "place_odds": null,
-      "jockey": "菊沢",
-      "trainer": "平岩",
-      "weight_carried": 58.0,
-      "horse_weight": 502,
-      "horse_weight_diff": -8,
-      "time": "2:02.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 13,
-      "num": "13",
-      "name": "ローンウルフ",
-      "horse_id": "2021104112",
-      "pop": 15,
-      "odds": 236.0,
-      "place_odds": null,
-      "jockey": "遠藤",
-      "trainer": "武市",
-      "weight_carried": 58.0,
-      "horse_weight": 484,
-      "horse_weight_diff": -6,
-      "time": "2:02.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 14,
-      "num": "6",
-      "name": "ライジングハース",
-      "horse_id": "2022106495",
-      "pop": 13,
-      "odds": 114.6,
-      "place_odds": null,
-      "jockey": "丸田",
-      "trainer": "松山",
-      "weight_carried": 58.0,
-      "horse_weight": 504,
-      "horse_weight_diff": 4,
-      "time": "2:02.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 15,
-      "num": "3",
-      "name": "エコログロス",
-      "horse_id": "2022101430",
-      "pop": 14,
-      "odds": 115.3,
-      "place_odds": null,
-      "jockey": "野中",
-      "trainer": "岩戸",
-      "weight_carried": 58.0,
-      "horse_weight": 450,
-      "horse_weight_diff": 16,
-      "time": "2:02.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
     }
   ],
   "新潟11R": [
@@ -3337,9 +2406,12 @@
       "horse_weight_diff": -2,
       "time": "1:09.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.4,
+      "corners": [
+        6,
+        6
+      ],
+      "sex_age": "牝4",
       "gate": "4"
     },
     {
@@ -3357,9 +2429,12 @@
       "horse_weight_diff": 4,
       "time": "1:09.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.1,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝4",
       "gate": "7"
     },
     {
@@ -3377,9 +2452,12 @@
       "horse_weight_diff": 0,
       "time": "1:09.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.7,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡5",
       "gate": "2"
     },
     {
@@ -3397,9 +2475,12 @@
       "horse_weight_diff": 2,
       "time": "1:09.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.8,
+      "corners": [
+        14,
+        13
+      ],
+      "sex_age": "セ5",
       "gate": "5"
     },
     {
@@ -3417,9 +2498,12 @@
       "horse_weight_diff": 6,
       "time": "1:09.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.4,
+      "corners": [
+        16,
+        15
+      ],
+      "sex_age": "牝4",
       "gate": "8"
     },
     {
@@ -3437,9 +2521,12 @@
       "horse_weight_diff": 4,
       "time": "1:09.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.1,
+      "corners": [
+        13,
+        10
+      ],
+      "sex_age": "牡6",
       "gate": "5"
     },
     {
@@ -3457,9 +2544,12 @@
       "horse_weight_diff": -2,
       "time": "1:09.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.7,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牡7",
       "gate": "6"
     },
     {
@@ -3477,9 +2567,12 @@
       "horse_weight_diff": 10,
       "time": "1:09.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.5,
+      "corners": [
+        10,
+        10
+      ],
+      "sex_age": "牡5",
       "gate": "8"
     },
     {
@@ -3497,9 +2590,12 @@
       "horse_weight_diff": -2,
       "time": "1:09.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝6",
       "gate": "1"
     },
     {
@@ -3517,9 +2613,12 @@
       "horse_weight_diff": 6,
       "time": "1:09.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.9,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牡6",
       "gate": "3"
     },
     {
@@ -3537,9 +2636,12 @@
       "horse_weight_diff": 0,
       "time": "1:09.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.8,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝5",
       "gate": "3"
     },
     {
@@ -3557,9 +2659,12 @@
       "horse_weight_diff": -2,
       "time": "1:10.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.0,
+      "corners": [
+        15,
+        15
+      ],
+      "sex_age": "牝5",
       "gate": "4"
     },
     {
@@ -3577,9 +2682,12 @@
       "horse_weight_diff": -2,
       "time": "1:10.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.9,
+      "corners": [
+        10,
+        10
+      ],
+      "sex_age": "牝4",
       "gate": "6"
     },
     {
@@ -3597,9 +2705,12 @@
       "horse_weight_diff": -12,
       "time": "1:10.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.6,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牡6",
       "gate": "2"
     },
     {
@@ -3617,9 +2728,12 @@
       "horse_weight_diff": 6,
       "time": "1:10.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.3,
+      "corners": [
+        10,
+        13
+      ],
+      "sex_age": "牝6",
       "gate": "1"
     },
     {
@@ -3637,10 +2751,360 @@
       "horse_weight_diff": 6,
       "time": "1:10.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.3,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝4",
       "gate": "7"
+    }
+  ],
+  "新潟12R": [
+    {
+      "rank": 1,
+      "num": "11",
+      "name": "ヴェントインコーダ",
+      "horse_id": "2022103195",
+      "pop": 3,
+      "odds": 5.3,
+      "place_odds": 2.0,
+      "jockey": "丸山",
+      "trainer": "角田",
+      "weight_carried": 56.0,
+      "horse_weight": 472,
+      "horse_weight_diff": -12,
+      "time": "1:12.0",
+      "margin": "",
+      "last3f": 37.7,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝4",
+      "gate": "6"
+    },
+    {
+      "rank": 2,
+      "num": "15",
+      "name": "ブリングライト",
+      "horse_id": "2020100617",
+      "pop": 6,
+      "odds": 8.3,
+      "place_odds": 2.7,
+      "jockey": "菊沢",
+      "trainer": "松山",
+      "weight_carried": 58.0,
+      "horse_weight": 480,
+      "horse_weight_diff": -16,
+      "time": "1:12.0",
+      "margin": "",
+      "last3f": 35.4,
+      "corners": [
+        15,
+        15
+      ],
+      "sex_age": "牡6",
+      "gate": "8"
+    },
+    {
+      "rank": 3,
+      "num": "7",
+      "name": "エテオクロス",
+      "horse_id": "2022105459",
+      "pop": 8,
+      "odds": 14.6,
+      "place_odds": 3.4,
+      "jockey": "▲石田",
+      "trainer": "新開",
+      "weight_carried": 55.0,
+      "horse_weight": 520,
+      "horse_weight_diff": 2,
+      "time": "1:12.4",
+      "margin": "",
+      "last3f": 36.7,
+      "corners": [
+        10,
+        11
+      ],
+      "sex_age": "牡4",
+      "gate": "4"
+    },
+    {
+      "rank": 4,
+      "num": "12",
+      "name": "アルマーレシチー",
+      "horse_id": "2021100675",
+      "pop": 11,
+      "odds": 49.3,
+      "place_odds": null,
+      "jockey": "★河原田",
+      "trainer": "上原博",
+      "weight_carried": 54.0,
+      "horse_weight": 532,
+      "horse_weight_diff": 4,
+      "time": "1:12.5",
+      "margin": "",
+      "last3f": 36.6,
+      "corners": [
+        13,
+        11
+      ],
+      "sex_age": "セ5",
+      "gate": "7"
+    },
+    {
+      "rank": 5,
+      "num": "13",
+      "name": "メイプルギャング",
+      "horse_id": "2021110063",
+      "pop": 9,
+      "odds": 18.7,
+      "place_odds": null,
+      "jockey": "△柴田裕",
+      "trainer": "中竹",
+      "weight_carried": 56.0,
+      "horse_weight": 508,
+      "horse_weight_diff": 4,
+      "time": "1:12.5",
+      "margin": "",
+      "last3f": 37.6,
+      "corners": [
+        6,
+        5
+      ],
+      "sex_age": "牡5",
+      "gate": "7"
+    },
+    {
+      "rank": 6,
+      "num": "10",
+      "name": "ペッパーミル",
+      "horse_id": "2021102745",
+      "pop": 4,
+      "odds": 6.6,
+      "place_odds": null,
+      "jockey": "ゴンサ",
+      "trainer": "加藤士",
+      "weight_carried": 58.0,
+      "horse_weight": 510,
+      "horse_weight_diff": 6,
+      "time": "1:12.8",
+      "margin": "",
+      "last3f": 38.3,
+      "corners": [
+        2,
+        3
+      ],
+      "sex_age": "牡5",
+      "gate": "6"
+    },
+    {
+      "rank": 7,
+      "num": "8",
+      "name": "サンライズジュピタ",
+      "horse_id": "2022103307",
+      "pop": 2,
+      "odds": 5.0,
+      "place_odds": null,
+      "jockey": "△舟山",
+      "trainer": "石坂",
+      "weight_carried": 56.0,
+      "horse_weight": 518,
+      "horse_weight_diff": 0,
+      "time": "1:12.8",
+      "margin": "",
+      "last3f": 38.4,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牡4",
+      "gate": "5"
+    },
+    {
+      "rank": 8,
+      "num": "3",
+      "name": "スペルビア",
+      "horse_id": "2022101781",
+      "pop": 14,
+      "odds": 165.1,
+      "place_odds": null,
+      "jockey": "▲上里",
+      "trainer": "石栗",
+      "weight_carried": 55.0,
+      "horse_weight": 456,
+      "horse_weight_diff": -17,
+      "time": "1:12.8",
+      "margin": "",
+      "last3f": 37.3,
+      "corners": [
+        9,
+        9
+      ],
+      "sex_age": "セ4",
+      "gate": "2"
+    },
+    {
+      "rank": 9,
+      "num": "4",
+      "name": "バルジール",
+      "horse_id": "2022105705",
+      "pop": 5,
+      "odds": 8.1,
+      "place_odds": null,
+      "jockey": "◇今村",
+      "trainer": "久保田",
+      "weight_carried": 56.0,
+      "horse_weight": 490,
+      "horse_weight_diff": 2,
+      "time": "1:12.9",
+      "margin": "",
+      "last3f": 38.1,
+      "corners": [
+        4,
+        4
+      ],
+      "sex_age": "牡4",
+      "gate": "3"
+    },
+    {
+      "rank": 10,
+      "num": "1",
+      "name": "ペルフェツィオーネ",
+      "horse_id": "2021106690",
+      "pop": 12,
+      "odds": 95.9,
+      "place_odds": null,
+      "jockey": "小沢",
+      "trainer": "杉山佳",
+      "weight_carried": 58.0,
+      "horse_weight": 458,
+      "horse_weight_diff": -4,
+      "time": "1:12.9",
+      "margin": "",
+      "last3f": 37.2,
+      "corners": [
+        10,
+        11
+      ],
+      "sex_age": "牡5",
+      "gate": "1"
+    },
+    {
+      "rank": 11,
+      "num": "14",
+      "name": "アメリカンランナー",
+      "horse_id": "2021110121",
+      "pop": 10,
+      "odds": 31.5,
+      "place_odds": null,
+      "jockey": "西塚",
+      "trainer": "茶木",
+      "weight_carried": 58.0,
+      "horse_weight": 472,
+      "horse_weight_diff": -16,
+      "time": "1:12.9",
+      "margin": "",
+      "last3f": 37.6,
+      "corners": [
+        8,
+        8
+      ],
+      "sex_age": "牡5",
+      "gate": "8"
+    },
+    {
+      "rank": 12,
+      "num": "5",
+      "name": "レネネト",
+      "horse_id": "2022110062",
+      "pop": 13,
+      "odds": 102.9,
+      "place_odds": null,
+      "jockey": "◇永島",
+      "trainer": "柴田",
+      "weight_carried": 54.0,
+      "horse_weight": 524,
+      "horse_weight_diff": 4,
+      "time": "1:13.2",
+      "margin": "",
+      "last3f": 37.6,
+      "corners": [
+        10,
+        9
+      ],
+      "sex_age": "牝4",
+      "gate": "3"
+    },
+    {
+      "rank": 13,
+      "num": "6",
+      "name": "オオタニサーン",
+      "horse_id": "2021110004",
+      "pop": 7,
+      "odds": 13.8,
+      "place_odds": null,
+      "jockey": "丹内",
+      "trainer": "堀",
+      "weight_carried": 58.0,
+      "horse_weight": 542,
+      "horse_weight_diff": 18,
+      "time": "1:13.6",
+      "margin": "",
+      "last3f": 38.5,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牡5",
+      "gate": "4"
+    },
+    {
+      "rank": 14,
+      "num": "9",
+      "name": "チャコワールド",
+      "horse_id": "2019102953",
+      "pop": 15,
+      "odds": 463.7,
+      "place_odds": null,
+      "jockey": "▲水沼",
+      "trainer": "的場",
+      "weight_carried": 55.0,
+      "horse_weight": 460,
+      "horse_weight_diff": -1,
+      "time": "1:14.7",
+      "margin": "",
+      "last3f": 38.4,
+      "corners": [
+        14,
+        14
+      ],
+      "sex_age": "牡7",
+      "gate": "5"
+    },
+    {
+      "rank": 15,
+      "num": "2",
+      "name": "ダイヤモンド",
+      "horse_id": "2022101456",
+      "pop": 1,
+      "odds": 5.0,
+      "place_odds": null,
+      "jockey": "富田",
+      "trainer": "清水久",
+      "weight_carried": 58.0,
+      "horse_weight": 528,
+      "horse_weight_diff": 2,
+      "time": "1:14.9",
+      "margin": "",
+      "last3f": 40.2,
+      "corners": [
+        4,
+        5
+      ],
+      "sex_age": "牡4",
+      "gate": "2"
     }
   ],
   "新潟1R": [
@@ -3660,8 +3124,13 @@
       "time": "3:11.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        2,
+        2,
+        2,
+        1
+      ],
+      "sex_age": "牝4",
       "gate": "2"
     },
     {
@@ -3680,8 +3149,13 @@
       "time": "3:11.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        5,
+        5,
+        4,
+        3
+      ],
+      "sex_age": "牡5",
       "gate": "5"
     },
     {
@@ -3700,8 +3174,13 @@
       "time": "3:12.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        3,
+        3,
+        3,
+        2
+      ],
+      "sex_age": "牝5",
       "gate": "6"
     },
     {
@@ -3720,8 +3199,13 @@
       "time": "3:12.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        3,
+        3,
+        4,
+        5
+      ],
+      "sex_age": "牡5",
       "gate": "4"
     },
     {
@@ -3740,8 +3224,13 @@
       "time": "3:12.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        7,
+        7,
+        6,
+        6
+      ],
+      "sex_age": "牡4",
       "gate": "7"
     },
     {
@@ -3760,8 +3249,13 @@
       "time": "3:13.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        9,
+        10,
+        6,
+        6
+      ],
+      "sex_age": "牡4",
       "gate": "7"
     },
     {
@@ -3780,8 +3274,13 @@
       "time": "3:14.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        11,
+        11,
+        10,
+        10
+      ],
+      "sex_age": "セ5",
       "gate": "1"
     },
     {
@@ -3800,8 +3299,13 @@
       "time": "3:14.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        6,
+        6,
+        8,
+        8
+      ],
+      "sex_age": "牡4",
       "gate": "6"
     },
     {
@@ -3820,8 +3324,13 @@
       "time": "3:14.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        8,
+        8,
+        9,
+        8
+      ],
+      "sex_age": "牡7",
       "gate": "3"
     },
     {
@@ -3840,8 +3349,13 @@
       "time": "3:16.0",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        9,
+        9,
+        11,
+        11
+      ],
+      "sex_age": "牡6",
       "gate": "3"
     },
     {
@@ -3860,8 +3374,13 @@
       "time": "3:16.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        1,
+        1,
+        1,
+        3
+      ],
+      "sex_age": "牡5",
       "gate": "8"
     },
     {
@@ -3880,8 +3399,13 @@
       "time": "3:16.8",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        12,
+        12,
+        12,
+        12
+      ],
+      "sex_age": "牡5",
       "gate": "4"
     },
     {
@@ -3900,8 +3424,13 @@
       "time": "3:27.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        13,
+        13,
+        13,
+        13
+      ],
+      "sex_age": "牡5",
       "gate": "8"
     }
   ],
@@ -3921,9 +3450,14 @@
       "horse_weight_diff": 2,
       "time": "1:56.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.2,
+      "corners": [
+        7,
+        7,
+        4,
+        4
+      ],
+      "sex_age": "牝3",
       "gate": "8"
     },
     {
@@ -3941,9 +3475,14 @@
       "horse_weight_diff": 4,
       "time": "1:56.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.3,
+      "corners": [
+        6,
+        6,
+        6,
+        5
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     },
     {
@@ -3961,9 +3500,14 @@
       "horse_weight_diff": 2,
       "time": "1:56.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.7,
+      "corners": [
+        14,
+        14,
+        13,
+        12
+      ],
+      "sex_age": "牝3",
       "gate": "3"
     },
     {
@@ -3981,9 +3525,14 @@
       "horse_weight_diff": -2,
       "time": "1:56.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.7,
+      "corners": [
+        4,
+        4,
+        5,
+        5
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     },
     {
@@ -4001,9 +3550,14 @@
       "horse_weight_diff": 2,
       "time": "1:56.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.3,
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -4021,9 +3575,14 @@
       "horse_weight_diff": 2,
       "time": "1:57.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.6,
+      "corners": [
+        3,
+        3,
+        2,
+        1
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -4041,9 +3600,14 @@
       "horse_weight_diff": -10,
       "time": "1:57.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.1,
+      "corners": [
+        13,
+        11,
+        10,
+        10
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -4061,9 +3625,14 @@
       "horse_weight_diff": -6,
       "time": "1:58.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.9,
+      "corners": [
+        9,
+        9,
+        8,
+        7
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     },
     {
@@ -4081,9 +3650,14 @@
       "horse_weight_diff": -6,
       "time": "1:58.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.6,
+      "corners": [
+        12,
+        11,
+        12,
+        10
+      ],
+      "sex_age": "牝3",
       "gate": "3"
     },
     {
@@ -4101,9 +3675,14 @@
       "horse_weight_diff": -4,
       "time": "1:58.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.5,
+      "corners": [
+        15,
+        15,
+        14,
+        14
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -4121,9 +3700,14 @@
       "horse_weight_diff": -2,
       "time": "1:59.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 42.9,
+      "corners": [
+        1,
+        1,
+        1,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "8"
     },
     {
@@ -4141,9 +3725,14 @@
       "horse_weight_diff": 0,
       "time": "2:00.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 42.6,
+      "corners": [
+        7,
+        7,
+        10,
+        12
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     },
     {
@@ -4161,9 +3750,14 @@
       "horse_weight_diff": -10,
       "time": "2:00.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 43.0,
+      "corners": [
+        4,
+        4,
+        7,
+        7
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -4181,9 +3775,14 @@
       "horse_weight_diff": 10,
       "time": "2:01.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 42.8,
+      "corners": [
+        10,
+        11,
+        14,
+        15
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -4201,10 +3800,362 @@
       "horse_weight_diff": -12,
       "time": "2:01.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 43.8,
+      "corners": [
+        10,
+        10,
+        8,
+        7
+      ],
+      "sex_age": "牝3",
       "gate": "6"
+    }
+  ],
+  "新潟3R": [
+    {
+      "rank": 1,
+      "num": "12",
+      "name": "アイアンナックル",
+      "horse_id": "2023100633",
+      "pop": 5,
+      "odds": 13.7,
+      "place_odds": 2.5,
+      "jockey": "▲森田",
+      "trainer": "尾形",
+      "weight_carried": 54.0,
+      "horse_weight": 442,
+      "horse_weight_diff": -4,
+      "time": "1:12.2",
+      "margin": "",
+      "last3f": 36.9,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡3",
+      "gate": "7"
+    },
+    {
+      "rank": 2,
+      "num": "15",
+      "name": "マイベスティー",
+      "horse_id": "2023103250",
+      "pop": 9,
+      "odds": 79.3,
+      "place_odds": 0.8,
+      "jockey": "長岡",
+      "trainer": "高橋亮",
+      "weight_carried": 57.0,
+      "horse_weight": 484,
+      "horse_weight_diff": 6,
+      "time": "1:12.6",
+      "margin": "",
+      "last3f": 37.9,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牡3",
+      "gate": "8"
+    },
+    {
+      "rank": 3,
+      "num": "11",
+      "name": "ジャーナーリア",
+      "horse_id": "2023100596",
+      "pop": 1,
+      "odds": 1.8,
+      "place_odds": 1.3,
+      "jockey": "丸山",
+      "trainer": "本田",
+      "weight_carried": 57.0,
+      "horse_weight": 526,
+      "horse_weight_diff": -8,
+      "time": "1:13.0",
+      "margin": "",
+      "last3f": 38.4,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牡3",
+      "gate": "6"
+    },
+    {
+      "rank": 4,
+      "num": "9",
+      "name": "ワイドポティロン",
+      "horse_id": "2023103282",
+      "pop": 8,
+      "odds": 49.3,
+      "place_odds": null,
+      "jockey": "▲石田",
+      "trainer": "佐藤悠",
+      "weight_carried": 52.0,
+      "horse_weight": 414,
+      "horse_weight_diff": -12,
+      "time": "1:13.3",
+      "margin": "",
+      "last3f": 37.1,
+      "corners": [
+        12,
+        11
+      ],
+      "sex_age": "牝3",
+      "gate": "5"
+    },
+    {
+      "rank": 5,
+      "num": "6",
+      "name": "サンライズロイ",
+      "horse_id": "2023106556",
+      "pop": 3,
+      "odds": 6.3,
+      "place_odds": null,
+      "jockey": "丹内",
+      "trainer": "牧浦",
+      "weight_carried": 57.0,
+      "horse_weight": 468,
+      "horse_weight_diff": -6,
+      "time": "1:13.4",
+      "margin": "",
+      "last3f": 37.9,
+      "corners": [
+        7,
+        7
+      ],
+      "sex_age": "牡3",
+      "gate": "4"
+    },
+    {
+      "rank": 6,
+      "num": "2",
+      "name": "サリーアン",
+      "horse_id": "2023100789",
+      "pop": 6,
+      "odds": 14.4,
+      "place_odds": null,
+      "jockey": "▲小林美",
+      "trainer": "鈴木伸",
+      "weight_carried": 54.0,
+      "horse_weight": 452,
+      "horse_weight_diff": -6,
+      "time": "1:13.7",
+      "margin": "",
+      "last3f": 37.9,
+      "corners": [
+        9,
+        7
+      ],
+      "sex_age": "牡3",
+      "gate": "2"
+    },
+    {
+      "rank": 7,
+      "num": "8",
+      "name": "クリコファルコン",
+      "horse_id": "2023101610",
+      "pop": 2,
+      "odds": 6.2,
+      "place_odds": null,
+      "jockey": "◇永島",
+      "trainer": "谷",
+      "weight_carried": 55.0,
+      "horse_weight": 460,
+      "horse_weight_diff": 6,
+      "time": "1:13.9",
+      "margin": "",
+      "last3f": 38.7,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡3",
+      "gate": "5"
+    },
+    {
+      "rank": 8,
+      "num": "5",
+      "name": "シンクシビリティ",
+      "horse_id": "2023101349",
+      "pop": 15,
+      "odds": 451.3,
+      "place_odds": null,
+      "jockey": "★河原田",
+      "trainer": "青木",
+      "weight_carried": 51.0,
+      "horse_weight": 422,
+      "horse_weight_diff": 4,
+      "time": "1:14.0",
+      "margin": "",
+      "last3f": 38.1,
+      "corners": [
+        10,
+        10
+      ],
+      "sex_age": "牝3",
+      "gate": "3"
+    },
+    {
+      "rank": 9,
+      "num": "7",
+      "name": "ヒエンジョー",
+      "horse_id": "2023101502",
+      "pop": 10,
+      "odds": 82.1,
+      "place_odds": null,
+      "jockey": "△柴田裕",
+      "trainer": "岡田",
+      "weight_carried": 55.0,
+      "horse_weight": 476,
+      "horse_weight_diff": 0,
+      "time": "1:14.0",
+      "margin": "",
+      "last3f": 37.0,
+      "corners": [
+        14,
+        14
+      ],
+      "sex_age": "牡3",
+      "gate": "4"
+    },
+    {
+      "rank": 10,
+      "num": "10",
+      "name": "ラインメテオラ",
+      "horse_id": "2023101317",
+      "pop": 4,
+      "odds": 7.2,
+      "place_odds": null,
+      "jockey": "富田",
+      "trainer": "長谷川",
+      "weight_carried": 57.0,
+      "horse_weight": 478,
+      "horse_weight_diff": 0,
+      "time": "1:14.1",
+      "margin": "",
+      "last3f": 39.1,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡3",
+      "gate": "6"
+    },
+    {
+      "rank": 11,
+      "num": "13",
+      "name": "アクシズ",
+      "horse_id": "2023105799",
+      "pop": 11,
+      "odds": 123.5,
+      "place_odds": null,
+      "jockey": "横山琉",
+      "trainer": "尾形",
+      "weight_carried": 57.0,
+      "horse_weight": 440,
+      "horse_weight_diff": -2,
+      "time": "1:14.2",
+      "margin": "",
+      "last3f": 38.5,
+      "corners": [
+        8,
+        9
+      ],
+      "sex_age": "牡3",
+      "gate": "7"
+    },
+    {
+      "rank": 12,
+      "num": "4",
+      "name": "リオンアンサー",
+      "horse_id": "2023100328",
+      "pop": 14,
+      "odds": 366.3,
+      "place_odds": null,
+      "jockey": "杉原",
+      "trainer": "佐藤吉",
+      "weight_carried": 55.0,
+      "horse_weight": 412,
+      "horse_weight_diff": -6,
+      "time": "1:14.4",
+      "margin": "",
+      "last3f": 38.1,
+      "corners": [
+        13,
+        11
+      ],
+      "sex_age": "牝3",
+      "gate": "3"
+    },
+    {
+      "rank": 13,
+      "num": "3",
+      "name": "オッピポイカ",
+      "horse_id": "2023106165",
+      "pop": 13,
+      "odds": 255.0,
+      "place_odds": null,
+      "jockey": "菅原隆",
+      "trainer": "鈴木慎",
+      "weight_carried": 57.0,
+      "horse_weight": 454,
+      "horse_weight_diff": -8,
+      "time": "1:14.7",
+      "margin": "",
+      "last3f": 38.7,
+      "corners": [
+        10,
+        11
+      ],
+      "sex_age": "牡3",
+      "gate": "2"
+    },
+    {
+      "rank": 14,
+      "num": "14",
+      "name": "ララクロシェット",
+      "horse_id": "2023101846",
+      "pop": 12,
+      "odds": 123.9,
+      "place_odds": null,
+      "jockey": "△鷲頭",
+      "trainer": "井上",
+      "weight_carried": 53.0,
+      "horse_weight": 436,
+      "horse_weight_diff": -12,
+      "time": "1:14.9",
+      "margin": "",
+      "last3f": 37.7,
+      "corners": [
+        15,
+        15
+      ],
+      "sex_age": "牝3",
+      "gate": "8"
+    },
+    {
+      "rank": 15,
+      "num": "1",
+      "name": "マイネルテオドロス",
+      "horse_id": "2023106407",
+      "pop": 7,
+      "odds": 20.8,
+      "place_odds": null,
+      "jockey": "▲石神道",
+      "trainer": "菊川",
+      "weight_carried": 54.0,
+      "horse_weight": 450,
+      "horse_weight_diff": -6,
+      "time": "1:15.2",
+      "margin": "",
+      "last3f": 40.3,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡3",
+      "gate": "1"
     }
   ],
   "新潟4R": [
@@ -4224,8 +4175,13 @@
       "time": "3:35.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        3,
+        3,
+        1,
+        1
+      ],
+      "sex_age": "セ6",
       "gate": "4"
     },
     {
@@ -4244,8 +4200,13 @@
       "time": "3:36.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        4,
+        4,
+        3,
+        2
+      ],
+      "sex_age": "牡5",
       "gate": "4"
     },
     {
@@ -4264,8 +4225,13 @@
       "time": "3:36.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        5,
+        5,
+        4,
+        3
+      ],
+      "sex_age": "牡5",
       "gate": "3"
     },
     {
@@ -4284,8 +4250,13 @@
       "time": "3:37.9",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        8,
+        7,
+        6,
+        5
+      ],
+      "sex_age": "牡6",
       "gate": "8"
     },
     {
@@ -4304,8 +4275,13 @@
       "time": "3:40.3",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        8,
+        9,
+        7,
+        6
+      ],
+      "sex_age": "牝7",
       "gate": "2"
     },
     {
@@ -4324,8 +4300,13 @@
       "time": "3:40.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        5,
+        7,
+        8,
+        8
+      ],
+      "sex_age": "セ5",
       "gate": "5"
     },
     {
@@ -4344,8 +4325,13 @@
       "time": "3:40.6",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        10,
+        10,
+        8,
+        8
+      ],
+      "sex_age": "セ6",
       "gate": "6"
     },
     {
@@ -4364,8 +4350,13 @@
       "time": "3:40.7",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        10,
+        11,
+        11,
+        10
+      ],
+      "sex_age": "牡4",
       "gate": "1"
     },
     {
@@ -4384,8 +4375,13 @@
       "time": "3:41.1",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        1,
+        1,
+        2,
+        4
+      ],
+      "sex_age": "牡6",
       "gate": "8"
     },
     {
@@ -4404,8 +4400,13 @@
       "time": "3:41.2",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        2,
+        2,
+        5,
+        6
+      ],
+      "sex_age": "牡5",
       "gate": "5"
     },
     {
@@ -4424,8 +4425,13 @@
       "time": "3:44.5",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        12,
+        12,
+        12,
+        12
+      ],
+      "sex_age": "牡5",
       "gate": "7"
     },
     {
@@ -4444,8 +4450,13 @@
       "time": "3:45.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        7,
+        5,
+        8,
+        11
+      ],
+      "sex_age": "牡4",
       "gate": "7"
     },
     {
@@ -4464,8 +4475,13 @@
       "time": "3:45.4",
       "margin": "",
       "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "corners": [
+        13,
+        13,
+        13,
+        13
+      ],
+      "sex_age": "牡8",
       "gate": "6"
     }
   ],
@@ -4485,9 +4501,12 @@
       "horse_weight_diff": -2,
       "time": "1:23.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.6,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡3",
       "gate": "2"
     },
     {
@@ -4505,9 +4524,12 @@
       "horse_weight_diff": -2,
       "time": "1:23.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.7,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     },
     {
@@ -4525,9 +4547,12 @@
       "horse_weight_diff": 12,
       "time": "1:23.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.6,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "8"
     },
     {
@@ -4545,9 +4570,12 @@
       "horse_weight_diff": -4,
       "time": "1:23.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.9,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -4565,9 +4593,12 @@
       "horse_weight_diff": -2,
       "time": "1:23.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.5,
+      "corners": [
+        8,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
@@ -4585,9 +4616,12 @@
       "horse_weight_diff": -24,
       "time": "1:23.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.7,
+      "corners": [
+        3,
+        7
+      ],
+      "sex_age": "セ3",
       "gate": "4"
     },
     {
@@ -4605,9 +4639,12 @@
       "horse_weight_diff": 4,
       "time": "1:23.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.1,
+      "corners": [
+        15,
+        15
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     },
     {
@@ -4625,9 +4662,12 @@
       "horse_weight_diff": -8,
       "time": "1:23.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.7,
+      "corners": [
+        10,
+        7
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -4645,9 +4685,12 @@
       "horse_weight_diff": -4,
       "time": "1:23.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.0,
+      "corners": [
+        8,
+        7
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -4665,9 +4708,12 @@
       "horse_weight_diff": 0,
       "time": "1:24.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.8,
+      "corners": [
+        13,
+        14
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
@@ -4685,9 +4731,12 @@
       "horse_weight_diff": -4,
       "time": "1:24.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.3,
+      "corners": [
+        10,
+        11
+      ],
+      "sex_age": "牝3",
       "gate": "3"
     },
     {
@@ -4705,9 +4754,12 @@
       "horse_weight_diff": -8,
       "time": "1:24.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.5,
+      "corners": [
+        10,
+        11
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -4725,9 +4777,12 @@
       "horse_weight_diff": 10,
       "time": "1:24.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.7,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -4745,9 +4800,12 @@
       "horse_weight_diff": -2,
       "time": "1:24.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.8,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     },
     {
@@ -4765,9 +4823,12 @@
       "horse_weight_diff": 12,
       "time": "1:24.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.6,
+      "corners": [
+        13,
+        11
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -4785,312 +4846,13 @@
       "horse_weight_diff": -8,
       "time": "1:26.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.6,
+      "corners": [
+        15,
+        16
+      ],
+      "sex_age": "牝3",
       "gate": "3"
-    }
-  ],
-  "新潟6R": [
-    {
-      "rank": 1,
-      "num": "13",
-      "name": "マシン",
-      "horse_id": "2023105387",
-      "pop": 1,
-      "odds": 3.6,
-      "place_odds": 1.7,
-      "jockey": "▲小林美",
-      "trainer": "石坂",
-      "weight_carried": 54.0,
-      "horse_weight": 470,
-      "horse_weight_diff": 0,
-      "time": "1:53.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 2,
-      "num": "3",
-      "name": "ピエナオルカ",
-      "horse_id": "2023100715",
-      "pop": 3,
-      "odds": 5.0,
-      "place_odds": 1.5,
-      "jockey": "◇永島",
-      "trainer": "谷",
-      "weight_carried": 55.0,
-      "horse_weight": 482,
-      "horse_weight_diff": 0,
-      "time": "1:53.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 3,
-      "num": "2",
-      "name": "クワッドマリニン",
-      "horse_id": "2023103187",
-      "pop": 6,
-      "odds": 14.2,
-      "place_odds": 3.2,
-      "jockey": "◇今村",
-      "trainer": "久保田",
-      "weight_carried": 55.0,
-      "horse_weight": 478,
-      "horse_weight_diff": -2,
-      "time": "1:55.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 4,
-      "num": "11",
-      "name": "ツインドライヴ",
-      "horse_id": "2023103438",
-      "pop": 4,
-      "odds": 5.9,
-      "place_odds": null,
-      "jockey": "▲石田",
-      "trainer": "新開",
-      "weight_carried": 54.0,
-      "horse_weight": 516,
-      "horse_weight_diff": -2,
-      "time": "1:55.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 5,
-      "num": "15",
-      "name": "エトワールブルー",
-      "horse_id": "2023100389",
-      "pop": 7,
-      "odds": 18.0,
-      "place_odds": null,
-      "jockey": "▲遠藤",
-      "trainer": "本田",
-      "weight_carried": 54.0,
-      "horse_weight": 514,
-      "horse_weight_diff": 2,
-      "time": "1:56.1",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 6,
-      "num": "10",
-      "name": "ゼンノスタニング",
-      "horse_id": "2023104611",
-      "pop": 10,
-      "odds": 73.4,
-      "place_odds": null,
-      "jockey": "▲森田",
-      "trainer": "武幸",
-      "weight_carried": 54.0,
-      "horse_weight": 448,
-      "horse_weight_diff": 0,
-      "time": "1:56.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 7,
-      "num": "1",
-      "name": "ヤマタケボニータ",
-      "horse_id": "2023100739",
-      "pop": 12,
-      "odds": 128.7,
-      "place_odds": null,
-      "jockey": "▲上里",
-      "trainer": "萱野",
-      "weight_carried": 54.0,
-      "horse_weight": 470,
-      "horse_weight_diff": -6,
-      "time": "1:56.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 8,
-      "num": "8",
-      "name": "メイショウゴッホ",
-      "horse_id": "2023102061",
-      "pop": 8,
-      "odds": 19.4,
-      "place_odds": null,
-      "jockey": "松本",
-      "trainer": "飯田",
-      "weight_carried": 57.0,
-      "horse_weight": 462,
-      "horse_weight_diff": 2,
-      "time": "1:56.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 9,
-      "num": "5",
-      "name": "キープシャイニング",
-      "horse_id": "2023103163",
-      "pop": 2,
-      "odds": 5.0,
-      "place_odds": null,
-      "jockey": "西塚",
-      "trainer": "長谷川",
-      "weight_carried": 57.0,
-      "horse_weight": 498,
-      "horse_weight_diff": -2,
-      "time": "1:56.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 10,
-      "num": "14",
-      "name": "メイショウソラル",
-      "horse_id": "2023106562",
-      "pop": 15,
-      "odds": 309.8,
-      "place_odds": null,
-      "jockey": "▲大久保",
-      "trainer": "和田勇",
-      "weight_carried": 54.0,
-      "horse_weight": 472,
-      "horse_weight_diff": 0,
-      "time": "1:57.1",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 11,
-      "num": "12",
-      "name": "メイショウコースト",
-      "horse_id": "2023101947",
-      "pop": 9,
-      "odds": 37.4,
-      "place_odds": null,
-      "jockey": "▲和田陽",
-      "trainer": "渡辺",
-      "weight_carried": 54.0,
-      "horse_weight": 508,
-      "horse_weight_diff": 0,
-      "time": "1:57.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 12,
-      "num": "9",
-      "name": "バル",
-      "horse_id": "2023101664",
-      "pop": 13,
-      "odds": 195.7,
-      "place_odds": null,
-      "jockey": "★河原田",
-      "trainer": "武市",
-      "weight_carried": 53.0,
-      "horse_weight": 516,
-      "horse_weight_diff": 6,
-      "time": "2:00.1",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 13,
-      "num": "4",
-      "name": "スナークオーロラ",
-      "horse_id": "2023106196",
-      "pop": 11,
-      "odds": 75.8,
-      "place_odds": null,
-      "jockey": "小沢",
-      "trainer": "今野",
-      "weight_carried": 55.0,
-      "horse_weight": 470,
-      "horse_weight_diff": 0,
-      "time": "2:00.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 14,
-      "num": "6",
-      "name": "ソフィア",
-      "horse_id": "2023107088",
-      "pop": 5,
-      "odds": 6.1,
-      "place_odds": null,
-      "jockey": "△舟山",
-      "trainer": "鹿戸",
-      "weight_carried": 53.0,
-      "horse_weight": 450,
-      "horse_weight_diff": 2,
-      "time": "2:00.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 15,
-      "num": "7",
-      "name": "ウォーターエクラン",
-      "horse_id": "2023105189",
-      "pop": 14,
-      "odds": 260.2,
-      "place_odds": null,
-      "jockey": "▲水沼",
-      "trainer": "藤野",
-      "weight_carried": 52.0,
-      "horse_weight": 410,
-      "horse_weight_diff": 2,
-      "time": "2:04.1",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
     }
   ],
   "新潟8R": [
@@ -5109,9 +4871,14 @@
       "horse_weight_diff": 4,
       "time": "1:53.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.2,
+      "corners": [
+        10,
+        8,
+        3,
+        3
+      ],
+      "sex_age": "牝4",
       "gate": "8"
     },
     {
@@ -5129,9 +4896,14 @@
       "horse_weight_diff": 10,
       "time": "1:53.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.0,
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sex_age": "牝4",
       "gate": "3"
     },
     {
@@ -5149,9 +4921,14 @@
       "horse_weight_diff": -4,
       "time": "1:53.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.9,
+      "corners": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "sex_age": "牝4",
       "gate": "6"
     },
     {
@@ -5169,9 +4946,14 @@
       "horse_weight_diff": 2,
       "time": "1:53.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.6,
+      "corners": [
+        6,
+        5,
+        7,
+        6
+      ],
+      "sex_age": "牝4",
       "gate": "1"
     },
     {
@@ -5189,9 +4971,14 @@
       "horse_weight_diff": 0,
       "time": "1:54.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.1,
+      "corners": [
+        12,
+        10,
+        13,
+        12
+      ],
+      "sex_age": "牝6",
       "gate": "7"
     },
     {
@@ -5209,9 +4996,14 @@
       "horse_weight_diff": 18,
       "time": "1:54.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.4,
+      "corners": [
+        13,
+        13,
+        11,
+        12
+      ],
+      "sex_age": "牝4",
       "gate": "4"
     },
     {
@@ -5229,9 +5021,14 @@
       "horse_weight_diff": 4,
       "time": "1:54.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.2,
+      "corners": [
+        15,
+        15,
+        14,
+        14
+      ],
+      "sex_age": "牝5",
       "gate": "8"
     },
     {
@@ -5249,9 +5046,14 @@
       "horse_weight_diff": 8,
       "time": "1:54.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.9,
+      "corners": [
+        11,
+        10,
+        10,
+        8
+      ],
+      "sex_age": "牝4",
       "gate": "2"
     },
     {
@@ -5269,9 +5071,14 @@
       "horse_weight_diff": 10,
       "time": "1:54.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.9,
+      "corners": [
+        13,
+        13,
+        11,
+        11
+      ],
+      "sex_age": "牝4",
       "gate": "6"
     },
     {
@@ -5289,9 +5096,14 @@
       "horse_weight_diff": 2,
       "time": "1:54.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.1,
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "sex_age": "牝4",
       "gate": "5"
     },
     {
@@ -5309,9 +5121,14 @@
       "horse_weight_diff": 2,
       "time": "1:55.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.9,
+      "corners": [
+        5,
+        5,
+        6,
+        6
+      ],
+      "sex_age": "牝4",
       "gate": "2"
     },
     {
@@ -5329,9 +5146,14 @@
       "horse_weight_diff": 8,
       "time": "1:55.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.7,
+      "corners": [
+        7,
+        10,
+        9,
+        8
+      ],
+      "sex_age": "牝4",
       "gate": "7"
     },
     {
@@ -5349,9 +5171,14 @@
       "horse_weight_diff": -2,
       "time": "1:55.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.2,
+      "corners": [
+        7,
+        7,
+        7,
+        8
+      ],
+      "sex_age": "牝4",
       "gate": "4"
     },
     {
@@ -5369,9 +5196,14 @@
       "horse_weight_diff": 0,
       "time": "1:55.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.8,
+      "corners": [
+        3,
+        3,
+        3,
+        5
+      ],
+      "sex_age": "牝4",
       "gate": "3"
     },
     {
@@ -5389,9 +5221,14 @@
       "horse_weight_diff": 2,
       "time": "1:57.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 41.0,
+      "corners": [
+        7,
+        8,
+        14,
+        15
+      ],
+      "sex_age": "牝4",
       "gate": "5"
     }
   ],
@@ -5411,9 +5248,12 @@
       "horse_weight_diff": -8,
       "time": "1:21.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.2,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡4",
       "gate": "7"
     },
     {
@@ -5431,9 +5271,12 @@
       "horse_weight_diff": -4,
       "time": "1:21.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 32.8,
+      "corners": [
+        9,
+        11
+      ],
+      "sex_age": "牡4",
       "gate": "3"
     },
     {
@@ -5451,9 +5294,12 @@
       "horse_weight_diff": -4,
       "time": "1:21.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 32.9,
+      "corners": [
+        7,
+        8
+      ],
+      "sex_age": "牡5",
       "gate": "6"
     },
     {
@@ -5471,9 +5317,12 @@
       "horse_weight_diff": 0,
       "time": "1:21.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.1,
+      "corners": [
+        6,
+        7
+      ],
+      "sex_age": "牡4",
       "gate": "1"
     },
     {
@@ -5491,9 +5340,12 @@
       "horse_weight_diff": -2,
       "time": "1:21.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 32.9,
+      "corners": [
+        13,
+        13
+      ],
+      "sex_age": "牝5",
       "gate": "5"
     },
     {
@@ -5511,9 +5363,12 @@
       "horse_weight_diff": -4,
       "time": "1:21.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.4,
+      "corners": [
+        9,
+        4
+      ],
+      "sex_age": "牡6",
       "gate": "8"
     },
     {
@@ -5531,9 +5386,12 @@
       "horse_weight_diff": -2,
       "time": "1:21.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.1,
+      "corners": [
+        9,
+        11
+      ],
+      "sex_age": "牡7",
       "gate": "4"
     },
     {
@@ -5551,9 +5409,12 @@
       "horse_weight_diff": 8,
       "time": "1:21.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.5,
+      "corners": [
+        3,
+        4
+      ],
+      "sex_age": "牡4",
       "gate": "2"
     },
     {
@@ -5571,9 +5432,12 @@
       "horse_weight_diff": 0,
       "time": "1:21.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.9,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝5",
       "gate": "1"
     },
     {
@@ -5591,9 +5455,12 @@
       "horse_weight_diff": 4,
       "time": "1:21.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.4,
+      "corners": [
+        7,
+        8
+      ],
+      "sex_age": "牡4",
       "gate": "4"
     },
     {
@@ -5611,9 +5478,12 @@
       "horse_weight_diff": 0,
       "time": "1:22.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.0,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牡4",
       "gate": "2"
     },
     {
@@ -5631,9 +5501,12 @@
       "horse_weight_diff": -2,
       "time": "1:22.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.0,
+      "corners": [
+        16,
+        16
+      ],
+      "sex_age": "セ5",
       "gate": "3"
     },
     {
@@ -5651,9 +5524,12 @@
       "horse_weight_diff": -6,
       "time": "1:22.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.9,
+      "corners": [
+        3,
+        4
+      ],
+      "sex_age": "牝4",
       "gate": "6"
     },
     {
@@ -5671,9 +5547,12 @@
       "horse_weight_diff": -12,
       "time": "1:22.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.7,
+      "corners": [
+        9,
+        8
+      ],
+      "sex_age": "牡4",
       "gate": "8"
     },
     {
@@ -5691,9 +5570,12 @@
       "horse_weight_diff": 6,
       "time": "1:22.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.5,
+      "corners": [
+        14,
+        15
+      ],
+      "sex_age": "牝5",
       "gate": "5"
     },
     {
@@ -5711,9 +5593,12 @@
       "horse_weight_diff": 0,
       "time": "1:22.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.8,
+      "corners": [
+        14,
+        13
+      ],
+      "sex_age": "牝5",
       "gate": "7"
     }
   ],
@@ -5733,9 +5618,12 @@
       "horse_weight_diff": 2,
       "time": "1:22.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.8,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡4",
       "gate": "2"
     },
     {
@@ -5753,9 +5641,12 @@
       "horse_weight_diff": -2,
       "time": "1:23.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.4,
+      "corners": [
+        16,
+        16
+      ],
+      "sex_age": "牡4",
       "gate": "7"
     },
     {
@@ -5773,9 +5664,12 @@
       "horse_weight_diff": 2,
       "time": "1:23.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.4,
+      "corners": [
+        12,
+        11
+      ],
+      "sex_age": "牡5",
       "gate": "5"
     },
     {
@@ -5793,9 +5687,12 @@
       "horse_weight_diff": -4,
       "time": "1:23.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.6,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牡5",
       "gate": "8"
     },
     {
@@ -5813,9 +5710,12 @@
       "horse_weight_diff": -4,
       "time": "1:23.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.4,
+      "corners": [
+        7,
+        6
+      ],
+      "sex_age": "牡6",
       "gate": "2"
     },
     {
@@ -5833,9 +5733,12 @@
       "horse_weight_diff": -10,
       "time": "1:23.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.5,
+      "corners": [
+        6,
+        6
+      ],
+      "sex_age": "牡6",
       "gate": "1"
     },
     {
@@ -5853,9 +5756,12 @@
       "horse_weight_diff": 6,
       "time": "1:23.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        14,
+        15
+      ],
+      "sex_age": "牡6",
       "gate": "3"
     },
     {
@@ -5873,9 +5779,12 @@
       "horse_weight_diff": 0,
       "time": "1:23.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.2,
+      "corners": [
+        10,
+        9
+      ],
+      "sex_age": "牡8",
       "gate": "6"
     },
     {
@@ -5893,9 +5802,12 @@
       "horse_weight_diff": 6,
       "time": "1:24.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.6,
+      "corners": [
+        15,
+        13
+      ],
+      "sex_age": "牝7",
       "gate": "7"
     },
     {
@@ -5913,9 +5825,12 @@
       "horse_weight_diff": 8,
       "time": "1:24.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.1,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡5",
       "gate": "1"
     },
     {
@@ -5933,9 +5848,12 @@
       "horse_weight_diff": 0,
       "time": "1:24.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.5,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "セ8",
       "gate": "5"
     },
     {
@@ -5953,9 +5871,12 @@
       "horse_weight_diff": -4,
       "time": "1:24.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.4,
+      "corners": [
+        13,
+        13
+      ],
+      "sex_age": "牡6",
       "gate": "4"
     },
     {
@@ -5973,9 +5894,12 @@
       "horse_weight_diff": 6,
       "time": "1:25.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.5,
+      "corners": [
+        7,
+        9
+      ],
+      "sex_age": "牡7",
       "gate": "6"
     },
     {
@@ -5993,9 +5917,12 @@
       "horse_weight_diff": -8,
       "time": "1:25.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.8,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牡6",
       "gate": "8"
     },
     {
@@ -6013,9 +5940,12 @@
       "horse_weight_diff": 0,
       "time": "1:27.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.1,
+      "corners": [
+        11,
+        11
+      ],
+      "sex_age": "牡5",
       "gate": "4"
     },
     {
@@ -6033,9 +5963,12 @@
       "horse_weight_diff": 0,
       "time": "1:27.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.8,
+      "corners": [
+        7,
+        6
+      ],
+      "sex_age": "牝5",
       "gate": "3"
     }
   ],
@@ -6055,9 +5988,12 @@
       "horse_weight_diff": 0,
       "time": "1:36.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.3,
+      "corners": [
+        14,
+        12
+      ],
+      "sex_age": "牝5",
       "gate": "2"
     },
     {
@@ -6075,9 +6011,12 @@
       "horse_weight_diff": -4,
       "time": "1:36.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.6,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝4",
       "gate": "7"
     },
     {
@@ -6095,9 +6034,12 @@
       "horse_weight_diff": -2,
       "time": "1:37.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.8,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝4",
       "gate": "8"
     },
     {
@@ -6115,9 +6057,12 @@
       "horse_weight_diff": 6,
       "time": "1:37.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.6,
+      "corners": [
+        14,
+        12
+      ],
+      "sex_age": "牝4",
       "gate": "2"
     },
     {
@@ -6135,9 +6080,12 @@
       "horse_weight_diff": 2,
       "time": "1:37.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.8,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝4",
       "gate": "5"
     },
     {
@@ -6155,9 +6103,12 @@
       "horse_weight_diff": 10,
       "time": "1:37.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        10,
+        10
+      ],
+      "sex_age": "牝4",
       "gate": "6"
     },
     {
@@ -6175,9 +6126,12 @@
       "horse_weight_diff": -8,
       "time": "1:37.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.9,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牝5",
       "gate": "1"
     },
     {
@@ -6195,9 +6149,12 @@
       "horse_weight_diff": -4,
       "time": "1:37.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.0,
+      "corners": [
+        10,
+        5
+      ],
+      "sex_age": "牝4",
       "gate": "5"
     },
     {
@@ -6215,9 +6172,12 @@
       "horse_weight_diff": 14,
       "time": "1:37.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.1,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牝5",
       "gate": "8"
     },
     {
@@ -6235,9 +6195,12 @@
       "horse_weight_diff": -2,
       "time": "1:38.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.4,
+      "corners": [
+        4,
+        4
+      ],
+      "sex_age": "牝4",
       "gate": "7"
     },
     {
@@ -6255,9 +6218,12 @@
       "horse_weight_diff": 2,
       "time": "1:38.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.6,
+      "corners": [
+        14,
+        16
+      ],
+      "sex_age": "牝5",
       "gate": "1"
     },
     {
@@ -6275,9 +6241,12 @@
       "horse_weight_diff": -2,
       "time": "1:38.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.5,
+      "corners": [
+        8,
+        8
+      ],
+      "sex_age": "牝4",
       "gate": "4"
     },
     {
@@ -6295,9 +6264,12 @@
       "horse_weight_diff": 8,
       "time": "1:38.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.7,
+      "corners": [
+        7,
+        8
+      ],
+      "sex_age": "牝5",
       "gate": "3"
     },
     {
@@ -6315,9 +6287,12 @@
       "horse_weight_diff": -4,
       "time": "1:38.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.3,
+      "corners": [
+        10,
+        12
+      ],
+      "sex_age": "牝4",
       "gate": "3"
     },
     {
@@ -6335,9 +6310,12 @@
       "horse_weight_diff": -2,
       "time": "1:39.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.9,
+      "corners": [
+        10,
+        12
+      ],
+      "sex_age": "牝4",
       "gate": "4"
     },
     {
@@ -6355,9 +6333,12 @@
       "horse_weight_diff": -10,
       "time": "1:39.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.2,
+      "corners": [
+        8,
+        10
+      ],
+      "sex_age": "牝4",
       "gate": "6"
     }
   ],
@@ -6377,9 +6358,12 @@
       "horse_weight_diff": -6,
       "time": "1:38.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.4,
+      "corners": [
+        4,
+        5
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     },
     {
@@ -6397,9 +6381,12 @@
       "horse_weight_diff": -4,
       "time": "1:38.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.6,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "8"
     },
     {
@@ -6417,9 +6404,12 @@
       "horse_weight_diff": -2,
       "time": "1:38.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.3,
+      "corners": [
+        9,
+        8
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     },
     {
@@ -6437,9 +6427,12 @@
       "horse_weight_diff": 8,
       "time": "1:38.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.5,
+      "corners": [
+        7,
+        8
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -6457,9 +6450,12 @@
       "horse_weight_diff": 6,
       "time": "1:38.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.4,
+      "corners": [
+        10,
+        8
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -6477,9 +6473,12 @@
       "horse_weight_diff": 0,
       "time": "1:38.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.2,
+      "corners": [
+        12,
+        12
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     },
     {
@@ -6497,9 +6496,12 @@
       "horse_weight_diff": 0,
       "time": "1:39.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.0,
+      "corners": [
+        7,
+        6
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -6517,9 +6519,12 @@
       "horse_weight_diff": 0,
       "time": "1:39.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.2,
+      "corners": [
+        14,
+        14
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -6537,9 +6542,12 @@
       "horse_weight_diff": 0,
       "time": "1:39.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.2,
+      "corners": [
+        4,
+        6
+      ],
+      "sex_age": "牝3",
       "gate": "8"
     },
     {
@@ -6557,9 +6565,12 @@
       "horse_weight_diff": -2,
       "time": "1:39.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.9,
+      "corners": [
+        12,
+        12
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -6577,9 +6588,12 @@
       "horse_weight_diff": 6,
       "time": "1:39.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.3,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -6597,9 +6611,12 @@
       "horse_weight_diff": -6,
       "time": "1:39.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.2,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -6617,9 +6634,12 @@
       "horse_weight_diff": 0,
       "time": "1:41.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.3,
+      "corners": [
+        4,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     },
     {
@@ -6637,9 +6657,12 @@
       "horse_weight_diff": 0,
       "time": "1:42.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.6,
+      "corners": [
+        15,
+        15
+      ],
+      "sex_age": "牝3",
       "gate": "3"
     },
     {
@@ -6657,332 +6680,13 @@
       "horse_weight_diff": 8,
       "time": "1:42.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 41.0,
+      "corners": [
+        10,
+        8
+      ],
+      "sex_age": "牝3",
       "gate": "3"
-    }
-  ],
-  "東京2R": [
-    {
-      "rank": 1,
-      "num": "1",
-      "name": "ヌクレオチド",
-      "horse_id": "2023101724",
-      "pop": 3,
-      "odds": 5.4,
-      "place_odds": 1.2,
-      "jockey": "横山典",
-      "trainer": "粕谷",
-      "weight_carried": 57.0,
-      "horse_weight": 480,
-      "horse_weight_diff": -4,
-      "time": "1:24.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 2,
-      "num": "14",
-      "name": "ウインビギニング",
-      "horse_id": "2023100291",
-      "pop": 1,
-      "odds": 1.7,
-      "place_odds": 1.1,
-      "jockey": "レーン",
-      "trainer": "上原博",
-      "weight_carried": 57.0,
-      "horse_weight": 506,
-      "horse_weight_diff": 4,
-      "time": "1:25.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 3,
-      "num": "16",
-      "name": "プリプリプリン",
-      "horse_id": "2023102590",
-      "pop": 2,
-      "odds": 4.2,
-      "place_odds": 1.2,
-      "jockey": "▲佐藤",
-      "trainer": "伊藤圭",
-      "weight_carried": 52.0,
-      "horse_weight": 486,
-      "horse_weight_diff": 10,
-      "time": "1:25.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 4,
-      "num": "6",
-      "name": "バターショコラ",
-      "horse_id": "2023105240",
-      "pop": 5,
-      "odds": 23.9,
-      "place_odds": null,
-      "jockey": "荻野極",
-      "trainer": "戸田",
-      "weight_carried": 55.0,
-      "horse_weight": 458,
-      "horse_weight_diff": 4,
-      "time": "1:26.1",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 5,
-      "num": "13",
-      "name": "セイクリッドシチー",
-      "horse_id": "2023100304",
-      "pop": 11,
-      "odds": 157.0,
-      "place_odds": null,
-      "jockey": "江田照",
-      "trainer": "田中剛",
-      "weight_carried": 57.0,
-      "horse_weight": 478,
-      "horse_weight_diff": 0,
-      "time": "1:26.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 6,
-      "num": "4",
-      "name": "レオスキーム",
-      "horse_id": "2023104893",
-      "pop": 16,
-      "odds": 307.0,
-      "place_odds": null,
-      "jockey": "松岡",
-      "trainer": "萱野",
-      "weight_carried": 57.0,
-      "horse_weight": 464,
-      "horse_weight_diff": 0,
-      "time": "1:26.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 7,
-      "num": "11",
-      "name": "クアラトレンガヌ",
-      "horse_id": "2023101869",
-      "pop": 10,
-      "odds": 155.4,
-      "place_odds": null,
-      "jockey": "☆長浜",
-      "trainer": "小笠",
-      "weight_carried": 56.0,
-      "horse_weight": 458,
-      "horse_weight_diff": 16,
-      "time": "1:26.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 8,
-      "num": "2",
-      "name": "インスウィング",
-      "horse_id": "2023101444",
-      "pop": 9,
-      "odds": 139.5,
-      "place_odds": null,
-      "jockey": "原",
-      "trainer": "青木",
-      "weight_carried": 57.0,
-      "horse_weight": 494,
-      "horse_weight_diff": 3,
-      "time": "1:26.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 8,
-      "num": "9",
-      "name": "クラージュスター",
-      "horse_id": "2023103010",
-      "pop": 14,
-      "odds": 271.2,
-      "place_odds": null,
-      "jockey": "石橋脩",
-      "trainer": "勢司",
-      "weight_carried": 57.0,
-      "horse_weight": 478,
-      "horse_weight_diff": 0,
-      "time": "1:26.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 10,
-      "num": "3",
-      "name": "マッシブショット",
-      "horse_id": "2023101845",
-      "pop": 8,
-      "odds": 139.5,
-      "place_odds": null,
-      "jockey": "木幡育",
-      "trainer": "武藤",
-      "weight_carried": 57.0,
-      "horse_weight": 454,
-      "horse_weight_diff": -6,
-      "time": "1:27.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 11,
-      "num": "7",
-      "name": "ヤマカンドリーミン",
-      "horse_id": "2023106660",
-      "pop": 6,
-      "odds": 34.4,
-      "place_odds": null,
-      "jockey": "横山武",
-      "trainer": "和田勇",
-      "weight_carried": 57.0,
-      "horse_weight": 438,
-      "horse_weight_diff": -8,
-      "time": "1:27.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 12,
-      "num": "12",
-      "name": "トーセンシーギリヤ",
-      "horse_id": "2023100588",
-      "pop": 15,
-      "odds": 280.5,
-      "place_odds": null,
-      "jockey": "原田和",
-      "trainer": "蛯名利",
-      "weight_carried": 57.0,
-      "horse_weight": 460,
-      "horse_weight_diff": -10,
-      "time": "1:27.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 13,
-      "num": "15",
-      "name": "フライデイゼーン",
-      "horse_id": "2023109074",
-      "pop": 13,
-      "odds": 173.5,
-      "place_odds": null,
-      "jockey": "木幡巧",
-      "trainer": "岩戸",
-      "weight_carried": 57.0,
-      "horse_weight": 476,
-      "horse_weight_diff": 8,
-      "time": "1:27.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 14,
-      "num": "10",
-      "name": "リバーブレーション",
-      "horse_id": "2023102377",
-      "pop": 7,
-      "odds": 124.6,
-      "place_odds": null,
-      "jockey": "柴田大",
-      "trainer": "清水英",
-      "weight_carried": 57.0,
-      "horse_weight": 440,
-      "horse_weight_diff": -4,
-      "time": "1:27.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 15,
-      "num": "5",
-      "name": "ハクサンマンゲツ",
-      "horse_id": "2023101776",
-      "pop": 12,
-      "odds": 166.0,
-      "place_odds": null,
-      "jockey": "佐々木",
-      "trainer": "菊川",
-      "weight_carried": 57.0,
-      "horse_weight": 466,
-      "horse_weight_diff": -2,
-      "time": "1:28.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 16,
-      "num": "8",
-      "name": "アイデアユー",
-      "horse_id": "2023101124",
-      "pop": 4,
-      "odds": 8.1,
-      "place_odds": null,
-      "jockey": "ディー",
-      "trainer": "鹿戸",
-      "weight_carried": 57.0,
-      "horse_weight": 478,
-      "horse_weight_diff": 2,
-      "time": "1:29.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
     }
   ],
   "東京3R": [
@@ -7001,9 +6705,14 @@
       "horse_weight_diff": 4,
       "time": "2:12.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.3,
+      "corners": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -7021,9 +6730,14 @@
       "horse_weight_diff": 2,
       "time": "2:12.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.0,
+      "corners": [
+        7,
+        7,
+        7,
+        6
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
@@ -7041,9 +6755,14 @@
       "horse_weight_diff": 8,
       "time": "2:13.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.2,
+      "corners": [
+        4,
+        4,
+        3,
+        6
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
@@ -7061,9 +6780,14 @@
       "horse_weight_diff": -4,
       "time": "2:13.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 37.9,
+      "corners": [
+        9,
+        9,
+        12,
+        9
+      ],
+      "sex_age": "牡3",
       "gate": "5"
     },
     {
@@ -7081,9 +6805,14 @@
       "horse_weight_diff": -6,
       "time": "2:13.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 38.1,
+      "corners": [
+        4,
+        7,
+        9,
+        8
+      ],
+      "sex_age": "牡3",
       "gate": "2"
     },
     {
@@ -7101,9 +6830,14 @@
       "horse_weight_diff": -2,
       "time": "2:14.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.1,
+      "corners": [
+        8,
+        6,
+        3,
+        2
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -7121,9 +6855,14 @@
       "horse_weight_diff": 4,
       "time": "2:14.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.2,
+      "corners": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
@@ -7141,9 +6880,14 @@
       "horse_weight_diff": 8,
       "time": "2:14.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.5,
+      "corners": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "sex_age": "牡3",
       "gate": "7"
     },
     {
@@ -7161,9 +6905,14 @@
       "horse_weight_diff": 2,
       "time": "2:15.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.3,
+      "corners": [
+        9,
+        9,
+        9,
+        9
+      ],
+      "sex_age": "牡3",
       "gate": "1"
     },
     {
@@ -7181,9 +6930,14 @@
       "horse_weight_diff": 6,
       "time": "2:15.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 39.3,
+      "corners": [
+        13,
+        13,
+        13,
+        11
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
@@ -7201,9 +6955,14 @@
       "horse_weight_diff": 4,
       "time": "2:16.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 40.6,
+      "corners": [
+        11,
+        11,
+        7,
+        11
+      ],
+      "sex_age": "牡3",
       "gate": "4"
     },
     {
@@ -7221,9 +6980,14 @@
       "horse_weight_diff": 6,
       "time": "2:17.2",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 41.8,
+      "corners": [
+        4,
+        4,
+        3,
+        4
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
@@ -7241,1056 +7005,339 @@
       "horse_weight_diff": -4,
       "time": "2:18.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 42.2,
+      "corners": [
+        11,
+        11,
+        11,
+        13
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     }
   ],
-  "東京4R": [
+  "東京6R": [
     {
       "rank": 1,
-      "num": "18",
-      "name": "フリーヤ",
-      "horse_id": "2023105849",
-      "pop": 1,
-      "odds": 2.8,
-      "place_odds": 1.5,
-      "jockey": "横山武",
-      "trainer": "鈴木伸",
-      "weight_carried": 55.0,
-      "horse_weight": 456,
-      "horse_weight_diff": -4,
-      "time": "1:33.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 2,
-      "num": "12",
-      "name": "ウインドオブヘヴン",
-      "horse_id": "2023100734",
-      "pop": 7,
-      "odds": 14.5,
-      "place_odds": 3.2,
-      "jockey": "ディー",
-      "trainer": "戸田",
-      "weight_carried": 57.0,
-      "horse_weight": 456,
-      "horse_weight_diff": 2,
-      "time": "1:33.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 3,
-      "num": "10",
-      "name": "ローレルクラウン",
-      "horse_id": "2023105723",
-      "pop": 11,
-      "odds": 80.8,
-      "place_odds": 8.2,
-      "jockey": "松岡",
-      "trainer": "松尾",
-      "weight_carried": 57.0,
-      "horse_weight": 486,
-      "horse_weight_diff": -8,
-      "time": "1:33.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 4,
-      "num": "16",
-      "name": "アドマイヤパープル",
-      "horse_id": "2023106879",
-      "pop": 4,
-      "odds": 11.0,
-      "place_odds": null,
-      "jockey": "津村",
-      "trainer": "宮田",
-      "weight_carried": 55.0,
-      "horse_weight": 440,
-      "horse_weight_diff": 6,
-      "time": "1:33.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 5,
-      "num": "2",
-      "name": "フクオトコ",
-      "horse_id": "2023102564",
-      "pop": 2,
-      "odds": 4.3,
-      "place_odds": null,
-      "jockey": "☆長浜",
-      "trainer": "菊沢",
-      "weight_carried": 56.0,
-      "horse_weight": 456,
-      "horse_weight_diff": 6,
-      "time": "1:34.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 6,
-      "num": "17",
-      "name": "イーガービーバー",
-      "horse_id": "2023100234",
-      "pop": 13,
-      "odds": 83.4,
-      "place_odds": null,
-      "jockey": "国分優",
-      "trainer": "和田郎",
-      "weight_carried": 57.0,
-      "horse_weight": 468,
-      "horse_weight_diff": 2,
-      "time": "1:34.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 7,
-      "num": "8",
-      "name": "カーヴドヴァン",
-      "horse_id": "2023103347",
-      "pop": 17,
-      "odds": 267.8,
-      "place_odds": null,
-      "jockey": "西村太",
-      "trainer": "大和田",
-      "weight_carried": 55.0,
-      "horse_weight": 474,
-      "horse_weight_diff": 8,
-      "time": "1:34.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 8,
       "num": "11",
-      "name": "エクストラダーク",
-      "horse_id": "2023101892",
-      "pop": 12,
-      "odds": 82.2,
-      "place_odds": null,
-      "jockey": "柴田大",
-      "trainer": "和田雄",
-      "weight_carried": 57.0,
-      "horse_weight": 432,
-      "horse_weight_diff": 2,
-      "time": "1:34.1",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 9,
-      "num": "7",
-      "name": "リトルコリンズ",
-      "horse_id": "2023104846",
-      "pop": 18,
-      "odds": 398.4,
-      "place_odds": null,
-      "jockey": "原田和",
-      "trainer": "小手川",
-      "weight_carried": 57.0,
-      "horse_weight": 432,
-      "horse_weight_diff": 4,
-      "time": "1:34.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 10,
-      "num": "15",
-      "name": "キョンチャン",
-      "horse_id": "2023101852",
-      "pop": 15,
-      "odds": 161.4,
-      "place_odds": null,
-      "jockey": "江田照",
-      "trainer": "深山",
-      "weight_carried": 55.0,
-      "horse_weight": 456,
-      "horse_weight_diff": 2,
-      "time": "1:34.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 11,
-      "num": "14",
-      "name": "ローズプリンセス",
-      "horse_id": "2023102985",
-      "pop": 6,
-      "odds": 13.9,
-      "place_odds": null,
-      "jockey": "荻野極",
-      "trainer": "上原佑",
-      "weight_carried": 55.0,
-      "horse_weight": 440,
-      "horse_weight_diff": 4,
-      "time": "1:34.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 12,
-      "num": "1",
-      "name": "アルペンローゼ",
-      "horse_id": "2023105243",
-      "pop": 9,
-      "odds": 26.8,
-      "place_odds": null,
-      "jockey": "田辺",
-      "trainer": "栗田",
-      "weight_carried": 55.0,
-      "horse_weight": 482,
-      "horse_weight_diff": 0,
-      "time": "1:34.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 13,
-      "num": "13",
-      "name": "フランシスガリバー",
-      "horse_id": "2023100599",
-      "pop": 10,
-      "odds": 29.0,
-      "place_odds": null,
-      "jockey": "横山典",
-      "trainer": "千葉",
-      "weight_carried": 55.0,
-      "horse_weight": 440,
-      "horse_weight_diff": 2,
-      "time": "1:34.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 14,
-      "num": "9",
-      "name": "ウインリフレクト",
-      "horse_id": "2023105893",
-      "pop": 14,
-      "odds": 85.7,
-      "place_odds": null,
-      "jockey": "木幡巧",
-      "trainer": "嘉藤",
-      "weight_carried": 57.0,
-      "horse_weight": 438,
-      "horse_weight_diff": 2,
-      "time": "1:34.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 15,
-      "num": "4",
-      "name": "ウィズアツインクル",
-      "horse_id": "2023102388",
-      "pop": 5,
-      "odds": 12.2,
-      "place_odds": null,
-      "jockey": "石橋脩",
-      "trainer": "牧",
-      "weight_carried": 57.0,
-      "horse_weight": 484,
-      "horse_weight_diff": 0,
-      "time": "1:34.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 16,
-      "num": "3",
-      "name": "ビップマリク",
-      "horse_id": "2023100161",
-      "pop": 8,
-      "odds": 23.3,
-      "place_odds": null,
-      "jockey": "吉田豊",
-      "trainer": "高柳瑞",
-      "weight_carried": 57.0,
-      "horse_weight": 474,
-      "horse_weight_diff": -4,
-      "time": "1:34.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 17,
-      "num": "5",
-      "name": "モストロ",
-      "horse_id": "2023100893",
-      "pop": 16,
-      "odds": 206.8,
-      "place_odds": null,
-      "jockey": "▲佐藤",
-      "trainer": "勢司",
-      "weight_carried": 54.0,
-      "horse_weight": 532,
-      "horse_weight_diff": 0,
-      "time": "1:35.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 18,
-      "num": "6",
-      "name": "レアリゼソンレーヴ",
-      "horse_id": "2023104401",
-      "pop": 3,
-      "odds": 5.7,
-      "place_odds": null,
-      "jockey": "佐々木",
-      "trainer": "大竹",
-      "weight_carried": 57.0,
-      "horse_weight": 472,
-      "horse_weight_diff": -10,
-      "time": "1:35.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    }
-  ],
-  "東京7R": [
-    {
-      "rank": 1,
-      "num": "9",
-      "name": "ルナルーチェット",
-      "horse_id": "2022105233",
-      "pop": 6,
-      "odds": 21.5,
-      "place_odds": 3.6,
-      "jockey": "田辺",
-      "trainer": "松尾",
-      "weight_carried": 56.0,
-      "horse_weight": 426,
-      "horse_weight_diff": 2,
-      "time": "1:32.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 2,
-      "num": "13",
-      "name": "ブルスカメンテ",
-      "horse_id": "2022104844",
-      "pop": 4,
-      "odds": 13.0,
-      "place_odds": 4.0,
-      "jockey": "石川",
-      "trainer": "黒岩",
-      "weight_carried": 56.0,
-      "horse_weight": 442,
-      "horse_weight_diff": 14,
-      "time": "1:32.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 3,
-      "num": "11",
-      "name": "ソニックライン",
-      "horse_id": "2021105871",
+      "name": "ファイアマン",
+      "horse_id": "2023101154",
       "pop": 3,
       "odds": 7.0,
-      "place_odds": 2.1,
-      "jockey": "横山武",
-      "trainer": "浅利",
-      "weight_carried": 58.0,
-      "horse_weight": 492,
-      "horse_weight_diff": 2,
-      "time": "1:32.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 4,
-      "num": "15",
-      "name": "フィールドノート",
-      "horse_id": "2022107186",
-      "pop": 2,
-      "odds": 4.0,
-      "place_odds": null,
-      "jockey": "ルメー",
-      "trainer": "木村",
-      "weight_carried": 58.0,
-      "horse_weight": 476,
-      "horse_weight_diff": 26,
-      "time": "1:33.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 5,
-      "num": "12",
-      "name": "ツインピークス",
-      "horse_id": "2022104179",
-      "pop": 9,
-      "odds": 33.8,
-      "place_odds": null,
-      "jockey": "木幡巧",
-      "trainer": "千葉",
-      "weight_carried": 56.0,
-      "horse_weight": 498,
-      "horse_weight_diff": 2,
-      "time": "1:33.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 6,
-      "num": "17",
-      "name": "カザンラク",
-      "horse_id": "2022104666",
-      "pop": 1,
-      "odds": 1.9,
-      "place_odds": null,
-      "jockey": "レーン",
-      "trainer": "嘉藤",
-      "weight_carried": 58.0,
-      "horse_weight": 500,
-      "horse_weight_diff": 4,
-      "time": "1:33.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 7,
-      "num": "1",
-      "name": "レッドロスタム",
-      "horse_id": "2020103705",
-      "pop": 8,
-      "odds": 28.5,
-      "place_odds": null,
+      "place_odds": 2.0,
       "jockey": "原",
-      "trainer": "浅利",
-      "weight_carried": 58.0,
-      "horse_weight": 506,
-      "horse_weight_diff": 6,
-      "time": "1:33.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 8,
-      "num": "8",
-      "name": "ショウナンマリーナ",
-      "horse_id": "2022101259",
-      "pop": 16,
-      "odds": 323.6,
-      "place_odds": null,
-      "jockey": "石橋脩",
-      "trainer": "森一",
-      "weight_carried": 56.0,
-      "horse_weight": 436,
-      "horse_weight_diff": 6,
-      "time": "1:33.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 9,
-      "num": "2",
-      "name": "スタニングヴュー",
-      "horse_id": "2022101272",
-      "pop": 7,
-      "odds": 28.1,
-      "place_odds": null,
-      "jockey": "▲佐藤",
-      "trainer": "金成",
-      "weight_carried": 53.0,
-      "horse_weight": 472,
+      "trainer": "上原博",
+      "weight_carried": 57.0,
+      "horse_weight": 496,
       "horse_weight_diff": 2,
-      "time": "1:33.4",
+      "time": "1:36.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 10,
-      "num": "3",
-      "name": "スターエンブレム",
-      "horse_id": "2022105130",
-      "pop": 13,
-      "odds": 151.0,
-      "place_odds": null,
-      "jockey": "北村宏",
-      "trainer": "林",
-      "weight_carried": 58.0,
-      "horse_weight": 478,
-      "horse_weight_diff": 2,
-      "time": "1:33.5",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 11,
-      "num": "10",
-      "name": "インマイポケット",
-      "horse_id": "2021105466",
-      "pop": 5,
-      "odds": 15.4,
-      "place_odds": null,
-      "jockey": "荻野極",
-      "trainer": "武幸",
-      "weight_carried": 56.0,
-      "horse_weight": 434,
-      "horse_weight_diff": -6,
-      "time": "1:33.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 12,
-      "num": "18",
-      "name": "ルクスアドラー",
-      "horse_id": "2021101100",
-      "pop": 14,
-      "odds": 275.3,
-      "place_odds": null,
-      "jockey": "大野",
-      "trainer": "平岩",
-      "weight_carried": 58.0,
-      "horse_weight": 460,
-      "horse_weight_diff": -4,
-      "time": "1:33.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 13,
-      "num": "16",
-      "name": "フェルシナ",
-      "horse_id": "2022105831",
-      "pop": 10,
-      "odds": 36.8,
-      "place_odds": null,
-      "jockey": "佐々木",
-      "trainer": "西園翔",
-      "weight_carried": 56.0,
-      "horse_weight": 452,
-      "horse_weight_diff": 0,
-      "time": "1:33.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
-    },
-    {
-      "rank": 14,
-      "num": "14",
-      "name": "メイリー",
-      "horse_id": "2022106741",
-      "pop": 11,
-      "odds": 59.7,
-      "place_odds": null,
-      "jockey": "吉田豊",
-      "trainer": "鈴木慎",
-      "weight_carried": 56.0,
-      "horse_weight": 450,
-      "horse_weight_diff": 0,
-      "time": "1:33.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        2,
+        2
+      ],
+      "sex_age": "牡3",
       "gate": "7"
-    },
-    {
-      "rank": 15,
-      "num": "5",
-      "name": "バム",
-      "horse_id": "2022103327",
-      "pop": 15,
-      "odds": 302.5,
-      "place_odds": null,
-      "jockey": "江田照",
-      "trainer": "伊藤伸",
-      "weight_carried": 58.0,
-      "horse_weight": 454,
-      "horse_weight_diff": 4,
-      "time": "1:33.9",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    },
-    {
-      "rank": 16,
-      "num": "7",
-      "name": "バーニングフレーム",
-      "horse_id": "2022106409",
-      "pop": 17,
-      "odds": 511.7,
-      "place_odds": null,
-      "jockey": "原田和",
-      "trainer": "伊藤伸",
-      "weight_carried": 56.0,
-      "horse_weight": 470,
-      "horse_weight_diff": 2,
-      "time": "1:34.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 17,
-      "num": "4",
-      "name": "デルマケセラセラ",
-      "horse_id": "2022105477",
-      "pop": 12,
-      "odds": 119.5,
-      "place_odds": null,
-      "jockey": "松岡",
-      "trainer": "小野",
-      "weight_carried": 56.0,
-      "horse_weight": 446,
-      "horse_weight_diff": 14,
-      "time": "1:34.3",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
-    },
-    {
-      "rank": 18,
-      "num": "6",
-      "name": "サンマルヴァレー",
-      "horse_id": "2019106409",
-      "pop": 18,
-      "odds": 588.0,
-      "place_odds": null,
-      "jockey": "秋山稔",
-      "trainer": "佐藤吉",
-      "weight_carried": 56.0,
-      "horse_weight": 482,
-      "horse_weight_diff": 8,
-      "time": "1:34.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "3"
-    }
-  ],
-  "東京8R": [
-    {
-      "rank": 1,
-      "num": "3",
-      "name": "エムティエスターテ",
-      "horse_id": "2022104234",
-      "pop": 5,
-      "odds": 10.9,
-      "place_odds": 4.4,
-      "jockey": "大野",
-      "trainer": "矢野",
-      "weight_carried": 58.0,
-      "horse_weight": 478,
-      "horse_weight_diff": 4,
-      "time": "1:24.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
     },
     {
       "rank": 2,
-      "num": "16",
-      "name": "ウフドゥウフ",
-      "horse_id": "2022105257",
-      "pop": 3,
-      "odds": 4.3,
-      "place_odds": 1.9,
-      "jockey": "田辺",
-      "trainer": "上原博",
-      "weight_carried": 58.0,
-      "horse_weight": 500,
-      "horse_weight_diff": 8,
-      "time": "1:24.8",
+      "num": "5",
+      "name": "ゴールドバローズ",
+      "horse_id": "2023105395",
+      "pop": 7,
+      "odds": 36.7,
+      "place_odds": 5.1,
+      "jockey": "荻野極",
+      "trainer": "渡辺",
+      "weight_carried": 57.0,
+      "horse_weight": 512,
+      "horse_weight_diff": 0,
+      "time": "1:36.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "8"
+      "last3f": 35.5,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡3",
+      "gate": "4"
     },
     {
       "rank": 3,
-      "num": "2",
-      "name": "ブラックジジ",
-      "horse_id": "2022101578",
-      "pop": 11,
-      "odds": 116.1,
-      "place_odds": 8.8,
-      "jockey": "原田和",
-      "trainer": "菊川",
-      "weight_carried": 58.0,
-      "horse_weight": 470,
-      "horse_weight_diff": -2,
-      "time": "1:24.8",
+      "num": "1",
+      "name": "スカイストライプス",
+      "horse_id": "2023107229",
+      "pop": 1,
+      "odds": 2.5,
+      "place_odds": 1.3,
+      "jockey": "ルメー",
+      "trainer": "安田",
+      "weight_carried": 57.0,
+      "horse_weight": 494,
+      "horse_weight_diff": 0,
+      "time": "1:36.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.5,
+      "corners": [
+        3,
+        3
+      ],
+      "sex_age": "牡3",
       "gate": "1"
     },
     {
       "rank": 4,
-      "num": "4",
-      "name": "グルーヴィーオン",
-      "horse_id": "2022101938",
-      "pop": 4,
-      "odds": 9.9,
+      "num": "12",
+      "name": "メディチパワー",
+      "horse_id": "2023100419",
+      "pop": 9,
+      "odds": 54.4,
       "place_odds": null,
-      "jockey": "原",
-      "trainer": "小手川",
-      "weight_carried": 56.0,
-      "horse_weight": 484,
-      "horse_weight_diff": -2,
-      "time": "1:25.0",
+      "jockey": "ディー",
+      "trainer": "中川",
+      "weight_carried": 57.0,
+      "horse_weight": 480,
+      "horse_weight_diff": 6,
+      "time": "1:37.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "2"
+      "last3f": 35.1,
+      "corners": [
+        10,
+        10
+      ],
+      "sex_age": "牡3",
+      "gate": "7"
     },
     {
       "rank": 5,
-      "num": "9",
-      "name": "ブライトビギニング",
-      "horse_id": "2022105842",
-      "pop": 6,
+      "num": "10",
+      "name": "フレイムスター",
+      "horse_id": "2023101577",
+      "pop": 4,
       "odds": 11.0,
       "place_odds": null,
-      "jockey": "佐々木",
-      "trainer": "室井",
-      "weight_carried": 58.0,
-      "horse_weight": 466,
+      "jockey": "北村宏",
+      "trainer": "清水久",
+      "weight_carried": 57.0,
+      "horse_weight": 518,
       "horse_weight_diff": 0,
-      "time": "1:25.2",
+      "time": "1:37.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
+      "last3f": 36.4,
+      "corners": [
+        1,
+        1
+      ],
+      "sex_age": "牡3",
+      "gate": "6"
     },
     {
       "rank": 6,
-      "num": "13",
-      "name": "ヘルヴェティオス",
-      "horse_id": "2022104619",
-      "pop": 1,
-      "odds": 3.0,
-      "place_odds": null,
-      "jockey": "ルメー",
-      "trainer": "金成",
-      "weight_carried": 58.0,
-      "horse_weight": 454,
-      "horse_weight_diff": 4,
-      "time": "1:25.2",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 7,
-      "num": "14",
-      "name": "ハルノアラシ",
-      "horse_id": "2022106099",
+      "num": "4",
+      "name": "テイクオンミー",
+      "horse_id": "2023102019",
       "pop": 8,
-      "odds": 38.3,
+      "odds": 37.3,
       "place_odds": null,
-      "jockey": "荻野極",
-      "trainer": "相沢",
-      "weight_carried": 58.0,
-      "horse_weight": 522,
-      "horse_weight_diff": 4,
-      "time": "1:25.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "7"
-    },
-    {
-      "rank": 8,
-      "num": "1",
-      "name": "ティアップドライブ",
-      "horse_id": "2022100182",
-      "pop": 10,
-      "odds": 60.2,
-      "place_odds": null,
-      "jockey": "江田照",
-      "trainer": "奥平",
-      "weight_carried": 58.0,
-      "horse_weight": 498,
-      "horse_weight_diff": 8,
-      "time": "1:25.4",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "1"
-    },
-    {
-      "rank": 9,
-      "num": "7",
-      "name": "ガンハンマー",
-      "horse_id": "2022100050",
-      "pop": 9,
-      "odds": 52.9,
-      "place_odds": null,
-      "jockey": "木幡巧",
-      "trainer": "加藤征",
-      "weight_carried": 58.0,
-      "horse_weight": 438,
-      "horse_weight_diff": 6,
-      "time": "1:25.6",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 10,
-      "num": "10",
-      "name": "クラリネットソナタ",
-      "horse_id": "2022105585",
-      "pop": 2,
-      "odds": 3.4,
-      "place_odds": null,
-      "jockey": "レーン",
-      "trainer": "柄崎",
-      "weight_carried": 56.0,
-      "horse_weight": 492,
+      "jockey": "津村",
+      "trainer": "水野",
+      "weight_carried": 57.0,
+      "horse_weight": 508,
       "horse_weight_diff": -4,
-      "time": "1:25.6",
+      "time": "1:37.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "5"
-    },
-    {
-      "rank": 11,
-      "num": "8",
-      "name": "シルバードン",
-      "horse_id": "2022101987",
-      "pop": 15,
-      "odds": 232.7,
-      "place_odds": null,
-      "jockey": "石橋脩",
-      "trainer": "牧",
-      "weight_carried": 58.0,
-      "horse_weight": 480,
-      "horse_weight_diff": 0,
-      "time": "1:25.7",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "4"
-    },
-    {
-      "rank": 12,
-      "num": "6",
-      "name": "スマイルディシー",
-      "horse_id": "2022104271",
-      "pop": 13,
-      "odds": 206.2,
-      "place_odds": null,
-      "jockey": "▲佐藤",
-      "trainer": "中川",
-      "weight_carried": 53.0,
-      "horse_weight": 482,
-      "horse_weight_diff": 2,
-      "time": "1:25.8",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.0,
+      "corners": [
+        6,
+        5
+      ],
+      "sex_age": "牡3",
       "gate": "3"
     },
     {
-      "rank": 13,
-      "num": "12",
-      "name": "エイミームーン",
-      "horse_id": "2022106013",
-      "pop": 12,
-      "odds": 184.9,
+      "rank": 7,
+      "num": "9",
+      "name": "インディヴァイン",
+      "horse_id": "2023107090",
+      "pop": 5,
+      "odds": 11.1,
       "place_odds": null,
-      "jockey": "石川",
-      "trainer": "矢野",
-      "weight_carried": 56.0,
-      "horse_weight": 462,
-      "horse_weight_diff": -6,
-      "time": "1:25.9",
+      "jockey": "レーン",
+      "trainer": "林",
+      "weight_carried": 57.0,
+      "horse_weight": 538,
+      "horse_weight_diff": 12,
+      "time": "1:38.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.4,
+      "corners": [
+        5,
+        5
+      ],
+      "sex_age": "牡3",
       "gate": "6"
     },
     {
-      "rank": 14,
-      "num": "11",
-      "name": "シックスパック",
-      "horse_id": "2022102961",
-      "pop": 7,
-      "odds": 38.0,
+      "rank": 8,
+      "num": "7",
+      "name": "タケルムサシ",
+      "horse_id": "2023105177",
+      "pop": 6,
+      "odds": 13.1,
       "place_odds": null,
-      "jockey": "吉田豊",
-      "trainer": "戸田",
-      "weight_carried": 58.0,
-      "horse_weight": 468,
-      "horse_weight_diff": -3,
-      "time": "1:26.0",
-      "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
-      "gate": "6"
-    },
-    {
-      "rank": 15,
-      "num": "15",
-      "name": "アイランドピーク",
-      "horse_id": "2021101363",
-      "pop": 16,
-      "odds": 451.5,
-      "place_odds": null,
-      "jockey": "☆長浜",
-      "trainer": "加藤和",
+      "jockey": "佐々木",
+      "trainer": "斎藤誠",
       "weight_carried": 57.0,
       "horse_weight": 494,
       "horse_weight_diff": 6,
-      "time": "1:26.9",
+      "time": "1:38.3",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.4,
+      "corners": [
+        8,
+        7
+      ],
+      "sex_age": "牡3",
+      "gate": "5"
+    },
+    {
+      "rank": 9,
+      "num": "2",
+      "name": "サムシングニュー",
+      "horse_id": "2023102364",
+      "pop": 13,
+      "odds": 182.2,
+      "place_odds": null,
+      "jockey": "吉田豊",
+      "trainer": "鹿戸",
+      "weight_carried": 57.0,
+      "horse_weight": 474,
+      "horse_weight_diff": 2,
+      "time": "1:38.4",
+      "margin": "",
+      "last3f": 36.4,
+      "corners": [
+        10,
+        9
+      ],
+      "sex_age": "牡3",
+      "gate": "2"
+    },
+    {
+      "rank": 10,
+      "num": "14",
+      "name": "ランブリングマン",
+      "horse_id": "2023103837",
+      "pop": 14,
+      "odds": 230.7,
+      "place_odds": null,
+      "jockey": "石川",
+      "trainer": "前川",
+      "weight_carried": 57.0,
+      "horse_weight": 470,
+      "horse_weight_diff": -6,
+      "time": "1:38.5",
+      "margin": "",
+      "last3f": 36.2,
+      "corners": [
+        13,
+        12
+      ],
+      "sex_age": "牡3",
       "gate": "8"
     },
     {
-      "rank": 16,
-      "num": "5",
-      "name": "サトノセレナーデ",
-      "horse_id": "2021103440",
-      "pop": 14,
-      "odds": 217.2,
+      "rank": 11,
+      "num": "3",
+      "name": "ランニングビーチ",
+      "horse_id": "2023103632",
+      "pop": 11,
+      "odds": 133.7,
       "place_odds": null,
-      "jockey": "北村宏",
-      "trainer": "古賀慎",
-      "weight_carried": 56.0,
-      "horse_weight": 530,
-      "horse_weight_diff": 2,
-      "time": "1:27.2",
+      "jockey": "木幡巧",
+      "trainer": "牧",
+      "weight_carried": 57.0,
+      "horse_weight": 462,
+      "horse_weight_diff": -6,
+      "time": "1:38.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 36.5,
+      "corners": [
+        13,
+        12
+      ],
+      "sex_age": "牡3",
       "gate": "3"
+    },
+    {
+      "rank": 12,
+      "num": "13",
+      "name": "アミラル",
+      "horse_id": "2023104682",
+      "pop": 10,
+      "odds": 127.5,
+      "place_odds": null,
+      "jockey": "国分優",
+      "trainer": "渡辺",
+      "weight_carried": 57.0,
+      "horse_weight": 476,
+      "horse_weight_diff": -2,
+      "time": "1:38.9",
+      "margin": "",
+      "last3f": 36.8,
+      "corners": [
+        8,
+        10
+      ],
+      "sex_age": "牡3",
+      "gate": "8"
+    },
+    {
+      "rank": 13,
+      "num": "8",
+      "name": "ホーナー",
+      "horse_id": "2023107518",
+      "pop": 12,
+      "odds": 181.8,
+      "place_odds": null,
+      "jockey": "☆長浜",
+      "trainer": "栗田",
+      "weight_carried": 56.0,
+      "horse_weight": 472,
+      "horse_weight_diff": 0,
+      "time": "1:39.0",
+      "margin": "",
+      "last3f": 36.7,
+      "corners": [
+        12,
+        12
+      ],
+      "sex_age": "牡3",
+      "gate": "5"
+    },
+    {
+      "rank": 14,
+      "num": "6",
+      "name": "リュウカルネ",
+      "horse_id": "2023102574",
+      "pop": 2,
+      "odds": 2.8,
+      "place_odds": null,
+      "jockey": "横山武",
+      "trainer": "伊藤圭",
+      "weight_carried": 57.0,
+      "horse_weight": 522,
+      "horse_weight_diff": 20,
+      "time": "1:40.2",
+      "margin": "",
+      "last3f": 38.3,
+      "corners": [
+        6,
+        7
+      ],
+      "sex_age": "牡3",
+      "gate": "4"
     }
   ],
   "東京9R": [
@@ -8309,9 +7356,13 @@
       "horse_weight_diff": -10,
       "time": "1:46.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.7,
+      "corners": [
+        6,
+        6,
+        6
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     },
     {
@@ -8329,9 +7380,13 @@
       "horse_weight_diff": -2,
       "time": "1:46.4",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.1,
+      "corners": [
+        12,
+        12,
+        12
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -8349,9 +7404,13 @@
       "horse_weight_diff": 8,
       "time": "1:46.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.5,
+      "corners": [
+        1,
+        2,
+        2
+      ],
+      "sex_age": "牝3",
       "gate": "2"
     },
     {
@@ -8369,9 +7428,13 @@
       "horse_weight_diff": 10,
       "time": "1:46.6",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.3,
+      "corners": [
+        2,
+        3,
+        3
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     },
     {
@@ -8389,9 +7452,13 @@
       "horse_weight_diff": 10,
       "time": "1:46.8",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.0,
+      "corners": [
+        6,
+        8,
+        7
+      ],
+      "sex_age": "牝3",
       "gate": "5"
     },
     {
@@ -8409,9 +7476,13 @@
       "horse_weight_diff": -10,
       "time": "1:46.9",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 33.9,
+      "corners": [
+        10,
+        9,
+        9
+      ],
+      "sex_age": "牝3",
       "gate": "8"
     },
     {
@@ -8429,9 +7500,13 @@
       "horse_weight_diff": 2,
       "time": "1:47.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.2,
+      "corners": [
+        10,
+        1,
+        1
+      ],
+      "sex_age": "牝3",
       "gate": "3"
     },
     {
@@ -8449,9 +7524,13 @@
       "horse_weight_diff": 6,
       "time": "1:47.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.0,
+      "corners": [
+        9,
+        9,
+        9
+      ],
+      "sex_age": "牝3",
       "gate": "6"
     },
     {
@@ -8469,9 +7548,13 @@
       "horse_weight_diff": 0,
       "time": "1:47.0",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.4,
+      "corners": [
+        4,
+        5,
+        4
+      ],
+      "sex_age": "牝3",
       "gate": "1"
     },
     {
@@ -8489,9 +7572,13 @@
       "horse_weight_diff": -4,
       "time": "1:47.1",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.3,
+      "corners": [
+        4,
+        6,
+        7
+      ],
+      "sex_age": "牝3",
       "gate": "4"
     },
     {
@@ -8509,9 +7596,13 @@
       "horse_weight_diff": 10,
       "time": "1:47.5",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 35.0,
+      "corners": [
+        3,
+        4,
+        4
+      ],
+      "sex_age": "牝3",
       "gate": "7"
     },
     {
@@ -8529,9 +7620,13 @@
       "horse_weight_diff": 6,
       "time": "1:47.7",
       "margin": "",
-      "last3f": 0.0,
-      "corners": [],
-      "sex_age": "",
+      "last3f": 34.7,
+      "corners": [
+        6,
+        9,
+        9
+      ],
+      "sex_age": "牝3",
       "gate": "8"
     }
   ]
