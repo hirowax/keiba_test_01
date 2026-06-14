@@ -54,12 +54,18 @@ sys.exit(0 if '$TOMORROW' in dates else 1)
 "; then
     echo "  ✓ $TOMORROW はJRA開催日 → run.sh 実行"
 
-    if AUTO_MODE=1 ./run.sh "$TOMORROW"; then
+    AUTO_MODE=1 ./run.sh "$TOMORROW" 2>&1 | tee /tmp/netkeiba_run.log
+    RUN_STATUS=${PIPESTATUS[0]}
+    if [ $RUN_STATUS -eq 0 ]; then
         echo "$(date '+%Y-%m-%d %H:%M:%S') 翌日分完了"
         notify_line "[netkeiba] $TOMORROW のデータ準備完了 ✓"
     else
-        echo "$(date '+%Y-%m-%d %H:%M:%S') 失敗 (exit code: $?)"
-        notify_line "[netkeiba] $TOMORROW の処理が失敗しました ✗ cron.logを確認してください"
+        echo "$(date '+%Y-%m-%d %H:%M:%S') 失敗 (exit code: $RUN_STATUS)"
+        if grep -q "プレミアムコンテンツにアクセスできません" /tmp/netkeiba_run.log; then
+            notify_line "[netkeiba] ❌ Cookie期限切れ: python3 save_cookies.py を実行後、AUTO_MODE=1 bash run.sh $TOMORROW を手動実行してください"
+        else
+            notify_line "[netkeiba] $TOMORROW の処理が失敗しました ✗ cron.logを確認してください"
+        fi
     fi
 else
     echo "  - $TOMORROW は非開催日 → スキップ"
@@ -88,10 +94,16 @@ for d in sorted(set(all_dates)):
 if [ -n "$MISSING_PICKUP" ]; then
     echo "────────────────────────────────────"
     echo "$(date '+%Y-%m-%d %H:%M:%S') ピックアップ欠損補完: $MISSING_PICKUP"
-    if AUTO_MODE=1 ./run.sh "$MISSING_PICKUP"; then
+    AUTO_MODE=1 ./run.sh "$MISSING_PICKUP" 2>&1 | tee /tmp/netkeiba_patch.log
+    PATCH_STATUS=${PIPESTATUS[0]}
+    if [ $PATCH_STATUS -eq 0 ]; then
         notify_line "[netkeiba] 過去データ補完完了: $MISSING_PICKUP ✓"
     else
         echo "  補完失敗: $MISSING_PICKUP"
-        notify_line "[netkeiba] 過去データ補完失敗: $MISSING_PICKUP ✗"
+        if grep -q "プレミアムコンテンツにアクセスできません" /tmp/netkeiba_patch.log; then
+            notify_line "[netkeiba] ❌ Cookie期限切れ: python3 save_cookies.py を実行後、AUTO_MODE=1 bash run.sh $MISSING_PICKUP を手動実行してください"
+        else
+            notify_line "[netkeiba] 過去データ補完失敗: $MISSING_PICKUP ✗ cron.logを確認してください"
+        fi
     fi
 fi
