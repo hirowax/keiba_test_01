@@ -278,7 +278,10 @@
       "time": "1:08.0",
       "margin": "",
       "last3f": 32.9,
-      "corners": [],
+      "corners": [
+        7,
+        7
+      ],
       "sex_age": "牡5",
       "gate": "4"
     },
@@ -318,7 +321,10 @@
       "time": "1:08.3",
       "margin": "",
       "last3f": 34.3,
-      "corners": [],
+      "corners": [
+        2,
+        2
+      ],
       "sex_age": "牝5",
       "gate": "3"
     },
@@ -822,7 +828,11 @@
       "time": "2:00.5",
       "margin": "",
       "last3f": 35.6,
-      "corners": [],
+      "corners": [
+        11,
+        10,
+        10
+      ],
       "sex_age": "牡4",
       "gate": "7"
     },
@@ -2332,7 +2342,11 @@
       "time": "2:13.9",
       "margin": "",
       "last3f": 39.2,
-      "corners": [],
+      "corners": [
+        13,
+        14,
+        14
+      ],
       "sex_age": "セ9",
       "gate": "4"
     },
