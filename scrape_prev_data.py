@@ -16,7 +16,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 
-from scraper import load_cookies, is_logged_in, load_env
+from scraper import load_cookies, load_env
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
@@ -152,16 +152,9 @@ def main():
             )
         )
 
-        if not load_cookies(context):
-            logger.error("❌ cookies.json が見つかりません。python3 save_cookies.py を実行してください")
-            browser.close()
-            sys.exit(1)
+        load_cookies(context)  # あれば読み込む（なくても動作可）
         page = context.new_page()
-        if not is_logged_in(page):
-            logger.error("❌ Cookie無効（期限切れの可能性）。python3 save_cookies.py を実行してください")
-            browser.close()
-            sys.exit(1)
-        logger.info("cookies でログイン済み")
+        logger.info("ブラウザ起動完了")
 
         total = len(need_scrape)
         for i, (hid, name) in enumerate(need_scrape.items(), 1):
