@@ -366,77 +366,6 @@
   }
   .pop-badge.low { background: #ffe4cc; color: #aa4400; }
 
-  /* ── 血統辞典バナー (一時表示) ── */
-  #pedigree-banner {
-    padding: 12px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  .pedigree-card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
-    margin-bottom: 4px;
-  }
-  .pedigree-header {
-    background: linear-gradient(135deg, #5a2d8c, #3d1a6e);
-    color: white;
-    padding: 10px 14px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .pedigree-race-block {
-    padding: 10px 14px;
-    border-bottom: 1px solid #f0f0f0;
-  }
-  .pedigree-race-block:last-child { border-bottom: none; }
-  .pedigree-race-label {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #5a2d8c;
-    margin-bottom: 6px;
-  }
-  .pedigree-horse {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 4px 0;
-    font-size: 0.85rem;
-  }
-  .pedigree-star {
-    background: #e8a000;
-    color: white;
-    border-radius: 4px;
-    padding: 1px 6px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-  .pedigree-num {
-    background: #5a2d8c;
-    color: white;
-    border-radius: 4px;
-    padding: 1px 6px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    min-width: 28px;
-    text-align: center;
-  }
-  .pedigree-horse-name { font-weight: 700; }
-  .pedigree-blood { color: #666; font-size: 0.78rem; }
-  .pedigree-reason {
-    background: #f0e8ff;
-    color: #5a2d8c;
-    border-radius: 4px;
-    padding: 1px 6px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    white-space: nowrap;
-  }
 
   /* ── 穴馬セクション ── */
   .anaba-section {
@@ -482,90 +411,6 @@
 
 <div id="loading"><div class="spinner"></div><p>データ読み込み中...</p></div>
 
-<!-- 血統辞典合致馬 2026-06-21 (一時表示・不要になったら削除) -->
-<div id="pedigree-banner" style="display:none">
-  <div class="pedigree-card">
-    <div class="pedigree-header">🧬 血統辞典 合致馬 (6/21)</div>
-
-    <div class="pedigree-race-block">
-      <div class="pedigree-race-label">函館10R　ダート1700m</div>
-      <div class="pedigree-horse">
-        <span class="pedigree-star">★PU</span>
-        <span class="pedigree-num">3番</span>
-        <span class="pedigree-horse-name">ジュンラトゥール</span>
-        <span class="pedigree-blood">父:パイロ / 母父:スペシャルウィーク</span>
-        <span class="pedigree-reason">父:パイロ</span>
-      </div>
-    </div>
-
-    <div class="pedigree-race-block">
-      <div class="pedigree-race-label">函館12R　芝1800m</div>
-      <div class="pedigree-horse">
-        <span class="pedigree-num">4番</span>
-        <span class="pedigree-blood">父:ノーブルミッション / 母父:ディープインパクト</span>
-        <span class="pedigree-reason">母父:ディープ</span>
-      </div>
-      <div class="pedigree-horse">
-        <span class="pedigree-num">6番</span>
-        <span class="pedigree-blood">父:ロードカナロア / 母父:ディープインパクト</span>
-        <span class="pedigree-reason">母父:ディープ</span>
-      </div>
-      <div class="pedigree-horse">
-        <span class="pedigree-num">8番</span>
-        <span class="pedigree-blood">父:アドマイヤマーズ / 母父:ディープインパクト</span>
-        <span class="pedigree-reason">母父:ディープ</span>
-      </div>
-    </div>
-
-    <div class="pedigree-race-block">
-      <div class="pedigree-race-label">東京8R　芝1600m</div>
-      <div class="pedigree-horse">
-        <span class="pedigree-num">2番</span>
-        <span class="pedigree-blood">父:キズナ / 母父:Power</span>
-        <span class="pedigree-reason">父:キズナ</span>
-      </div>
-      <div class="pedigree-horse">
-        <span class="pedigree-num">4番</span>
-        <span class="pedigree-blood">父:キズナ / 母父:チチカステナンゴ</span>
-        <span class="pedigree-reason">父:キズナ</span>
-      </div>
-    </div>
-
-    <div class="pedigree-race-block">
-      <div class="pedigree-race-label">阪神10R　ダート1800m</div>
-      <div class="pedigree-horse">
-        <span class="pedigree-num">1番</span>
-        <span class="pedigree-blood">父:ヘニーヒューズ / 母父:ダイワメジャー</span>
-        <span class="pedigree-reason">父:ヘニーヒューズ</span>
-      </div>
-      <div class="pedigree-horse">
-        <span class="pedigree-num">5番</span>
-        <span class="pedigree-blood">父:キズナ / 母父:キングカメハメハ</span>
-        <span class="pedigree-reason">母父:キングカメハメハ</span>
-      </div>
-    </div>
-
-    <div class="pedigree-race-block">
-      <div class="pedigree-race-label">阪神8R　芝2000m</div>
-      <div class="pedigree-horse">
-        <span class="pedigree-num">1番</span>
-        <span class="pedigree-blood">父:ルーラーシップ / 母父:ディープインパクト</span>
-        <span class="pedigree-reason">母父:ディープ</span>
-      </div>
-    </div>
-
-    <div class="pedigree-race-block">
-      <div class="pedigree-race-label">阪神9R　芝2000m</div>
-      <div class="pedigree-horse">
-        <span class="pedigree-num">4番</span>
-        <span class="pedigree-blood">父:エピファネイア / 母父:マイネルラヴ</span>
-        <span class="pedigree-reason">父:エピファネイア</span>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- /血統辞典合致馬 -->
 
 <div id="content"></div>
 
@@ -585,7 +430,6 @@ async function checkPw() {
   if (hash === PW_HASH) {
     localStorage.setItem(AUTH_KEY, '1');
     document.getElementById('auth-overlay').style.display = 'none';
-    document.getElementById('pedigree-banner').style.display = 'block';
     initDates();
   } else {
     document.getElementById('pw-error').textContent = 'パスワードが違います';
@@ -595,7 +439,6 @@ async function checkPw() {
 
 if (localStorage.getItem(AUTH_KEY) === '1') {
   document.getElementById('auth-overlay').style.display = 'none';
-  document.getElementById('pedigree-banner').style.display = 'block';
 } else {
   document.getElementById('auth-overlay').style.display = 'flex';
 }
