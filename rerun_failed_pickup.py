@@ -172,6 +172,7 @@ def main():
                     "race_num": race_num,
                     "scored": scored,
                     "pop_map": shutuba_data.get("pop_map", {}),
+                    "odds_map": shutuba_data.get("odds_map", {}),
                     "position_nums": shutuba_data["position_nums"],
                     "top3_hits": shutuba_data["top3_hits"],
                     "pickup_nums": data_top_data["pickup_nums"],

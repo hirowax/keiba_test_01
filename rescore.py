@@ -110,6 +110,7 @@ def main():
             "top3_hits":     rdata.get("top3_hits", {}),
             "horse_id_map":  horse_id_map,
             "pop_map":       rdata.get("pop_map", {}),
+            "odds_map":      rdata.get("odds_map", {}),
         }
         data_top_data = {
             "pickup_nums":   set(rdata.get("pickup_nums", [])),

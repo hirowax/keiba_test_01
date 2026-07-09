@@ -317,6 +317,7 @@ def main():
                     "scored": scored,
                     "anaba": anaba_list,
                     "pop_map": shutuba_data.get("pop_map", {}),
+                    "odds_map": shutuba_data.get("odds_map", {}),
                     "horse_id_map": horse_id_map,
                     "position_nums": shutuba_data["position_nums"],
                     "top3_hits": shutuba_data["top3_hits"],

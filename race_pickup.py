@@ -72,6 +72,7 @@ def scrape_shutuba(page, race_id: str) -> dict:
         position_nums: set of 馬番 (推定ポジション有利馬)
         top3_hits:     {馬番: カテゴリー数}
         horse_map:     {馬番: 馬名} (出馬表)
+        odds_map:      {馬番: 単勝オッズ} (スコアリング時点。docs/roi_improvement_plan.md 柱1 Phase A)
     """
     url = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
     # race.netkeiba トップを経由してから shutuba へ
@@ -98,8 +99,9 @@ def scrape_shutuba(page, race_id: str) -> dict:
             if short_name:
                 horse_map[num] = short_name
 
-    # AI展開図に出ない馬はHorseInfoテーブルから補完 + horse_id取得 + 人気取得
-    pop_map: Dict[str, str] = {}  # 馬番 → 人気順位
+    # AI展開図に出ない馬はHorseInfoテーブルから補完 + horse_id取得 + 人気・オッズ取得
+    pop_map: Dict[str, str] = {}    # 馬番 → 人気順位
+    odds_map: Dict[str, float] = {}  # 馬番 → 単勝オッズ（スコアリング時点）
     for a in soup.select("td.HorseInfo a[href*='/horse/']"):
         name = _norm_name(a.get_text(strip=True))
         href = a.get("href", "")
@@ -122,11 +124,22 @@ def scrape_shutuba(page, race_id: str) -> dict:
                 horse_map[num] = name  # フルネームで補完
             if hid and num not in horse_id_map:
                 horse_id_map[num] = hid
-            # 人気（Popular / Ninki class）
+            # 単勝オッズ: class="Txt_R Popular"（"Popular_Ninki" は含まない）
+            # ※class_=lambda は個別クラスにもマッチしDOM順依存になるため、クラスリスト全体で判定する
+            if num not in odds_map:
+                odds_td = tr.find(lambda t: t.name == "td"
+                                  and "Popular" in (t.get("class") or [])
+                                  and "Popular_Ninki" not in (t.get("class") or []))
+                if odds_td:
+                    val = re.sub(r"\s+", "", odds_td.get_text(strip=True))
+                    try:
+                        odds_map[num] = float(val)
+                    except ValueError:
+                        pass  # "---" 等（未発売）は無視
+            # 人気: class に "Popular_Ninki" を持つセルのみ（オッズセルと誤取得しないよう限定）
             if num not in pop_map:
-                pop_td = tr.find("td", class_=lambda c: c and any(
-                    x in c for x in ["Popular", "Ninki", "ninki"]
-                ))
+                pop_td = tr.find(lambda t: t.name == "td"
+                                 and "Popular_Ninki" in (t.get("class") or []))
                 if pop_td:
                     val = re.sub(r"\s+", "", pop_td.get_text(strip=True))
                     if val.isdigit():
@@ -208,6 +221,7 @@ def scrape_shutuba(page, race_id: str) -> dict:
         "horse_map": horse_map,
         "horse_id_map": horse_id_map,
         "pop_map": pop_map,
+        "odds_map": odds_map,
         "position_nums": position_nums,
         "top3_hits": top3_hits,
         "predicted_pace": predicted_pace,
@@ -322,6 +336,7 @@ def score_horses(
     top3_hits      = shutuba_data["top3_hits"]
     horse_id_map   = shutuba_data.get("horse_id_map", {})
     pop_map        = shutuba_data.get("pop_map", {})
+    odds_map       = shutuba_data.get("odds_map", {})
     pickup_nums    = data_top_data["pickup_nums"]
     analysis_hits  = data_top_data["analysis_hits"]
 
@@ -460,6 +475,7 @@ def score_horses(
             "rank": rank,
             "breakdown": breakdown,
             "today_pop": pop_map.get(num, ""),
+            "today_odds": odds_map.get(num, ""),
         })
 
     results.sort(key=lambda x: -x["score"])
