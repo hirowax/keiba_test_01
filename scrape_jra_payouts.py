@@ -35,14 +35,8 @@ BASE_URL = "https://www.jra.go.jp/JRADB/accessS.html"
 ENTRY_CNAME = "pw01skl00999999/B3"
 PROBE_TARGET_MONTH = "202510"
 
-# scraper.py:226-231 と同一の場コード対応
-VENUE_MAP = {
-    "01": "札幌", "02": "函館", "03": "福島", "04": "新潟",
-    "05": "東京", "06": "中山", "07": "中京", "08": "京都",
-    "09": "阪神", "10": "小倉",
-}
-
 # <li class="..."> → 出力キー（2026-08-08に実HTML確認済み: refund_area内のli要素）
+# 場コード（race_id[4:6]）はnetkeibaと同一: 札幌01〜小倉10（scraper.py:226-231参照）
 BET_CLASS_MAP = {
     "win": "tansho",
     "place": "fukusho",
@@ -323,14 +317,25 @@ def scrape_date(date: str, cache: dict) -> dict:
             sde_cname = ensure_sde_cname(date, vv, race_id, cache)
             html = fetch_post(sde_cname)
             if is_param_error_page(html):
-                raise RuntimeError("パラメータエラーページが返された")
+                # 当週系リンク（srl00/sde01）は週替わりで失効することがある。
+                # キャッシュを破棄して1回だけ再クロールする
+                log.info(f"{label}: パラメータエラー → キャッシュ破棄して再取得")
+                cache.get("sde", {}).pop(race_id, None)
+                cache.get("srl", {}).pop(f"{date}_{vv}", None)
+                sde_cname = ensure_sde_cname(date, vv, race_id, cache)
+                html = fetch_post(sde_cname)
+                if is_param_error_page(html):
+                    raise RuntimeError("パラメータエラーページが返された（キャッシュ破棄後も失敗）")
             result = parse_payouts(html)
         except Exception as e:
             log.warning(f"{label}: 払戻取得失敗 ({e})")
             consecutive_fail += 1
             if consecutive_fail >= 5:
-                log.warning(f"{date}: 連続{consecutive_fail}件失敗のため以降のレースを中断")
-                break
+                # 部分ファイルを書くと --all の再取得対象から外れて欠落が永久化するため、
+                # 中断時は例外にして書き込み自体を行わない（キャッシュは保存済みなので再実行は軽い）
+                raise RuntimeError(
+                    f"{date}: 連続{consecutive_fail}件失敗のため中断（payouts_jra.json は書き込まない）"
+                )
             continue
 
         consecutive_fail = 0
@@ -338,6 +343,9 @@ def scrape_date(date: str, cache: dict) -> dict:
             log.warning(f"{label}: 払戻データが空です")
         payouts[label] = result
 
+    missing = sorted(set(known) - set(payouts))
+    if missing:
+        log.warning(f"{date}: 払戻を取得できなかったレース: {missing}")
     return payouts
 
 
