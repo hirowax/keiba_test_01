@@ -145,8 +145,8 @@ def analyze():
 
     # レース単位の結果を貯める
     records = []  # dict per bet race
-    # 馬連/ワイド再集計用
-    umaren_records = []  # (date, hit_bool, return_yen)
+    # 馬連/ワイド再集計用: (date, label, hit_bool, return_yen)
+    umaren_records = []
     wide_records = []
 
     skipped_no_summary = 0
