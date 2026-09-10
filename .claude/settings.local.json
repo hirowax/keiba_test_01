@@ -16,7 +16,13 @@
       "Bash(python3 scraper.py 20260321)",
       "Bash(python3 -m pip install openpyxl -q)",
       "Bash(python3 -:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Skill(update-config)",
+      "Bash(sed -n '110,260p' /tmp/audit_v2.txt)",
+      "Bash(wc -l /tmp/audit_v2.txt; python3 analyze_factor_audit.py > /tmp/audit_v2.txt 2>&1; wc -l /tmp/audit_v2.txt; sed -n '255,330p' /tmp/audit_v2.txt)",
+      "Bash(AUTO_MODE=1 bash run.sh 20260613)",
+      "Bash(iconv -f SHIFT_JIS -t UTF-8)",
+      "Bash(./run.sh 20260801)"
     ]
   }
 }
