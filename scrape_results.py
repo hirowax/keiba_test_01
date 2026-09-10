@@ -35,6 +35,8 @@ BASE_DIR = Path(__file__).parent
 OUTPUT_DIR = BASE_DIR / "output"
 
 RESULT_URL = "https://race.netkeiba.com/race/result.html?race_id={race_id}"
+HORSE_PAGE_URL = "https://db.netkeiba.com/horse/{horse_id}/"
+PEDIGREE_FILE = OUTPUT_DIR / "horse_pedigree.json"
 
 
 def _text(el) -> str:
@@ -161,6 +163,45 @@ def parse_place_odds(soup) -> dict:
             result[num] = round(int(amount) / 100, 1)
         except ValueError:
             pass
+
+    return result
+
+
+def fetch_horse_pedigree(page, horse_id: str) -> dict:
+    """馬ページの血統表から父・母父を取得"""
+    url = HORSE_PAGE_URL.format(horse_id=horse_id)
+    try:
+        page.goto(url, wait_until="domcontentloaded")
+        time.sleep(random.uniform(2.0, 4.0))
+    except PlaywrightTimeoutError:
+        log.warning(f"血統取得タイムアウト: {horse_id}")
+        return {}
+
+    html = page.content()
+    soup = BeautifulSoup(html, "html.parser")
+    result = {}
+
+    blood_table = soup.find("table", class_="blood_table")
+    if not blood_table:
+        log.warning(f"血統表が見つかりません: {horse_id}")
+        return result
+
+    # blood_table 構造: rowspan=2 の td が 父(1番目)・母(2番目)
+    # 同じ tr 内の rowspan なし td が 父の父(父の行) / 母の父(母の行)
+    rowspan2_tds = blood_table.find_all("td", attrs={"rowspan": "2"})
+    if rowspan2_tds:
+        a = rowspan2_tds[0].find("a")
+        if a:
+            result["sire"] = a.get_text(strip=True)
+    if len(rowspan2_tds) >= 2:
+        # 母と同じ tr にある rowspan なし td = 母の父 (dam's sire)
+        dam_tr = rowspan2_tds[1].parent
+        for td in dam_tr.find_all("td"):
+            if not td.has_attr("rowspan"):
+                a = td.find("a")
+                if a:
+                    result["dam_sire"] = a.get_text(strip=True)
+                break
 
     return result
 
@@ -370,6 +411,13 @@ def main():
     else:
         log.info("pickup_scores.json なし → レース一覧ページから取得します")
 
+    # 血統キャッシュ（永続・馬IDをキーに父・母父を保存）
+    pedigree_cache: dict = {}
+    if PEDIGREE_FILE.exists():
+        with open(PEDIGREE_FILE, encoding="utf-8") as f:
+            pedigree_cache = json.load(f)
+        log.info(f"血統キャッシュ: {len(pedigree_cache)}頭")
+
     email, password = load_env()
 
     with sync_playwright() as p:
@@ -446,12 +494,52 @@ def main():
                     "corners":           h["corners"],
                     "sex_age":           h["sex_age"],
                     "gate":              h["gate"],
+                    "sire":              "",
+                    "dam_sire":          "",
                 }
                 for h in horses
             ]
             race_conditions[label] = condition
 
             human_sleep(4.0, 9.0)
+
+        # 血統取得（キャッシュにない馬のみ）
+        new_horse_ids = sorted(
+            h["horse_id"]
+            for rows in race_results.values()
+            for h in rows
+            if h["horse_id"] and h["horse_id"] not in pedigree_cache
+        )
+        if new_horse_ids:
+            log.info(f"血統取得: {len(new_horse_ids)}頭（初回は時間がかかります）")
+            consecutive_fail = 0
+            for i, horse_id in enumerate(new_horse_ids, 1):
+                ped = fetch_horse_pedigree(page, horse_id)
+                if ped:
+                    pedigree_cache[horse_id] = ped
+                    consecutive_fail = 0
+                    log.debug(f"  {horse_id}: 父={ped.get('sire','')} 母父={ped.get('dam_sire','')}")
+                else:
+                    consecutive_fail += 1
+                    # 連続失敗が続く場合はIPブロック等を疑い中断（取得済みは下で保存される）
+                    if consecutive_fail >= 10:
+                        log.error(f"⚠️  血統取得が{consecutive_fail}連続で失敗。ブロックを疑い中断します")
+                        break
+                # 取得済みを定期保存（中断してもキャッシュを失わない）
+                if i % 20 == 0:
+                    with open(PEDIGREE_FILE, "w", encoding="utf-8") as f:
+                        json.dump(pedigree_cache, f, ensure_ascii=False, indent=2)
+                    log.info(f"  血統 {i}/{len(new_horse_ids)}頭 取得・キャッシュ保存")
+                human_sleep(2.0, 5.0)
+        else:
+            log.info("血統: 全馬キャッシュ済み")
+
+        # race_results に血統情報を反映
+        for rows in race_results.values():
+            for h in rows:
+                ped = pedigree_cache.get(h["horse_id"], {})
+                h["sire"] = ped.get("sire", "")
+                h["dam_sire"] = ped.get("dam_sire", "")
 
         browser.close()
 
@@ -464,9 +552,12 @@ def main():
         json.dump(race_results, f, ensure_ascii=False, indent=2)
     with open(conditions_path, "w", encoding="utf-8") as f:
         json.dump(race_conditions, f, ensure_ascii=False, indent=2)
+    with open(PEDIGREE_FILE, "w", encoding="utf-8") as f:
+        json.dump(pedigree_cache, f, ensure_ascii=False, indent=2)
 
     log.info(f"保存完了: {results_path}")
     log.info(f"保存完了: {conditions_path}")
+    log.info(f"血統キャッシュ保存: {PEDIGREE_FILE} ({len(pedigree_cache)}頭)")
     log.info(f"取得レース数: {len(race_results)} / {len(race_id_map)}")
 
     # データ品質チェック（cronログで気づけるように WARNING を出す）
