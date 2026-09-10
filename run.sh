@@ -5,6 +5,18 @@
 set -e
 cd "$(dirname "$0")"
 
+# ── 二重起動防止（IPブロック・cookie競合・git push競合対策） ──
+LOCKFILE="/tmp/netkeiba_run.lock"
+if [ -f "$LOCKFILE" ]; then
+    LOCK_PID=$(cat "$LOCKFILE")
+    if ps -p "$LOCK_PID" > /dev/null 2>&1; then
+        echo "❌ 既に run.sh が実行中です (PID: $LOCK_PID)。1日ずつ順番に実行してください。"
+        exit 1
+    fi
+fi
+echo $$ > "$LOCKFILE"
+trap 'rm -f "$LOCKFILE"' EXIT
+
 DATE=${1:-$(date +%Y%m%d)}
 
 # ── 日付・曜日の確認 ──────────────────────────────────────────
