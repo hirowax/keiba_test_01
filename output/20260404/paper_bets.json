@@ -1,0 +1,548 @@
+{
+ "date": "20260404",
+ "generated_at": "2026-09-10T22:55:04+09:00",
+ "settled": true,
+ "races": {
+  "中山2R": {
+   "axis_num": 5,
+   "axis_name": "アオハルブルース",
+   "score": 12,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "5": 100
+     },
+     "cost": 100,
+     "return": 110,
+     "hit": true
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "5": 100
+     },
+     "cost": 100,
+     "return": 190,
+     "hit": true
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "skip_reason": "no_o_candidate",
+     "bets": {},
+     "cost": 0,
+     "return": 0,
+     "hit": false
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      2,
+      6,
+      7,
+      14
+     ],
+     "bets": {
+      "2-5-6": 100,
+      "2-5-7": 100,
+      "2-5-14": 100,
+      "5-6-7": 100,
+      "5-6-14": 100,
+      "5-7-14": 100
+     },
+     "cost": 600,
+     "return": 0,
+     "hit": false
+    }
+   }
+  },
+  "中山3R": {
+   "axis_num": 1,
+   "axis_name": "エコロバロン",
+   "score": 8,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "1": 100
+     },
+     "cost": 100,
+     "return": 190,
+     "hit": true
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "1": 100
+     },
+     "cost": 100,
+     "return": 750,
+     "hit": true
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 14,
+     "bets": {
+      "1-14": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      2,
+      3,
+      13,
+      14
+     ],
+     "bets": {
+      "1-2-3": 100,
+      "1-2-13": 100,
+      "1-2-14": 100,
+      "1-3-13": 100,
+      "1-3-14": 100,
+      "1-13-14": 100
+     },
+     "cost": 600,
+     "return": 2830,
+     "hit": true
+    }
+   }
+  },
+  "中山7R": {
+   "axis_num": 1,
+   "axis_name": "マリアイリダータ",
+   "score": 10,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "1": 100
+     },
+     "cost": 100,
+     "return": 110,
+     "hit": true
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "1": 100
+     },
+     "cost": 100,
+     "return": 200,
+     "hit": true
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 10,
+     "bets": {
+      "1-10": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      2,
+      3,
+      8,
+      10
+     ],
+     "bets": {
+      "1-2-3": 100,
+      "1-2-8": 100,
+      "1-2-10": 100,
+      "1-3-8": 100,
+      "1-3-10": 100,
+      "1-8-10": 100
+     },
+     "cost": 600,
+     "return": 0,
+     "hit": false
+    }
+   }
+  },
+  "中山8R": {
+   "axis_num": 6,
+   "axis_name": "ニシノケンタマン",
+   "score": 9,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "6": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "6": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 3,
+     "bets": {
+      "3-6": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      1,
+      3,
+      5,
+      7
+     ],
+     "bets": {
+      "1-3-6": 100,
+      "1-5-6": 100,
+      "1-6-7": 100,
+      "3-5-6": 100,
+      "3-6-7": 100,
+      "5-6-7": 100
+     },
+     "cost": 600,
+     "return": 0,
+     "hit": false
+    }
+   }
+  },
+  "阪神10R": {
+   "axis_num": 7,
+   "axis_name": "ビダーヤ",
+   "score": 12,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "7": 100
+     },
+     "cost": 100,
+     "return": 110,
+     "hit": true
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "7": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 5,
+     "bets": {
+      "5-7": 100
+     },
+     "cost": 100,
+     "return": 320,
+     "hit": true
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      5,
+      6
+     ],
+     "bets": {
+      "5-6-7": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    }
+   }
+  },
+  "阪神2R": {
+   "axis_num": 14,
+   "axis_name": "アニマレイ",
+   "score": 8,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "14": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "14": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 1,
+     "bets": {
+      "1-14": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      1,
+      8,
+      11,
+      15
+     ],
+     "bets": {
+      "1-8-14": 100,
+      "1-11-14": 100,
+      "1-14-15": 100,
+      "8-11-14": 100,
+      "8-14-15": 100,
+      "11-14-15": 100
+     },
+     "cost": 600,
+     "return": 0,
+     "hit": false
+    }
+   }
+  },
+  "阪神6R": {
+   "axis_num": 4,
+   "axis_name": "テーオーミリカン",
+   "score": 8,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "4": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "4": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 2,
+     "bets": {
+      "2-4": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      2,
+      5,
+      7,
+      16
+     ],
+     "bets": {
+      "2-4-5": 100,
+      "2-4-7": 100,
+      "2-4-16": 100,
+      "4-5-7": 100,
+      "4-5-16": 100,
+      "4-7-16": 100
+     },
+     "cost": 600,
+     "return": 0,
+     "hit": false
+    }
+   }
+  },
+  "阪神7R": {
+   "axis_num": 5,
+   "axis_name": "アークドール",
+   "score": 8,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "5": 100
+     },
+     "cost": 100,
+     "return": 110,
+     "hit": true
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "5": 100
+     },
+     "cost": 100,
+     "return": 300,
+     "hit": true
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 4,
+     "bets": {
+      "4-5": 100
+     },
+     "cost": 100,
+     "return": 180,
+     "hit": true
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      3,
+      4,
+      6,
+      7,
+      8
+     ],
+     "bets": {
+      "3-4-5": 100,
+      "3-5-6": 100,
+      "3-5-7": 100,
+      "3-5-8": 100,
+      "4-5-6": 100,
+      "4-5-7": 100,
+      "4-5-8": 100,
+      "5-6-7": 100,
+      "5-6-8": 100,
+      "5-7-8": 100
+     },
+     "cost": 1000,
+     "return": 400,
+     "hit": true
+    }
+   }
+  },
+  "阪神9R": {
+   "axis_num": 9,
+   "axis_name": "タガノアルトゥーラ",
+   "score": 8,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "9": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "9": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 2,
+     "bets": {
+      "2-9": 100
+     },
+     "cost": 100,
+     "return": 0,
+     "hit": false
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      2,
+      3,
+      5,
+      7
+     ],
+     "bets": {
+      "2-3-9": 100,
+      "2-5-9": 100,
+      "2-7-9": 100,
+      "3-5-9": 100,
+      "3-7-9": 100,
+      "5-7-9": 100
+     },
+     "cost": 600,
+     "return": 0,
+     "hit": false
+    }
+   }
+  }
+ },
+ "skipped_races": {
+  "中山10R": "no_axis(score<8 or unscored)",
+  "中山11R": "no_axis(score<8 or unscored)",
+  "中山12R": "no_axis(score<8 or unscored)",
+  "中山1R": "no_axis(score<8 or unscored)",
+  "中山6R": "no_axis(score<8 or unscored)",
+  "中山9R": "no_axis(score<8 or unscored)",
+  "阪神11R": "no_axis(score<8 or unscored)",
+  "阪神12R": "no_axis(score<8 or unscored)",
+  "阪神1R": "no_axis(score<8 or unscored)",
+  "阪神3R": "no_axis(score<8 or unscored)",
+  "阪神8R": "no_axis(score<8 or unscored)"
+ },
+ "settled_at": "2026-09-10T22:55:21+09:00"
+}
