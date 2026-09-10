@@ -16,12 +16,18 @@ himo_set() / maru_num() をそのまま再利用し、定義の重複実装に�
 判定基準（回収率≥110% かつ上位3本除外後≥80% かつ的中数≥15）はreportでは判定せず数値のみ出す
 （90日経過後にFable/人間が判定する運用のため）。
 
+事前登録の不変性: generate は既存の paper_bets.json を上書きしない（レース前に一度生成した
+買い目は精算後も含め不変。rescore.py 等で pickup_scores.json が事後に書き換わっても
+過去の記録は汚染されない）。作り直す場合は人間がファイルを削除してから再実行する。
+また PAPER_TRADE_START より前の日付は「前向き記録」ではないため generate を拒否し、
+report の集計も PAPER_TRADE_START 以降に限定する（開催前バックテストとの混同防止）。
+
 使い方:
-  python3 paper_trade.py generate YYYYMMDD   # 1日分の買い目生成
-  python3 paper_trade.py generate --all      # pickup_scores.json+summaryが揃う全日付で生成
+  python3 paper_trade.py generate YYYYMMDD   # 1日分の買い目生成（PAPER_TRADE_START以降・既存ファイルは上書きしない）
+  python3 paper_trade.py generate --all      # 同上を対象日全部に
   python3 paper_trade.py settle YYYYMMDD     # 1日分を精算
   python3 paper_trade.py settle --all        # payouts_jra.jsonが揃う全日付を精算
-  python3 paper_trade.py report              # メニュー別の累積成績表
+  python3 paper_trade.py report              # メニュー別の累積成績表（PAPER_TRADE_START以降のみ）
 """
 import argparse
 import json
@@ -41,6 +47,11 @@ MENU_NAMES = {
     "M3": "◎-○ワイド",
     "M4": "◎軸3連複(紐2頭流し)",
 }
+
+# 前向きペーパートレードの開始日（事前登録・変更禁止）。
+# Issue #3実装・レビュー時の検証用サンプル（20260404・20260906）はこの日より前のため
+# 前向き記録の対象外。この日以降にrun.shが生成したものだけを集計する。
+PAPER_TRADE_START = "20260912"
 
 
 def load_json(path: Path):
@@ -123,6 +134,13 @@ def build_menus(scored, summary_race):
 
 def generate_for_date(date: str) -> bool:
     """1日分の買い目を生成し output/{date}/paper_bets.json に保存。成功したらTrue"""
+    if date < PAPER_TRADE_START:
+        print(f"  {date}: PAPER_TRADE_START({PAPER_TRADE_START})より前 → 前向き記録の対象外のためスキップ")
+        return False
+    bets_path = OUTPUT_DIR / date / "paper_bets.json"
+    if bets_path.exists():
+        print(f"  {date}: paper_bets.json は既存 → 上書きしない（作り直す場合は先にファイルを削除）")
+        return False
     pickup = load_json(OUTPUT_DIR / date / "pickup_scores.json")
     if pickup is None:
         print(f"  {date}: pickup_scores.json なし → スキップ")
@@ -156,7 +174,7 @@ def generate_for_date(date: str) -> bool:
         "races": races,
         "skipped_races": skipped,
     }
-    save_json(OUTPUT_DIR / date / "paper_bets.json", out)
+    save_json(bets_path, out)
     print(f"  {date}: {len(races)}レース買い目生成 (スキップ{len(skipped)}) → paper_bets.json")
     return True
 
@@ -165,9 +183,10 @@ def cmd_generate(args):
     if args.all:
         dates = sorted(
             d.name for d in OUTPUT_DIR.iterdir()
-            if d.is_dir() and d.name.isdigit() and (d / "pickup_scores.json").exists()
+            if d.is_dir() and d.name.isdigit() and d.name >= PAPER_TRADE_START
+            and (d / "pickup_scores.json").exists()
         )
-        print(f"generate --all: 対象{len(dates)}日")
+        print(f"generate --all: 対象{len(dates)}日（{PAPER_TRADE_START}以降・既存のpaper_bets.jsonはスキップ）")
         for date in dates:
             generate_for_date(date)
     else:
@@ -256,7 +275,8 @@ def cmd_settle(args):
 def cmd_report(args):
     dates = sorted(
         d.name for d in OUTPUT_DIR.iterdir()
-        if d.is_dir() and d.name.isdigit() and (d / "paper_bets.json").exists()
+        if d.is_dir() and d.name.isdigit() and d.name >= PAPER_TRADE_START
+        and (d / "paper_bets.json").exists()
     )
 
     per_menu = {k: [] for k in MENU_NAMES}  # menu -> list of (date, label, cost, return, hit)
@@ -275,6 +295,7 @@ def cmd_report(args):
     print("=" * 60)
     print("ペーパートレード累積成績（M1〜M4）")
     print("=" * 60)
+    print(f"開始日: {PAPER_TRADE_START} 以降のみ集計")
     print(f"精算済み日数: {n_settled_dates} / 買い目生成済み日数: {len(dates)}")
     if not n_settled_dates:
         print("精算済みデータがありません（先に settle を実行してください）")

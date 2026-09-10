@@ -44,7 +44,7 @@ echo "▶ GitHub Pages用 JSON エクスポート..."
 python3 export_json.py "$DATE"
 
 echo "▶ ペーパートレード買い目生成..."
-python3 paper_trade.py generate "$DATE"
+python3 paper_trade.py generate "$DATE" || echo "⚠️  paper_trade 失敗（本体データには影響なし・続行）"
 
 echo "▶ GitHubにデータをpush中..."
 git add output/ summary/ --ignore-errors
