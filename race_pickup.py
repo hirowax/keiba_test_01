@@ -209,13 +209,21 @@ def scrape_shutuba(page, race_id: str) -> dict:
         if m:
             predicted_pace = m.group()
 
-    # ── レース距離（RaceData01 から） ──
+    # ── レース距離・馬場種別（RaceData01 から） ──
     race_dist = None
+    race_surface = None
     rd1 = soup.find(class_="RaceData01")
     if rd1:
-        m = re.search(r"(\d{3,4})m", rd1.get_text())
+        rd1_text = rd1.get_text(" ", strip=True)
+        m = re.search(r"(\d{3,4})m", rd1_text)
         if m:
             race_dist = int(m.group(1))
+        if "芝" in rd1_text:
+            race_surface = "芝"
+        elif "ダート" in rd1_text or re.search(r"ダ\d", rd1_text):
+            race_surface = "ダート"
+        elif "障" in rd1_text:
+            race_surface = "障害"
 
     return {
         "horse_map": horse_map,
@@ -226,6 +234,7 @@ def scrape_shutuba(page, race_id: str) -> dict:
         "top3_hits": top3_hits,
         "predicted_pace": predicted_pace,
         "race_dist": race_dist,
+        "race_surface": race_surface,
     }
 
 

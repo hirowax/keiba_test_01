@@ -325,6 +325,7 @@ def main():
                     "analysis_hits": data_top_data["analysis_hits"],
                     "predicted_pace": shutuba_data.get("predicted_pace"),
                     "race_dist": shutuba_data.get("race_dist"),
+                    "race_surface": shutuba_data.get("race_surface"),
                     "advice": advice,
                 }
 
