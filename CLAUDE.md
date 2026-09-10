@@ -30,6 +30,11 @@ netkeiba/
 ├── rerun_failed_pickup.py # エラーレースのみ再ピックアップ・pickup_scores.jsonにマージ
 ├── rescrape_results_all.py # 全日付のrace_results.jsonを再スクレイプ（フィールド追加時等に使用）
 ├── run_history_batch.py  # 過去日付のXLSX+pickup_scores.json一括生成（完了済みはスキップ）
+├── scrape_history.py     # 過去日付のレース結果を一括取得（pickup_scores.json不要）
+├── scrape_jra_payouts.py # JRA公式(jra.go.jp)から払戻を取得（Issue #1）
+├── paper_trade.py        # ペーパートレード台帳 generate/settle/report（Issue #3）
+├── validate_trifecta_202608.py # 3連複の事前登録検証（Issue #2・紐定義の実装元）
+├── analyze_anaba*.py / validate_anaba_*.py # 穴馬ファクター研究（2026-05に完全保留）
 ├── index.html            # GitHub Pages メインページ（静的・パスワードゲート付き）
 ├── app.py                # 旧Flask Webアプリ（Render移行前・現在未使用）
 ├── save_cookies.py       # 初回ログイン・クッキー保存用
@@ -47,9 +52,12 @@ netkeiba/
 │   │   ├── 全場_3指数重複馬.csv
 │   │   ├── pickup_scores.json    # スコアリング結果（Webアプリが読む）
 │   │   ├── triple.json           # 3指数重複馬（GitHub Pages用JSON）
-│   │   ├── race_results.json     # 全馬着順・人気・馬体重等（scrape_results.py出力）
-│   │   └── race_conditions.json  # 馬場・天気・距離・クラス等（scrape_results.py出力）
+│   │   ├── race_results.json     # 全馬着順・人気・馬体重・父/母父等（scrape_results.py出力）
+│   │   ├── race_conditions.json  # 馬場・天気・距離・クラス等（scrape_results.py出力）
+│   │   ├── payouts_jra.json      # JRA公式払戻（scrape_jra_payouts.py出力）
+│   │   └── paper_bets.json       # ペーパートレード買い目・精算結果（paper_trade.py出力）
 │   ├── horse_db.json         # 馬別前走データ グローバルキャッシュ（28日有効）
+│   ├── horse_pedigree.json   # 馬別血統（父・母父）永続キャッシュ（scrape_results.pyが収集）
 │   ├── horse_style.json      # 馬別脚質データ（build_horse_style.pyが出力・run_pickup_all.pyが参照）
 │   ├── dates.json            # 利用可能な日付一覧（GitHub Pages用）
 │   └── threshold_config.json # 期待値🔥閾値設定（calibrate_threshold.pyが更新）
@@ -115,6 +123,20 @@ git add output/ && git commit -m "rescore: 20260404" && git push
 ```
 
 スクレイプ不要で pickup_scores.json を最新ロジックで再計算。
+
+> **注意**: `rescore.py` は過去のスコアを書き換えるが、既存の `paper_bets.json` は
+> `paper_trade.py generate` が上書きしないため影響を受けない（前向き記録の不変性を保つ設計）。
+
+### 5-2. ペーパートレードの精算（払戻取得後）
+
+```bash
+python3 scrape_jra_payouts.py --all   # 払戻を分割取得（1回3日分まで）
+python3 paper_trade.py settle --all   # payouts_jra.json で精算
+python3 paper_trade.py report         # メニュー別の累積成績
+```
+
+買い目生成（`generate`）は run.sh が自動実行するので手動操作は不要。
+精算はcron未組み込みのため、月次レポート前に上記を手動実行する。
 
 ### 6. 前走データのみ収集
 
@@ -266,18 +288,30 @@ venue表示順：東京→中山→京都→阪神→中京→新潟→福島→
 **Issue管理・スケジュール・担当割当は `docs/betting_workflow_issues.md` に一元化**（2026-07-18策定）。
 担当モデル（Sonnet/Opus/Fable/人間）とエスカレーションルールも同ドキュメント参照。
 
+### 進行中・今後のタスク（2026-09-11時点）
+
 | ユーザーの指示 | 内容 | 担当 | 前提条件 |
 |---|---|---|---|
-| 「Issue #1 やって」 | JRA公式払戻スクレイパー実装（scrape_jra_payouts.py） | Sonnet | なし（次のアクション） |
-| 「Issue #2 やって」 | 3連複の事前登録検証（過去80日分） | Opus | Issue #1合格 |
-| 「Issue #3 やって」 | ペーパートレード台帳（paper_trade.py） | Sonnet | Issue #1合格 |
-| 「Issue #N レビューして」 | featureブランチを受入基準でレビュー→合否判定 | Fable | 該当Issueの実装完了 |
-| 「月次レポートやって」 | ペーパートレード累積成績+90日到達予測の更新 | Fable | Issue #3合格後・毎月初 |
+| 「払戻バックフィルやって」 | `scrape_jra_payouts.py --all` を分割実行（残り約14日分） | Sonnet | なし（**次のアクション**） |
+| 「月次レポートやって」 | 払戻バックフィル→`paper_trade.py settle --all`→累積成績+90日到達予測 | Fable | 毎月初 |
 | 「Phase Bやって」 | スコア確率化 + EVフィルターのバックテスト | Fable | クリーンデータ90日以上（2027-01末頃） |
 | 「Phase Cやって」 | 損益分岐オッズ表示のUI実装 | Sonnet | Phase Bが採用基準クリア |
+| 「Aやって」 | 血統辞典条件の過去データ照合（下記「プランA」） | — | 未着手 |
+| 「Issue #N やって/レビューして」 | 新規Issueの実装・レビュー | 同ドキュメント参照 | — |
 
-- Phase A（オッズ保存）は**完了**（実装2026-07-06・確認2026-07-18合格・オッズ取得率100%）。
-  `pickup_scores.json` に `odds_map`（レース単位）と `today_odds`（scored各馬）が保存される（2026-07-11以降）
+### 完了済み
+
+| Issue | 内容 | 結果 |
+|---|---|---|
+| #1 | JRA公式払戻スクレイパー | ✅ 2026-08-08 レビュー合格 |
+| #2 | 3連複の事前登録検証 | ✅ 2026-08-10 **3連複は基準未達→不採用で終了**（回収率64.4%/53.2%） |
+| #3 | ペーパートレード台帳 `paper_trade.py` | ✅ 2026-09-10 マージ済み。**20260912から前向き記録を開始** |
+| #4 | Phase A（オッズ保存） | ✅ 2026-07-18 合格・オッズ取得率100% |
+
+- Phase A により `pickup_scores.json` に `odds_map`（レース単位）と `today_odds`（scored各馬）が保存される（2026-07-11以降）
+- ペーパートレードは `run.sh` 末尾で `paper_trade.py generate` が自動実行される。
+  精算は払戻データ取得後に手動で `python3 paper_trade.py settle --all`（cron未組み込み）
+- `PAPER_TRADE_START = 20260912` は事前登録値。**データを見た後に動かさない**
 - 実銭での馬券購入は常に人間が行う（AIは判断材料の提示まで）
 - 事前登録した閾値・判定基準をデータを見た後に動かすのは禁止（多重検定回避）
 
