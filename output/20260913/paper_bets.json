@@ -1,0 +1,113 @@
+{
+ "date": "20260913",
+ "generated_at": "2026-09-12T17:25:56+09:00",
+ "settled": false,
+ "races": {
+  "中山12R": {
+   "axis_num": 4,
+   "axis_name": "ジェイエルモーダル",
+   "score": 10,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "4": 100
+     },
+     "cost": 100
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "4": 100
+     },
+     "cost": 100
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 12,
+     "bets": {
+      "4-12": 100
+     },
+     "cost": 100
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      3,
+      11,
+      12
+     ],
+     "bets": {
+      "3-4-11": 100,
+      "3-4-12": 100,
+      "4-11-12": 100
+     },
+     "cost": 300
+    }
+   }
+  },
+  "阪神9R": {
+   "axis_num": 3,
+   "axis_name": "サンライズバブル",
+   "score": 8,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "3": 100
+     },
+     "cost": 100
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "3": 100
+     },
+     "cost": 100
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 10,
+     "bets": {
+      "3-10": 100
+     },
+     "cost": 100
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      5,
+      6,
+      10,
+      11
+     ],
+     "bets": {
+      "3-5-6": 100,
+      "3-5-10": 100,
+      "3-5-11": 100,
+      "3-6-10": 100,
+      "3-6-11": 100,
+      "3-10-11": 100
+     },
+     "cost": 600
+    }
+   }
+  }
+ },
+ "skipped_races": {
+  "中山10R": "no_axis(score<8 or unscored)",
+  "中山8R": "no_axis(score<8 or unscored)",
+  "中山9R": "no_axis(score<8 or unscored)",
+  "阪神10R": "no_axis(score<8 or unscored)",
+  "阪神12R": "no_axis(score<8 or unscored)",
+  "阪神8R": "no_axis(score<8 or unscored)"
+ }
+}
