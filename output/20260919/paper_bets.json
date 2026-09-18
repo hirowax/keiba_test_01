@@ -1,0 +1,122 @@
+{
+ "date": "20260919",
+ "generated_at": "2026-09-19T05:14:16+09:00",
+ "settled": false,
+ "races": {
+  "中山7R": {
+   "axis_num": 2,
+   "axis_name": "ステイアンビシャス",
+   "score": 9,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "2": 100
+     },
+     "cost": 100
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "2": 100
+     },
+     "cost": 100
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 3,
+     "bets": {
+      "2-3": 100
+     },
+     "cost": 100
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      3,
+      5,
+      11,
+      13
+     ],
+     "bets": {
+      "2-3-5": 100,
+      "2-3-11": 100,
+      "2-3-13": 100,
+      "2-5-11": 100,
+      "2-5-13": 100,
+      "2-11-13": 100
+     },
+     "cost": 600
+    }
+   }
+  },
+  "阪神7R": {
+   "axis_num": 8,
+   "axis_name": "タガノアルトゥーラ",
+   "score": 8,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "8": 100
+     },
+     "cost": 100
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "8": 100
+     },
+     "cost": 100
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 7,
+     "bets": {
+      "7-8": 100
+     },
+     "cost": 100
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      3,
+      6,
+      7,
+      9,
+      12
+     ],
+     "bets": {
+      "3-6-8": 100,
+      "3-7-8": 100,
+      "3-8-9": 100,
+      "3-8-12": 100,
+      "6-7-8": 100,
+      "6-8-9": 100,
+      "6-8-12": 100,
+      "7-8-9": 100,
+      "7-8-12": 100,
+      "8-9-12": 100
+     },
+     "cost": 1000
+    }
+   }
+  }
+ },
+ "skipped_races": {
+  "中山10R": "no_axis(score<8 or unscored)",
+  "中山8R": "no_axis(score<8 or unscored)",
+  "阪神11R": "no_axis(score<8 or unscored)",
+  "阪神12R": "no_axis(score<8 or unscored)",
+  "阪神4R": "no_axis(score<8 or unscored)",
+  "阪神9R": "no_axis(score<8 or unscored)"
+ }
+}
