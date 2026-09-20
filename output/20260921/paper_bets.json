@@ -1,0 +1,64 @@
+{
+ "date": "20260921",
+ "generated_at": "2026-09-20T17:15:01+09:00",
+ "settled": false,
+ "races": {
+  "阪神8R": {
+   "axis_num": 3,
+   "axis_name": "ロードアルディート",
+   "score": 9,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "3": 100
+     },
+     "cost": 100
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "3": 100
+     },
+     "cost": 100
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 10,
+     "bets": {
+      "3-10": 100
+     },
+     "cost": 100
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      2,
+      6,
+      8,
+      10
+     ],
+     "bets": {
+      "2-3-6": 100,
+      "2-3-8": 100,
+      "2-3-10": 100,
+      "3-6-8": 100,
+      "3-6-10": 100,
+      "3-8-10": 100
+     },
+     "cost": 600
+    }
+   }
+  }
+ },
+ "skipped_races": {
+  "阪神10R": "no_axis(score<8 or unscored)",
+  "阪神11R": "no_axis(score<8 or unscored)",
+  "阪神7R": "no_axis(score<8 or unscored)",
+  "阪神9R": "no_axis(score<8 or unscored)"
+ }
+}
