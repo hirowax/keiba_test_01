@@ -1,0 +1,14 @@
+{
+ "date": "20260922",
+ "generated_at": "2026-09-21T20:24:21+09:00",
+ "settled": false,
+ "races": {},
+ "skipped_races": {
+  "中山10R": "no_axis(score<8 or unscored)",
+  "中山12R": "no_axis(score<8 or unscored)",
+  "中山1R": "no_axis(score<8 or unscored)",
+  "中山7R": "no_axis(score<8 or unscored)",
+  "中山8R": "no_axis(score<8 or unscored)",
+  "中山9R": "no_axis(score<8 or unscored)"
+ }
+}
