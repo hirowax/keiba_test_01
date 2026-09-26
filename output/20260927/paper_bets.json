@@ -1,0 +1,17 @@
+{
+ "date": "20260927",
+ "generated_at": "2026-09-26T17:28:14+09:00",
+ "settled": false,
+ "races": {},
+ "skipped_races": {
+  "中山6R": "no_axis(score<8 or unscored)",
+  "中山7R": "no_axis(score<8 or unscored)",
+  "中山8R": "no_axis(score<8 or unscored)",
+  "阪神10R": "no_axis(score<8 or unscored)",
+  "阪神12R": "no_axis(score<8 or unscored)",
+  "阪神1R": "no_axis(score<8 or unscored)",
+  "阪神7R": "no_axis(score<8 or unscored)",
+  "阪神8R": "no_axis(score<8 or unscored)",
+  "阪神9R": "no_axis(score<8 or unscored)"
+ }
+}
