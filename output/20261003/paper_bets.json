@@ -1,0 +1,73 @@
+{
+ "date": "20261003",
+ "generated_at": "2026-10-02T17:27:51+09:00",
+ "settled": false,
+ "races": {
+  "京都8R": {
+   "axis_num": 6,
+   "axis_name": "サミダレナイツ",
+   "score": 9,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "6": 100
+     },
+     "cost": 100
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "6": 100
+     },
+     "cost": 100
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 5,
+     "bets": {
+      "5-6": 100
+     },
+     "cost": 100
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      2,
+      4,
+      5,
+      9,
+      11
+     ],
+     "bets": {
+      "2-4-6": 100,
+      "2-5-6": 100,
+      "2-6-9": 100,
+      "2-6-11": 100,
+      "4-5-6": 100,
+      "4-6-9": 100,
+      "4-6-11": 100,
+      "5-6-9": 100,
+      "5-6-11": 100,
+      "6-9-11": 100
+     },
+     "cost": 1000
+    }
+   }
+  }
+ },
+ "skipped_races": {
+  "京都11R": "no_axis(score<8 or unscored)",
+  "京都12R": "no_axis(score<8 or unscored)",
+  "京都3R": "no_axis(score<8 or unscored)",
+  "京都7R": "no_axis(score<8 or unscored)",
+  "東京6R": "no_axis(score<8 or unscored)",
+  "東京7R": "no_axis(score<8 or unscored)",
+  "東京8R": "no_axis(score<8 or unscored)",
+  "東京9R": "no_axis(score<8 or unscored)"
+ }
+}
