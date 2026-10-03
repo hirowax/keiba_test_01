@@ -6132,13 +6132,13 @@
     "scraped_at": "20260404"
   },
   "2023103761": {
-    "prev_date": "2026/03/08",
-    "prev_pop": "4",
-    "prev_rank": "4",
-    "prev_idx": "**",
-    "prev_idx_m": "**",
+    "prev_date": "2026/07/11",
+    "prev_pop": "7",
+    "prev_rank": "11",
+    "prev_idx": "63",
+    "prev_idx_m": "63",
     "prev_dist": "芝1800",
-    "scraped_at": "20260404"
+    "scraped_at": "20261004"
   },
   "2023106941": {
     "prev_date": "2026/02/14",
@@ -10089,13 +10089,13 @@
     "scraped_at": "20260322"
   },
   "2022101389": {
-    "prev_date": "2026/02/21",
-    "prev_pop": "2",
-    "prev_rank": "1",
-    "prev_idx": "85",
-    "prev_idx_m": "85",
-    "prev_dist": "ダ1800",
-    "scraped_at": "20260111"
+    "prev_date": "2026/07/12",
+    "prev_pop": "6",
+    "prev_rank": "5",
+    "prev_idx": "91",
+    "prev_idx_m": "91",
+    "prev_dist": "ダ1700",
+    "scraped_at": "20261004"
   },
   "2022103911": {
     "prev_date": "2026/02/15",
@@ -19353,7 +19353,13 @@
     "scraped_at": "20260426"
   },
   "2018104708": {
-    "scraped_at": "20260426"
+    "prev_date": "2026/06/07",
+    "prev_pop": "17",
+    "prev_rank": "16",
+    "prev_idx": "90",
+    "prev_idx_m": "90",
+    "prev_dist": "芝1600",
+    "scraped_at": "20261004"
   },
   "2021105700": {
     "prev_date": "2026/02/22",
@@ -39729,13 +39735,13 @@
     "scraped_at": "20260405"
   },
   "2019102632": {
-    "prev_date": "2026/03/01",
-    "prev_pop": "1",
-    "prev_rank": "12",
-    "prev_idx": "**",
-    "prev_idx_m": "**",
-    "prev_dist": "芝1800",
-    "scraped_at": "20260405"
+    "prev_date": "2026/06/07",
+    "prev_pop": "6",
+    "prev_rank": "4",
+    "prev_idx": "103",
+    "prev_idx_m": "103",
+    "prev_dist": "芝1600",
+    "scraped_at": "20261004"
   },
   "2019104878": {
     "prev_date": "2025/12/06",
@@ -42355,5 +42361,14 @@
     "prev_idx_m": "44",
     "prev_dist": "ダ1700",
     "scraped_at": "20261003"
+  },
+  "2019104675": {
+    "prev_date": "2026/08/09",
+    "prev_pop": "3",
+    "prev_rank": "2",
+    "prev_idx": "",
+    "prev_idx_m": "",
+    "prev_dist": "障3000",
+    "scraped_at": "20261004"
   }
 }
