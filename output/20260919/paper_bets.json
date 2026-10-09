@@ -1,7 +1,7 @@
 {
  "date": "20260919",
  "generated_at": "2026-09-19T05:14:16+09:00",
- "settled": false,
+ "settled": true,
  "races": {
   "中山7R": {
    "axis_num": 2,
@@ -14,7 +14,9 @@
      "bets": {
       "2": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 0,
+     "hit": false
     },
     "M2": {
      "name": "◎単勝",
@@ -22,7 +24,9 @@
      "bets": {
       "2": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 0,
+     "hit": false
     },
     "M3": {
      "name": "◎-○ワイド",
@@ -31,7 +35,9 @@
      "bets": {
       "2-3": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 0,
+     "hit": false
     },
     "M4": {
      "name": "◎軸3連複(紐2頭流し)",
@@ -50,7 +56,9 @@
       "2-5-13": 100,
       "2-11-13": 100
      },
-     "cost": 600
+     "cost": 600,
+     "return": 0,
+     "hit": false
     }
    }
   },
@@ -65,7 +73,9 @@
      "bets": {
       "8": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 0,
+     "hit": false
     },
     "M2": {
      "name": "◎単勝",
@@ -73,7 +83,9 @@
      "bets": {
       "8": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 0,
+     "hit": false
     },
     "M3": {
      "name": "◎-○ワイド",
@@ -82,7 +94,9 @@
      "bets": {
       "7-8": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 0,
+     "hit": false
     },
     "M4": {
      "name": "◎軸3連複(紐2頭流し)",
@@ -106,7 +120,9 @@
       "7-8-12": 100,
       "8-9-12": 100
      },
-     "cost": 1000
+     "cost": 1000,
+     "return": 0,
+     "hit": false
     }
    }
   }
@@ -118,5 +134,6 @@
   "阪神12R": "no_axis(score<8 or unscored)",
   "阪神4R": "no_axis(score<8 or unscored)",
   "阪神9R": "no_axis(score<8 or unscored)"
- }
+ },
+ "settled_at": "2026-10-09T17:16:06+09:00"
 }

@@ -1,7 +1,7 @@
 {
  "date": "20261004",
  "generated_at": "2026-10-03T17:29:04+09:00",
- "settled": false,
+ "settled": true,
  "races": {},
  "skipped_races": {
   "京都10R": "no_axis(score<8 or unscored)",
@@ -11,5 +11,6 @@
   "東京11R": "no_axis(score<8 or unscored)",
   "東京4R": "no_axis(score<8 or unscored)",
   "東京7R": "no_axis(score<8 or unscored)"
- }
+ },
+ "settled_at": "2026-10-09T17:16:06+09:00"
 }
