@@ -1,0 +1,71 @@
+{
+ "date": "20261010",
+ "generated_at": "2026-10-09T17:29:07+09:00",
+ "settled": false,
+ "races": {
+  "東京9R": {
+   "axis_num": 7,
+   "axis_name": "ジュンツバメガエシ",
+   "score": 10,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "7": 100
+     },
+     "cost": 100
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "7": 100
+     },
+     "cost": 100
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 3,
+     "bets": {
+      "3-7": 100
+     },
+     "cost": 100
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      2,
+      3,
+      6,
+      8,
+      9
+     ],
+     "bets": {
+      "2-3-7": 100,
+      "2-6-7": 100,
+      "2-7-8": 100,
+      "2-7-9": 100,
+      "3-6-7": 100,
+      "3-7-8": 100,
+      "3-7-9": 100,
+      "6-7-8": 100,
+      "6-7-9": 100,
+      "7-8-9": 100
+     },
+     "cost": 1000
+    }
+   }
+  }
+ },
+ "skipped_races": {
+  "京都12R": "no_axis(score<8 or unscored)",
+  "京都7R": "no_axis(score<8 or unscored)",
+  "京都9R": "no_axis(score<8 or unscored)",
+  "東京10R": "no_axis(score<8 or unscored)",
+  "東京7R": "no_axis(score<8 or unscored)",
+  "東京8R": "no_axis(score<8 or unscored)"
+ }
+}
