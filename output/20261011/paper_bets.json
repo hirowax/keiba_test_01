@@ -1,0 +1,18 @@
+{
+ "date": "20261011",
+ "generated_at": "2026-10-10T23:06:39+09:00",
+ "settled": false,
+ "races": {},
+ "skipped_races": {
+  "京都10R": "no_axis(score<8 or unscored)",
+  "京都6R": "no_axis(score<8 or unscored)",
+  "京都8R": "no_axis(score<8 or unscored)",
+  "東京10R": "no_axis(score<8 or unscored)",
+  "東京11R": "no_axis(score<8 or unscored)",
+  "東京12R": "no_axis(score<8 or unscored)",
+  "東京6R": "no_axis(score<8 or unscored)",
+  "東京7R": "no_axis(score<8 or unscored)",
+  "東京8R": "no_axis(score<8 or unscored)",
+  "東京9R": "no_axis(score<8 or unscored)"
+ }
+}
