@@ -1,0 +1,130 @@
+{
+ "date": "20261017",
+ "generated_at": "2026-10-16T19:21:00+09:00",
+ "settled": false,
+ "races": {
+  "京都7R": {
+   "axis_num": 4,
+   "axis_name": "ココロヅヨサ",
+   "score": 11,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "4": 100
+     },
+     "cost": 100
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "4": 100
+     },
+     "cost": 100
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 8,
+     "bets": {
+      "4-8": 100
+     },
+     "cost": 100
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      1,
+      2,
+      3,
+      5,
+      8,
+      9
+     ],
+     "bets": {
+      "1-2-4": 100,
+      "1-3-4": 100,
+      "1-4-5": 100,
+      "1-4-8": 100,
+      "1-4-9": 100,
+      "2-3-4": 100,
+      "2-4-5": 100,
+      "2-4-8": 100,
+      "2-4-9": 100,
+      "3-4-5": 100,
+      "3-4-8": 100,
+      "3-4-9": 100,
+      "4-5-8": 100,
+      "4-5-9": 100,
+      "4-8-9": 100
+     },
+     "cost": 1500
+    }
+   }
+  },
+  "東京7R": {
+   "axis_num": 5,
+   "axis_name": "タイセイリアル",
+   "score": 10,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "5": 100
+     },
+     "cost": 100
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "5": 100
+     },
+     "cost": 100
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 10,
+     "bets": {
+      "5-10": 100
+     },
+     "cost": 100
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      2,
+      6,
+      7,
+      10
+     ],
+     "bets": {
+      "2-5-6": 100,
+      "2-5-7": 100,
+      "2-5-10": 100,
+      "5-6-7": 100,
+      "5-6-10": 100,
+      "5-7-10": 100
+     },
+     "cost": 600
+    }
+   }
+  }
+ },
+ "skipped_races": {
+  "京都12R": "no_axis(score<8 or unscored)",
+  "新潟10R": "no_axis(score<8 or unscored)",
+  "新潟12R": "no_axis(score<8 or unscored)",
+  "新潟3R": "no_axis(score<8 or unscored)",
+  "新潟4R": "no_axis(score<8 or unscored)",
+  "東京10R": "no_axis(score<8 or unscored)",
+  "東京11R": "no_axis(score<8 or unscored)",
+  "東京8R": "no_axis(score<8 or unscored)"
+ }
+}
