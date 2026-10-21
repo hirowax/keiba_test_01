@@ -1,7 +1,7 @@
 {
  "date": "20261018",
  "generated_at": "2026-10-17T18:48:10+09:00",
- "settled": false,
+ "settled": true,
  "races": {
   "京都10R": {
    "axis_num": 4,
@@ -14,7 +14,9 @@
      "bets": {
       "4": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 150,
+     "hit": true
     },
     "M2": {
      "name": "◎単勝",
@@ -22,7 +24,9 @@
      "bets": {
       "4": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 0,
+     "hit": false
     },
     "M3": {
      "name": "◎-○ワイド",
@@ -31,7 +35,9 @@
      "bets": {
       "4-8": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 370,
+     "hit": true
     },
     "M4": {
      "name": "◎軸3連複(紐2頭流し)",
@@ -50,7 +56,9 @@
       "4-5-8": 100,
       "4-7-8": 100
      },
-     "cost": 600
+     "cost": 600,
+     "return": 0,
+     "hit": false
     }
    }
   },
@@ -65,7 +73,9 @@
      "bets": {
       "3": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 110,
+     "hit": true
     },
     "M2": {
      "name": "◎単勝",
@@ -73,7 +83,9 @@
      "bets": {
       "3": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 260,
+     "hit": true
     },
     "M3": {
      "name": "◎-○ワイド",
@@ -82,7 +94,9 @@
      "bets": {
       "2-3": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 210,
+     "hit": true
     },
     "M4": {
      "name": "◎軸3連複(紐2頭流し)",
@@ -101,7 +115,9 @@
       "2-3-8": 100,
       "3-5-8": 100
      },
-     "cost": 600
+     "cost": 600,
+     "return": 380,
+     "hit": true
     }
    }
   },
@@ -116,7 +132,9 @@
      "bets": {
       "8": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 0,
+     "hit": false
     },
     "M2": {
      "name": "◎単勝",
@@ -124,7 +142,9 @@
      "bets": {
       "8": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 0,
+     "hit": false
     },
     "M3": {
      "name": "◎-○ワイド",
@@ -133,7 +153,9 @@
      "bets": {
       "8-9": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 0,
+     "hit": false
     },
     "M4": {
      "name": "◎軸3連複(紐2頭流し)",
@@ -148,7 +170,9 @@
       "5-8-9": 100,
       "6-8-9": 100
      },
-     "cost": 300
+     "cost": 300,
+     "return": 0,
+     "hit": false
     }
    }
   }
@@ -165,5 +189,6 @@
   "東京7R": "no_axis(score<8 or unscored)",
   "東京8R": "no_axis(score<8 or unscored)",
   "東京9R": "no_axis(score<8 or unscored)"
- }
+ },
+ "settled_at": "2026-10-21T10:37:31+09:00"
 }

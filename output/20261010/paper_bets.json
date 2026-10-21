@@ -1,7 +1,7 @@
 {
  "date": "20261010",
  "generated_at": "2026-10-09T17:29:07+09:00",
- "settled": false,
+ "settled": true,
  "races": {
   "東京9R": {
    "axis_num": 7,
@@ -14,7 +14,9 @@
      "bets": {
       "7": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 0,
+     "hit": false
     },
     "M2": {
      "name": "◎単勝",
@@ -22,7 +24,9 @@
      "bets": {
       "7": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 0,
+     "hit": false
     },
     "M3": {
      "name": "◎-○ワイド",
@@ -31,7 +35,9 @@
      "bets": {
       "3-7": 100
      },
-     "cost": 100
+     "cost": 100,
+     "return": 0,
+     "hit": false
     },
     "M4": {
      "name": "◎軸3連複(紐2頭流し)",
@@ -55,7 +61,9 @@
       "6-7-9": 100,
       "7-8-9": 100
      },
-     "cost": 1000
+     "cost": 1000,
+     "return": 0,
+     "hit": false
     }
    }
   }
@@ -67,5 +75,6 @@
   "東京10R": "no_axis(score<8 or unscored)",
   "東京7R": "no_axis(score<8 or unscored)",
   "東京8R": "no_axis(score<8 or unscored)"
- }
+ },
+ "settled_at": "2026-10-21T10:37:31+09:00"
 }
