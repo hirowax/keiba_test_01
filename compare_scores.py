@@ -25,6 +25,15 @@ def load_scored(path):
     return result
 
 
+def _mark(rank) -> str:
+    """着順マーク。結果行がない馬（取消等）は rank が "?" になるため数値化して判定する"""
+    try:
+        r = int(rank)
+    except (TypeError, ValueError):
+        return "－"
+    return "◎" if r == 1 else ("○" if r <= 3 else "×")
+
+
 def load_results(date):
     rr_path = OUTPUT_DIR / date / "race_results.json"
     if not rr_path.exists():
@@ -114,7 +123,7 @@ def main():
             rank = r.get("rank", "?")
             odds = r.get("odds", 0)
             pop = r.get("pop", 0)
-            result = "◎" if rank == 1 else ("○" if rank and rank <= 3 else "×")
+            result = _mark(rank)
             print(f"    {k[0]} {k[1]:<10} {all_new[k].get('馬名',''):<12} "
                   f"旧{old_s}→新{new_s}pt  {pop}人気 {rank}着 {odds}倍 {result}")
 
@@ -127,7 +136,7 @@ def main():
             rank = r.get("rank", "?")
             odds = r.get("odds", 0)
             pop = r.get("pop", 0)
-            result = "◎" if rank == 1 else ("○" if rank and rank <= 3 else "×")
+            result = _mark(rank)
             print(f"    {k[0]} {k[1]:<10} {all_old[k].get('馬名',''):<12} "
                   f"旧{old_s}→新{new_s}pt  {pop}人気 {rank}着 {odds}倍 {result}")
 
