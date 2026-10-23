@@ -30,8 +30,7 @@
               "pts": 1
             }
           ],
-          "today_pop": "3",
-          "today_odds": ""
+          "today_pop": "3"
         }
       ],
       "anaba": [],
@@ -102,13 +101,9 @@
           "当該距離順位": "1位",
           "当該コース指数": 66.0,
           "当該コース順位": "1位",
-          "score": 9,
+          "score": 7,
           "rank": "★★★",
           "breakdown": [
-            {
-              "label": "3指数すべて1位",
-              "pts": 1
-            },
             {
               "label": "各データ上位3頭 2カテゴリー",
               "pts": 2
@@ -122,16 +117,15 @@
               "pts": 1
             },
             {
-              "label": "前走指数76(70以上) + 前走指数レース内1位(76)",
-              "pts": 3
+              "label": "前走指数76(70以上)",
+              "pts": 1
             },
             {
               "label": "中4週以内(15日)",
-              "pts": 1
+              "pts": 2
             }
           ],
-          "today_pop": "2",
-          "today_odds": ""
+          "today_pop": "2"
         },
         {
           "開催場": "京都",
@@ -152,8 +146,7 @@
               "pts": 1
             }
           ],
-          "today_pop": "1",
-          "today_odds": ""
+          "today_pop": "1"
         }
       ],
       "anaba": [
@@ -225,13 +218,9 @@
           "当該距離順位": "1位",
           "当該コース指数": 77.0,
           "当該コース順位": "1位",
-          "score": 7,
+          "score": 6,
           "rank": "★★★",
           "breakdown": [
-            {
-              "label": "3指数すべて1位",
-              "pts": 1
-            },
             {
               "label": "各データ上位3頭 2カテゴリー",
               "pts": 2
@@ -249,8 +238,7 @@
               "pts": 1
             }
           ],
-          "today_pop": "2",
-          "today_odds": ""
+          "today_pop": "2"
         },
         {
           "開催場": "京都",
@@ -266,8 +254,7 @@
           "score": 0,
           "rank": "－",
           "breakdown": [],
-          "today_pop": "5",
-          "today_odds": ""
+          "today_pop": "5"
         }
       ],
       "anaba": [],
@@ -347,8 +334,7 @@
               "pts": 4
             }
           ],
-          "today_pop": "5",
-          "today_odds": ""
+          "today_pop": "5"
         },
         {
           "開催場": "京都",
@@ -361,13 +347,9 @@
           "当該距離順位": "1位",
           "当該コース指数": 82.0,
           "当該コース順位": "1位",
-          "score": 3,
-          "rank": "★★",
+          "score": 2,
+          "rank": "★",
           "breakdown": [
-            {
-              "label": "3指数すべて1位",
-              "pts": 1
-            },
             {
               "label": "データ分析ピックアップ3頭",
               "pts": 1
@@ -377,8 +359,7 @@
               "pts": 1
             }
           ],
-          "today_pop": "2",
-          "today_odds": ""
+          "today_pop": "2"
         }
       ],
       "anaba": [],
@@ -448,8 +429,7 @@
               "pts": 2
             }
           ],
-          "today_pop": "1",
-          "today_odds": ""
+          "today_pop": "1"
         },
         {
           "開催場": "新潟",
@@ -465,8 +445,7 @@
           "score": 0,
           "rank": "－",
           "breakdown": [],
-          "today_pop": "7",
-          "today_odds": ""
+          "today_pop": "7"
         }
       ],
       "anaba": [],
@@ -540,8 +519,7 @@
           "score": 0,
           "rank": "－",
           "breakdown": [],
-          "today_pop": "4",
-          "today_odds": ""
+          "today_pop": "4"
         }
       ],
       "anaba": [],
@@ -608,13 +586,9 @@
           "当該距離順位": "1位",
           "当該コース指数": 88.0,
           "当該コース順位": "1位",
-          "score": 5,
-          "rank": "★★★",
+          "score": 4,
+          "rank": "★★",
           "breakdown": [
-            {
-              "label": "3指数すべて1位",
-              "pts": 1
-            },
             {
               "label": "各データ上位3頭 4カテゴリー",
               "pts": 2
@@ -624,8 +598,7 @@
               "pts": 2
             }
           ],
-          "today_pop": "1",
-          "today_odds": ""
+          "today_pop": "1"
         }
       ],
       "anaba": [],
@@ -722,8 +695,7 @@
               "pts": 1
             }
           ],
-          "today_pop": "1",
-          "today_odds": ""
+          "today_pop": "1"
         }
       ],
       "anaba": [],
@@ -787,8 +759,8 @@
           "当該距離順位": "2位",
           "当該コース指数": 107.0,
           "当該コース順位": "2位",
-          "score": 4,
-          "rank": "★★",
+          "score": 5,
+          "rank": "★★★",
           "breakdown": [
             {
               "label": "各データ上位3頭 1カテゴリー",
@@ -801,14 +773,9 @@
             {
               "label": "前走指数93(90以上) + 前走指数レース内1位(93) + (合算上限3pt)",
               "pts": 3
-            },
-            {
-              "label": "距離延長(1800m→2100m)",
-              "pts": -1
             }
           ],
-          "today_pop": "1",
-          "today_odds": ""
+          "today_pop": "1"
         }
       ],
       "anaba": [],
@@ -877,7 +844,7 @@
           "当該距離順位": "1位",
           "当該コース指数": 92.0,
           "当該コース順位": "2位",
-          "score": 6,
+          "score": 8,
           "rank": "★★★",
           "breakdown": [
             {
@@ -894,15 +861,10 @@
             },
             {
               "label": "中4週以内(22日)",
-              "pts": 1
-            },
-            {
-              "label": "距離延長(1200m→1300m)",
-              "pts": -1
+              "pts": 2
             }
           ],
-          "today_pop": "1",
-          "today_odds": ""
+          "today_pop": "1"
         }
       ],
       "anaba": [],
@@ -968,20 +930,15 @@
           "当該距離順位": "1位",
           "当該コース指数": 68.0,
           "当該コース順位": "1位",
-          "score": 2,
+          "score": 1,
           "rank": "★",
           "breakdown": [
-            {
-              "label": "3指数すべて1位",
-              "pts": 1
-            },
             {
               "label": "各データ上位3頭 1カテゴリー",
               "pts": 1
             }
           ],
-          "today_pop": "2",
-          "today_odds": ""
+          "today_pop": "2"
         }
       ],
       "anaba": [],
@@ -1048,13 +1005,9 @@
           "当該距離順位": "1位",
           "当該コース指数": 72.0,
           "当該コース順位": "1位",
-          "score": 5,
-          "rank": "★★★",
+          "score": 4,
+          "rank": "★★",
           "breakdown": [
-            {
-              "label": "3指数すべて1位",
-              "pts": 1
-            },
             {
               "label": "各データ上位3頭 2カテゴリー",
               "pts": 2
@@ -1064,8 +1017,7 @@
               "pts": 2
             }
           ],
-          "today_pop": "1",
-          "today_odds": ""
+          "today_pop": "1"
         },
         {
           "開催場": "東京",
@@ -1090,8 +1042,7 @@
               "pts": 2
             }
           ],
-          "today_pop": "8",
-          "today_odds": ""
+          "today_pop": "8"
         }
       ],
       "anaba": [],
@@ -1180,8 +1131,7 @@
               "pts": 3
             }
           ],
-          "today_pop": "3",
-          "today_odds": ""
+          "today_pop": "3"
         }
       ],
       "anaba": [],
@@ -1256,8 +1206,7 @@
               "pts": 1
             }
           ],
-          "today_pop": "2",
-          "today_odds": ""
+          "today_pop": "2"
         }
       ],
       "anaba": [],
@@ -1335,8 +1284,7 @@
               "pts": 2
             }
           ],
-          "today_pop": "3",
-          "today_odds": ""
+          "today_pop": "3"
         }
       ],
       "anaba": [],
@@ -1418,8 +1366,7 @@
               "pts": 1
             }
           ],
-          "today_pop": "4",
-          "today_odds": ""
+          "today_pop": "4"
         }
       ],
       "anaba": [],
@@ -1507,8 +1454,7 @@
               "pts": 1
             }
           ],
-          "today_pop": "5",
-          "today_odds": ""
+          "today_pop": "5"
         },
         {
           "開催場": "東京",
@@ -1541,8 +1487,7 @@
               "pts": 1
             }
           ],
-          "today_pop": "3",
-          "today_odds": ""
+          "today_pop": "3"
         }
       ],
       "anaba": [],
@@ -1590,6 +1535,6 @@
       "advice": null
     }
   },
-  "scoring_version": "v6",
-  "rescored_at": "2026-10-23T18:09:44.815733"
+  "scoring_version": "v5",
+  "rescored_at": "2026-06-25T17:41:14.848360"
 }
