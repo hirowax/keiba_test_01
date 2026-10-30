@@ -27,10 +27,12 @@ report の集計も PAPER_TRADE_START 以降に限定する（開催前バック
   python3 paper_trade.py generate --all      # 同上を対象日全部に
   python3 paper_trade.py settle YYYYMMDD     # 1日分を精算
   python3 paper_trade.py settle --all        # payouts_jra.jsonが揃う全日付を精算
+                                             #  （無効レース・払戻欠け・結果に馬番が無いメニューは精算しない）
   python3 paper_trade.py report              # メニュー別の累積成績表（PAPER_TRADE_START以降のみ）
 """
 import argparse
 import json
+from collections import Counter
 from datetime import datetime
 from itertools import combinations
 from pathlib import Path
@@ -195,11 +197,17 @@ def cmd_generate(args):
 
 # ── settle ──────────────────────────────────────────────────
 
+def menu_horse_nums(menu: dict) -> set:
+    """メニューの買い目に出てくる馬番（文字列）の集合"""
+    return {n for key in menu.get("bets", {}) for n in str(key).split("-")}
+
+
 def settle_menu(menu: dict, race_payout: dict) -> dict:
-    """1メニュー分を精算し return/hit を書き込んで返す"""
+    """1メニュー分を精算し return/hit/status を書き込んで返す（払戻・出走の確認は呼び出し側）"""
     if not menu.get("bets"):
         menu["return"] = 0
         menu["hit"] = False
+        menu["status"] = "no_bet"
         return menu
 
     mtype = menu["type"]
@@ -229,10 +237,33 @@ def settle_menu(menu: dict, race_payout: dict) -> dict:
 
     menu["return"] = ret
     menu["hit"] = hit
+    menu["status"] = "settled"
     return menu
 
 
+def mark_unsettled(menu: dict, status: str, reason: str) -> dict:
+    """精算できないメニュー。払戻0円・不的中として扱わないよう return/hit を消す"""
+    menu.pop("return", None)
+    menu.pop("hit", None)
+    menu["status"] = status
+    menu["unsettled_reason"] = reason
+    return menu
+
+
+def load_invalidated(date: str) -> dict:
+    """output/{date}/invalidated.json の無効レース {label: reason}。買い目ファイルは書き換えずにこちらで外す"""
+    inv = load_json(OUTPUT_DIR / date / "invalidated.json") or {}
+    return {label: r.get("reason", "") for label, r in inv.get("races", {}).items()}
+
+
 def settle_for_date(date: str) -> bool:
+    """1日分を精算する。次の場合は精算せず、理由を残す（払戻0円・不的中にしない）:
+    - 無効レース（invalidated.json）
+    - そのレースの払戻が payouts_jra.json に無い
+    - 買い目の馬番が結果データに無い（取消・除外・競走中止・失格のどれか。結果データは
+      着順が数字の馬しか保存しないため区別できない。返還の可能性があるので要確認として残す）
+    全レースが精算済み・無効・買い目なしのどれかになった日だけ settled=True にする。
+    """
     bets_path = OUTPUT_DIR / date / "paper_bets.json"
     bets = load_json(bets_path)
     if bets is None:
@@ -242,16 +273,42 @@ def settle_for_date(date: str) -> bool:
     if payouts is None:
         print(f"  {date}: payouts_jra.json なし → スキップ")
         return False
+    results = load_json(OUTPUT_DIR / date / "race_results.json")
+    if results is None:
+        print(f"  {date}: race_results.json なし（出走の確認ができない）→ スキップ")
+        return False
+    invalid = load_invalidated(date)
 
+    n_pending = 0
     for label, race in bets["races"].items():
-        race_payout = payouts.get(label, {})
+        if label in invalid:
+            race["void"] = invalid[label]
+            for menu in race["menus"].values():
+                mark_unsettled(menu, "void", invalid[label])
+            continue
+        race.pop("void", None)
+        race_payout = payouts.get(label)
+        runners = {str(h.get("num")) for h in results.get(label, [])}
         for menu in race["menus"].values():
-            settle_menu(menu, race_payout)
+            if not menu.get("bets"):
+                settle_menu(menu, {})
+            elif not race_payout or not race_payout.get("tansho"):
+                mark_unsettled(menu, "pending_no_payout", "このレースの払戻データが無い")
+                n_pending += 1
+            elif menu_horse_nums(menu) - runners:
+                missing = sorted(menu_horse_nums(menu) - runners, key=int)
+                mark_unsettled(menu, "pending_not_in_results",
+                               f"結果データに馬番{missing}が無い（取消・除外・競走中止・失格のいずれか。返還の可能性あり）")
+                n_pending += 1
+            else:
+                settle_menu(menu, race_payout)
 
-    bets["settled"] = True
+    bets["settled"] = n_pending == 0
     bets["settled_at"] = datetime.now().astimezone().isoformat(timespec="seconds")
     save_json(bets_path, bets)
-    print(f"  {date}: {len(bets['races'])}レース精算完了")
+    n_void = sum(1 for r in bets["races"].values() if r.get("void"))
+    print(f"  {date}: {len(bets['races'])}レース（無効{n_void}・未精算メニュー{n_pending}）"
+          + (" 精算完了" if bets["settled"] else " → 未精算あり"))
     return True
 
 
@@ -281,23 +338,45 @@ def cmd_report(args):
 
     per_menu = {k: [] for k in MENU_NAMES}  # menu -> list of (date, label, cost, return, hit)
     n_settled_dates = 0
+    voided = []                       # (date, label, reason)
+    pending = Counter()               # status -> メニュー数
     for date in dates:
         bets = load_json(OUTPUT_DIR / date / "paper_bets.json")
-        if not bets or not bets.get("settled"):
+        if not bets:
             continue
-        n_settled_dates += 1
+        if bets.get("settled"):
+            n_settled_dates += 1
+        invalid = load_invalidated(date)  # 精算前でも無効レースは集計から外す
         for label, race in bets["races"].items():
+            if label in invalid or race.get("void"):
+                voided.append((date, label, invalid.get(label) or race.get("void")))
+                continue
             for mkey, menu in race["menus"].items():
                 if menu.get("cost", 0) <= 0:
                     continue
-                per_menu[mkey].append((date, label, menu["cost"], menu.get("return", 0), menu.get("hit", False)))
+                if menu.get("status") != "settled":
+                    # 未精算・旧形式（status なし＝払戻欠けの確認前に精算したもの）は集計しない
+                    status = menu.get("status")
+                    if status is None:
+                        status = "settle_again" if bets.get("settled") else "not_settled_yet"
+                    pending[status] += 1
+                    continue
+                per_menu[mkey].append((date, label, menu["cost"], menu["return"], menu["hit"]))
 
     print("=" * 60)
     print("ペーパートレード累積成績（M1〜M4）")
     print("=" * 60)
     print(f"開始日: {PAPER_TRADE_START} 以降のみ集計")
     print(f"精算済み日数: {n_settled_dates} / 買い目生成済み日数: {len(dates)}")
-    if not n_settled_dates:
+    print(f"無効として集計から外したレース: {len(voided)}")
+    for date, label, reason in voided:
+        print(f"  {date} {label}: {reason}")
+    if pending:
+        labels = {"pending_no_payout": "払戻データ無し", "pending_not_in_results": "結果データに馬番無し（返還の可能性）",
+                  "settle_again": "旧形式の精算（settle を再実行すると集計される）",
+                  "not_settled_yet": "未精算（払戻の取得・settle 待ち）"}
+        print("集計に入れていない未精算メニュー: " + "、".join(f"{labels.get(k, k)} {v}" for k, v in pending.items()))
+    if not any(per_menu.values()):
         print("精算済みデータがありません（先に settle を実行してください）")
         return
 
