@@ -19,7 +19,7 @@ from scraper import (
     load_env, load_cookies, save_cookies, is_logged_in, login,
     get_race_ids, human_sleep, human_browse, _random_scroll, is_ip_blocked,
 )
-from race_pickup import scrape_shutuba, scrape_data_top, score_horses, SCORING_VERSION
+from race_pickup import scrape_shutuba, scrape_data_top, score_horses, SCORING_VERSION, COLLECTOR_VERSION
 
 logging.basicConfig(
     level=logging.INFO,
@@ -219,6 +219,13 @@ def main():
                         results[race_label] = {"error": "shutuba empty after retry"}
                         continue
 
+                # 馬番↔馬ID対応が検証できないレースはスコアリングしない（枠番誤認・欠損で別馬のデータが付くため）
+                if shutuba_data.get("map_issues"):
+                    logger.error(f"  {race_label}: 出馬表の対応検証NG {shutuba_data['map_issues']} (スキップ)")
+                    results[race_label] = {"error": "shutuba map invalid",
+                                           "map_issues": shutuba_data["map_issues"]}
+                    continue
+
                 human_sleep(4.0, 10.0)
                 data_top_data = scrape_data_top(page, race_id, shutuba_data["horse_map"])
                 human_sleep(4.0, 10.0)
@@ -318,6 +325,8 @@ def main():
                     "anaba": anaba_list,
                     "pop_map": shutuba_data.get("pop_map", {}),
                     "odds_map": shutuba_data.get("odds_map", {}),
+                    "odds_status": shutuba_data.get("odds_status", {}),
+                    "collector_version": COLLECTOR_VERSION,
                     "horse_id_map": horse_id_map,
                     "position_nums": shutuba_data["position_nums"],
                     "top3_hits": shutuba_data["top3_hits"],
@@ -368,7 +377,8 @@ def main():
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(
             {"date": date, "generated_at": datetime.now().isoformat(),
-             "scoring_version": SCORING_VERSION, "races": results},
+             "scoring_version": SCORING_VERSION, "collector_version": COLLECTOR_VERSION,
+             "races": results},
             f, ensure_ascii=False, indent=2, default=str
         )
 

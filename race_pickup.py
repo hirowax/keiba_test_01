@@ -65,6 +65,103 @@ def _extract_race_id(url: str) -> str:
     return m.group(1) if m else ""
 
 
+# ─── shutuba 出馬表テーブルのパース ──────────────────────────────
+# 収集ロジックの版: pickup_scores.json に埋め込む（スコア式の SCORING_VERSION とは別管理）
+# c1: 行内の最初の数字セル（=枠番）を馬番として使っていた（〜2026-10-30。horse_id/オッズ/人気が別馬に付く）
+# c2: td.Umaban* を明示して取得 + 対応検証（map_issues）
+COLLECTOR_VERSION = "c2"
+
+_UNSOLD_ODDS = {"", "-", "--", "---", "---.-", "**", "***"}
+
+
+def parse_shutuba_rows(soup: BeautifulSoup, expected_nums: set = frozenset()) -> dict:
+    """
+    出馬表（td.HorseInfo を含む行）から 馬番 → 馬名/horse_id/単勝オッズ/人気 を同一行由来で取得する。
+    馬番は td.Umaban* のみから取る（td.Waku* は枠番。行内の最初の数字は枠番なので使わない）。
+
+    map_issues が空でなければ対応が信頼できないため、呼び出し側はそのレースをスコア対象にしない。
+    expected_nums: AI展開図（HorseIcon）の馬番集合。出馬表行にない馬番があれば欠損として検出する。
+    """
+    horse_map: Dict[str, str] = {}
+    horse_id_map: Dict[str, str] = {}
+    odds_map: Dict[str, float] = {}
+    pop_map: Dict[str, str] = {}
+    odds_status: Dict[str, str] = {}  # 馬番 → ok / unsold（未発売）/ scratched（取消・除外）/ no_cell / unparsable
+    issues: List[str] = []
+
+    seen_hids: Dict[str, str] = {}
+    for tr in soup.find_all("tr"):
+        info = tr.find("td", class_="HorseInfo")
+        if not info:
+            continue
+        num_td = tr.find("td", class_=re.compile(r"^Umaban"))
+        num = num_td.get_text(strip=True) if num_td else ""
+        if not num.isdigit():
+            issues.append("row_without_umaban")
+            continue
+        if num in horse_map:
+            issues.append(f"dup_umaban:{num}")
+            continue
+
+        a = info.find("a", href=re.compile(r"/horse/\d+"))
+        name = _norm_name(a.get_text(strip=True) if a else info.get_text(strip=True))
+        horse_map[num] = name
+        m_id = re.search(r"/horse/(\d+)", a.get("href", "")) if a else None
+        hid = m_id.group(1) if m_id else ""
+        if not hid:
+            issues.append(f"missing_horse_id:{num}")
+        elif hid in seen_hids:
+            issues.append(f"dup_horse_id:{seen_hids[hid]},{num}")
+        else:
+            seen_hids[hid] = num
+            horse_id_map[num] = hid
+
+        # 単勝オッズ: class="Txt_R Popular"（"Popular_Ninki" は含まない）
+        # ※class_=lambda は個別クラスにもマッチしDOM順依存になるため、クラスリスト全体で判定する
+        scratched = ("Cancel" in (tr.get("class") or [])
+                     or any(k in tr.get_text() for k in ("取消", "除外")))
+        odds_td = tr.find(lambda t: t.name == "td"
+                          and "Popular" in (t.get("class") or [])
+                          and "Popular_Ninki" not in (t.get("class") or []))
+        if scratched:
+            odds_status[num] = "scratched"
+        elif not odds_td:
+            odds_status[num] = "no_cell"
+        else:
+            val = re.sub(r"\s+", "", odds_td.get_text(strip=True))
+            try:
+                odds_map[num] = float(val)
+                odds_status[num] = "ok"
+            except ValueError:
+                odds_status[num] = "unsold" if val in _UNSOLD_ODDS else "unparsable"
+        # 人気: class に "Popular_Ninki" を持つセルのみ（オッズセルと誤取得しないよう限定）
+        pop_td = tr.find(lambda t: t.name == "td"
+                         and "Popular_Ninki" in (t.get("class") or []))
+        if pop_td and not scratched:
+            val = re.sub(r"\s+", "", pop_td.get_text(strip=True))
+            if val.isdigit():
+                pop_map[num] = val
+
+    nums = {int(n) for n in horse_map}
+    if not nums:
+        issues.append("no_rows")
+    elif nums != set(range(1, max(nums) + 1)):
+        issues.append("umaban_not_contiguous:" + ",".join(
+            str(n) for n in sorted(set(range(1, max(nums) + 1)) - nums)))
+    missing_expected = sorted((set(expected_nums) - set(horse_map)), key=int)
+    if missing_expected:
+        issues.append("missing_vs_horseicon:" + ",".join(missing_expected))
+
+    return {
+        "horse_map": horse_map,
+        "horse_id_map": horse_id_map,
+        "odds_map": odds_map,
+        "pop_map": pop_map,
+        "odds_status": odds_status,
+        "map_issues": issues,
+    }
+
+
 # ─── shutuba ページのスクレイプ ──────────────────────────────────
 def scrape_shutuba(page, race_id: str) -> dict:
     """
@@ -89,7 +186,6 @@ def scrape_shutuba(page, race_id: str) -> dict:
 
     # ── 出馬表: 馬番 → 馬名 (AI展開図のHorseIconから取得が最も確実) ──
     horse_map: Dict[str, str] = {}
-    horse_id_map: Dict[str, str] = {}  # 馬番 → horse_id
     for span in soup.select("span.HorseIcon[id^='Horse']"):
         horse_id = span.get("id", "")  # "Horse7" → "7"
         num = horse_id.replace("Horse", "")
@@ -100,50 +196,12 @@ def scrape_shutuba(page, race_id: str) -> dict:
                 horse_map[num] = short_name
 
     # AI展開図に出ない馬はHorseInfoテーブルから補完 + horse_id取得 + 人気・オッズ取得
-    pop_map: Dict[str, str] = {}    # 馬番 → 人気順位
-    odds_map: Dict[str, float] = {}  # 馬番 → 単勝オッズ（スコアリング時点）
-    for a in soup.select("td.HorseInfo a[href*='/horse/']"):
-        name = _norm_name(a.get_text(strip=True))
-        href = a.get("href", "")
-        m_id = re.search(r"/horse/(\d+)", href)
-        hid = m_id.group(1) if m_id else ""
-        if not name:
-            continue
-        tr = a.find_parent("tr")
-        if not tr:
-            continue
-        # 馬番セルを探す (class='Num' か最初の数字セル)
-        num_td = tr.find("td", class_="Num") or tr.find("td", class_="num")
-        if num_td:
-            num = num_td.get_text(strip=True)
-        else:
-            tds = tr.find_all("td")
-            num = next((t.get_text(strip=True) for t in tds if t.get_text(strip=True).isdigit()), "")
-        if num.isdigit():
-            if num not in horse_map:
-                horse_map[num] = name  # フルネームで補完
-            if hid and num not in horse_id_map:
-                horse_id_map[num] = hid
-            # 単勝オッズ: class="Txt_R Popular"（"Popular_Ninki" は含まない）
-            # ※class_=lambda は個別クラスにもマッチしDOM順依存になるため、クラスリスト全体で判定する
-            if num not in odds_map:
-                odds_td = tr.find(lambda t: t.name == "td"
-                                  and "Popular" in (t.get("class") or [])
-                                  and "Popular_Ninki" not in (t.get("class") or []))
-                if odds_td:
-                    val = re.sub(r"\s+", "", odds_td.get_text(strip=True))
-                    try:
-                        odds_map[num] = float(val)
-                    except ValueError:
-                        pass  # "---" 等（未発売）は無視
-            # 人気: class に "Popular_Ninki" を持つセルのみ（オッズセルと誤取得しないよう限定）
-            if num not in pop_map:
-                pop_td = tr.find(lambda t: t.name == "td"
-                                 and "Popular_Ninki" in (t.get("class") or []))
-                if pop_td:
-                    val = re.sub(r"\s+", "", pop_td.get_text(strip=True))
-                    if val.isdigit():
-                        pop_map[num] = val
+    rows = parse_shutuba_rows(soup, expected_nums=set(horse_map))
+    for num, name in rows["horse_map"].items():
+        horse_map.setdefault(num, name)  # フルネームで補完
+    horse_id_map = rows["horse_id_map"]
+    pop_map: Dict[str, str] = rows["pop_map"]      # 馬番 → 人気順位
+    odds_map: Dict[str, float] = rows["odds_map"]  # 馬番 → 単勝オッズ（スコアリング時点）
 
     # ── 推定ポジション有利馬 ──
     position_nums: set = set()
@@ -230,6 +288,8 @@ def scrape_shutuba(page, race_id: str) -> dict:
         "horse_id_map": horse_id_map,
         "pop_map": pop_map,
         "odds_map": odds_map,
+        "odds_status": rows["odds_status"],
+        "map_issues": rows["map_issues"],
         "position_nums": position_nums,
         "top3_hits": top3_hits,
         "predicted_pace": predicted_pace,
@@ -535,6 +595,7 @@ def analyze_race(shutuba_url: str, triple_horses: List[dict], prev_db: dict = No
         "race_id": race_id,
         "horse_map": shutuba_data["horse_map"],
         "horse_id_map": shutuba_data.get("horse_id_map", {}),
+        "map_issues": shutuba_data.get("map_issues", []),
         "position_nums": list(shutuba_data["position_nums"]),
         "top3_hits": shutuba_data["top3_hits"],
         "pickup_nums": list(data_top_data["pickup_nums"]),

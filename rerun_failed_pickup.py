@@ -14,7 +14,7 @@ import pandas as pd
 from playwright.sync_api import sync_playwright
 
 from scraper import load_env, load_cookies, get_race_ids, human_sleep, human_browse, _random_scroll
-from race_pickup import scrape_shutuba, scrape_data_top, score_horses
+from race_pickup import scrape_shutuba, scrape_data_top, score_horses, COLLECTOR_VERSION
 from run_pickup_all import (
     load_horse_db, load_horse_style, save_horse_db,
     is_cache_fresh, _prev_is_valid, scrape_horse_prev_page,
@@ -125,6 +125,11 @@ def main():
                         logger.error(f"  {race_label}: リトライ後も空 (スキップ)")
                         continue
 
+                # 馬番↔馬ID対応が検証できないレースはスコアリングしない（既存の error エントリを残す）
+                if shutuba_data.get("map_issues"):
+                    logger.error(f"  {race_label}: 出馬表の対応検証NG {shutuba_data['map_issues']} (スキップ)")
+                    continue
+
                 human_sleep(4.0, 10.0)
                 data_top_data = scrape_data_top(page, race_id, shutuba_data["horse_map"])
                 human_sleep(4.0, 10.0)
@@ -173,6 +178,8 @@ def main():
                     "scored": scored,
                     "pop_map": shutuba_data.get("pop_map", {}),
                     "odds_map": shutuba_data.get("odds_map", {}),
+                    "odds_status": shutuba_data.get("odds_status", {}),
+                    "collector_version": COLLECTOR_VERSION,
                     "position_nums": shutuba_data["position_nums"],
                     "top3_hits": shutuba_data["top3_hits"],
                     "pickup_nums": data_top_data["pickup_nums"],
