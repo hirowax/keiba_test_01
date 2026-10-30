@@ -332,6 +332,43 @@ def parse_speed_table(page, race_id: str, mode: str) -> Optional[pd.DataFrame]:
     return df
 
 
+# タイム指数として妥当な範囲。外れた値は読み取りの誤りとみなす（2026-10-30 指数1000事故）
+INDEX_MIN, INDEX_MAX = 0, 200
+
+
+def speed_cell_score(cell) -> str:
+    """shutuba_submenu の指数セルから「画面に見えている」指数を返す。無ければ ""。
+
+    セルには並び替え用の隠し値 span.Sort_Function_Data_Hidden があり、中身は「1000＋指数」
+    （指数83 → "1083"、データ無し → "1000"）。2026-10-30 まで隠し値をそのまま指数として読み、
+    データ無しの馬が指数1000で1位扱いになっていた。隠し値は使わず、見えている文字だけを読む。
+    見えている文字が "-"・"未"・空ならデータ無し。
+    """
+    if cell is None:
+        return ""
+    cell = BeautifulSoup(str(cell), "html.parser")  # 元の soup を壊さない
+    for hidden in cell.find_all(class_="Sort_Function_Data_Hidden"):
+        hidden.decompose()
+    text = re.sub(r"\s+", "", cell.get_text())
+    if not re.fullmatch(r"\d+(\.\d+)?", text):
+        return ""
+    if not (INDEX_MIN < float(text) < INDEX_MAX):
+        logger.error(f"指数が範囲外: {text}（読み取り誤りの可能性）")
+        return ""
+    return text
+
+
+def index_out_of_range(df: Optional[pd.DataFrame]) -> List[float]:
+    """ランキング表の指数列に範囲外の値があれば返す（空なら正常）"""
+    if df is None:
+        return []
+    col = next((c for c in df.columns if "指数" in c), None)
+    if col is None:
+        return []
+    vals = pd.to_numeric(df[col], errors="coerce").dropna()
+    return [float(v) for v in vals if not (INDEX_MIN < v < INDEX_MAX)]
+
+
 def parse_speed_shutuba(page, race_id: str) -> Optional[Dict[str, pd.DataFrame]]:
     """rf=shutuba_submenu URLから全3指数を一括取得。
     type=rank が未公開(前日等)のときのフォールバック用。
@@ -356,25 +393,6 @@ def parse_speed_shutuba(page, race_id: str) -> Optional[Dict[str, pd.DataFrame]]
 
     html = page.content()
     soup = BeautifulSoup(html, "html.parser")
-
-    def _cell_score(cell) -> str:
-        """CSSセルから指数値を抽出。Sort_Function_Data_Hidden spanを優先。
-        "未"を含む場合はデータなし → "" を返す。"""
-        if cell is None:
-            return ""
-        full_text = cell.get_text(strip=True)
-        if "未" in full_text:
-            return ""
-        hidden = cell.find(class_="Sort_Function_Data_Hidden")
-        if hidden:
-            v = hidden.get_text(strip=True)
-            try:
-                return str(int(v))
-            except ValueError:
-                pass
-        # フォールバック: 先頭の整数を抽出
-        m = re.search(r"\d+", full_text)
-        return m.group() if m else ""
 
     def _cell_name(cell) -> str:
         """馬名セルからリンクテキストを取得（Sort_Function_Data_Hidden を除外）"""
@@ -415,9 +433,9 @@ def parse_speed_shutuba(page, race_id: str) -> Optional[Dict[str, pd.DataFrame]]
         horses.append({
             "num":  num,
             "name": name,
-            "avg":  _cell_score(avg_cell),
-            "dist": _cell_score(dist_cell),
-            "crs":  _cell_score(crs_cell),
+            "avg":  speed_cell_score(avg_cell),
+            "dist": speed_cell_score(dist_cell),
+            "crs":  speed_cell_score(crs_cell),
         })
 
     if not horses:
@@ -881,6 +899,13 @@ def main():
                     logger.error("   → python3 save_cookies.py を実行して再ログインしてください")
                     browser.close()
                     return
+
+            # 指数が範囲外のモードは読み取り誤りとして捨てる（3指数重複馬の判定に使わない）
+            for k in list(dfs):
+                bad = index_out_of_range(dfs[k])
+                if bad:
+                    logger.error(f"{label} {MODES[k]}: 指数が範囲外 {bad[:5]} → このモードは使わない")
+                    dfs[k] = None
 
             # mode_label をキーに変換して蓄積
             all_data.setdefault(venue, {})[label] = {
