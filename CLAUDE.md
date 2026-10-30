@@ -27,6 +27,7 @@ netkeiba/
 ├── analyze_hypotheses.py # 仮説検証スクリプト（統計分析用）
 ├── build_horse_style.py  # race_results.jsonのコーナー通過順から脚質推定・horse_style.json更新
 ├── compare_scores.py     # 旧スコアvs新スコアの前後比較（コード変更の効果検証用）
+├── tests/                # 回帰テスト（python3 -m unittest discover -s tests）
 ├── rerun_failed_pickup.py # エラーレースのみ再ピックアップ・pickup_scores.jsonにマージ
 ├── rescrape_results_all.py # 全日付のrace_results.jsonを再スクレイプ（フィールド追加時等に使用）
 ├── run_history_batch.py  # 過去日付のXLSX+pickup_scores.json一括生成（完了済みはスキップ）
@@ -243,7 +244,8 @@ git add output/ && git commit -m "results: YYYYMMDD YYYYMMDD ..." && git push
 
 スコアリングバージョン: `race_pickup.py` の `SCORING_VERSION` 定数で管理。pickup_scores.json の `scoring_version` フィールドに埋め込まれる。`rescore.py` 実行時も更新される。`analyze_roi.py` の【10】セクションでバージョン別比較が可能。
 
-`scrape_shutuba()` は `pop_map: {馬番: 人気}` も取得し、各馬の `today_pop` フィールドに格納。
+`scrape_shutuba()` は `parse_shutuba_rows()` で出馬表の各行から 馬番（`td.Umaban*`）・馬ID・単勝オッズ・人気を**同一行由来**で取得し、`today_pop`/`today_odds` に格納。対応検証（`map_issues`）でNGのレースはスコアリングしない。
+収集ロジックの版は `COLLECTOR_VERSION`（c2〜）で pickup_scores.json に記録。**キーが無いデータ（c1, 〜2026-10-30）は枠番を馬番として取得しており、前走系ファクター・today_odds・today_pop が別馬の値**（`docs/incident_umaban_20261030.md`）。
 人気取得: shutuba.html の `td.Ninki` → 取れない場合 speed.html (`rf=shutuba_submenu`) の `sk__ninki` から取得。
 
 ランク：★★★(5pt以上) / ★★(3〜4pt) / ★(1〜2pt) / －(0pt)
@@ -273,6 +275,7 @@ venue表示順：東京→中山→京都→阪神→中京→新潟→福島→
 - `ev_threshold`：期待値🔥マークを付ける最低スコア（現在 **9pt**）
 - `calibrate_threshold.py` が run.sh 実行時に毎回自動更新
 - ロジック：過去データで **3着内率70%以上**・サンプル5頭以上を満たす最低閾値を採用
+- ⚠️ 以下の実績値は c1（枠番誤認）入力に基づく。修正後データで再評価が必要（`docs/incident_umaban_20261030.md`）
 - 実績（2026-10-23時点・v5・クリーン窓63日 20260328〜20261018）：
   - 9pt以上：134頭 → 3着内79頭（59.0%） ← 現在の閾値
   - 8pt以上：204頭 → 3着内120頭（58.8%）
@@ -418,6 +421,20 @@ python3 save_cookies.py
 - **LINE通知**: 成功/失敗をMessaging APIでpush（`.env` に LINE_TOKEN / LINE_USER_ID）
 - **年末作業**: 翌年の `jra_calendar_YYYY.json` を取得する
 - **cookies期限切れ時**: cronが `❌ プレミアムコンテンツにアクセスできません` で失敗→手動で `python3 save_cookies.py` を実行してから再実行
+
+---
+
+## データ整合性ルール（2026-10-30 枠番誤認インシデントを受けて）
+
+経緯・影響・成績比較は `docs/incident_umaban_20261030.md`。以下は恒久ルール。
+
+- **要素は明示して取る**: スクレイプはクラス名等で対象セルを特定する。「最初の数字セル」等の位置推測フォールバックは書かない。見つからなければそのレース/行を失敗にする。
+- **重複を黙って捨てない**: 「同じキーは初回のみ登録」は禁止。重複キー・重複IDは異常として検出・記録する。
+- **取得率と正しさは別物**: 新しい取得項目・パーサー変更の合格条件は「件数」ではなく、正解データ（`race_results.json` の馬番・馬ID）との**全頭照合一致**。
+- **推測で閉じない**: 充足率の低下・横ばい等の異常に推測で説明を付けた場合、その推測を検証するまでタスクを閉じない。
+- **テスト必須**: `race_pickup.py` 等のパーサーを変更したら `python3 -m unittest discover -s tests` を通す。多頭数（枠番≠馬番）のケースを必ず含める。
+- **過去データの品質**: `collector_version` が無い pickup_scores.json（c1）の前走系ファクター・オッズ・人気は研究・検証に使わない。過去ファイルは上書きしない。
+- **版を分ける**: スコア式（`SCORING_VERSION`）と収集ロジック（`COLLECTOR_VERSION`）は別管理。収集を変えたら COLLECTOR_VERSION を上げる。
 
 ---
 
