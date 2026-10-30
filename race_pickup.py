@@ -67,9 +67,9 @@ def _extract_race_id(url: str) -> str:
 
 # ─── shutuba 出馬表テーブルのパース ──────────────────────────────
 # 収集ロジックの版: pickup_scores.json に埋め込む（スコア式の SCORING_VERSION とは別管理）
-# c1: 行内の最初の数字セル（=枠番）を馬番として使っていた（〜2026-10-30。horse_id/オッズ/人気が別馬に付く）
-# c2: td.Umaban* を明示して取得 + 対応検証（map_issues）
-COLLECTOR_VERSION = "c2"
+# collector_version が無い pickup_scores.json = 修正前（〜2026-10-30。枠番を馬番として読み、horse_id/オッズ/人気が別馬に付く）
+# 取り方を変えたら値を変える（例: "修正後_YYYYMMDD_内容"）
+COLLECTOR_VERSION = "修正後_20261030_馬番を正しく取得"
 
 _UNSOLD_ODDS = {"", "-", "--", "---", "---.-", "**", "***"}
 
