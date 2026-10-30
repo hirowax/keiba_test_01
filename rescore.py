@@ -15,6 +15,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+from data_quality import load_invalidated
 from race_pickup import score_horses, SCORING_VERSION
 
 BASE_DIR = Path(__file__).parent
@@ -96,15 +97,17 @@ def main():
                 str(h["num"]): h.get("horse_id", "") for h in horses
             }
 
+    invalid = load_invalidated(date)
     updated = 0
     for race_label, rdata in pickup_data["races"].items():
-        if "error" in rdata:
-            continue
+        if "error" in rdata or race_label in invalid:
+            continue  # 採点エラー・無効レース（invalidated.json）は採点し直さない
 
         # horse_id_map: 修正後（collector_version あり）の保存値のみ信頼する。
         # 修正前のデータは枠番キーで別馬を指すため、race_results の正しい対応を使い、
         # 保存オッズ・人気（同じく別馬の値）は引き継がない（docs/incident_umaban_20261030.md）
-        trusted = bool(rdata.get("collector_version"))
+        # 判定するのは馬番の取り方だけ（指数の読み方・無効化は data_quality.race_quality_issues で別に判定する）
+        trusted = bool((rdata.get("quality") or {}).get("umaban") or rdata.get("collector_version"))
         if trusted:
             horse_id_map = rdata.get("horse_id_map") or {}
         else:

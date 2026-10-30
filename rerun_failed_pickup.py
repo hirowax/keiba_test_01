@@ -14,6 +14,7 @@ import pandas as pd
 from playwright.sync_api import sync_playwright
 
 from scraper import load_env, load_cookies, get_race_ids, human_sleep, human_browse, _random_scroll
+from data_quality import build_quality, load_index_sources
 from race_pickup import scrape_shutuba, scrape_data_top, score_horses, active_horse_ids, COLLECTOR_VERSION
 from run_pickup_all import (
     load_horse_db, load_horse_style, save_horse_db,
@@ -187,6 +188,7 @@ def main():
                     "horse_name_full": shutuba_data.get("horse_name_full", {}),
                     "horse_id_map": horse_id_map,  # 後日の照合・prev_data.json スナップショット用
                     "collector_version": COLLECTOR_VERSION,
+                    "quality": build_quality(COLLECTOR_VERSION, load_index_sources(date), race_label),
                     "position_nums": shutuba_data["position_nums"],
                     "top3_hits": shutuba_data["top3_hits"],
                     "pickup_nums": data_top_data["pickup_nums"],
