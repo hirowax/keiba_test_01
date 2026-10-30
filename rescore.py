@@ -101,16 +101,23 @@ def main():
         if "error" in rdata:
             continue
 
-        # horse_id_map: pickup_scores.json に保存済みなら優先使用、なければ race_results から補完
-        horse_id_map = rdata.get("horse_id_map") or horse_id_by_race.get(race_label, {})
+        # horse_id_map: 修正後（collector_version あり）の保存値のみ信頼する。
+        # 修正前のデータは枠番キーで別馬を指すため、race_results の正しい対応を使い、
+        # 保存オッズ・人気（同じく別馬の値）は引き継がない（docs/incident_umaban_20261030.md）
+        trusted = bool(rdata.get("collector_version"))
+        if trusted:
+            horse_id_map = rdata.get("horse_id_map") or {}
+        else:
+            horse_id_map = horse_id_by_race.get(race_label, {})
 
         # shutuba_data / data_top_data を既存データから復元
         shutuba_data = {
             "position_nums": set(rdata.get("position_nums", [])),
             "top3_hits":     rdata.get("top3_hits", {}),
             "horse_id_map":  horse_id_map,
-            "pop_map":       rdata.get("pop_map", {}),
-            "odds_map":      rdata.get("odds_map", {}),
+            "pop_map":       rdata.get("pop_map", {}) if trusted else {},
+            "odds_map":      rdata.get("odds_map", {}) if trusted else {},
+            "scratched_nums": rdata.get("scratched_nums", {}),
         }
         data_top_data = {
             "pickup_nums":   set(rdata.get("pickup_nums", [])),
@@ -124,7 +131,9 @@ def main():
         # レース内の前走指数最大値を計算（出走全馬対象）
         race_max_prev_idx = None
         prev_idxs = []
-        for hid in horse_id_map.values():
+        for num, hid in horse_id_map.items():
+            if num in shutuba_data["scratched_nums"]:
+                continue  # 取消・除外は比較対象外
             if hid in horse_db:
                 try:
                     prev_idxs.append(float(horse_db[hid].get("prev_idx", "")))

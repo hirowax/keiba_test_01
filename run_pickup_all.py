@@ -19,7 +19,8 @@ from scraper import (
     load_env, load_cookies, save_cookies, is_logged_in, login,
     get_race_ids, human_sleep, human_browse, _random_scroll, is_ip_blocked,
 )
-from race_pickup import scrape_shutuba, scrape_data_top, score_horses, SCORING_VERSION, COLLECTOR_VERSION
+from race_pickup import (scrape_shutuba, scrape_data_top, score_horses, active_horse_ids,
+                         SCORING_VERSION, COLLECTOR_VERSION)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -220,6 +221,11 @@ def main():
                         continue
 
                 # 馬番↔馬ID対応が検証できないレースはスコアリングしない（枠番誤認・欠損で別馬のデータが付くため）
+                # ページの読み込み途中の可能性があるので1回だけ待って再取得する
+                if shutuba_data.get("map_issues"):
+                    logger.warning(f"  {race_label}: 出馬表の対応検証NG {shutuba_data['map_issues']} → 待機して再取得")
+                    human_sleep(8.0, 15.0)
+                    shutuba_data = scrape_shutuba(page, race_id)
                 if shutuba_data.get("map_issues"):
                     logger.error(f"  {race_label}: 出馬表の対応検証NG {shutuba_data['map_issues']} (スキップ)")
                     results[race_label] = {"error": "shutuba map invalid",
@@ -255,7 +261,7 @@ def main():
                 # レース内の前走指数最大値を計算（キャッシュ済みデータのみ利用）
                 race_max_prev_idx = None
                 prev_idxs = []
-                for hid in horse_id_map.values():
+                for hid in active_horse_ids(shutuba_data).values():  # 取消・除外は比較対象外
                     if hid in horse_db and _prev_is_valid(horse_db[hid], date):
                         try:
                             prev_idxs.append(float(horse_db[hid].get("prev_idx", "")))
@@ -281,7 +287,7 @@ def main():
                 pop_map = shutuba_data.get("pop_map", {})
                 horse_map = shutuba_data.get("horse_map", {})
                 anaba_list = []
-                for num, hid in horse_id_map.items():
+                for num, hid in active_horse_ids(shutuba_data).items():  # 取消・除外は候補外
                     if num in scored_nums:
                         continue  # 3指数重複馬は除外（既にスコアリング済み）
                     pop_str = pop_map.get(num, "")
@@ -326,6 +332,8 @@ def main():
                     "pop_map": shutuba_data.get("pop_map", {}),
                     "odds_map": shutuba_data.get("odds_map", {}),
                     "odds_status": shutuba_data.get("odds_status", {}),
+                    "scratched_nums": shutuba_data.get("scratched_nums", {}),
+                    "horse_name_full": shutuba_data.get("horse_name_full", {}),
                     "collector_version": COLLECTOR_VERSION,
                     "horse_id_map": horse_id_map,
                     "position_nums": shutuba_data["position_nums"],

@@ -24,6 +24,10 @@ TARGET_RATE = 0.70
 MIN_COUNT = 5
 # これより前は前走系ファクター汚染のため除外（docs/factor_audit_202606.md）
 CLEAN_START = "20260328"
+# 修正後（collector_version あり）のレースだけを使う。修正前は枠番を馬番として読んでおり
+# 前走成績による加点が別馬の値（docs/incident_umaban_20261030.md）。
+# 修正後の照合馬数がこれ未満なら threshold_config.json を更新せず現行値（9pt・暫定）を維持する。
+MIN_TRUSTED_HORSES = 200
 
 
 def load_pairs():
@@ -53,6 +57,8 @@ def cross_reference(pairs):
     for date_str, pickup, results in pairs:
         dates_used.append(date_str)
         for race, rdata in pickup.get("races", {}).items():
+            if not rdata.get("collector_version"):
+                continue  # 修正前のレースは使わない
             for h in rdata.get("scored", []):
                 finish = None
                 num = str(h.get("馬番", ""))
@@ -126,7 +132,11 @@ def main():
 
     log.info(f"{len(pairs)}日分のデータを照合: {[p[0] for p in pairs]}")
     horses, dates_used = cross_reference(pairs)
-    log.info(f"照合馬数: {len(horses)}頭")
+    log.info(f"照合馬数（修正後のレースのみ）: {len(horses)}頭")
+    if len(horses) < MIN_TRUSTED_HORSES:
+        log.warning(f"修正後データが {MIN_TRUSTED_HORSES}頭未満のため閾値は更新しない"
+                    f"（threshold_config.json の現行値を暫定維持。有効性は未確認）")
+        return
 
     stats = calc_stats(horses)
     optimal = pick_threshold(stats)

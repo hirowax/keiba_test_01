@@ -66,6 +66,10 @@ def _extract_race_id(url: str) -> str:
 
 
 # ─── shutuba 出馬表テーブルのパース ──────────────────────────────
+class ShutubaMapError(ValueError):
+    """出馬表の馬番↔馬ID対応が検証できない（採点・公開してはいけない）"""
+
+
 # 収集ロジックの版: pickup_scores.json に埋め込む（スコア式の SCORING_VERSION とは別管理）
 # collector_version が無い pickup_scores.json = 修正前（〜2026-10-30。枠番を馬番として読み、horse_id/オッズ/人気が別馬に付く）
 # 取り方を変えたら値を変える（例: "修正後_YYYYMMDD_内容"）
@@ -74,19 +78,30 @@ COLLECTOR_VERSION = "修正後_20261030_馬番を正しく取得"
 _UNSOLD_ODDS = {"", "-", "--", "---", "---.-", "**", "***"}
 
 
-def parse_shutuba_rows(soup: BeautifulSoup, expected_nums: set = frozenset()) -> dict:
+def parse_field_size(soup: BeautifulSoup):
+    """RaceData02 の「15頭」から出走頭数（取消・除外を含む登録頭数）を返す。無ければ None"""
+    rd2 = soup.find(class_="RaceData02")
+    m = re.search(r"(\d+)頭", rd2.get_text(" ", strip=True)) if rd2 else None
+    return int(m.group(1)) if m else None
+
+
+def parse_shutuba_rows(soup: BeautifulSoup, field_size=None, expected_nums: set = frozenset()) -> dict:
     """
     出馬表（td.HorseInfo を含む行）から 馬番 → 馬名/horse_id/単勝オッズ/人気 を同一行由来で取得する。
     馬番は td.Umaban* のみから取る（td.Waku* は枠番。行内の最初の数字は枠番なので使わない）。
 
-    map_issues が空でなければ対応が信頼できないため、呼び出し側はそのレースをスコア対象にしない。
+    map_issues が空でなければ対応が信頼できないため、そのレースは採点しない（score_horses が拒否する）。
+    field_size: ページ上部の「N頭」（取消・除外を含む。2026-10-30 実ページで表の行数と一致を確認）。
+                馬番の集合が 1..N と完全一致することを要求する（末尾欠落も検出）。不明なら異常扱い。
     expected_nums: AI展開図（HorseIcon）の馬番集合。出馬表行にない馬番があれば欠損として検出する。
+    取消・除外: 行の class "Cancel" または td.Cancel_Txt（実ページで確認）。scratched_nums に入れ、対応表には残す。
     """
     horse_map: Dict[str, str] = {}
     horse_id_map: Dict[str, str] = {}
     odds_map: Dict[str, float] = {}
     pop_map: Dict[str, str] = {}
     odds_status: Dict[str, str] = {}  # 馬番 → ok / unsold（未発売）/ scratched（取消・除外）/ no_cell / unparsable
+    scratched_nums: Dict[str, str] = {}  # 馬番 → "取消" / "除外" 等（Cancel_Txt の文字）
     issues: List[str] = []
 
     seen_hids: Dict[str, str] = {}
@@ -118,8 +133,10 @@ def parse_shutuba_rows(soup: BeautifulSoup, expected_nums: set = frozenset()) ->
 
         # 単勝オッズ: class="Txt_R Popular"（"Popular_Ninki" は含まない）
         # ※class_=lambda は個別クラスにもマッチしDOM順依存になるため、クラスリスト全体で判定する
-        scratched = ("Cancel" in (tr.get("class") or [])
-                     or any(k in tr.get_text() for k in ("取消", "除外")))
+        cancel_td = tr.find("td", class_="Cancel_Txt")
+        scratched = "Cancel" in (tr.get("class") or []) or cancel_td is not None
+        if scratched:
+            scratched_nums[num] = cancel_td.get_text(strip=True) if cancel_td else "取消"
         odds_td = tr.find(lambda t: t.name == "td"
                           and "Popular" in (t.get("class") or [])
                           and "Popular_Ninki" not in (t.get("class") or []))
@@ -148,6 +165,10 @@ def parse_shutuba_rows(soup: BeautifulSoup, expected_nums: set = frozenset()) ->
     elif nums != set(range(1, max(nums) + 1)):
         issues.append("umaban_not_contiguous:" + ",".join(
             str(n) for n in sorted(set(range(1, max(nums) + 1)) - nums)))
+    if field_size is None:
+        issues.append("field_size_unknown")
+    elif nums != set(range(1, field_size + 1)):
+        issues.append(f"row_count_mismatch:{len(nums)}/{field_size}")
     missing_expected = sorted((set(expected_nums) - set(horse_map)), key=int)
     if missing_expected:
         issues.append("missing_vs_horseicon:" + ",".join(missing_expected))
@@ -158,8 +179,15 @@ def parse_shutuba_rows(soup: BeautifulSoup, expected_nums: set = frozenset()) ->
         "odds_map": odds_map,
         "pop_map": pop_map,
         "odds_status": odds_status,
+        "scratched_nums": scratched_nums,
         "map_issues": issues,
     }
+
+
+def active_horse_ids(shutuba_data: dict) -> Dict[str, str]:
+    """馬番 → horse_id のうち取消・除外を除いたもの（レース内比較・穴馬候補に使う）"""
+    scratched = shutuba_data.get("scratched_nums") or {}
+    return {n: h for n, h in (shutuba_data.get("horse_id_map") or {}).items() if n not in scratched}
 
 
 # ─── shutuba ページのスクレイプ ──────────────────────────────────
@@ -196,9 +224,10 @@ def scrape_shutuba(page, race_id: str) -> dict:
                 horse_map[num] = short_name
 
     # AI展開図に出ない馬はHorseInfoテーブルから補完 + horse_id取得 + 人気・オッズ取得
-    rows = parse_shutuba_rows(soup, expected_nums=set(horse_map))
+    rows = parse_shutuba_rows(soup, field_size=parse_field_size(soup), expected_nums=set(horse_map))
+    # horse_map は表示・名前照合用（AI展開図の短縮名を優先、無い馬は正式名で補完）。正式名は horse_name_full
     for num, name in rows["horse_map"].items():
-        horse_map.setdefault(num, name)  # フルネームで補完
+        horse_map.setdefault(num, name)
     horse_id_map = rows["horse_id_map"]
     pop_map: Dict[str, str] = rows["pop_map"]      # 馬番 → 人気順位
     odds_map: Dict[str, float] = rows["odds_map"]  # 馬番 → 単勝オッズ（スコアリング時点）
@@ -289,6 +318,8 @@ def scrape_shutuba(page, race_id: str) -> dict:
         "pop_map": pop_map,
         "odds_map": odds_map,
         "odds_status": rows["odds_status"],
+        "scratched_nums": rows["scratched_nums"],
+        "horse_name_full": rows["horse_map"],
         "map_issues": rows["map_issues"],
         "position_nums": position_nums,
         "top3_hits": top3_hits,
@@ -400,7 +431,13 @@ def score_horses(
     """
     triple_horses: [{馬番, 馬名, ...}]  ← (A) 3指数重複馬
     prev_db: {horse_id: {prev_pop, prev_rank, prev_idx, ...}}  ← horse_db.json
+
+    出馬表の対応検証（map_issues）が NG のデータは採点しない（全実行経路の共通入口で拒否）。
+    取消・除外の馬（scratched_nums）は採点候補から外す。
     """
+    if shutuba_data.get("map_issues"):
+        raise ShutubaMapError(f"出馬表の対応検証NG: {shutuba_data['map_issues']}")
+    scratched_nums = shutuba_data.get("scratched_nums") or {}
     position_nums  = shutuba_data["position_nums"]
     top3_hits      = shutuba_data["top3_hits"]
     horse_id_map   = shutuba_data.get("horse_id_map", {})
@@ -412,6 +449,8 @@ def score_horses(
     results = []
     for horse in triple_horses:
         num  = str(horse.get("馬番", "")).strip()
+        if num in scratched_nums:
+            continue
         name = horse.get("馬名", "")
         score = 0
         breakdown = []
@@ -579,7 +618,10 @@ def analyze_race(shutuba_url: str, triple_horses: List[dict], prev_db: dict = No
 
         browser.close()
 
-    scored = score_horses(triple_horses, shutuba_data, data_top_data, prev_db=prev_db)
+    try:
+        scored = score_horses(triple_horses, shutuba_data, data_top_data, prev_db=prev_db)
+    except ShutubaMapError as e:
+        return {"error": str(e), "race_id": race_id, "map_issues": shutuba_data.get("map_issues", [])}
 
     # スコア付き馬が1頭もいない場合のアドバイス
     has_any_bonus = any(h["score"] > 0 for h in scored)
