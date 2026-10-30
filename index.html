@@ -519,7 +519,8 @@ function renderThresholdBadge(cfg) {
   const stats = cfg.stats || {};
   const t = String(cfg.ev_threshold);
   const s = stats[t];
-  const rateStr = s ? `（過去${s.count}頭中${s.hit3}頭 3着内 ${Math.round(s.rate*100)}%）` : '';
+  // 修正前（枠番を馬番として読んでいた）の実績は表示しない。修正後データで集計した場合のみ表示
+  const rateStr = (s && cfg.collector_version_only) ? `（過去${s.count}頭中${s.hit3}頭 3着内 ${Math.round(s.rate*100)}%）` : '';
   return `
     <div style="background:#f0f4f8;border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:0.78rem;color:#555;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
       <span>🔥 期待値閾値: <strong>${cfg.ev_threshold}pt以上</strong> ${rateStr}</span>

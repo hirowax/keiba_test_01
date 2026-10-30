@@ -150,6 +150,7 @@ def main():
         "calibrated_at": str(date.today()),
         "dates_used": dates_used,
         "stats": stats,
+        "collector_version_only": True,  # index.html はこれが無い実績を表示しない
     }
 
     out_path = OUTPUT_DIR / "threshold_config.json"
