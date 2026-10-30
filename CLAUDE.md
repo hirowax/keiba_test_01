@@ -25,7 +25,8 @@ netkeiba のタイム指数（近走平均・当該距離・当該コース）�
 - **テスト必須**: `race_pickup.py` 等のパーサーを変更したら `python3 -m unittest discover -s tests` を通す。多頭数（枠番≠馬番）のケースを必ず含める。
 - **過去データの品質**: `collector_version` が無い pickup_scores.json（修正前）の前走成績による加点・オッズ・人気は研究・検証に使わない。過去ファイルは上書きしない。
 - **造語を使わない**: 報告・ドキュメント・データ値に自作の略語や区分名（例: c1/c2、A群/B群）を使わない。誰が見ても分かる言葉（例: 修正前/修正後）にする。必要ならユーザーと意味を揃えてから使う。
-- **版を分ける**: スコア式（`SCORING_VERSION`）と収集ロジック（`COLLECTOR_VERSION`）は別管理。取り方を変えたら COLLECTOR_VERSION の値を変える。
+- **版を分ける**: スコア式（`SCORING_VERSION`）、馬番・馬IDの取り方（`race_pickup.COLLECTOR_VERSION`）、指数の読み方（`scraper.INDEX_READER_VERSION`）は別管理。取り方を変えたら該当する版の値を変える。
+- **品質はレース単位で判定する**: pickup_scores.json の各レースの `quality`（馬番の版・指数の読み方の版・指数の取得経路）と `invalidated.json` を `data_quality.race_quality_issues()` で判定する。版が1つあるだけで使える扱いにしない。研究・閾値調整・精算はこの判定を通す。
 - 取得している値ごとの取り方と確認状況は `docs/data_sources.md`。**値を新しく取る・取り方を変えたら必ず更新し、実ページか正解データで確認してから使う。**
 
 ---
@@ -45,6 +46,7 @@ netkeiba/
 ├── analyze_hypotheses.py # 仮説検証スクリプト（統計分析用）
 ├── build_horse_style.py  # race_results.jsonのコーナー通過順から脚質推定・horse_style.json更新
 ├── compare_scores.py     # 旧スコアvs新スコアの前後比較（コード変更の効果検証用）
+├── data_quality.py       # レース単位の品質判定（馬番の版・指数の読み方・無効化）
 ├── tests/                # 回帰テスト（python3 -m unittest discover -s tests）
 ├── docs/data_sources.md  # 取得している値ごとの取り方・確認状況（取り方を変えたら更新）
 ├── rerun_failed_pickup.py # エラーレースのみ再ピックアップ・pickup_scores.jsonにマージ

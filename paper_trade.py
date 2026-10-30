@@ -37,6 +37,7 @@ from datetime import datetime
 from itertools import combinations
 from pathlib import Path
 
+from data_quality import load_invalidated
 from validate_trifecta_202608 import himo_set, maru_num, combo_key, MIN_SCORE, BET_UNIT
 
 BASE_DIR = Path(__file__).parent
@@ -250,12 +251,6 @@ def mark_unsettled(menu: dict, status: str, reason: str) -> dict:
     return menu
 
 
-def load_invalidated(date: str) -> dict:
-    """output/{date}/invalidated.json の無効レース {label: reason}。買い目ファイルは書き換えずにこちらで外す"""
-    inv = load_json(OUTPUT_DIR / date / "invalidated.json") or {}
-    return {label: r.get("reason", "") for label, r in inv.get("races", {}).items()}
-
-
 def settle_for_date(date: str) -> bool:
     """1日分を精算する。次の場合は精算せず、理由を残す（払戻0円・不的中にしない）:
     - 無効レース（invalidated.json）
@@ -277,7 +272,7 @@ def settle_for_date(date: str) -> bool:
     if results is None:
         print(f"  {date}: race_results.json なし（出走の確認ができない）→ スキップ")
         return False
-    invalid = load_invalidated(date)
+    invalid = load_invalidated(date, OUTPUT_DIR)  # 買い目ファイルは書き換えず、ここで外す
 
     n_pending = 0
     for label, race in bets["races"].items():
@@ -346,7 +341,7 @@ def cmd_report(args):
             continue
         if bets.get("settled"):
             n_settled_dates += 1
-        invalid = load_invalidated(date)  # 精算前でも無効レースは集計から外す
+        invalid = load_invalidated(date, OUTPUT_DIR)  # 精算前でも無効レースは集計から外す
         for label, race in bets["races"].items():
             if label in invalid or race.get("void"):
                 voided.append((date, label, invalid.get(label) or race.get("void")))

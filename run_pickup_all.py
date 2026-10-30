@@ -19,6 +19,7 @@ from scraper import (
     load_env, load_cookies, save_cookies, is_logged_in, login,
     get_race_ids, human_sleep, human_browse, _random_scroll, is_ip_blocked,
 )
+from data_quality import build_quality, load_index_sources
 from race_pickup import (scrape_shutuba, scrape_data_top, score_horses, active_horse_ids,
                          SCORING_VERSION, COLLECTOR_VERSION)
 
@@ -130,6 +131,7 @@ def main():
         sys.exit(1)
 
     triple_df = pd.read_csv(csv_path, encoding="utf-8-sig")
+    index_sources = load_index_sources(date)  # 指数の取得経路（scraper.py が保存。無ければ quality に記録されない）
     logger.info(f"3指数重複馬: {len(triple_df)}頭 / {triple_df.groupby(['開催場','レース番号']).ngroups}レース")
 
     email, password = load_env()
@@ -335,6 +337,7 @@ def main():
                     "scratched_nums": shutuba_data.get("scratched_nums", {}),
                     "horse_name_full": shutuba_data.get("horse_name_full", {}),
                     "collector_version": COLLECTOR_VERSION,
+                    "quality": build_quality(COLLECTOR_VERSION, index_sources, race_label),
                     "horse_id_map": horse_id_map,
                     "position_nums": shutuba_data["position_nums"],
                     "top3_hits": shutuba_data["top3_hits"],

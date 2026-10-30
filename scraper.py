@@ -343,6 +343,8 @@ def parse_rank_html(html: str) -> Optional[pd.DataFrame]:
 #   ページの説明文で確認）、データ無しは「-」「未経験」。代わりの取り方の隠し値は「1000＋指数」。
 # 0 とマイナスは正当な値。INDEX_MAX 以上は隠し値などの読み取り誤りとして異常扱い（200 は異常）。
 INDEX_MAX = 200
+# 指数の読み方の版。読み方を変えたら値を変える（output/{date}/index_sources.json → pickup_scores.json の quality）
+INDEX_READER_VERSION = "画面の値_0とマイナスと*は正常_200以上は異常_20261030夜"
 INDEX_NO_DATA = {"", "-", "−", "－", "未", "未経験"}
 INDEX_TEXT_RE = re.compile(r"(-?\d+(?:\.\d+)?)(\*?)")
 
@@ -396,7 +398,8 @@ def index_read_errors(df: Optional[pd.DataFrame]) -> List[str]:
     return errors
 
 
-def parse_speed_shutuba(page, race_id: str) -> Optional[Dict[str, pd.DataFrame]]:
+def parse_speed_shutuba(page, race_id: str,
+                        errors_out: Optional[Dict[str, List[str]]] = None) -> Optional[Dict[str, pd.DataFrame]]:
     """rf=shutuba_submenu URLから全3指数を一括取得。
     type=rank が未公開(前日等)のときのフォールバック用。
     Returns: {"average": df, "distance": df, "course": df} または None
@@ -418,11 +421,12 @@ def parse_speed_shutuba(page, race_id: str) -> Optional[Dict[str, pd.DataFrame]]
         logger.warning(f"shutuba速度表タイムアウト: {url}")
         return None
 
-    return parse_speed_shutuba_html(page.content(), race_id)
+    return parse_speed_shutuba_html(page.content(), race_id, errors_out)
 
 
-def parse_speed_shutuba_html(html: str, race_id: str = "") -> Optional[Dict[str, pd.DataFrame]]:
-    """parse_speed_shutuba の HTML 解析部分。指数に取得異常があるモードは結果に含めない"""
+def parse_speed_shutuba_html(html: str, race_id: str = "",
+                             errors_out: Optional[Dict[str, List[str]]] = None) -> Optional[Dict[str, pd.DataFrame]]:
+    """parse_speed_shutuba の HTML 解析部分。指数に取得異常があるモードは結果に含めず、errors_out に記録する"""
     url = SPEED_URL_BASE.format(race_id=race_id)
     soup = BeautifulSoup(html, "html.parser")
 
@@ -504,6 +508,8 @@ def parse_speed_shutuba_html(html: str, race_id: str = "") -> Optional[Dict[str,
     result = {}
     for key, val_key in [("average", "avg"), ("distance", "dist"), ("course", "crs")]:
         if read_errors.get(val_key):
+            if errors_out is not None:
+                errors_out[key] = read_errors[val_key]
             logger.error(f"shutuba: {MODES[key]} の指数に取得異常 {read_errors[val_key][:5]} → このモードは使わない ({race_id})")
             continue
         if any(h[val_key] for h in horses):
@@ -879,6 +885,7 @@ def main():
         all_summaries: Dict[str, Dict] = {}
         # 全場 3指数重複馬の行リスト
         triple_rows: List[dict] = []
+        index_sources: Dict[str, dict] = {}  # label -> 指数の種類ごとの取得経路と取得異常
         total_fail_count = 0  # type=rank・shutuba 両方失敗した回数（cookie切れ検知用）
 
         for race in races:
@@ -888,11 +895,15 @@ def main():
             logger.info(f"処理中: {label} ({race_id})")
 
             dfs: Dict[str, Optional[pd.DataFrame]] = {}
+            sources: Dict[str, str] = {}
+            read_errors: Dict[str, List[str]] = {}
 
             for mode_key, mode_label in MODES.items():
                 try:
                     df = parse_speed_table(page, race_id, mode_key)
                     dfs[mode_key] = df
+                    if df is not None:
+                        sources[mode_key] = "type=rank"
                     if df is None:
                         logger.warning(f"{label} {mode_label}: データなし")
                 except Exception as e:
@@ -906,7 +917,7 @@ def main():
                 logger.warning(f"type=rank 未公開 → shutuba fallback: {race_id}")
                 shutuba_ok = False
                 try:
-                    fallback = parse_speed_shutuba(page, race_id)
+                    fallback = parse_speed_shutuba(page, race_id, read_errors)
                     if fallback:
                         # 取得頭数チェック（最初のdfの行数）。3頭以下はプレビュー版で破棄
                         first_df = next(iter(fallback.values()))
@@ -915,6 +926,8 @@ def main():
                             logger.warning(f"{label} shutuba fallback {n_horses}頭 = プレビュー版疑い → 破棄")
                         else:
                             dfs.update(fallback)
+                            for k in fallback:
+                                sources[k] = "代わり(shutuba_submenu)"
                             got = sum(1 for v in dfs.values() if v is not None)
                             logger.info(f"{label}: shutuba fallback で {got}モード取得 ({n_horses}頭)")
                             shutuba_ok = True
@@ -940,6 +953,12 @@ def main():
                 if bad:
                     logger.error(f"{label} {MODES[k]}: 指数に取得異常 {bad[:5]} → このモードは使わない")
                     dfs[k] = None
+                    read_errors[k] = bad
+            index_sources[label] = {
+                "race_id": race_id,
+                "modes": {MODES[k]: ("取得異常" if k in read_errors else sources.get(k, "なし")) for k in MODES},
+                "read_errors": {MODES[k]: v for k, v in read_errors.items()},
+            }
 
             # mode_label をキーに変換して蓄積
             all_data.setdefault(venue, {})[label] = {
@@ -976,6 +995,14 @@ def main():
             logger.info(f"保存: {triple_path} ({len(triple_rows)}行)")
         else:
             logger.info("3指数重複馬: 該当レースなし")
+
+        # 指数の取得経路の記録（run_pickup_all.py が pickup_scores.json の quality に写す）
+        src_path = out_dir / "index_sources.json"
+        with open(src_path, "w", encoding="utf-8") as f:
+            json.dump({"date": date, "index_reader_version": INDEX_READER_VERSION,
+                       "races": index_sources}, f, ensure_ascii=False, indent=1)
+        n_err = sum(1 for r in index_sources.values() if r["read_errors"])
+        logger.info(f"保存: {src_path}（{len(index_sources)}レース・取得異常{n_err}レース）")
 
         logger.info("完了")
 
