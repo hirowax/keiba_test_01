@@ -12,7 +12,7 @@ import logging
 import re
 from pathlib import Path
 from datetime import datetime
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Tuple
 
 from dotenv import load_dotenv
 import os
@@ -295,7 +295,18 @@ def parse_speed_table(page, race_id: str, mode: str) -> Optional[pd.DataFrame]:
     except PlaywrightTimeoutError:
         logger.warning(f"テーブル待機タイムアウト: {url}")
 
-    html = page.content()
+    df = parse_rank_html(page.content())
+    if df is None:
+        return None
+    if not _is_valid_speed_df(df):
+        # 会員プラン表などが返ってきた場合
+        logger.warning(f"指数ランキング表ではないコンテンツを取得: {url}")
+        return None
+    return df
+
+
+def parse_rank_html(html: str) -> Optional[pd.DataFrame]:
+    """type=rank ページの HTML からランキング表を DataFrame にする（ランキング表かの判定は呼び出し側）"""
     soup = BeautifulSoup(html, "html.parser")
 
     tables = soup.find_all("table")
@@ -323,50 +334,66 @@ def parse_speed_table(page, race_id: str, mode: str) -> Optional[pd.DataFrame]:
     headers += [f"col{i}" for i in range(len(headers), max_cols)]
     for row in data:
         row += [""] * (max_cols - len(row))
-    df = pd.DataFrame(data, columns=headers[:max_cols])
-
-    # 会員プラン表などが返ってきた場合は None
-    if not _is_valid_speed_df(df):
-        logger.warning(f"指数ランキング表ではないコンテンツを取得: {url}")
-        return None
-    return df
+    return pd.DataFrame(data, columns=headers[:max_cols])
 
 
-# タイム指数として妥当な範囲。外れた値は読み取りの誤りとみなす（2026-10-30 指数1000事故）
-INDEX_MIN, INDEX_MAX = 0, 200
+# タイム指数の値の読み取り（2026-10-30 指数1000事故・同日夜の範囲検査の誤りを受けて）
+# 実データ（output/*.xlsx 2025-09〜2026-10 のランキング98,404件）で確認した値の形:
+#   数字（マイナスあり。最小 -720・最大 127）、近走平均だけ末尾に「*」（5走分のデータが無い馬。
+#   ページの説明文で確認）、データ無しは「-」「未経験」。代わりの取り方の隠し値は「1000＋指数」。
+# 0 とマイナスは正当な値。INDEX_MAX 以上は隠し値などの読み取り誤りとして異常扱い（200 は異常）。
+INDEX_MAX = 200
+INDEX_NO_DATA = {"", "-", "−", "－", "未", "未経験"}
+INDEX_TEXT_RE = re.compile(r"(-?\d+(?:\.\d+)?)(\*?)")
 
 
-def speed_cell_score(cell) -> str:
-    """shutuba_submenu の指数セルから「画面に見えている」指数を返す。無ければ ""。
+def classify_index_text(text) -> Tuple[str, Optional[float]]:
+    """指数セルの文字を ("ok", 値) / ("none", None)=正当なデータ無し / ("error", 値か None)=取得異常 に分ける"""
+    text = re.sub(r"\s+", "", "" if text is None else str(text))
+    if text in INDEX_NO_DATA or text.lower() == "nan":
+        return "none", None
+    m = INDEX_TEXT_RE.fullmatch(text)
+    if not m:
+        return "error", None
+    v = float(m.group(1))
+    if v >= INDEX_MAX:
+        return "error", v
+    return "ok", v
+
+
+def speed_cell_value(cell) -> Tuple[str, str]:
+    """shutuba_submenu の指数セルから「画面に見えている」文字を読み、(区分, 文字) を返す。
 
     セルには並び替え用の隠し値 span.Sort_Function_Data_Hidden があり、中身は「1000＋指数」
     （指数83 → "1083"、データ無し → "1000"）。2026-10-30 まで隠し値をそのまま指数として読み、
     データ無しの馬が指数1000で1位扱いになっていた。隠し値は使わず、見えている文字だけを読む。
-    見えている文字が "-"・"未"・空ならデータ無し。
+    区分は classify_index_text と同じ。異常を空文字にして消さないこと（呼び出し側でモードごと捨てる）。
     """
     if cell is None:
-        return ""
+        return "none", ""
     cell = BeautifulSoup(str(cell), "html.parser")  # 元の soup を壊さない
     for hidden in cell.find_all(class_="Sort_Function_Data_Hidden"):
         hidden.decompose()
     text = re.sub(r"\s+", "", cell.get_text())
-    if not re.fullmatch(r"\d+(\.\d+)?", text):
-        return ""
-    if not (INDEX_MIN < float(text) < INDEX_MAX):
-        logger.error(f"指数が範囲外: {text}（読み取り誤りの可能性）")
-        return ""
-    return text
+    kind, _ = classify_index_text(text)
+    return kind, ("" if kind == "none" else text)
 
 
-def index_out_of_range(df: Optional[pd.DataFrame]) -> List[float]:
-    """ランキング表の指数列に範囲外の値があれば返す（空なら正常）"""
+def index_read_errors(df: Optional[pd.DataFrame]) -> List[str]:
+    """ランキング表の指数列から取得異常の文字を返す（空なら正常）。順位列が「N位」「-」の行だけを見る"""
     if df is None:
         return []
     col = next((c for c in df.columns if "指数" in c), None)
     if col is None:
-        return []
-    vals = pd.to_numeric(df[col], errors="coerce").dropna()
-    return [float(v) for v in vals if not (INDEX_MIN < v < INDEX_MAX)]
+        return ["指数列なし"]
+    rank_col = df.columns[0]
+    errors = []
+    for rank, text in zip(df[rank_col].astype(str), df[col]):
+        if not re.fullmatch(r"\d+位|-", rank.strip()):
+            continue  # 2段目の見出し行（5走前…）など
+        if classify_index_text(text)[0] == "error":
+            errors.append(str(text))
+    return errors
 
 
 def parse_speed_shutuba(page, race_id: str) -> Optional[Dict[str, pd.DataFrame]]:
@@ -391,7 +418,12 @@ def parse_speed_shutuba(page, race_id: str) -> Optional[Dict[str, pd.DataFrame]]
         logger.warning(f"shutuba速度表タイムアウト: {url}")
         return None
 
-    html = page.content()
+    return parse_speed_shutuba_html(page.content(), race_id)
+
+
+def parse_speed_shutuba_html(html: str, race_id: str = "") -> Optional[Dict[str, pd.DataFrame]]:
+    """parse_speed_shutuba の HTML 解析部分。指数に取得異常があるモードは結果に含めない"""
+    url = SPEED_URL_BASE.format(race_id=race_id)
     soup = BeautifulSoup(html, "html.parser")
 
     def _cell_name(cell) -> str:
@@ -413,6 +445,7 @@ def parse_speed_shutuba(page, race_id: str) -> Optional[Dict[str, pd.DataFrame]]
         return None
 
     horses = []
+    read_errors: Dict[str, List[str]] = {}  # 指数の取得異常（モード別）。そのモードは使わない
     for tr in table.find_all("tr"):
         # 馬番セルの有無でデータ行を判定
         num_cell  = tr.find(class_=re.compile(r"sk__umaban|UmaBan"))
@@ -430,48 +463,49 @@ def parse_speed_shutuba(page, race_id: str) -> Optional[Dict[str, pd.DataFrame]]
         dist_cell = tr.find(class_="sk__max_distance_index")
         crs_cell  = tr.find(class_="sk__max_course_index")
 
-        horses.append({
-            "num":  num,
-            "name": name,
-            "avg":  speed_cell_score(avg_cell),
-            "dist": speed_cell_score(dist_cell),
-            "crs":  speed_cell_score(crs_cell),
-        })
+        h = {"num": num, "name": name}
+        for key, c in (("avg", avg_cell), ("dist", dist_cell), ("crs", crs_cell)):
+            kind, text = speed_cell_value(c)
+            h[key] = text
+            if kind == "error":
+                read_errors.setdefault(key, []).append(f"{num}番:{text or '(数字でない)'}")
+        horses.append(h)
 
     if not horses:
         logger.warning(f"shutuba: 馬データ取得失敗 ({url})")
         return None
 
     def make_rank_df(horses, val_key):
-        """指定列でソートしてtype=rank形式のDataFrameを作る"""
+        """指定列でソートしてtype=rank形式のDataFrameを作る。
+        0・マイナスも正当な指数として順位を付ける。データ無しは末尾で順位「-」。
+        指数の文字は画面のまま（近走平均の「*」も残す。type=rank 経路と同じ扱いにするため）"""
         scored = []
         for h in horses:
-            v = h[val_key]
-            try:
-                scored.append((float(v), h))
-            except (ValueError, TypeError):
-                scored.append((-1.0, h))  # 値なしは末尾
-        scored.sort(key=lambda x: -x[0])
+            kind, v = classify_index_text(h[val_key])
+            scored.append((v if kind == "ok" else None, h))
+        scored.sort(key=lambda x: (x[0] is None, -(x[0] or 0)))
 
         rows_out = []
         rank = 1
         prev_score = None
-        rank_counter = 0
-        for score, h in scored:
-            rank_counter += 1
-            if score != prev_score and score > 0:
+        for rank_counter, (score, h) in enumerate(scored, start=1):
+            if score is None:
+                rows_out.append(["-", "", h["num"], "", h["name"], "-"])
+                continue
+            if score != prev_score:
                 rank = rank_counter
             prev_score = score
-            rank_str = f"{rank}位" if score > 0 else "-"
             # type=rank形式: [順位, 枠(空), 馬番, 印(空), 馬名, 指数]
-            idx_val = str(int(score)) if score > 0 else "-"
-            rows_out.append([rank_str, "", h["num"], "", h["name"], idx_val])
+            rows_out.append([f"{rank}位", "", h["num"], "", h["name"], h[val_key]])
         headers = ["順位", "枠", "馬番", "印", "馬名", "指数"]
         return pd.DataFrame(rows_out, columns=headers)
 
     # 各モードのデータが1頭以上あれば結果に含める
     result = {}
     for key, val_key in [("average", "avg"), ("distance", "dist"), ("course", "crs")]:
+        if read_errors.get(val_key):
+            logger.error(f"shutuba: {MODES[key]} の指数に取得異常 {read_errors[val_key][:5]} → このモードは使わない ({race_id})")
+            continue
         if any(h[val_key] for h in horses):
             result[key] = make_rank_df(horses, val_key)
 
@@ -900,11 +934,11 @@ def main():
                     browser.close()
                     return
 
-            # 指数が範囲外のモードは読み取り誤りとして捨てる（3指数重複馬の判定に使わない）
+            # 指数に取得異常があるモードは捨てる（3指数重複馬の判定に使わない）。0・マイナスは正当な値
             for k in list(dfs):
-                bad = index_out_of_range(dfs[k])
+                bad = index_read_errors(dfs[k])
                 if bad:
-                    logger.error(f"{label} {MODES[k]}: 指数が範囲外 {bad[:5]} → このモードは使わない")
+                    logger.error(f"{label} {MODES[k]}: 指数に取得異常 {bad[:5]} → このモードは使わない")
                     dfs[k] = None
 
             # mode_label をキーに変換して蓄積
