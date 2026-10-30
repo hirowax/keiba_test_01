@@ -16,7 +16,8 @@
      },
      "cost": 100,
      "return": 130,
-     "hit": true
+     "hit": true,
+     "status": "settled"
     },
     "M2": {
      "name": "◎単勝",
@@ -26,7 +27,8 @@
      },
      "cost": 100,
      "return": 180,
-     "hit": true
+     "hit": true,
+     "status": "settled"
     },
     "M3": {
      "name": "◎-○ワイド",
@@ -37,7 +39,8 @@
      },
      "cost": 100,
      "return": 0,
-     "hit": false
+     "hit": false,
+     "status": "settled"
     },
     "M4": {
      "name": "◎軸3連複(紐2頭流し)",
@@ -54,7 +57,8 @@
      },
      "cost": 300,
      "return": 0,
-     "hit": false
+     "hit": false,
+     "status": "settled"
     }
    }
   },
@@ -71,7 +75,8 @@
      },
      "cost": 100,
      "return": 0,
-     "hit": false
+     "hit": false,
+     "status": "settled"
     },
     "M2": {
      "name": "◎単勝",
@@ -81,7 +86,8 @@
      },
      "cost": 100,
      "return": 0,
-     "hit": false
+     "hit": false,
+     "status": "settled"
     },
     "M3": {
      "name": "◎-○ワイド",
@@ -92,7 +98,8 @@
      },
      "cost": 100,
      "return": 0,
-     "hit": false
+     "hit": false,
+     "status": "settled"
     },
     "M4": {
      "name": "◎軸3連複(紐2頭流し)",
@@ -113,7 +120,8 @@
      },
      "cost": 600,
      "return": 0,
-     "hit": false
+     "hit": false,
+     "status": "settled"
     }
    }
   }
@@ -126,5 +134,5 @@
   "阪神12R": "no_axis(score<8 or unscored)",
   "阪神8R": "no_axis(score<8 or unscored)"
  },
- "settled_at": "2026-10-21T10:37:31+09:00"
+ "settled_at": "2026-10-30T23:52:21+09:00"
 }
