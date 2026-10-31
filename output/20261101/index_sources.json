@@ -1,0 +1,222 @@
+{
+ "date": "20261101",
+ "index_reader_version": "画面の値_0とマイナスと*は正常_200以上は異常_20261030夜",
+ "races": {
+  "東京1R": {
+   "race_id": "202605041101",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "東京2R": {
+   "race_id": "202605041102",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "東京3R": {
+   "race_id": "202605041103",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "東京4R": {
+   "race_id": "202605041104",
+   "modes": {
+    "近走平均": "なし",
+    "当該距離": "なし",
+    "当該コース": "なし"
+   },
+   "read_errors": {}
+  },
+  "東京5R": {
+   "race_id": "202605041105",
+   "modes": {
+    "近走平均": "なし",
+    "当該距離": "なし",
+    "当該コース": "なし"
+   },
+   "read_errors": {}
+  },
+  "東京6R": {
+   "race_id": "202605041106",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "東京7R": {
+   "race_id": "202605041107",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "東京8R": {
+   "race_id": "202605041108",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "東京9R": {
+   "race_id": "202605041109",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "東京10R": {
+   "race_id": "202605041110",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "東京11R": {
+   "race_id": "202605041111",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "東京12R": {
+   "race_id": "202605041112",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "京都1R": {
+   "race_id": "202608041101",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "京都2R": {
+   "race_id": "202608041102",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "京都3R": {
+   "race_id": "202608041103",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "京都4R": {
+   "race_id": "202608041104",
+   "modes": {
+    "近走平均": "なし",
+    "当該距離": "なし",
+    "当該コース": "なし"
+   },
+   "read_errors": {}
+  },
+  "京都5R": {
+   "race_id": "202608041105",
+   "modes": {
+    "近走平均": "なし",
+    "当該距離": "なし",
+    "当該コース": "なし"
+   },
+   "read_errors": {}
+  },
+  "京都6R": {
+   "race_id": "202608041106",
+   "modes": {
+    "近走平均": "なし",
+    "当該距離": "なし",
+    "当該コース": "なし"
+   },
+   "read_errors": {}
+  },
+  "京都7R": {
+   "race_id": "202608041107",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "京都8R": {
+   "race_id": "202608041108",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "京都9R": {
+   "race_id": "202608041109",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "京都10R": {
+   "race_id": "202608041110",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "京都11R": {
+   "race_id": "202608041111",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  },
+  "京都12R": {
+   "race_id": "202608041112",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {}
+  }
+ }
+}
