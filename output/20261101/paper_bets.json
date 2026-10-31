@@ -1,0 +1,163 @@
+{
+ "date": "20261101",
+ "generated_at": "2026-10-31T20:17:28+09:00",
+ "settled": false,
+ "races": {
+  "京都8R": {
+   "axis_num": 4,
+   "axis_name": "ニホンピロロジャー",
+   "score": 8,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "4": 100
+     },
+     "cost": 100
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "4": 100
+     },
+     "cost": 100
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "skip_reason": "no_o_candidate",
+     "bets": {},
+     "cost": 0
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      3,
+      7
+     ],
+     "bets": {
+      "3-4-7": 100
+     },
+     "cost": 100
+    }
+   }
+  },
+  "東京6R": {
+   "axis_num": 12,
+   "axis_name": "ゴーゴーパンチ",
+   "score": 10,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "12": 100
+     },
+     "cost": 100
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "12": 100
+     },
+     "cost": 100
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 4,
+     "bets": {
+      "4-12": 100
+     },
+     "cost": 100
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      2,
+      4,
+      9,
+      14,
+      15
+     ],
+     "bets": {
+      "2-4-12": 100,
+      "2-9-12": 100,
+      "2-12-14": 100,
+      "2-12-15": 100,
+      "4-9-12": 100,
+      "4-12-14": 100,
+      "4-12-15": 100,
+      "9-12-14": 100,
+      "9-12-15": 100,
+      "12-14-15": 100
+     },
+     "cost": 1000
+    }
+   }
+  },
+  "東京8R": {
+   "axis_num": 6,
+   "axis_name": "イブキ",
+   "score": 11,
+   "menus": {
+    "M1": {
+     "name": "◎複勝",
+     "type": "fukusho",
+     "bets": {
+      "6": 100
+     },
+     "cost": 100
+    },
+    "M2": {
+     "name": "◎単勝",
+     "type": "tansho",
+     "bets": {
+      "6": 100
+     },
+     "cost": 100
+    },
+    "M3": {
+     "name": "◎-○ワイド",
+     "type": "wide",
+     "o_num": 7,
+     "bets": {
+      "6-7": 100
+     },
+     "cost": 100
+    },
+    "M4": {
+     "name": "◎軸3連複(紐2頭流し)",
+     "type": "trio",
+     "himo": [
+      1,
+      3,
+      4,
+      7
+     ],
+     "bets": {
+      "1-3-6": 100,
+      "1-4-6": 100,
+      "1-6-7": 100,
+      "3-4-6": 100,
+      "3-6-7": 100,
+      "4-6-7": 100
+     },
+     "cost": 600
+    }
+   }
+  }
+ },
+ "skipped_races": {
+  "京都11R": "no_axis(score<8 or unscored)",
+  "京都12R": "no_axis(score<8 or unscored)",
+  "東京12R": "no_axis(score<8 or unscored)",
+  "東京7R": "no_axis(score<8 or unscored)",
+  "東京9R": "no_axis(score<8 or unscored)"
+ }
+}
