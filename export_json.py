@@ -35,6 +35,14 @@ def export_triple(date: str):
     print(f"  [triple] {len(records)}頭 → {out_path.name}")
 
 
+def index_number(v):
+    """サマリーの指数を数値にする（「96*」→96.0。数字でなければ ""）"""
+    if isinstance(v, (int, float)):
+        return v
+    m = re.fullmatch(r"(-?\d+(?:\.\d+)?)\*?", str(v).strip())
+    return float(m.group(1)) if m else ""
+
+
 def export_summary(date: str):
     xlsx_path = SUMMARY_DIR / f"{date}.xlsx"
     out_path = SUMMARY_DIR / f"{date}.json"
@@ -79,7 +87,7 @@ def export_summary(date: str):
                 current_section = "course"; continue
             elif "3指数すべて" in cell0:
                 current_section = "triple"; continue
-            elif cell0 in ("セクション", "該当なし", "データなし"):
+            elif cell0 in ("セクション", "該当なし", "データなし", "順位を使えない"):
                 continue
 
             num = str(row[1]).strip() if pd.notna(row[1]) else ""
@@ -90,16 +98,21 @@ def export_summary(date: str):
             v_avg  = row[3] if pd.notna(row[3]) else ""
             v_dist = row[4] if pd.notna(row[4]) else ""
             v_crs  = row[5] if pd.notna(row[5]) else ""
+            # 順位列（2026-11-02〜。ページの順位。それより前のサマリーには無い）
+            rank = str(row[6]).strip() if len(row) > 6 and pd.notna(row[6]) else ""
 
             entry = {"num": num, "name": name,
                      "avg": v_avg, "dist": v_dist, "crs": v_crs}
+            if rank:
+                entry["rank"] = rank
 
+            # val は数値（「96*」→96）。画面の文字は avg/dist/crs に残す
             if current_section == "average":
-                entry["val"] = v_avg; current_race["average"].append(entry)
+                entry["val"] = index_number(v_avg); current_race["average"].append(entry)
             elif current_section == "distance":
-                entry["val"] = v_dist; current_race["distance"].append(entry)
+                entry["val"] = index_number(v_dist); current_race["distance"].append(entry)
             elif current_section == "course":
-                entry["val"] = v_crs; current_race["course"].append(entry)
+                entry["val"] = index_number(v_crs); current_race["course"].append(entry)
             elif current_section == "triple":
                 current_race["triple"].append(entry)
 

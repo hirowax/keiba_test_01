@@ -655,7 +655,9 @@ function renderVenuePanel(venue, triple, summary) {
 
   return labels.map(label => {
     const { scored, rdata } = raceMap[label];
-    const singles = singleMap[`${venue}_${label.replace(venue,'')}`] || [];
+    // buildSingleTopMap のキーは `${venue}_${summary の label}`（label は「東京9R」の形）。
+    // 2026-04-11〜11-02 は「東京_9R」で探していて一致せず、単指数1位が表示されていなかった
+    const singles = singleMap[`${venue}_${label}`] || [];
     return renderRaceCard(label, venue, scored, singles, rdata);
   }).join('');
 }
@@ -757,18 +759,23 @@ function buildSingleTopMap(summary) {
   for (const [venue, races] of Object.entries(summary)) {
     for (const race of races) {
       const key = `${venue}_${race.label}`;
-      const tripleNames = new Set((race.triple || []).map(h => h.name));
+      const tripleNums = new Set((race.triple || []).map(h => String(h.num)));
       const seen = new Set();
       const singles = [];
       for (const cat of [{key:'average',label:'近走平均'},{key:'distance',label:'当該距離'},{key:'course',label:'当該コース'}]) {
-        const top = (race[cat.key] || [])[0];
-        if (!top || tripleNames.has(top.name)) continue;
-        if (seen.has(top.name)) {
-          singles.find(s => s.name === top.name)?.strong.push(cat.label);
-          continue;
+        // 1位の馬（同率1位は全員）。2026-11-02 より前のサマリーには順位が無いので先頭の1頭
+        const list = race[cat.key] || [];
+        const tops = list.some(h => h.rank) ? list.filter(h => h.rank === '1位') : list.slice(0, 1);
+        for (const top of tops) {
+          if (tripleNums.has(String(top.num))) continue;
+          const key = String(top.num);
+          if (seen.has(key)) {
+            singles.find(s => String(s.num) === key)?.strong.push(cat.label);
+            continue;
+          }
+          seen.add(key);
+          singles.push({ num: top.num, name: top.name, strong: [cat.label] });
         }
-        seen.add(top.name);
-        singles.push({ num: top.num, name: top.name, strong: [cat.label] });
       }
       if (singles.length) map[key] = singles;
     }

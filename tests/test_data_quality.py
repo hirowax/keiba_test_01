@@ -12,10 +12,11 @@ from bs4 import BeautifulSoup
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from data_quality import build_quality, race_quality_issues  # noqa: E402
-from scraper import INDEX_READER_VERSION, parse_speed_shutuba_html  # noqa: E402
+from scraper import CANDIDATE_RULE_VERSION, INDEX_READER_VERSION, parse_speed_shutuba_html  # noqa: E402
 
 SOURCES = {
     "index_reader_version": INDEX_READER_VERSION,
+    "candidate_rule_version": CANDIDATE_RULE_VERSION,
     "races": {"東京7R": {"modes": {"近走平均": "type=rank", "当該距離": "type=rank", "当該コース": "type=rank"},
                          "read_errors": {}}},
 }
@@ -29,7 +30,15 @@ class QualityTest(unittest.TestCase):
     def test_collector_version_alone_is_not_enough(self):
         """10/31 のように馬番の修正後でも、指数の読み方が未記録なら使わない"""
         issues = race_quality_issues({"collector_version": "v"})
-        self.assertEqual(issues, ["指数の読み方が未記録（2026-10-30 夜の修正前）"])
+        self.assertEqual(issues, ["指数の読み方が未記録（2026-10-30 夜の修正前）",
+                                  "候補の選び方が修正前（「*」付きを外す・同じ値は並び順。2026-11-02 より前）"])
+
+    def test_old_candidate_rule(self):
+        """11/1 のように指数の読み方が記録されていても、候補の選び方が修正前なら使わない"""
+        old = {k: v for k, v in SOURCES.items() if k != "candidate_rule_version"}
+        rdata = {"collector_version": "v", "quality": build_quality("v", old, "東京7R")}
+        self.assertEqual(race_quality_issues(rdata),
+                         ["候補の選び方が修正前（「*」付きを外す・同じ値は並び順。2026-11-02 より前）"])
 
     def test_race_missing_from_index_sources(self):
         q = build_quality("v", SOURCES, "京都1R")
