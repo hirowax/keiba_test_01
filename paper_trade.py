@@ -261,8 +261,9 @@ def menu_horse_nums(menu: dict) -> set:
     return {n for key in menu.get("bets", {}) for n in str(key).split("-")}
 
 
-def settle_menu(menu: dict, race_payout: dict) -> dict:
-    """1メニュー分を精算し return/hit/status を書き込んで返す（払戻・出走の確認は呼び出し側）"""
+def settle_menu(menu: dict, race_payout: dict, refunded: set = frozenset()) -> dict:
+    """1メニュー分を精算し return/hit/status を書き込んで返す（払戻・出走の確認は呼び出し側）。
+    refunded: 返還の馬番（文字列）。その馬を含む組み合わせは賭け金をそのまま返す（的中ではない）"""
     if not menu.get("bets"):
         menu["return"] = 0
         menu["hit"] = False
@@ -272,22 +273,28 @@ def settle_menu(menu: dict, race_payout: dict) -> dict:
     mtype = menu["type"]
     ret = 0
     hit = False
+    refunded_keys = [k for k in menu["bets"] if set(str(k).split("-")) & set(refunded)]
+    for k in refunded_keys:
+        ret += menu["bets"][k]
+    if refunded_keys:
+        menu["refunded"] = refunded_keys
+    bets_left = {k: v for k, v in menu["bets"].items() if k not in refunded_keys}
 
     if mtype in ("fukusho", "tansho"):
         table = race_payout.get(mtype, {})
-        for num in menu["bets"]:
+        for num in bets_left:
             if num in table:
                 ret += table[num]
                 hit = True
     elif mtype == "wide":
         table = race_payout.get("wide", {})
-        for key in menu["bets"]:
+        for key in bets_left:
             if key in table:
                 ret += table[key]
                 hit = True
     elif mtype == "trio":
         table = race_payout.get("trio", {})
-        bet_keys = set(menu["bets"].keys())
+        bet_keys = set(bets_left)
         for win_combo, yen in table.items():
             norm = combo_key([int(x) for x in win_combo.split("-")])
             if norm in bet_keys:
@@ -313,8 +320,9 @@ def settle_for_date(date: str) -> bool:
     """1日分を精算する。次の場合は精算せず、理由を残す（払戻0円・不的中にしない）:
     - 無効レース（invalidated.json）
     - そのレースの払戻が payouts_jra.json に無い
-    - 買い目の馬番が結果データに無い（取消・除外・競走中止・失格のどれか。結果データは
-      着順が数字の馬しか保存しないため区別できない。返還の可能性があるので要確認として残す）
+    - 買い目の馬番が結果データに無く、返還の記録（payouts_jra.json の refund）にも、
+      中止・失格の記録（race_nonfinishers.json）にも無い（区別できないので要確認として残す）
+    返還の馬を含む組み合わせは賭け金をそのまま返す（menu["refunded"] に記録）。中止・失格の馬は不的中。
     全レースが精算済み・無効・買い目なしのどれかになった日だけ settled=True にする。
     """
     bets_path = OUTPUT_DIR / date / "paper_bets.json"
@@ -331,6 +339,7 @@ def settle_for_date(date: str) -> bool:
         print(f"  {date}: race_results.json なし（出走の確認ができない）→ スキップ")
         return False
     invalid = load_invalidated(date, OUTPUT_DIR)  # 買い目ファイルは書き換えず、ここで外す
+    nonfinishers = load_json(OUTPUT_DIR / date / "race_nonfinishers.json") or {}
 
     n_pending = 0
     for label, race in bets["races"].items():
@@ -342,19 +351,26 @@ def settle_for_date(date: str) -> bool:
         race.pop("void", None)
         race_payout = payouts.get(label)
         runners = {str(h.get("num")) for h in results.get(label, [])}
+        # 返還（取消・除外）の馬番は JRA 払戻ページの「返還」欄から（2026-11-03〜の取得。古い払戻ファイルには無い）
+        refund_nums = {str(n) for n in ((race_payout or {}).get("refund") or {}).get("umaban", [])}
+        nonfin = {str(o["num"]): o["status"] for o in nonfinishers.get(label, [])}
         for menu in race["menus"].values():
             if not menu.get("bets"):
                 settle_menu(menu, {})
             elif not race_payout or not race_payout.get("tansho"):
                 mark_unsettled(menu, "pending_no_payout", "このレースの払戻データが無い")
                 n_pending += 1
-            elif menu_horse_nums(menu) - runners:
-                missing = sorted(menu_horse_nums(menu) - runners, key=int)
-                mark_unsettled(menu, "pending_not_in_results",
-                               f"結果データに馬番{missing}が無い（取消・除外・競走中止・失格のいずれか。返還の可能性あり）")
-                n_pending += 1
             else:
-                settle_menu(menu, race_payout)
+                missing = menu_horse_nums(menu) - runners
+                refunded = {n for n in missing if n in refund_nums}
+                ran = {n for n in missing - refunded if nonfin.get(n) in ("中止", "失格")}
+                unknown = sorted(missing - refunded - ran, key=int)
+                if unknown:
+                    mark_unsettled(menu, "pending_not_in_results",
+                                   f"結果データに馬番{unknown}が無く、返還の記録も中止・失格の記録も無い（返還の可能性あり）")
+                    n_pending += 1
+                else:
+                    settle_menu(menu, race_payout, refunded)
 
     bets["settled"] = n_pending == 0
     bets["settled_at"] = datetime.now().astimezone().isoformat(timespec="seconds")
