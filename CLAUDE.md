@@ -5,29 +5,90 @@
 netkeiba のタイム指数（近走平均・当該距離・当該コース）を自動取得し、
 3指数すべてでトップ3に入る馬をスコアリングしてスマホで確認できる静的Webアプリ。
 
-- **データ取得**: Playwright でログイン → speed.html スクレイプ（ローカルMacのみ）
-- **スコアリング**: 3指数重複馬 × 加点要素（下記）
-- **公開**: GitHub push → GitHub Pages 自動更新（コールドスタートなし・完全無料）
-- **URL**: `https://hirowax.github.io/keiba_test_01/`
+- **データ取得**: Playwright（cookies でログイン済み）→ speed.html スクレイプ（ローカルMacのみ）
+- **スコアリング**: 3指数すべてでトップ3の馬 × 加点要素（下記）
+- **公開**: GitHub push → GitHub Pages 自動更新 `https://hirowax.github.io/keiba_test_01/`
 
 ---
 
-## データ整合性ルール（2026-10-30 の取得ミス2件を受けて・最優先で守る）
+## データ整合性ルール（最優先で守る）
 
-2026-10-30 に「枠番を馬番として読んでいた」「指数の隠し値（1000＋指数）を指数として読んでいた」の2件が見つかった。
-どちらも実ページを確かめずに書いた取り方が原因。経緯・影響は `docs/incident_umaban_20261030.md`。以下は恒久ルール。
+2026-10-30 に「枠番を馬番として読んでいた」「指数の隠し値（1000＋指数）を指数として読んでいた」の2件、
+その修正の中で「近走平均の「*」付きの値が候補から外れていた」問題が見つかった。
+どれも実ページを確かめずに書いた取り方が原因。経緯・影響・残りのタスクは `docs/incident_umaban_20261030.md`。
+以下は恒久ルール（グローバル設定の「確認と報告」「計画・検証の設計」に加えて守る）。
 
-- **要素は明示して取る**: スクレイプはクラス名等で対象セルを特定する。「最初の数字セル」「何列目」等の位置推測や、並び替え用の隠し値は使わない。画面に見えている値を読む。見つからなければそのレース/行を失敗にする。
-- **値の範囲を検査する**: 指数は200以上を異常（0・マイナスは正当な値。実データの最小は-720）、頭数はページの「N頭」と一致など。範囲は実データで決め、根拠を `docs/data_sources.md` に書く。異常は空の値にせず、取得異常として記録してそのモード・レースを使わない。
+### 取得
+- **要素は明示して取る**: クラス名等で対象セルを特定する。「最初の数字セル」「何列目」等の位置推測や、並び替え用の隠し値は使わない。画面に見えている値を読む。見つからなければそのレース/行を失敗にする。
+- **値の範囲を検査する**:
+  - 指数は200以上を異常とする。0・マイナスは正当な値（実データの最小は-720）。
+  - 頭数はページの「N頭」と一致すること。
+  - 範囲は実データで決め、根拠を `docs/data_sources.md` に書く。
+  - 異常は空の値にせず、取得異常として記録し、そのモード・レースを使わない。
 - **重複を黙って捨てない**: 「同じキーは初回のみ登録」は禁止。重複キー・重複IDは異常として検出・記録する。
+- **順位はページの順位を使う**:
+  - 指数のトップN・1位は、表の「順位」列で決める。同じ順位の馬は全員含める。値を数字に変換して並べ直さない。
+  - 候補選び・サマリー・サイト表示（`index.html`）は同じ判定処理を使い、馬は馬番で照合する。
+  - 定義は `docs/index_top3_definition_202611.md`。**2026-11-02 時点で未実装**（残りのタスク7）。今のコードは「*」付きの値を落とし、同じ値の馬を並び順で切っている。
+- 取得している値ごとの取り方と確認状況は `docs/data_sources.md`。**値を新しく取る・取り方を変えたら必ず更新し、実ページか正解データで確認してから使う。**
+
+### 合格の条件とテスト
 - **取得率と正しさは別物**: 新しい取得項目・パーサー変更の合格条件は「件数」ではなく、正解データ（`race_results.json` の馬番・馬ID）との**全頭照合一致**。
 - **推測で閉じない**: 充足率の低下・横ばい等の異常に推測で説明を付けた場合、その推測を検証するまでタスクを閉じない。
-- **テスト必須**: `race_pickup.py` 等のパーサーを変更したら `python3 -m unittest discover -s tests` を通す。多頭数（枠番≠馬番）のケースを必ず含める。
-- **過去データの品質**: `collector_version` が無い pickup_scores.json（修正前）の前走成績による加点・オッズ・人気は研究・検証に使わない。過去ファイルは上書きしない。
-- **造語を使わない**: 報告・ドキュメント・データ値に自作の略語や区分名（例: c1/c2、A群/B群）を使わない。誰が見ても分かる言葉（例: 修正前/修正後）にする。必要ならユーザーと意味を揃えてから使う。
-- **版を分ける**: スコア式（`SCORING_VERSION`）、馬番・馬IDの取り方（`race_pickup.COLLECTOR_VERSION`）、指数の読み方（`scraper.INDEX_READER_VERSION`）は別管理。取り方を変えたら該当する版の値を変える。
-- **品質はレース単位で判定する**: pickup_scores.json の各レースの `quality`（馬番の版・指数の読み方の版・指数の取得経路）と `invalidated.json` を `data_quality.race_quality_issues()` で判定する。版が1つあるだけで使える扱いにしない。研究・閾値調整・精算はこの判定を通す。
-- 取得している値ごとの取り方と確認状況は `docs/data_sources.md`。**値を新しく取る・取り方を変えたら必ず更新し、実ページか正解データで確認してから使う。**
+- **テスト必須**: パーサー・判定処理を変えたら `python3 -m unittest discover -s tests` を通す。多頭数（枠番≠馬番）・同じ順位・「*」付き・0とマイナスの指数を含める。実ページの例は `tests/fixtures/`。
+
+### 版と品質
+- **版を分ける**: 取り方を変えたら該当する版の値を変える。
+  - スコア式: `race_pickup.SCORING_VERSION`（現行 v5）
+  - 馬番・馬IDの取り方: `race_pickup.COLLECTOR_VERSION`
+  - 指数の読み方: `scraper.INDEX_READER_VERSION`
+  - 候補の選び方: 残りのタスク7の実装時に新設する
+- **品質はレース単位で判定する**:
+  - pickup_scores.json の各レースの `quality`（馬番の版・指数の読み方の版・指数の取得経路）と `invalidated.json` を、`data_quality.race_quality_issues()` で判定する。
+  - 版が1つあるだけで使える扱いにしない。研究・閾値調整・精算はこの判定を通す。
+- **修正前のデータ**:
+  - `collector_version` が無い pickup_scores.json（〜2026-10-30）は、前走成績・オッズ・人気が他の馬の値になっている。研究・検証に使わない。
+  - 指数の読み方が記録されていないデータ（〜2026-10-31）は、隠し値・「*」の扱いに誤りがあり得る。
+
+### 過去の記録
+- 過去の pickup_scores.json・paper_bets.json・threshold_config.json・全場_3指数重複馬.csv は上書きしない。修復・再計算の結果は別ファイルにする。
+- 過去日付に `rescore.py` を実行しない（pickup_scores.json を書き換える。既にある候補しか採点し直せないので修復にも使えない）。
+- **事前登録した値・判定基準を、データを見た後に動かさない**（例: `PAPER_TRADE_START = 20260912`）。
+
+### 言葉
+- **造語を使わない**: 報告・ドキュメント・データ値に自作の略語や区分名（例: c1/c2、A群/B群、クリーン窓）を使わない。誰が見ても分かる言葉（例: 修正前/修正後）にする。必要ならユーザーと意味を揃えてから使う。
+
+---
+
+## 過去データでの検証・比較のルール（2026-11-02〜）
+
+成績を集計する前に、`docs/index_top3_definition_202611.md` の形で計画を文書にし、ユーザーの承認を得てから実行する。計画に必ず書くこと:
+- **対象**: 開始日・終了日、使うファイル、対象から外した日と理由。実行時に使ったファイルの一覧を保存する。
+  - 条件にするファイルは、実際の保存状況を確かめてから決める。
+  - `invalidated.json` は無効レースがある日にだけ置く記録なので、必須にしない。
+  - `payouts_jra.json` の有無は、回収率の対象選びにだけ使う。
+- **旧方式の再現**: コミットを指定して元の関数を呼ぶ（書き写さない）。当時の出力（`全場_3指数重複馬.csv` など）と一致するか確かめる。
+- **旧方式の再現が当時の出力と違う場合**: 「当時の候補」と「固定した旧コードで再計算した候補」を区別して報告する。
+- **表の検査**: 当たったレースは除外し、理由別に件数を出す。
+  - 見出し行と馬の行は、決まった形で区別する。保存済みの表には、順位列が「5走前」の見出し行がある。不正な順位の馬の行を、見出し行として読み飛ばさない。
+  - 指数200以上、読めない値
+  - 順位の形式・順序の不整合
+  - 馬番の重複、3指数の欠け
+  - 表の欠け: 頭数ではなく、結果の各馬番が表にあるかで確かめる
+  - 無効レース
+- **照合**: 対象の馬を選んでから結果と照合する。馬番と馬名の両方の一致だけを同じ馬とする（馬名で許すのは空白の違いだけ）。照合できない馬は種類別に件数を出す。
+- **分母と払戻**:
+  - 結果に無い馬には、取消・除外と競走中止・失格が混ざる。`scrape_results.py` が着順が数字でない行を捨てているため。
+    - 取消・除外: 分母から外す。馬券は返還。
+    - 競走中止・失格: 分母に入れ、不的中とする。
+    - 状態が分からない: 推定せず、未確認として件数を出す。
+    - 状態を確かめられない馬が残る集計は、「着順を取得できた馬だけの参考集計」と明記する。
+  - 払戻は JRA 公式（`payouts_jra.json`）で、そのレースのその券種が取れているものだけを使う。取れていないものを0円にしない。
+  - オッズから計算した値は、1着の馬だけに当てはめた参考値として分ける。
+- **点数・🔥**: 修正前のデータの点数は使わない。過去データを作り直してから計算する（残りのタスク8〜10）。
+- **結果の扱い**:
+  - 結果は別の文書に書く。
+  - 定義（何を正しいとするか）は成績で戻さない。成績は「推奨・購入の対象にするか」の判断に使い、その判断の基準も先に決める。
 
 ---
 
@@ -35,64 +96,65 @@ netkeiba のタイム指数（近走平均・当該距離・当該コース）�
 
 ```
 netkeiba/
-├── scraper.py            # タイム指数取得・Excel/CSV出力
-├── race_pickup.py        # レース別スコアリング（shutuba + data_top スクレイプ）
-├── run_pickup_all.py     # 全レース一括ピックアップ実行
-├── scrape_results.py     # レース結果を包括的スクレイプ（当日夜〜翌日実行）
-├── scrape_prev_data.py   # 馬別前走データ収集（horse_db.jsonキャッシュ使用）
-├── rescore.py            # 既存pickup_scores.jsonを再スコアリング（スクレイプ不要）
-├── calibrate_threshold.py # 期待値🔥閾値を過去データから自動キャリブレーション
-├── export_json.py        # CSV/Excel → JSON変換 + dates.json生成（GitHub Pages用）
-├── analyze_hypotheses.py # 仮説検証スクリプト（統計分析用）
-├── build_horse_style.py  # race_results.jsonのコーナー通過順から脚質推定・horse_style.json更新
-├── compare_scores.py     # 旧スコアvs新スコアの前後比較（コード変更の効果検証用）
-├── data_quality.py       # レース単位の品質判定（馬番の版・指数の読み方・無効化）
-├── tests/                # 回帰テスト（python3 -m unittest discover -s tests）
-├── docs/data_sources.md  # 取得している値ごとの取り方・確認状況（取り方を変えたら更新）
-├── rerun_failed_pickup.py # エラーレースのみ再ピックアップ・pickup_scores.jsonにマージ
-├── rescrape_results_all.py # 全日付のrace_results.jsonを再スクレイプ（フィールド追加時等に使用）
-├── run_history_batch.py  # 過去日付のXLSX+pickup_scores.json一括生成（完了済みはスキップ）
-├── scrape_history.py     # 過去日付のレース結果を一括取得（pickup_scores.json不要）
-├── scrape_jra_payouts.py # JRA公式(jra.go.jp)から払戻を取得（Issue #1）
-├── paper_trade.py        # ペーパートレード台帳 generate/settle/report（Issue #3）
-├── validate_trifecta_202608.py # 3連複の事前登録検証（Issue #2・紐定義の実装元）
-├── analyze_anaba*.py / validate_anaba_*.py # 穴馬ファクター研究（2026-05に完全保留）
+├── 取得
+│   ├── scraper.py            # タイム指数取得・Excel/CSV出力・3指数の候補選び・index_sources.json
+│   ├── race_pickup.py        # レース別スコアリング（shutuba + data_top スクレイプ）
+│   ├── run_pickup_all.py     # 全レース一括ピックアップ実行
+│   ├── rerun_failed_pickup.py # エラーレースのみ再ピックアップ・pickup_scores.jsonにマージ
+│   ├── scrape_prev_data.py   # 馬別前走データ収集（horse_db.jsonキャッシュ使用）
+│   ├── scrape_results.py     # レース結果を包括的スクレイプ（当日夜〜翌日実行）
+│   ├── scrape_jra_payouts.py # JRA公式(jra.go.jp)から払戻を取得（Issue #1）
+│   ├── scrape_history.py     # 過去日付のレース結果を一括取得（pickup_scores.json不要）
+│   ├── rescrape_results_all.py # 全日付のrace_results.jsonを再スクレイプ（フィールド追加時等）
+│   ├── run_history_batch.py  # 過去日付のXLSX+pickup_scores.json一括生成（完了済みはスキップ）
+│   └── save_cookies.py       # 初回ログイン・クッキー保存用
+├── 判定・集計
+│   ├── data_quality.py       # レース単位の品質判定（馬番の版・指数の読み方・無効化）
+│   ├── calibrate_threshold.py # 🔥閾値を過去データから自動計算
+│   ├── paper_trade.py        # ペーパートレード台帳 generate/settle/report（Issue #3）
+│   ├── rescore.py            # pickup_scores.jsonを再スコアリング（過去日付には使わない）
+│   ├── build_horse_style.py  # コーナー通過順から脚質推定・horse_style.json更新
+│   └── export_json.py        # CSV/Excel → JSON変換 + dates.json生成（GitHub Pages用）
+├── 研究・検証
+│   ├── analyze_roi.py / analyze_hypotheses.py / compare_scores.py
+│   ├── validate_trifecta_202608.py # 3連複の事前登録検証（Issue #2・紐定義の実装元）
+│   └── analyze_anaba*.py / validate_anaba_*.py # 穴馬ファクター研究（2026-05に完全保留）
 ├── index.html            # GitHub Pages メインページ（静的・パスワードゲート付き）
-├── app.py                # 旧Flask Webアプリ（Render移行前・現在未使用）
-├── save_cookies.py       # 初回ログイン・クッキー保存用
-├── run.sh                # 一括実行スクリプト（スクレイプ→push）
-├── templates/index.html  # 旧Flaskテンプレート（現在未使用）
-├── Dockerfile            # 旧Koyeb/Render用（現在未使用）
-├── requirements.txt      # 全依存パッケージ（ローカル用）
-├── requirements-server.txt # 旧サーバー用（現在未使用）
-├── Procfile              # 旧Render用（現在未使用）
-├── .env                  # NETKEIBA_EMAIL / NETKEIBA_PASSWORD（gitignore済）
-├── cookies.json          # ログインセッション（gitignore済）
+├── run.sh / run_cron.sh / run_results_cron.sh # 一括実行・cron
+├── tests/                # 回帰テスト（fixtures/ に実ページの表）
+├── docs/
+│   ├── incident_umaban_20261030.md # 取得ミスの経緯・影響・**残りのタスク**
+│   ├── data_sources.md            # 取得している値ごとの取り方・確認状況
+│   ├── index_top3_definition_202611.md # トップ3の定義と比較の計画（検証計画のひな形）
+│   ├── roi_improvement_plan.md / betting_workflow_issues.md # 回収率改善の計画・Issue管理
+│   └── scraping_notes.md / setup.md / cron_setup.md / runbook_backfill.md # 運用
+├── 未使用: app.py / templates/ / Dockerfile / Procfile / requirements-server.txt（旧サーバー用）
+├── .env / cookies.json   # gitignore済
 ├── output/
 │   ├── YYYYMMDD.xlsx         # タイム指数（全場・全モード）
 │   ├── YYYYMMDD/
-│   │   ├── 全場_3指数重複馬.csv
-│   │   ├── pickup_scores.json    # スコアリング結果（Webアプリが読む）
-│   │   ├── triple.json           # 3指数重複馬（GitHub Pages用JSON）
-│   │   ├── race_results.json     # 全馬着順・人気・馬体重・父/母父等（scrape_results.py出力）
-│   │   ├── race_conditions.json  # 馬場・天気・距離・クラス等（scrape_results.py出力）
-│   │   ├── payouts_jra.json      # JRA公式払戻（scrape_jra_payouts.py出力）
-│   │   └── paper_bets.json       # ペーパートレード買い目・精算結果（paper_trade.py出力）
-│   ├── horse_db.json         # 馬別前走データ グローバルキャッシュ（28日有効）
-│   ├── horse_pedigree.json   # 馬別血統（父・母父）永続キャッシュ（scrape_results.pyが収集）
-│   ├── horse_style.json      # 馬別脚質データ（build_horse_style.pyが出力・run_pickup_all.pyが参照）
-│   ├── dates.json            # 利用可能な日付一覧（GitHub Pages用）
-│   └── threshold_config.json # 期待値🔥閾値設定（calibrate_threshold.pyが更新）
-└── summary/
-    ├── YYYYMMDD.xlsx     # サマリー（レース別トップ5・重複馬）
-    └── YYYYMMDD.json     # 上記のJSON版（GitHub Pages用）
+│   │   ├── 全場_3指数重複馬.csv   # 3指数すべてでトップ3の馬
+│   │   ├── index_sources.json   # 指数の取得経路・取得異常（2026-11-01〜）
+│   │   ├── pickup_scores.json   # スコアリング結果（Webアプリが読む。quality を含む）
+│   │   ├── triple.json          # 3指数重複馬（GitHub Pages用JSON）
+│   │   ├── race_results.json    # 着順のある全馬の着順・人気・馬番・馬ID等（取消・除外・中止は載らない）
+│   │   ├── race_conditions.json # 馬場・天気・距離・クラス等
+│   │   ├── payouts_jra.json     # JRA公式払戻
+│   │   ├── paper_bets.json      # ペーパートレード買い目・精算結果
+│   │   └── invalidated.json     # 無効にしたレースと理由（ある日だけ）
+│   ├── horse_db.json         # 馬別前走データ キャッシュ（28日有効）
+│   ├── horse_pedigree.json   # 馬別血統（父・母父）永続キャッシュ
+│   ├── horse_style.json      # 馬別脚質データ
+│   ├── dates.json            # 利用可能な日付一覧
+│   └── threshold_config.json # 🔥閾値設定
+└── summary/YYYYMMDD.xlsx / .json # サマリー（レース別トップ5・重複馬）
 ```
 
 ---
 
-## 通常の使い方（毎週末）
+## 通常の使い方
 
-### 1. 一括実行（推奨）
+### 1. 一括実行（cron が前日17時に自動実行）
 
 ```bash
 cd ~/Desktop/netkeiba
@@ -100,12 +162,13 @@ cd ~/Desktop/netkeiba
 ./run.sh                 # 引数なしで今日の日付
 ```
 
-内部処理：
-1. `scraper.py` → タイム指数取得・Excel/CSV出力
+内部処理:
+1. `scraper.py` → タイム指数取得・Excel/CSV出力・`index_sources.json`
 2. `run_pickup_all.py` → 全レースのピックアップスコアリング
-3. `calibrate_threshold.py` → 期待値🔥閾値を過去実績から自動更新
-4. `export_json.py` → CSV/Excel を JSON に変換・dates.json 更新
-5. `git push` → GitHub Pages 自動更新（1〜2分後）
+3. `calibrate_threshold.py` → 🔥閾値の再計算（条件を満たさなければ更新しない）
+4. `export_json.py` → JSON 変換・dates.json 更新
+5. `paper_trade.py generate` → ペーパートレードの買い目
+6. `git push` → GitHub Pages 自動更新（1〜2分後）
 
 ### 2. 初回・クッキー切れ時のログイン
 
@@ -113,43 +176,19 @@ cd ~/Desktop/netkeiba
 python3 save_cookies.py
 ```
 
-ブラウザが開くので手動でログインして閉じる。
+ブラウザが開くので手動でログインして閉じる。cron が `❌ プレミアムコンテンツにアクセスできません` で失敗したときも同じ。
 
-### 3. レース結果を保存（当日夜〜翌日）
+### 3. レース結果を保存（cron が当日夜に自動実行。Mac を閉じていた日は手動）
 
 ```bash
 python3 scrape_results.py 20260404
-git add output/20260404/ && git commit -m "results: 20260404" && git push
+git add output/20260404/ output/horse_pedigree.json && git commit -m "results: 20260404" && git push
 ```
 
-保存先：
-- `output/{date}/race_results.json` — 全馬の着順・人気・オッズ・馬体重・増減・騎手・上がり3F・コーナー通過順
-- `output/{date}/race_conditions.json` — 馬場状態・天気・距離・芝/ダート・クラス・出走頭数
+- コーナー通過順は当日夜には空のことがある（警告が出る）。後日 `scrape_results.py` で取り直す。
+- 取得後、採点時の馬番・馬ID・馬名と結果を全頭照合する（自動化は残りのタスク2）。
 
-データが蓄積されると `calibrate_threshold.py` の精度向上・`analyze_hypotheses.py` での分析が可能になる。
-
-### 4. 閾値を手動で再キャリブレーション
-
-```bash
-python3 calibrate_threshold.py
-```
-
-過去の pickup_scores.json + race_results.json を照合し、3着内率が TARGET_RATE(70%) 以上で
-馬数が最大になる閾値を選んで threshold_config.json に保存する。run.sh では自動実行される。
-
-### 5. 既存データを再スコアリング（コード変更後）
-
-```bash
-python3 rescore.py 20260404
-git add output/ && git commit -m "rescore: 20260404" && git push
-```
-
-スクレイプ不要で pickup_scores.json を最新ロジックで再計算。
-
-> **注意**: `rescore.py` は過去のスコアを書き換えるが、既存の `paper_bets.json` は
-> `paper_trade.py generate` が上書きしないため影響を受けない（前向き記録の不変性を保つ設計）。
-
-### 5-2. ペーパートレードの精算（払戻取得後）
+### 4. ペーパートレードの精算（払戻取得後・cron 未組み込み）
 
 ```bash
 python3 scrape_jra_payouts.py --all   # 払戻を分割取得（1回3日分まで）
@@ -157,16 +196,14 @@ python3 paper_trade.py settle --all   # payouts_jra.json で精算
 python3 paper_trade.py report         # メニュー別の累積成績
 ```
 
-買い目生成（`generate`）は run.sh が自動実行するので手動操作は不要。
-精算はcron未組み込みのため、月次レポート前に上記を手動実行する。
-
 精算しないもの（2026-10-30〜。払戻0円・不的中として集計しない）:
-- `output/{date}/invalidated.json` に載った無効レース（買い目ファイルは書き換えず、report に件数と理由を出す）
+- `invalidated.json` に載った無効レース（買い目ファイルは書き換えず、report に件数と理由を出す）
 - 払戻データが無いレース（その日は `settled=False` のまま）
 - 買い目の馬番が結果データに無いメニュー（取消・除外・競走中止・失格のどれか区別できない。返還の可能性あり）
+
 report は `status: settled` のメニューだけを集計する。2026-10-30 より前に精算したファイルには status が無いので、`settle --all` をやり直すと集計に入る。
 
-### 6. 前走データのみ収集
+### 5. 前走データのみ収集
 
 ```bash
 python3 scrape_prev_data.py 20260404
@@ -174,13 +211,15 @@ python3 scrape_prev_data.py 20260404
 
 horse_db.json のキャッシュを使い、未取得の馬のみスクレイプ。
 
-### 7. 過去開催のスクレイプ（未取得週末の遡及）
+### 6. 過去開催のスクレイプ（未取得週末の遡及）
 
 手順は `docs/runbook_backfill.md`（開催日は祝日で変わるので必ずカレンダー確認）。
 
-## スコアリングロジック（race_pickup.py）
+---
 
-3指数重複馬（A）に対して以下の加点。選出基準は**3指数すべてトップ3**（旧：トップ5）：
+## スコアリングロジック（race_pickup.py・現行 v5）
+
+候補は**3指数すべてでトップ3**の馬（旧: トップ5）。トップ3の定義は変更予定（上の「順位はページの順位を使う」）。候補に以下を加点する。
 
 | 項目 | 点数 | 内容 |
 |------|------|------|
@@ -197,54 +236,49 @@ horse_db.json のキャッシュを使い、未取得の馬のみスクレイプ
 | 前走好走 | +2 | 前走1〜6番人気かつ1〜3着（horse_db使用） |
 | 同距離前走（±50m） | +1 | horse_db の prev_dist と当日距離を比較 |
 
-最高合計: 名目 **13pt**（出走馬分析は上限なしのため固定上限ではない。実データの最高は13pt）
-※「前走指数HIGH/MID」と「前走指数レース内1位」は合算上限3pt（重複加点ガード）
-※**現行は v5**。v6（3指数すべて1位+1・距離延長>50m -1・前走10着以下-1・中4週+2→+1）は
-2026-10-23 に実装・64日再スコアまで行ったうえで差し戻した。経緯と前後比較は
-`docs/ops_log_202610.md` と `docs/v6_rescore_compare_202610.txt` を参照。
-根拠データは `docs/factor_audit_202606.md`、実装手順は `docs/v6_implementation_plan.md`。
+- 表の N・回収率は、すべて修正前（馬番の誤り）のデータで出した数字。修正後のデータで確かめ直していない。
+- 最高合計: 名目 **13pt**（出走馬分析は上限なしのため固定上限ではない。実データの最高は13pt）。
+- 「前走タイム指数90以上／70〜89」と「前走指数レース内1位」は合算上限3pt。
+- ランク: ★★★(5pt以上) / ★★(3〜4pt) / ★(1〜2pt) / －(0pt)。
+- v6（3指数すべて1位+1・距離延長>50m -1・前走10着以下-1・中4週+2→+1）は 2026-10-23 に実装・64日再スコアまで行ったうえで差し戻した。経緯は `docs/ops_log_202610.md` と `docs/v6_rescore_compare_202610.txt`、根拠は `docs/factor_audit_202606.md`。
+- `SCORING_VERSION` は pickup_scores.json の `scoring_version` に記録される。
 
-スコアリングバージョン: `race_pickup.py` の `SCORING_VERSION` 定数で管理。pickup_scores.json の `scoring_version` フィールドに埋め込まれる。`rescore.py` 実行時も更新される。`analyze_roi.py` の【10】セクションでバージョン別比較が可能。
-
-`scrape_shutuba()` は `parse_shutuba_rows()` で出馬表の各行から 馬番（`td.Umaban*`）・馬ID・単勝オッズ・人気を**同一行由来**で取得し、`today_pop`/`today_odds` に格納。対応検証（`map_issues`）でNGのレースはスコアリングしない。
-データの取り方は pickup_scores.json の `collector_version` に記録（例: `修正後_20261030_馬番を正しく取得`）。**この項目が無いデータ＝修正前（〜2026-10-30）は枠番を馬番として読んでおり、前走成績・オッズ・人気が他の馬の値**（`docs/incident_umaban_20261030.md`）。
-人気取得: shutuba.html の `td.Ninki` → 取れない場合 speed.html (`rf=shutuba_submenu`) の `sk__ninki` から取得。
-
-ランク：★★★(5pt以上) / ★★(3〜4pt) / ★(1〜2pt) / －(0pt)
+出馬表の読み方:
+- `scrape_shutuba()` は `parse_shutuba_rows()` で、出馬表の各行から馬番（`td.Umaban*`）・馬ID・単勝オッズ・人気を**同一行由来**で取得する（`today_pop`/`today_odds`）。
+- 対応検証（`map_issues`）で NG のレースはスコアリングしない。
+- 人気: shutuba.html の `td.Ninki` → 取れない場合 speed.html（`rf=shutuba_submenu`）の `sk__ninki`。
 
 ---
 
 ## Webアプリの構成（index.html）
 
-パスワードゲート付き（SHA-256ハッシュ照合・localStorage保存）。
+パスワードゲート付き（SHA-256ハッシュ照合・localStorage保存）。リポジトリは public。
 
-- **最注目馬セクション**：ev_threshold以上の馬を最上部に表示
-  - **次点セクション**：ev_threshold-2 〜 ev_threshold-1 の馬をグレーで小さく表示
-- **開催場タブ**：中山/阪神/福島 など当日の会場ごとにタブ切替
-  - 各レースをカード表示（12R→1R順）
-  - カード内: スコア付き馬一覧（スコア降順）+ ファクター + 人気
-  - 🔥バッジ: ev_threshold以上の馬
-  - 参考バッジ（灰）：1〜3R（3歳未勝利・荒れやすいレース）
-  - **単指数1位馬**（紫バッジ）：3指数重複外だが1指数で1位の馬
-
-venue表示順：東京→中山→京都→阪神→中京→新潟→福島→函館→札幌→小倉
+- **最注目馬セクション**: ev_threshold 以上の馬を最上部に表示
+  - **次点セクション**: ev_threshold-2 〜 ev_threshold-1 の馬をグレーで小さく表示
+- **開催場タブ**: 会場ごとにタブ切替。表示順は 東京→中山→京都→阪神→中京→新潟→福島→函館→札幌→小倉
+  - 各レースをカード表示（12R→1R順）。スコア付き馬一覧（スコア降順）+ ファクター + 人気
+  - 🔥バッジ: ev_threshold 以上の馬
+  - 参考バッジ（灰）: 1〜3R（3歳未勝利・荒れやすいレース）
+  - **単指数1位馬**（紫バッジ）: 3指数の候補外だが1つの指数で1位の馬。今は各指数の先頭の1頭だけを表示し、同率1位を落としている（残りのタスク7で直す）
+  - 3着内率の表示は、修正後のデータだけで計算した閾値設定（`collector_version_only`）のときだけ出す
 
 ---
 
-## 期待値🔥閾値（threshold_config.json）
+## 🔥閾値（threshold_config.json）
 
-- パス：`output/threshold_config.json`
-- `ev_threshold`：期待値🔥マークを付ける最低スコア（現在 **9pt**）
-- `calibrate_threshold.py` が run.sh 実行時に毎回自動更新。**ただし修正後（collector_version あり）のレースのみ使い、照合馬数200頭未満なら更新しない**（2026-10-30〜。現行9ptは暫定値で有効性未確認）
-- ロジック：過去データで **3着内率70%以上**・サンプル5頭以上を満たす最低閾値を採用
-- ⚠️ 以下の実績値は修正前（枠番を馬番として読んでいた）のデータに基づく。修正後データで再評価が必要（`docs/incident_umaban_20261030.md`）
-- 実績（2026-10-23時点・v5・クリーン窓63日 20260328〜20261018）：
-  - 9pt以上：134頭 → 3着内79頭（59.0%） ← 現在の閾値
-  - 8pt以上：204頭 → 3着内120頭（58.8%）
-  - 7pt以上：319頭 → 3着内170頭（53.3%）
-- 注意：クリーン窓限定の集計では**どの閾値も TARGET_RATE(70%) に到達しない**ため、
-  候補中の最高値が採用される。旧記載の「8pt=75.0%」は汚染期間込み（2025-12〜2026-05）の
-  数値でクリーン窓では再現しない。
+- `ev_threshold`: 🔥を付ける最低スコア。現在 **9pt**（2026-10-24 に修正前のデータで計算した値。**有効性は未確認**）。
+- `calibrate_threshold.py`（run.sh で毎回実行）の選び方:
+  - 候補 3〜9pt のうち、5頭以上いて3着内率が70%（`TARGET_RATE`）以上の最も低い値を選ぶ。
+  - 満たすものが無ければ、3着内率が最も高い値を選ぶ。
+- 使うデータ（2026-10-30〜）: `race_quality_issues()` を通ったレースだけ。照合できた馬が200頭未満なら更新しない（今は未満なので 9pt のまま）。
+- 既知の問題: 結果との照合が「馬番か馬名のどちらかが一致」で済ませている（残りのタスク6）。
+- 修正前のデータでの参考値（2026-10-23・v5・20260328〜20261018 の63日。前走データの取り込み不具合が直った後だが、馬番の誤りは残る期間）:
+  - 9pt以上: 134頭 → 3着内79頭（59.0%）
+  - 8pt以上: 204頭 → 3着内120頭（58.8%）
+  - 7pt以上: 319頭 → 3着内170頭（53.3%）
+  - どの値も70%に届かず、最高率の 9pt が選ばれていた。
+- 🔥の基準の決め直しは、過去データの作り直しの後に、データを見る前に決めて記録してから行う（残りのタスク10）。
 
 ---
 
@@ -252,47 +286,44 @@ venue表示順：東京→中山→京都→阪神→中京→新潟→福島→
 
 的中率を保ちつつ回収率を上げるための計画。詳細・実装仕様・判定基準はすべて `docs/roi_improvement_plan.md` に記載。
 **以下の指示を受けたら、必ず同ドキュメント（と `docs/anaba_research_log.md` の教訓）を読んでから着手すること。**
+同ドキュメントの数字は修正前のデータで出したもの。使う前に `docs/incident_umaban_20261030.md` の影響範囲を確かめる。
 
-**Issue管理・スケジュール・担当割当は `docs/betting_workflow_issues.md` に一元化**（2026-07-18策定）。
-担当モデル（Sonnet/Opus/Fable/人間）とエスカレーションルールも同ドキュメント参照。
+Issue管理・スケジュール・担当割当は `docs/betting_workflow_issues.md` に一元化（2026-07-18策定）。
 
-### 進行中・今後のタスク（2026-10-30時点）
+### 進行中・今後のタスク（2026-11-02時点）
 
-| ユーザーの指示 | 内容 | 担当 | 前提条件 |
-|---|---|---|---|
-| — | 取得ミス2件の後始末（10/31結果との全頭照合、自動照合とLINE通知、要確認リスト消化、9/12以降の再採点） | — | **最優先**（一覧と順番は `docs/incident_umaban_20261030.md` 末尾「残りのタスク」） |
-| 「払戻バックフィルやって」 | `scrape_jra_payouts.py --all` を分割実行（残り約14日分） | Sonnet | なし（**次のアクション**） |
-| 「月次レポートやって」 | 払戻バックフィル→`paper_trade.py settle --all`→累積成績+90日到達予測 | Fable | 毎月初 |
-| 「Phase Bやって」 | スコア確率化 + EVフィルターのバックテスト | Fable | クリーンデータ90日以上（2027-01末頃） |
-| 「Phase Cやって」 | 損益分岐オッズ表示のUI実装 | Sonnet | Phase Bが採用基準クリア |
-| 「Aやって」 | 血統辞典条件の過去データ照合（下記「プランA」） | — | 未着手 |
-| 「Issue #N やって/レビューして」 | 新規Issueの実装・レビュー | 同ドキュメント参照 | — |
+| ユーザーの指示 | 内容 | 前提条件 |
+|---|---|---|
+| — | 取得ミスの後始末（一覧と順番は `docs/incident_umaban_20261030.md` 末尾「残りのタスク」） | **最優先** |
+| 「払戻バックフィルやって」 | `scrape_jra_payouts.py --all` を分割実行（約14日分 + 10/31・11/1） | なし |
+| 「月次レポートやって」 | 払戻バックフィル→`paper_trade.py settle --all`→累積成績 | 毎月初 |
+| 「Phase Bやって」 | スコア確率化 + EVフィルターのバックテスト | 修正後のデータが90日以上。修正前のデータは使わない |
+| 「Phase Cやって」 | 損益分岐オッズ表示のUI実装 | Phase Bが採用基準クリア |
+| 「血統辞典のAやって」 | 血統辞典条件の過去データ照合（`docs/pedigree_dictionary.md` のプランA） | 未着手。残りのタスク7の「A」（ページの順位どおり）とは別 |
+| 「Issue #N やって/レビューして」 | 新規Issueの実装・レビュー | 同ドキュメント参照 |
 
 ### 完了済み
 
 | Issue | 内容 | 結果 |
 |---|---|---|
-| #1 | JRA公式払戻スクレイパー | ✅ 2026-08-08 レビュー合格 |
-| #2 | 3連複の事前登録検証 | ✅ 2026-08-10 **3連複は基準未達→不採用で終了**（回収率64.4%/53.2%） |
+| #1 | JRA公式払戻スクレイパー | ✅ 2026-08-08 レビュー合格（取得処理の正しさは再確認中: 残りのタスク4） |
+| #2 | 3連複の事前登録検証 | ✅ 2026-08-10 **3連複は基準未達→不採用で終了**（回収率64.4%/53.2%。修正前のデータ） |
 | #3 | ペーパートレード台帳 `paper_trade.py` | ✅ 2026-09-10 マージ済み。**20260912から前向き記録を開始** |
 | #4 | Phase A（オッズ保存） | ⚠️ 2026-07-18 合格としたが、2026-10-30 に**オッズは枠番キーで他の馬の値**と判明（件数しか見ていなかった） |
 
-- Phase A により `pickup_scores.json` に `odds_map`（レース単位）と `today_odds`（scored各馬）が保存される（2026-07-11以降）
-- ペーパートレードは `run.sh` 末尾で `paper_trade.py generate` が自動実行される。
-  精算は払戻データ取得後に手動で `python3 paper_trade.py settle --all`（cron未組み込み）
-- `PAPER_TRADE_START = 20260912` は事前登録値。**データを見た後に動かさない**
-- 実銭での馬券購入は常に人間が行う（AIは判断材料の提示まで）
-- 事前登録した閾値・判定基準をデータを見た後に動かすのは禁止（多重検定回避）
+- ペーパートレード:
+  - 買い目は `run.sh` 末尾で自動生成。精算は手動（上の「4. ペーパートレードの精算」）。
+  - 9/12〜10/30 の買い目は修正前の採点に基づく。書き換えず、無効にしたレースは `invalidated.json` で外す。
+- 実銭での馬券購入は常に人間が行う（AIは判断材料の提示まで）。
 
 ---
 
 ## horse_db.json キャッシュ
 
-- パス：`output/horse_db.json`
-- キー：horse_id（netkeiba の馬ID）
-- 有効期限：28日（`HORSE_DB_STALE_DAYS`）: 2週目以降のリクエスト数を1/3以下に削減
-- 内容：`prev_date, prev_pop, prev_rank, prev_idx, prev_idx_m, prev_dist, scraped_at`
+- キー: horse_id（netkeiba の馬ID）。有効期限 28日（`HORSE_DB_STALE_DAYS`）
+- 内容: `prev_date, prev_pop, prev_rank, prev_idx, prev_idx_m, prev_dist, scraped_at`
 - git にコミットして蓄積する（初回は scrape_prev_data.py で全馬取得 約30分）
+- 前走タイム指数の列が正しいかは未確認（残りのタスク1）
 
 ---
 
@@ -300,54 +331,34 @@ venue表示順：東京→中山→京都→阪神→中京→新潟→福島→
 
 詳細（ステルス設定・待機・認証の安全弁・指数の公開タイミング）は `docs/scraping_notes.md`。要点:
 - cookies のみ使用（自動ログインしない）。切れたら `python3 save_cookies.py` を手動実行
-- 早い番組の「データなし」「type=rank 未公開 → shutuba fallback」は大半が新馬戦・障害で正常（プリフライト通過なら無視可）
+- 早い番組の「データなし」「type=rank 未公開 → shutuba_submenu で代わりに取得」は大半が新馬戦・障害で正常（プリフライト通過なら無視可）。経路は `index_sources.json` に残る
 - IPブロックは24時間待てば解除
+- netkeiba のスクレイピングは**利用規約上グレー**。個人利用・低頻度・ログイン済みの範囲で使用すること
 
 ---
 
-## 環境構築・デプロイ詳細
+## 自動実行・デプロイ
 
-`docs/setup.md`
+詳細は `docs/cron_setup.md`・`docs/setup.md`。
 
----
+- **pmset**: 毎日16:55にMac自動スリープ解除（Mac を閉じていると動かない）
+- **データ取得**: `0 17 * * * ~/Desktop/netkeiba/run_cron.sh` — 翌日がJRA開催日なら `run.sh`
+- **結果取得**: 当日がJRA開催日なら `scrape_results.py` を実行して結果→push
+  - `30 18 * 1-6,10-12 * ~/Desktop/netkeiba/run_results_cron.sh`（通常期：18:30）
+  - `30 19 * 7-9 *       ~/Desktop/netkeiba/run_results_cron.sh`（夏期7〜9月：19:30）
+  - `pickup_scores.json` がない場合でもレース一覧ページから race_id を取得する
+  - `output/{date}/` だけを commit する（`horse_pedigree.json` は含まれない）
+- ログは `cron.log`。LINE通知（成功/失敗）は `.env` の LINE_TOKEN / LINE_USER_ID
+- **カレンダー**: `jra_calendar_YYYY.json`（JRA公式ICSから取得）。年末に翌年分を取得する
+- **デプロイ**: GitHub（hirowax/keiba_test_01・public）の main への push で GitHub Pages が1〜2分で更新
 
-## デプロイ構成
-
-- **リポジトリ**：GitHub（hirowax/keiba_test_01）※ public
-- **ホスティング**：GitHub Pages（コールドスタートなし・完全無料）
-- **URL**：`https://hirowax.github.io/keiba_test_01/`
-- **自動デプロイ**：main ブランチへの push で自動更新（1〜2分）
-
-## 自動実行（cron）
-
-詳細は `docs/cron_setup.md`。
-
-- **pmset**: 毎日16:55にMac自動スリープ解除
-- **crontab（データ取得）**: `0 17 * * * ~/Desktop/netkeiba/run_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1`
-  - 翌日がJRA開催日なら `run.sh` を実行してデータ取得→push
-- **crontab（結果取得）**:
-  - `30 18 * 1-6,10-12 * ~/Desktop/netkeiba/run_results_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1`（通常期：18:30）
-  - `30 19 * 7-9 *       ~/Desktop/netkeiba/run_results_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1`（夏期7〜9月：19:30）
-  - 当日がJRA開催日なら `scrape_results.py` を実行して結果→push
-  - `pickup_scores.json` がない場合でもレース一覧ページから race_id を取得してフォールバック
-- **カレンダー**: `jra_calendar_YYYY.json`（JRA公式ICSから取得）
-- **LINE通知**: 成功/失敗をMessaging APIでpush（`.env` に LINE_TOKEN / LINE_USER_ID）
-- **年末作業**: 翌年の `jra_calendar_YYYY.json` を取得する
-- **cookies期限切れ時**: cronが `❌ プレミアムコンテンツにアクセスできません` で失敗→手動で `python3 save_cookies.py` を実行してから再実行
+### git push
+- データ更新の決まった流れ（`run.sh`／`scrape_results.py` 実行後の結果の commit、cron）では、commit 後に**都度確認せず自動で push する**。
+- それ以外（コード・文書の変更、force push 等）はグローバル設定どおり、明示的な指示があるまで push しない。
 
 ---
 
 ## 注意事項
 
-- `.env` と `cookies.json` は **gitignore 済み**（スクレイプはローカルのみ）
-- `debug_*.png` も gitignore 済み
-- netkeiba のスクレイピングは**利用規約上グレー**。個人利用・低頻度・ログイン済みの範囲で使用すること
+- `.env` と `cookies.json`・`debug_*.png` は gitignore 済み
 - `run.sh` はターミナルで `cd ~/Desktop/netkeiba` してから実行すること
-- リポジトリは public だが、パスワードゲートで一般閲覧を制限している
-- **git push について**: このプロジェクトの通常データ更新フロー（`run.sh`／`scrape_results.py`実行後のcommit、cronによる自動実行）では、commit後に**都度確認せず自動でpushする**。グローバル設定の「pushは明示指示があるまで待つ」は、破壊的操作やこのフロー以外のpush（コード変更・force push等）にのみ適用する。
-
----
-
-## 血統辞典検証
-
-条件一覧とプランA/Bは `docs/pedigree_dictionary.md`。「Aやって」と言われたらそれに従う。
