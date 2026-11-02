@@ -16,6 +16,13 @@ himo_set() / maru_num() をそのまま再利用し、定義の重複実装に�
 判定基準（回収率≥110% かつ上位3本除外後≥80% かつ的中数≥15）はreportでは判定せず数値のみ出す
 （90日経過後にFable/人間が判定する運用のため）。
 
+買い目の◯と紐の選び方の版（menu_rule。2026-11-02〜。docs/index_top3_definition_202611.md）:
+- 修正前: validate_trifecta_202608.py の himo_set() / maru_num()。サマリーの各指数の先頭1頭とトップ5の一覧を使う。
+  当時のサマリーは近走平均の「*」付きの値を外し、同じ値の馬を並び順で切っていた。
+- ページの順位: サマリーに順位（rank）がある日（2026-11-02 の変更以降）。同率1位は全員、5位以内は全員を使い、
+  馬は馬番で照合する。◯を単指数1位から選ぶとき、値が同じなら馬番の小さい方。
+report は版ごとに分けて集計する（版をまたいで足さない）。
+
 事前登録の不変性: generate は既存の paper_bets.json を上書きしない（レース前に一度生成した
 買い目は精算後も含め不変。rescore.py 等で pickup_scores.json が事後に書き換わっても
 過去の記録は汚染されない）。作り直す場合は人間がファイルを削除してから再実行する。
@@ -56,6 +63,9 @@ MENU_NAMES = {
 # 前向き記録の対象外。この日以降にrun.shが生成したものだけを集計する。
 PAPER_TRADE_START = "20260912"
 
+MENU_RULE_OLD = "修正前_各指数の先頭1頭とトップ5の一覧"
+MENU_RULE_PAGE_RANK = "ページの順位_同率1位と5位以内は全員_20261102"
+
 
 def load_json(path: Path):
     if not path.exists():
@@ -82,8 +92,54 @@ def build_summary_index(summary):
 
 # ── generate ────────────────────────────────────────────────
 
+CATS = ("average", "distance", "course")
+
+
+def menu_rule_of(summary_race: dict) -> str:
+    """サマリーに順位（rank）があればページの順位の版"""
+    has_rank = any(h.get("rank") for cat in CATS for h in summary_race.get(cat, []))
+    return MENU_RULE_PAGE_RANK if has_rank else MENU_RULE_OLD
+
+
+def _page_rank_lists(summary_race: dict):
+    """(3指数の候補の馬番, 指数ごとの1位の馬, 指数ごとの5位以内の馬番)。馬番は int"""
+    triple = {int(h["num"]) for h in summary_race.get("triple", [])}
+    firsts = {cat: [h for h in summary_race.get(cat, []) if h.get("rank") == "1位"] for cat in CATS}
+    top5 = {cat: {int(h["num"]) for h in summary_race.get(cat, [])} for cat in CATS}
+    return triple, firsts, top5
+
+
+def himo_set_page_rank(scored, summary_race):
+    """紐 B∪C∪D（validate_trifecta_202608.himo_set と同じ考え方を、ページの順位で）。
+    B: scored[1:]、D: 各指数の1位（同率は全員）のうち3指数の候補でない馬、
+    C: 5位以内に2指数以上で入る、3指数の候補でない馬"""
+    axis_num = int(scored[0]["馬番"])
+    triple, firsts, top5 = _page_rank_lists(summary_race)
+    b = {int(h["馬番"]) for h in scored[1:]}
+    d = {int(h["num"]) for cat in CATS for h in firsts[cat]} - triple
+    count = Counter(n for cat in CATS for n in top5[cat])
+    c = {n for n, k in count.items() if k >= 2} - triple
+    return axis_num, (b | c | d) - {axis_num}
+
+
+def maru_num_page_rank(scored, summary_race):
+    """◯ = スコア2位の候補。いなければ単指数1位（同率は全員）のうち3指数の候補でない馬で、値が最大の馬。
+    値が同じなら馬番の小さい方"""
+    if len(scored) >= 2:
+        return int(scored[1]["馬番"])
+    triple, firsts, _ = _page_rank_lists(summary_race)
+    cands = [(h.get("val"), int(h["num"])) for cat in CATS for h in firsts[cat]
+             if int(h["num"]) not in triple and isinstance(h.get("val"), (int, float))]
+    if not cands:
+        return None
+    return min(cands, key=lambda x: (-x[0], x[1]))[1]
+
 def build_menus(scored, summary_race):
     """1レース分のM1〜M4を組み立てて dict で返す"""
+    if menu_rule_of(summary_race) == MENU_RULE_PAGE_RANK:
+        maru, himo_of = maru_num_page_rank, himo_set_page_rank
+    else:
+        maru, himo_of = maru_num, himo_set
     axis_num = int(scored[0]["馬番"])
     axis_name = scored[0].get("馬名", "")
 
@@ -102,7 +158,7 @@ def build_menus(scored, summary_race):
     }
 
     # M3: ◎-○ワイド
-    o_num = maru_num(scored, summary_race)
+    o_num = maru(scored, summary_race)
     if o_num is None or o_num == axis_num:
         menus["M3"] = {
             "name": MENU_NAMES["M3"], "type": "wide",
@@ -116,7 +172,7 @@ def build_menus(scored, summary_race):
         }
 
     # M4: ◎軸3連複（紐2頭流し）
-    _, himo = himo_set(scored, summary_race)
+    _, himo = himo_of(scored, summary_race)
     if len(himo) < 2:
         menus["M4"] = {
             "name": MENU_NAMES["M4"], "type": "trio",
@@ -167,6 +223,8 @@ def generate_for_date(date: str) -> bool:
             "axis_num": axis_num,
             "axis_name": axis_name,
             "score": scored[0].get("score"),
+            "menu_rule": menu_rule_of(summary_race),
+            "candidate_rule": (rdata.get("quality") or {}).get("candidate_rule"),
             "menus": menus,
         }
 
@@ -331,7 +389,7 @@ def cmd_report(args):
         and (d / "paper_bets.json").exists()
     )
 
-    per_menu = {k: [] for k in MENU_NAMES}  # menu -> list of (date, label, cost, return, hit)
+    per_menu = {}  # (版, menu) -> list of (date, label, cost, return, hit)
     n_settled_dates = 0
     voided = []                       # (date, label, reason)
     pending = Counter()               # status -> メニュー数
@@ -356,7 +414,9 @@ def cmd_report(args):
                         status = "settle_again" if bets.get("settled") else "not_settled_yet"
                     pending[status] += 1
                     continue
-                per_menu[mkey].append((date, label, menu["cost"], menu["return"], menu["hit"]))
+                rule = race.get("menu_rule", MENU_RULE_OLD)
+                per_menu.setdefault((rule, mkey), []).append(
+                    (date, label, menu["cost"], menu["return"], menu["hit"]))
 
     print("=" * 60)
     print("ペーパートレード累積成績（M1〜M4）")
@@ -375,6 +435,13 @@ def cmd_report(args):
         print("精算済みデータがありません（先に settle を実行してください）")
         return
 
+    rules = [r for r in (MENU_RULE_OLD, MENU_RULE_PAGE_RANK) if any(k[0] == r for k in per_menu)]
+    for rule in rules:
+        print(f"\n## 買い目の選び方: {rule}（版をまたいで足さない）")
+        _report_menus({m: per_menu.get((rule, m), []) for m in MENU_NAMES})
+
+
+def _report_menus(per_menu: dict):
     for mkey, name in MENU_NAMES.items():
         recs = per_menu[mkey]
         if not recs:

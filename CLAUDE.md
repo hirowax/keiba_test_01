@@ -79,7 +79,7 @@ netkeiba のタイム指数（近走平均・当該距離・当該コース）�
   - 無効レース
 - **照合**: 対象の馬を選んでから結果と照合する。馬番と馬名の両方の一致だけを同じ馬とする（馬名で許すのは空白の違いだけ）。照合できない馬は種類別に件数を出す。
 - **分母と払戻**:
-  - 結果に無い馬には、取消・除外と競走中止・失格が混ざる。`scrape_results.py` が着順が数字でない行を捨てているため。
+  - 結果に無い馬には、取消・除外と競走中止・失格が混ざる。`scrape_results.py` が着順が数字でない行を捨てていたため（2026-11-02 から `race_nonfinishers.json` に保存。過去分は `race_results_all.json`）。
     - 取消・除外: 分母から外す。馬券は返還。
     - 競走中止・失格: 分母に入れ、不的中とする。
     - 状態が分からない: 推定せず、未確認として件数を出す。
@@ -107,6 +107,7 @@ netkeiba/
 │   ├── scrape_jra_payouts.py # JRA公式(jra.go.jp)から払戻を取得（Issue #1）
 │   ├── scrape_history.py     # 過去日付のレース結果を一括取得（pickup_scores.json不要）
 │   ├── rescrape_results_all.py # 全日付のrace_results.jsonを再スクレイプ（フィールド追加時等）
+│   ├── rescrape_results_full.py # 過去の全レースの結果を別ファイル race_results_all.json に取り直す（再開可）
 │   ├── run_history_batch.py  # 過去日付のXLSX+pickup_scores.json一括生成（完了済みはスキップ）
 │   └── save_cookies.py       # 初回ログイン・クッキー保存用
 ├── 判定・集計
@@ -139,6 +140,8 @@ netkeiba/
 │   │   ├── pickup_scores.json   # スコアリング結果（Webアプリが読む。quality を含む）
 │   │   ├── triple.json          # 3指数重複馬（GitHub Pages用JSON）
 │   │   ├── race_results.json    # 着順のある全馬の着順・人気・馬番・馬ID等（取消・除外・中止は載らない）
+│   │   ├── race_nonfinishers.json # 着順が数字でない馬（取消・除外・中止・失格。2026-11-02〜）
+│   │   ├── race_results_all.json  # 全レースの結果の取り直し（着順なしの馬を含む。rescrape_results_full.py）
 │   │   ├── race_conditions.json # 馬場・天気・距離・クラス等
 │   │   ├── payouts_jra.json     # JRA公式払戻
 │   │   ├── paper_bets.json      # ペーパートレード買い目・精算結果
@@ -314,6 +317,7 @@ Issue管理・スケジュール・担当割当は `docs/betting_workflow_issues
 
 - ペーパートレード:
   - 買い目は `run.sh` 末尾で自動生成。精算は手動（上の「4. ペーパートレードの精算」）。
+  - ◯と紐の選び方は版（`menu_rule`）を記録し、report は版ごとに分けて集計する（2026-11-02〜。`docs/betting_workflow_issues.md`）。
   - 9/12〜10/30 の買い目は修正前の採点に基づく。書き換えず、無効にしたレースは `invalidated.json` で外す。
 - 実銭での馬券購入は常に人間が行う（AIは判断材料の提示まで）。
 
