@@ -216,13 +216,24 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
         log.warning(f"タイムアウト: {race_id}")
         return None
 
-    html = page.content()
+    return parse_result_html(page.content(), race_label)
+
+
+# 着順が数字でない行の書き方（2026-11-02 に実ページで確認したのは「取消」だけ。
+# 除外・中止・失格は netkeiba の表記として想定したもの。これ以外は「不明」として元の文字を残す）
+NON_FINISH_STATUSES = ("取消", "除外", "中止", "失格")
+
+
+def parse_result_html(html: str, race_label: str = "") -> dict:
+    """結果ページの HTML を {"condition", "horses"(着順が数字の馬), "others"(着順が数字でない馬)} にする。
+    2026-11-02 まで、着順が数字でない行（取消・除外・中止・失格）は捨てていた（docs/index_top3_definition_202611.md）"""
     soup = BeautifulSoup(html, "html.parser")
 
     condition = parse_race_condition(soup)
     place_odds_map = parse_place_odds(soup)
 
     horses = []
+    others = []  # 着順が数字でない馬（取消・除外・中止・失格・不明）
 
     # メイン結果テーブル（.HorseList）
     table = soup.find("table", class_=re.compile(r"HorseList"))
@@ -242,11 +253,10 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
         if len(tds) < 8:
             continue
 
-        # 着順（数字でなければスキップ = ヘッダー行・取消等）
+        # 着順。数字でない行は others に分けて残す（見出し行は td が8個未満で上で除外済み）
         rank_text = re.sub(r"\s+", "", tds[0].get_text())
-        if not re.match(r"^\d{1,2}$", rank_text):
-            continue
-        rank = int(rank_text)
+        finished = bool(re.match(r"^\d{1,2}$", rank_text))
+        rank = int(rank_text) if finished else None
 
         # 枠番
         gate = _text(tds[1]) if len(tds) > 1 else ""
@@ -272,6 +282,16 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
                 name = re.sub(r"\s+", "", name_cell.get_text())
 
         if not name or not num.isdigit():
+            if not finished:
+                log.warning(f"  {race_label}: 着順「{rank_text}」の行の馬番・馬名が読めない")
+            continue
+
+        if not finished:
+            status = rank_text if rank_text in NON_FINISH_STATUSES else "不明"
+            if status == "不明":
+                log.warning(f"  {race_label}: 着順の書き方が未知「{rank_text}」（{num}番 {name}）")
+            others.append({"status": status, "rank_text": rank_text, "gate": gate,
+                           "num": num, "name": name, "horse_id": horse_id})
             continue
 
         # 性齢: 専用クラスがなく td.Horse_Info.Txt_C（馬名セルは Horse_Info のみ）
@@ -386,9 +406,10 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
 
     condition["num_horses"] = len(horses)
     log.info(f"  {race_label}: {len(horses)}頭 馬場={condition.get('condition','?')} "
-             f"距離={condition.get('distance','?')}m 天気={condition.get('weather','?')}")
+             f"距離={condition.get('distance','?')}m 天気={condition.get('weather','?')}"
+             + (f" 着順なし={[(o['num'], o['status']) for o in others]}" if others else ""))
 
-    return {"condition": condition, "horses": horses}
+    return {"condition": condition, "horses": horses, "others": others}
 
 
 def main():
@@ -457,6 +478,7 @@ def main():
                 sys.exit(1)
 
         race_results = {}    # calibrate_threshold.py 互換: {label: [{rank,num,name,...}]}
+        race_others = {}     # 着順が数字でない馬: {label: [{status,rank_text,num,name,horse_id,gate}]}
         race_conditions = {} # レース条件: {label: {distance, surface, condition, ...}}
 
         for label, race_id in sorted(race_id_map.items()):
@@ -500,6 +522,7 @@ def main():
                 for h in horses
             ]
             race_conditions[label] = condition
+            race_others[label] = result["others"]
 
             human_sleep(4.0, 9.0)
 
@@ -552,6 +575,10 @@ def main():
         json.dump(race_results, f, ensure_ascii=False, indent=2)
     with open(conditions_path, "w", encoding="utf-8") as f:
         json.dump(race_conditions, f, ensure_ascii=False, indent=2)
+    # 着順が数字でない馬（2026-11-02〜）。race_results.json には入れない（rank が数字の前提の処理が多いため）
+    others_path = out_dir / "race_nonfinishers.json"
+    with open(others_path, "w", encoding="utf-8") as f:
+        json.dump(race_others, f, ensure_ascii=False, indent=2)
     with open(PEDIGREE_FILE, "w", encoding="utf-8") as f:
         json.dump(pedigree_cache, f, ensure_ascii=False, indent=2)
 
