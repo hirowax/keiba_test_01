@@ -273,7 +273,31 @@ def parse_payouts(html: str) -> dict:
             combos[combo] = int(yen_digits)
         if combos:
             result[bet_type] = combos
+    result["refund"] = parse_refund(container)
     return result
+
+
+def parse_refund(container) -> dict:
+    """払戻欄の「返還」（取消・除外の馬番と枠）。2026-11-02 に実ページで確認した形:
+    <dl><dt>返還</dt><dd><p><strong>返還馬番　13番　返還同枠　7枠</strong></p></dd></dl>
+    競走中止のレース（11/1 京都4R）にはこの欄が無い。除外・複数頭の書き方は未確認なので、元の文字も残す。
+    返還の欄が無いレースは空のリスト（"refund" キーがあること自体が、返還の欄を確かめた印）"""
+    out = {"umaban": [], "waku": [], "text": ""}
+    for dt in container.find_all("dt"):
+        if "返還" not in dt.get_text():
+            continue
+        dd = dt.find_next_sibling("dd")
+        text = re.sub(r"\s+", " ", dd.get_text(" ", strip=True)) if dd else ""
+        out["text"] = (out["text"] + " " + text).strip()
+        m = re.search(r"返還馬番(.*?)(返還同枠|$)", text)
+        if m:
+            out["umaban"] += [int(n) for n in re.findall(r"\d+", m.group(1))]
+        m = re.search(r"返還同枠(.*)$", text)
+        if m:
+            out["waku"] += [int(n) for n in re.findall(r"\d+", m.group(1))]
+        if not out["umaban"] and not out["waku"]:
+            log.warning(f"返還の欄を読めない: {text}")
+    return out
 
 
 # ---------- 対象日レース一覧（netkeiba側データから） ----------
