@@ -6,6 +6,7 @@
 """
 
 import json
+import re
 import logging
 from datetime import date
 from collections import Counter
@@ -54,39 +55,71 @@ def load_pairs():
     return pairs
 
 
+SPACES = re.compile(r"[\s\u3000]+")
+# 中止・失格は出走しているので3着以内ではないとして数える（着順の代わりの値）
+NOT_TOP3 = 99
+
+
+def _load(path: Path):
+    if not path.exists():
+        return None
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def match_result(rows, others: dict, num: str, name: str):
+    """結果と照合して着順（int）か、集計しない理由（str）を返す。
+    馬番と馬名の両方が一致したときだけ同じ馬とする（馬名で許すのは空白の違いだけ）。2026-11-02 まで
+    「馬番か馬名のどちらかが一致」で照合していた"""
+    if rows is None:
+        return "結果が無い"
+    same = lambda a, b: SPACES.sub("", str(a)) == SPACES.sub("", str(b))
+    for r in rows:
+        if str(r.get("num", "")) == num:
+            return int(r["rank"]) if same(r.get("name", ""), name) else "馬番は合うが馬名が違う"
+    o = others.get(num)
+    if o is None:
+        return "馬番が結果に無い（取消・除外・中止・失格の区別がつかない日を含む）"
+    if not same(o.get("name", ""), name):
+        return "馬番は合うが馬名が違う"
+    return NOT_TOP3 if o["status"] in ("中止", "失格") else f"{o['status']}"
+
+
 def cross_reference(pairs):
     """全日付のpickup馬に着順を紐付けたリストを返す"""
     all_horses = []
     dates_used = []
     excluded = Counter()  # 使わなかった理由 -> レース数
+    unmatched = Counter()  # 集計しなかった馬の理由 -> 頭数
     for date_str, pickup, results in pairs:
         dates_used.append(date_str)
+        nonfinishers = _load(OUTPUT_DIR / date_str / "race_nonfinishers.json") or {}
         invalid = load_invalidated(date_str, OUTPUT_DIR)
         for race, rdata in pickup.get("races", {}).items():
             issues = race_quality_issues(rdata, invalid.get(race))
             if issues:
                 excluded[issues[0].split(":")[0]] += 1
                 continue
+            others = {str(o["num"]): o for o in nonfinishers.get(race, [])}
             for h in rdata.get("scored", []):
-                finish = None
                 num = str(h.get("馬番", ""))
-                name = h.get("馬名", "")
-                if race in results:
-                    for r in results[race]:
-                        if str(r.get("num", "")) == num or r.get("name", "") == name:
-                            finish = r.get("rank")
-                            break
-                if finish is None:
-                    continue  # 結果不明はスキップ
+                name = (rdata.get("horse_name_full") or {}).get(num) or h.get("馬名", "")
+                status = match_result(results.get(race), others, num, name)
+                unmatched[status] += 0 if isinstance(status, int) else 1
+                if not isinstance(status, int):
+                    continue  # 照合できない・取消・除外は集計しない（件数はログに出す）
                 all_horses.append({
                     "date": date_str,
                     "race": race,
                     "name": name,
                     "score": h["score"],
-                    "finish": finish,
+                    "finish": status,
                 })
     if excluded:
         log.info("使わなかったレース: " + "、".join(f"{k} {v}" for k, v in excluded.most_common()))
+    unmatched = {k: v for k, v in unmatched.items() if v}
+    if unmatched:
+        log.info("集計しなかった馬: " + "、".join(f"{k} {v}" for k, v in unmatched.items()))
     return all_horses, dates_used
 
 
