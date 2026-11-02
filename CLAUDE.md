@@ -112,6 +112,7 @@ netkeiba/
 │   └── save_cookies.py       # 初回ログイン・クッキー保存用
 ├── 判定・集計
 │   ├── data_quality.py       # レース単位の品質判定（馬番の版・指数の読み方・無効化）
+│   ├── verify_results.py     # 結果取得後の全頭照合（馬番・馬ID・馬名・レースID）
 │   ├── calibrate_threshold.py # 🔥閾値を過去データから自動計算
 │   ├── paper_trade.py        # ペーパートレード台帳 generate/settle/report（Issue #3）
 │   ├── rescore.py            # pickup_scores.jsonを再スコアリング（過去日付には使わない）
@@ -190,7 +191,7 @@ git add output/20260404/ output/horse_pedigree.json && git commit -m "results: 2
 ```
 
 - コーナー通過順は当日夜には空のことがある（警告が出る）。後日 `scrape_results.py` で取り直す。
-- 取得後、採点時の馬番・馬ID・馬名と結果を全頭照合する（自動化は残りのタスク2）。
+- 取得後、`python3 verify_results.py 20260404` で採点時の馬番・馬ID・馬名と結果を全頭照合する（cron では自動。不一致は LINE で通知。結果は `output/{date}/results_check.json`）。
 
 ### 4. ペーパートレードの精算（払戻取得後・cron 未組み込み）
 
@@ -299,7 +300,7 @@ Issue管理・スケジュール・担当割当は `docs/betting_workflow_issues
 | ユーザーの指示 | 内容 | 前提条件 |
 |---|---|---|
 | — | 取得ミスの後始末（一覧と順番は `docs/incident_umaban_20261030.md` 末尾「残りのタスク」） | **最優先** |
-| 「払戻バックフィルやって」 | `scrape_jra_payouts.py --all` を分割実行（約14日分 + 10/31・11/1） | なし |
+| 「払戻バックフィルやって」 | `scrape_jra_payouts.py --all` を分割実行（2026-11-02 時点で未取得なし） | なし |
 | 「月次レポートやって」 | 払戻バックフィル→`paper_trade.py settle --all`→累積成績 | 毎月初 |
 | 「Phase Bやって」 | スコア確率化 + EVフィルターのバックテスト | 修正後のデータが90日以上。修正前のデータは使わない |
 | 「Phase Cやって」 | 損益分岐オッズ表示のUI実装 | Phase Bが採用基準クリア |
@@ -352,6 +353,7 @@ Issue管理・スケジュール・担当割当は `docs/betting_workflow_issues
   - `30 18 * 1-6,10-12 * ~/Desktop/netkeiba/run_results_cron.sh`（通常期：18:30）
   - `30 19 * 7-9 *       ~/Desktop/netkeiba/run_results_cron.sh`（夏期7〜9月：19:30）
   - `pickup_scores.json` がない場合でもレース一覧ページから race_id を取得する
+  - 取得後に `verify_results.py` で全頭照合し、不一致があれば LINE で通知する（公開は続ける。2026-11-02〜）
   - `output/{date}/` だけを commit する（`horse_pedigree.json` は含まれない）
 - ログは `cron.log`。LINE通知（成功/失敗）は `.env` の LINE_TOKEN / LINE_USER_ID
 - **カレンダー**: `jra_calendar_YYYY.json`（JRA公式ICSから取得）。年末に翌年分を取得する

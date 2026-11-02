@@ -61,6 +61,14 @@ sys.exit(0 if '$TODAY' in dates else 1)
         exit 1
     fi
 
+    # 採点時の馬番・馬ID・馬名を結果と全頭照合（2026-11-02〜）。不一致は LINE で知らせる（公開は続ける）
+    CHECK_OUT=$(python3 verify_results.py "$TODAY" 2>&1)
+    CHECK_RC=$?
+    echo "$CHECK_OUT"
+    if [ $CHECK_RC -ne 0 ]; then
+        notify_line "[netkeiba] $TODAY 全頭照合で不一致 ✗ $(echo "$CHECK_OUT" | head -4 | tr '\n' ' ' | tr -d '"')"
+    fi
+
     # git commit & push（各ステップの失敗を個別ハンドリング）
     git add "output/${TODAY}/"
     git commit -m "results: ${TODAY}" || echo "  (変更なし — コミットスキップ)"
