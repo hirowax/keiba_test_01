@@ -344,7 +344,7 @@ def parse_rank_html(html: str) -> Optional[pd.DataFrame]:
 # 0 とマイナスは正当な値。INDEX_MAX 以上は隠し値などの読み取り誤りとして異常扱い（200 は異常）。
 INDEX_MAX = 200
 # 指数の読み方の版。読み方を変えたら値を変える（output/{date}/index_sources.json → pickup_scores.json の quality）
-INDEX_READER_VERSION = "画面の値_0とマイナスと*は正常_200以上は異常_20261030夜"
+INDEX_READER_VERSION = "画面の値_0とマイナスと*は正常_200以上は異常_順位の形と馬番の重複も検査_20261102"
 INDEX_NO_DATA = {"", "-", "−", "－", "未", "未経験"}
 INDEX_TEXT_RE = re.compile(r"(-?\d+(?:\.\d+)?)(\*?)")
 
@@ -381,21 +381,103 @@ def speed_cell_value(cell) -> Tuple[str, str]:
     return kind, ("" if kind == "none" else text)
 
 
+# 表の2段目の見出し行の先頭セル。実ページと保存済みの表（output/*.xlsx 122日分・2026-11-02 確認）で
+# 見つかった形はこの2つだけ（近走平均は「5走前…」、当該距離・当該コースは「着度数…」）
+SUBHEADER_FIRST_CELLS = ("5走前", "着度数")
+RANK_TEXT_RE = re.compile(r"(\d+)位")
+
+
+def _table_columns(df: pd.DataFrame):
+    """(順位列, 馬番列, 馬名列, 指数列)。順位列は先頭列、指数列は名前に「指数」を含む最初の列"""
+    idx_col = next((c for c in df.columns if "指数" in str(c)), None)
+    num_col = next((c for c in df.columns if "馬番" in str(c)), None)
+    name_col = next((c for c in df.columns if "馬名" in str(c)), None)
+    return df.columns[0], num_col, name_col, idx_col
+
+
+def ranked_horses(df: pd.DataFrame) -> Tuple[List[dict], List[str], List[dict]]:
+    """ランキング表の馬の行を [{"順位": int か None(データ無し), "馬番", "馬名", "指数"(画面の文字), "値"}] にする。
+    docs/index_top3_definition_202611.md の定義どおり、順位はページの「順位」列を使う。
+    Returns: (馬の行, 取得異常, ページの順位の食い違い)
+
+    取得異常（読み取りの誤り。その指数を3指数の判定に使わない）:
+    - 指数の値の異常（200以上・未知の形）。メッセージは異常な文字そのもの
+    - 順位列が「N位」「-」でない行（決まった形の見出し行 SUBHEADER_FIRST_CELLS だけは読み飛ばす）
+    - 同じ馬番が2回以上
+    ページの順位の食い違い（netkeiba のページ自体の不整合。表は使う）:
+    - 順位が値と合わない（順位 = 1 + 自分より大きい値の頭数。同じ値は同じ順位で、次の順位は飛ぶ）
+    - 順位があるのに指数が無い／順位「-」なのに指数がある
+    保存済みの10,063表（2025-09〜2026-11）では、食い違いは6表だけ（指数0の馬の順位4表、未経験の馬に順位2表）。
+    どれも5位以下だった。
+    """
+    rank_col, num_col, name_col, idx_col = _table_columns(df)
+    if idx_col is None or num_col is None:
+        return [], ["指数列か馬番列が無い"], []
+    horses, errors, notes = [], [], []
+    for _, row in df.iterrows():
+        rank_text = str(row[rank_col]).strip()
+        if rank_text in SUBHEADER_FIRST_CELLS:
+            continue
+        m = RANK_TEXT_RE.fullmatch(rank_text)
+        if not m and rank_text != "-":
+            errors.append(f"順位が不正: {rank_text!r}")
+            continue
+        num = str(row[num_col]).strip()
+        text = row[idx_col]
+        kind, value = classify_index_text(text)
+        if kind == "error":
+            errors.append(str(text))
+            continue
+        rank = int(m.group(1)) if m else None
+        h = {"順位": rank, "馬番": num, "馬名": str(row[name_col]).strip() if name_col else "",
+             "指数": str(text).strip(), "値": value if kind == "ok" else None}
+        horses.append(h)
+        if rank is not None and kind != "ok":
+            notes.append({"馬番": num, "順位": rank, "正しい順位": None, "内容": f"{rank}位なのに指数が無い"})
+    nums = [h["馬番"] for h in horses]
+    dup = sorted({n for n in nums if nums.count(n) > 1})
+    if dup:
+        errors.append(f"馬番の重複: {dup}")
+    values = [h["値"] for h in horses if h["順位"] is not None and h["値"] is not None]
+    for h in horses:
+        if h["値"] is None:
+            continue
+        expected = 1 + sum(1 for v in values if v > h["値"])
+        if h["順位"] is None:
+            notes.append({"馬番": h["馬番"], "順位": None, "正しい順位": expected,
+                          "内容": f"順位「-」なのに指数 {h['指数']}（値からは{expected}位）"})
+        elif h["順位"] != expected:
+            notes.append({"馬番": h["馬番"], "順位": h["順位"], "正しい順位": expected,
+                          "内容": f"{h['順位']}位が値{h['指数']}と合わない（{expected}位のはず）"})
+    return horses, errors, notes
+
+
 def index_read_errors(df: Optional[pd.DataFrame]) -> List[str]:
-    """ランキング表の指数列から取得異常の文字を返す（空なら正常）。順位列が「N位」「-」の行だけを見る"""
+    """ランキング表の取得異常（指数の値の異常・順位の形の不正・馬番の重複）を返す（空なら正常）。
+    取得異常がある表は、そのモードを3指数の判定に使わない（main で記録）"""
     if df is None:
         return []
-    col = next((c for c in df.columns if "指数" in c), None)
-    if col is None:
-        return ["指数列なし"]
-    rank_col = df.columns[0]
-    errors = []
-    for rank, text in zip(df[rank_col].astype(str), df[col]):
-        if not re.fullmatch(r"\d+位|-", rank.strip()):
-            continue  # 2段目の見出し行（5走前…）など
-        if classify_index_text(text)[0] == "error":
-            errors.append(str(text))
-    return errors
+    return ranked_horses(df)[1]
+
+
+def rank_notes(df: Optional[pd.DataFrame]) -> List[str]:
+    """ページの順位の食い違い（記録用の文字）"""
+    if df is None:
+        return []
+    return [f"{n['馬番']}番: {n['内容']}" for n in ranked_horses(df)[2]]
+
+
+def top_rank_horses(df: pd.DataFrame, n: int) -> List[dict]:
+    """ページの順位が n 位以内の馬（同じ順位は全員）を表の順に返す。
+    取得異常がある表と、ページの順位の食い違いが n 位以内にかかる表は ValueError（順位を信用できない）"""
+    horses, errors, notes = ranked_horses(df)
+    if errors:
+        raise ValueError(f"表に取得異常があるので順位を使えない: {errors[:5]}")
+    near = [x for x in notes if (x["順位"] is not None and x["順位"] <= n)
+            or (x["正しい順位"] is not None and x["正しい順位"] <= n)]
+    if near:
+        raise ValueError(f"ページの順位の食い違いが{n}位以内にかかる: {[x['内容'] for x in near]}")
+    return [h for h in horses if h["順位"] is not None and h["値"] is not None and h["順位"] <= n]
 
 
 def parse_speed_shutuba(page, race_id: str,
@@ -628,198 +710,102 @@ def write_excel(
     logger.info(f"保存: {summary_path}")
 
 
-# ─── サマリー生成 ─────────────────────────────────────────────
-def _get_topN(df: pd.DataFrame, n: int) -> Optional[pd.DataFrame]:
-    """指数列を特定して上位N頭を返す"""
-    idx_col = None
-    for col in df.columns:
-        if "指数" in col:
-            idx_col = col
-            break
-    if idx_col is None:
-        numeric_cols = df.select_dtypes(include="number").columns.tolist()
-        if len(numeric_cols) >= 1:
-            idx_col = numeric_cols[0]
-
-    if idx_col is None:
-        return None
-
-    horse_col = next((c for c in df.columns if "馬名" in c), None)
-    num_col = next((c for c in df.columns if "馬番" in c), None)
-
-    df = df.copy()
-    df[idx_col] = pd.to_numeric(df[idx_col], errors="coerce")
-    df = df.dropna(subset=[idx_col])
-    df = df.sort_values(idx_col, ascending=False).head(n)
-
-    cols = [c for c in [num_col, horse_col, idx_col] if c is not None]
-    if not cols:
-        return None
-    return df[cols].reset_index(drop=True)
+# ─── 候補選び・サマリー生成 ─────────────────────────────────────
+# 候補の選び方の版（docs/index_top3_definition_202611.md）。選び方を変えたら値を変える
+# （output/{date}/index_sources.json → pickup_scores.json の quality.candidate_rule）
+CANDIDATE_RULE_VERSION = "ページの順位で3位以内_同じ順位は全員_20261102"
+TRIPLE_TOP_N = 3     # 3指数すべてでこの順位以内の馬を候補にする
+SUMMARY_TOP_N = 5    # サマリーに載せる順位
 
 
-def _get_top5(df: pd.DataFrame) -> Optional[pd.DataFrame]:
-    """指数列を特定してトップ5を返す（Excel表示用）"""
-    return _get_topN(df, 5)
+def _mode_tops(dfs: Dict[str, Optional[pd.DataFrame]], n: int) -> Optional[Dict[str, List[dict]]]:
+    """各指数のページの順位 n 位以内の馬。3指数のどれかが無ければ None"""
+    tops = {}
+    for mode_key in MODES:
+        df = dfs.get(mode_key)
+        if df is None:
+            return None
+        tops[mode_key] = top_rank_horses(df, n)
+    return tops
 
 
 def build_summary(dfs: Dict[str, Optional[pd.DataFrame]], label: str) -> pd.DataFrame:
     """
     dfs: {"average": df, "distance": df, "course": df}
+    各指数の5位以内（同じ順位は全員）と、3指数すべてで3位以内の馬（find_triple_top5_rows と同じ判定）
     """
+    cols = ["セクション", "馬番", "馬名", "近走平均", "当該距離", "当該コース", "順位"]
+    blank = dict.fromkeys(cols, "")
     records = []
 
-    # ① 各指数トップ5
-    top5_all: Dict[str, Optional[pd.DataFrame]] = {}
+    # ① 各指数の5位以内
     for mode_key, mode_label in MODES.items():
+        records.append({**blank, "セクション": f"【{mode_label} トップ5】"})
         df = dfs.get(mode_key)
-        top5 = _get_top5(df) if df is not None else None
-        top5_all[mode_key] = top5
-
-        records.append({"セクション": f"【{mode_label} トップ5】", "馬番": "", "馬名": "", "近走平均": "", "当該距離": "", "当該コース": ""})
-        if top5 is not None:
-            for _, row in top5.iterrows():
-                r = {"セクション": "", "馬番": "", "馬名": "", "近走平均": "", "当該距離": "", "当該コース": ""}
-                for col in top5.columns:
-                    if "馬番" in col:
-                        r["馬番"] = row[col]
-                    elif "馬名" in col:
-                        r["馬名"] = row[col]
-                    elif "指数" in col:
-                        r[mode_label] = row[col]
-                records.append(r)
+        try:
+            tops = top_rank_horses(df, SUMMARY_TOP_N) if df is not None else None
+        except ValueError as e:
+            logger.warning(f"{label} {mode_label}: {e}")
+            records.append({**blank, "セクション": "順位を使えない"})
+            continue
+        if tops:
+            for h in tops:
+                records.append({**blank, "馬番": h["馬番"], "馬名": h["馬名"],
+                                mode_label: h["指数"], "順位": f"{h['順位']}位"})
         else:
-            records.append({"セクション": "データなし", "馬番": "", "馬名": "", "近走平均": "", "当該距離": "", "当該コース": ""})
+            records.append({**blank, "セクション": "データなし"})
 
     # ② 3指数すべてでトップ3に入っている馬
-    records.append({"セクション": "【3指数すべてトップ3入り馬】", "馬番": "", "馬名": "", "近走平均": "", "当該距離": "", "当該コース": ""})
-
-    triple_horses = _find_triple_top5(dfs)
-    if triple_horses:
-        for entry in triple_horses:
-            records.append({
-                "セクション": "",
-                "馬番": entry["馬番"],
-                "馬名": entry["馬名"],
-                "近走平均": entry.get("近走平均", ""),
-                "当該距離": entry.get("当該距離", ""),
-                "当該コース": entry.get("当該コース", ""),
-            })
+    records.append({**blank, "セクション": "【3指数すべてトップ3入り馬】"})
+    try:
+        triple = find_triple_top5_rows(label, dfs)
+    except ValueError as e:
+        logger.warning(f"{label} 3指数: {e}")
+        records.append({**blank, "セクション": "順位を使えない"})
+        return pd.DataFrame(records, columns=cols)
+    if triple:
+        for r in triple:
+            records.append({**blank, "馬番": r["馬番"], "馬名": r["馬名"],
+                            "近走平均": r["近走平均指数"], "当該距離": r["当該距離指数"],
+                            "当該コース": r["当該コース指数"]})
     else:
-        records.append({"セクション": "該当なし", "馬番": "", "馬名": "", "近走平均": "", "当該距離": "", "当該コース": ""})
+        records.append({**blank, "セクション": "該当なし"})
 
-    return pd.DataFrame(records)
+    return pd.DataFrame(records, columns=cols)
 
 
 def find_triple_top5_rows(label: str, dfs: Dict[str, Optional[pd.DataFrame]]) -> List[dict]:
     """
-    3指数すべてでトップ3（馬番一致）に入っている馬を返す。
+    3指数すべてでトップ3に入っている馬を返す（関数名は旧トップ5時代のまま）。
+    トップ3 = ページの順位が3位以内（同じ順位は全員。「*」付きも含む）。馬は馬番で照合する。
     Returns: [{"開催場", "レース番号", "馬番", "馬名",
                "近走平均指数", "近走平均順位", "当該距離指数", "当該距離順位",
-               "当該コース指数", "当該コース順位"}, ...]
+               "当該コース指数", "当該コース順位"}, ...]  指数は画面の文字、順位はページの順位
     """
+    tops = _mode_tops(dfs, TRIPLE_TOP_N)
+    if tops is None:
+        return []
+    mode_info = {k: {h["馬番"]: h for h in v} for k, v in tops.items()}
+    common = set.intersection(*(set(t) for t in mode_info.values()))
+
     venue = venue_of(label)
     race_num = re.sub(r"^[^\d]+", "", label)  # "中山11R" → "11R"
-
-    # mode_key -> { 馬番: {馬名, 指数, 順位} }
-    mode_info: Dict[str, Dict[str, dict]] = {}
-
-    for mode_key, mode_label in MODES.items():
-        df = dfs.get(mode_key)
-        if df is None:
-            return []
-
-        # 列を特定
-        idx_col = next((c for c in df.columns if "指数" in c), None)
-        num_col = next((c for c in df.columns if "馬番" in c), None)
-        horse_col = next((c for c in df.columns if "馬名" in c), None)
-
-        if idx_col is None or num_col is None:
-            return []
-
-        work = df.copy()
-        work[idx_col] = pd.to_numeric(work[idx_col], errors="coerce")
-        work = work.dropna(subset=[idx_col])
-        work = work.sort_values(idx_col, ascending=False).reset_index(drop=True)
-
-        table = {}
-        for rank_0, row in work.iterrows():
-            num = str(row[num_col]).strip()
-            if not num or rank_0 >= 3:  # トップ3のみ
-                if rank_0 >= 3:
-                    break
-            table[num] = {
-                "馬名": str(row[horse_col]).strip() if horse_col else "",
-                "指数": row[idx_col],
-                "順位": f"{rank_0 + 1}位",
-            }
-        mode_info[mode_key] = table
-
-    # 馬番の積集合
-    sets = [set(t.keys()) for t in mode_info.values()]
-    common_nums = set.intersection(*sets) if sets else set()
-
     rows = []
-    for num in sorted(common_nums, key=lambda x: int(x) if x.isdigit() else 0):
-        avg = mode_info["average"][num]
-        dist = mode_info["distance"][num]
-        crs = mode_info["course"][num]
+    for num in sorted(common, key=lambda x: int(x) if x.isdigit() else 0):
+        avg, dist, crs = (mode_info[k][num] for k in ("average", "distance", "course"))
         rows.append({
             "開催場": venue,
             "レース番号": race_num,
             "馬番": num,
             "馬名": avg["馬名"] or dist["馬名"] or crs["馬名"],
             "近走平均指数": avg["指数"],
-            "近走平均順位": avg["順位"],
+            "近走平均順位": f"{avg['順位']}位",
             "当該距離指数": dist["指数"],
-            "当該距離順位": dist["順位"],
+            "当該距離順位": f"{dist['順位']}位",
             "当該コース指数": crs["指数"],
-            "当該コース順位": crs["順位"],
+            "当該コース順位": f"{crs['順位']}位",
         })
     return rows
-
-
-def _find_triple_top5(dfs: Dict[str, Optional[pd.DataFrame]]) -> List[dict]:
-    """3指数すべてでトップ3入りの馬を返す（サマリー表示用）"""
-    top5_names: dict[str, set[str]] = {}
-    top5_data: dict[str, dict[str, dict]] = {}  # mode -> {馬名: row_dict}
-
-    for mode_key, mode_label in MODES.items():
-        df = dfs.get(mode_key)
-        top3 = _get_topN(df, 3) if df is not None else None
-        if top3 is None:
-            return []
-
-        names = set()
-        data = {}
-        for _, row in top3.iterrows():
-            name = None
-            num = None
-            idx_val = None
-            for col in top3.columns:
-                if "馬名" in col:
-                    name = str(row[col])
-                elif "馬番" in col:
-                    num = str(row[col])
-                elif "指数" in col:
-                    idx_val = row[col]
-            if name:
-                names.add(name)
-                data[name] = {"馬番": num, "馬名": name, mode_label: idx_val}
-        top5_names[mode_key] = names
-        top5_data[mode_key] = data
-
-    # 積集合
-    common = set.intersection(*top5_names.values()) if top5_names else set()
-    result = []
-    for name in common:
-        entry = {"馬番": "", "馬名": name}
-        for mode_key, mode_label in MODES.items():
-            entry[mode_label] = top5_data[mode_key].get(name, {}).get(mode_label, "")
-            if not entry["馬番"] and top5_data[mode_key].get(name, {}).get("馬番"):
-                entry["馬番"] = top5_data[mode_key][name]["馬番"]
-        result.append(entry)
-    return result
 
 
 # ─── メイン ───────────────────────────────────────────────────
@@ -947,17 +933,21 @@ def main():
                     browser.close()
                     return
 
-            # 指数に取得異常があるモードは捨てる（3指数重複馬の判定に使わない）。0・マイナスは正当な値
+            # 指数の取得異常・順位の不整合・馬番の重複があるモードは捨てる（3指数重複馬の判定に使わない）。0・マイナスは正当な値
             for k in list(dfs):
                 bad = index_read_errors(dfs[k])
                 if bad:
                     logger.error(f"{label} {MODES[k]}: 指数に取得異常 {bad[:5]} → このモードは使わない")
                     dfs[k] = None
                     read_errors[k] = bad
+            notes = {MODES[k]: rank_notes(v) for k, v in dfs.items() if rank_notes(v)}
+            for m, v in notes.items():
+                logger.warning(f"{label} {m}: ページの順位の食い違い {v[:3]}（表は使う。上位にかかる場合は候補を出さない）")
             index_sources[label] = {
                 "race_id": race_id,
                 "modes": {MODES[k]: ("取得異常" if k in read_errors else sources.get(k, "なし")) for k in MODES},
                 "read_errors": {MODES[k]: v for k, v in read_errors.items()},
+                "rank_notes": notes,
             }
 
             # mode_label をキーに変換して蓄積
@@ -1000,6 +990,7 @@ def main():
         src_path = out_dir / "index_sources.json"
         with open(src_path, "w", encoding="utf-8") as f:
             json.dump({"date": date, "index_reader_version": INDEX_READER_VERSION,
+                       "candidate_rule_version": CANDIDATE_RULE_VERSION,
                        "races": index_sources}, f, ensure_ascii=False, indent=1)
         n_err = sum(1 for r in index_sources.values() if r["read_errors"])
         logger.info(f"保存: {src_path}（{len(index_sources)}レース・取得異常{n_err}レース）")
