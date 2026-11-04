@@ -6,3 +6,4 @@ __pycache__/
 debug_*.png
 *.xlsx
 cron.log
+rescrape_full.log
