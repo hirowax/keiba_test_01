@@ -48,17 +48,19 @@
    {'date': '20261025', 'race': '東京4R', 'candidates': 1, 'scored_record': True, 'paper': '買い目あり', 'invalidated': False, 'steeple': True, 'all_exactly_1000': True}
 
 [当時のコードの再現: find_triple_top5_rows と候補の一覧の馬番]
-   {'一致': 184} 使ったコミット {'3f80997': 26, '5f98199': 42, '33231c8': 99, 'd9a4002': 14, 'f3f7142': 3}
-   {'date': '20260912', 'race': '阪神1R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['1'], 'old_code': ['1'], 'status': '一致'}
-   {'date': '20260919', 'race': '阪神4R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['2'], 'old_code': ['2'], 'status': '一致'}
-   {'date': '20260920', 'race': '阪神1R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['1', '2'], 'old_code': ['1', '2'], 'status': '一致'}
-   {'date': '20260922', 'race': '中山1R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['1', '2'], 'old_code': ['1', '2'], 'status': '一致'}
-   {'date': '20260927', 'race': '阪神1R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['3'], 'old_code': ['3'], 'status': '一致'}
-   {'date': '20261004', 'race': '東京4R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['3'], 'old_code': ['3'], 'status': '一致'}
-   {'date': '20261012', 'race': '東京4R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['1'], 'old_code': ['1'], 'status': '一致'}
-   {'date': '20261018', 'race': '東京9R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['2'], 'old_code': ['2'], 'status': '一致'}
-   {'date': '20261024', 'race': '京都4R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['1', '3'], 'old_code': ['1', '3'], 'status': '一致'}
-   {'date': '20261025', 'race': '東京4R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['3'], 'old_code': ['3'], 'status': '一致'}
+   基準のコミット 2d1bc1397becd5cfa54f4430b7726d75205f3a7b
+   {'一致': 184} 使った scraper.py のコミット {'3f8099700172c67d67179cfc5649f8dda4e9871b': 26, '5f981999129e83aa5114c00fededff7fcf9d3966': 42, '33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6': 99, 'd9a4002a9bcedac9c8b281f139641acb0f16199e': 14, 'f3f7142d122131902d8b808f0f08336788edbd5c': 3}
+   入力の候補の一覧が選んだコミットの内容と一致 {True: 184}
+   {'date': '20260912', 'race': '阪神1R', 'csv_commit': 'f0069e7f890b82466794f194f6f7f73796734803', 'scraper_commit': '3f8099700172c67d67179cfc5649f8dda4e9871b', 'input_csv_equals_commit': True, 'csv': ['1'], 'old_code': ['1'], 'status': '一致'}
+   {'date': '20260919', 'race': '阪神4R', 'csv_commit': 'e6899e77047f1d368de6e3882a578f647e7d313c', 'scraper_commit': '3f8099700172c67d67179cfc5649f8dda4e9871b', 'input_csv_equals_commit': True, 'csv': ['2'], 'old_code': ['2'], 'status': '一致'}
+   {'date': '20260920', 'race': '阪神1R', 'csv_commit': '12741ab0b1db03ff53d9e5e3cc2ba913b87eb149', 'scraper_commit': '3f8099700172c67d67179cfc5649f8dda4e9871b', 'input_csv_equals_commit': True, 'csv': ['1', '2'], 'old_code': ['1', '2'], 'status': '一致'}
+   {'date': '20260922', 'race': '中山1R', 'csv_commit': 'ca695a472df717415c224ad16d23be6528a3f8f7', 'scraper_commit': '3f8099700172c67d67179cfc5649f8dda4e9871b', 'input_csv_equals_commit': True, 'csv': ['1', '2'], 'old_code': ['1', '2'], 'status': '一致'}
+   {'date': '20260927', 'race': '阪神1R', 'csv_commit': 'bfa4f801af587bf685f59c1ca91703293b2d850c', 'scraper_commit': '3f8099700172c67d67179cfc5649f8dda4e9871b', 'input_csv_equals_commit': True, 'csv': ['3'], 'old_code': ['3'], 'status': '一致'}
+   {'date': '20261004', 'race': '東京4R', 'csv_commit': '9ea183b247f9cd64993f8de100f367e3f3c5d3ca', 'scraper_commit': '3f8099700172c67d67179cfc5649f8dda4e9871b', 'input_csv_equals_commit': True, 'csv': ['3'], 'old_code': ['3'], 'status': '一致'}
+   {'date': '20261012', 'race': '東京4R', 'csv_commit': '9ed67199298c1fdb18af3530f12daf07aa889455', 'scraper_commit': '3f8099700172c67d67179cfc5649f8dda4e9871b', 'input_csv_equals_commit': True, 'csv': ['1'], 'old_code': ['1'], 'status': '一致'}
+   {'date': '20261018', 'race': '東京9R', 'csv_commit': 'a08b80ca557067973307184e4f1bed4e2e851bdb', 'scraper_commit': '3f8099700172c67d67179cfc5649f8dda4e9871b', 'input_csv_equals_commit': True, 'csv': ['2'], 'old_code': ['2'], 'status': '一致'}
+   {'date': '20261024', 'race': '京都4R', 'csv_commit': '4b81df946f5c6efd488a210e2cfb08b3de2b3a78', 'scraper_commit': '3f8099700172c67d67179cfc5649f8dda4e9871b', 'input_csv_equals_commit': True, 'csv': ['1', '3'], 'old_code': ['1', '3'], 'status': '一致'}
+   {'date': '20261025', 'race': '東京4R', 'csv_commit': 'ac0026081e6f22f8ab869d881cdf051fce8aaf65', 'scraper_commit': '3f8099700172c67d67179cfc5649f8dda4e9871b', 'input_csv_equals_commit': True, 'csv': ['3'], 'old_code': ['3'], 'status': '一致'}
    候補の一覧を2回以上コミットした日（対象レースに候補のある日のうち） ['20260411', '20260412', '20260523', '20260524']
     20260912 表の更新時刻 2026-09-11T17:19:00 候補の一覧のコミット ['f0069e7 2026-09-11T17:28:23+09:00']
     20260913 表の更新時刻 2026-09-12T17:16:04 候補の一覧のコミット ['d689dd6 2026-09-12T17:25:56+09:00']
