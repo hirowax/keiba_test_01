@@ -1,0 +1,316 @@
+{
+  "run_id": "20261028",
+  "started_at": "2026-10-28T16:02:27.030599",
+  "finished_at": "2026-10-28T16:02:29.469046",
+  "base_dir": "/Users/hirowax/Desktop/netkeiba",
+  "read_only": true,
+  "git": {
+    "head": "3d2f09c266b6a995ee9d12774449ca55be30828e",
+    "head_short": "3d2f09c",
+    "branch": "main",
+    "head_subject": "results: 20261025",
+    "head_date": "2026-10-26T22:07:23+09:00",
+    "status_porcelain": "M output/horse_pedigree.json\n?? research/"
+  },
+  "constants": {
+    "CLEAN_START": "20260328",
+    "ODDS_START": "20260711",
+    "PAPER_TRADE_START": "20260912"
+  },
+  "a1": {
+    "counts": {
+      "date_dirs": 120,
+      "dates_with_pickup_scores.json": 120,
+      "dates_with_prev_data.json": 67,
+      "dates_with_race_results.json": 120,
+      "dates_with_race_conditions.json": 120,
+      "dates_with_payouts_jra.json": 118,
+      "dates_with_paper_bets.json": 17,
+      "races_in_pickup_scores": 1615,
+      "horses_scored_candidates": 2177,
+      "horses_anaba_rows": 181,
+      "races_in_race_results": 1670,
+      "horses_in_race_results": 22916,
+      "races_in_payouts": 1642
+    },
+    "n_inventory_files": 567
+  },
+  "a2": {
+    "n_rows": 22477,
+    "n_candidate_rows": 2177,
+    "n_noncandidate_rows": 20300,
+    "races_total": 1615,
+    "races_with_zero_prerace_odds": 1203,
+    "races_with_partial_prerace_odds": 394,
+    "rates_all": {
+      "f_race_id": 100.0,
+      "f_horse_id": 42.3,
+      "f_umaban": 100.0,
+      "f_field_size_prerace": 0.0,
+      "f_field_size_postrace": 99.0,
+      "f_scratch_state": 0.0,
+      "f_idx_values_3": 9.7,
+      "f_idx_ranks_3": 9.7,
+      "f_idx_basis_nraces": 0.0,
+      "f_triple_flag": 9.7,
+      "f_breakdown": 9.7,
+      "f_score": 9.7,
+      "f_scoring_version": 100.0,
+      "f_generated_at": 100.0,
+      "f_rescored_at": 51.9,
+      "f_odds_prerace": 14.6,
+      "f_pop_prerace": 73.9,
+      "f_odds_fetch_time_per_race": 0.0,
+      "f_place_odds_prerace": 0.0,
+      "f_prev_date": 17.6,
+      "f_prev_fetch_time": 23.1,
+      "f_prev_snapshot_perdate": 58.7,
+      "f_style_history_dates": 0.0,
+      "f_final_rank": 98.5,
+      "f_final_odds": 98.5,
+      "f_final_place_odds": 16.0,
+      "f_jra_payout": 98.4,
+      "f_last3f": 40.9,
+      "f_corners": 61.8,
+      "f_margin": 0.0
+    },
+    "rates_candidates": {
+      "f_race_id": 100.0,
+      "f_horse_id": 46.8,
+      "f_umaban": 100.0,
+      "f_field_size_prerace": 0.0,
+      "f_field_size_postrace": 98.8,
+      "f_scratch_state": 0.0,
+      "f_idx_values_3": 100.0,
+      "f_idx_ranks_3": 100.0,
+      "f_idx_basis_nraces": 0.0,
+      "f_triple_flag": 100.0,
+      "f_breakdown": 100.0,
+      "f_score": 100.0,
+      "f_scoring_version": 100.0,
+      "f_generated_at": 100.0,
+      "f_rescored_at": 53.1,
+      "f_odds_prerace": 16.6,
+      "f_pop_prerace": 72.8,
+      "f_odds_fetch_time_per_race": 0.0,
+      "f_place_odds_prerace": 0.0,
+      "f_prev_date": 30.4,
+      "f_prev_fetch_time": 31.9,
+      "f_prev_snapshot_perdate": 58.8,
+      "f_style_history_dates": 0.0,
+      "f_final_rank": 98.1,
+      "f_final_odds": 98.1,
+      "f_final_place_odds": 27.3,
+      "f_jra_payout": 98.3,
+      "f_last3f": 39.6,
+      "f_corners": 62.5,
+      "f_margin": 0.0
+    },
+    "rates_noncandidates": {
+      "f_race_id": 100.0,
+      "f_horse_id": 41.8,
+      "f_umaban": 100.0,
+      "f_field_size_prerace": 0.0,
+      "f_field_size_postrace": 99.1,
+      "f_scratch_state": 0.0,
+      "f_idx_values_3": 0.0,
+      "f_idx_ranks_3": 0.0,
+      "f_idx_basis_nraces": 0.0,
+      "f_triple_flag": 0.0,
+      "f_breakdown": 0.0,
+      "f_score": 0.0,
+      "f_scoring_version": 100.0,
+      "f_generated_at": 100.0,
+      "f_rescored_at": 51.8,
+      "f_odds_prerace": 14.4,
+      "f_pop_prerace": 74.0,
+      "f_odds_fetch_time_per_race": 0.0,
+      "f_place_odds_prerace": 0.0,
+      "f_prev_date": 16.2,
+      "f_prev_fetch_time": 22.2,
+      "f_prev_snapshot_perdate": 58.7,
+      "f_style_history_dates": 0.0,
+      "f_final_rank": 98.6,
+      "f_final_odds": 98.6,
+      "f_final_place_odds": 14.8,
+      "f_jra_payout": 98.4,
+      "f_last3f": 41.0,
+      "f_corners": 61.7,
+      "f_margin": 0.0
+    }
+  },
+  "a3": {
+    "prev_date_checked": 6832,
+    "prev_date_violations": 0,
+    "horse_style_value_keys": [
+      "avg_ratio",
+      "n_races",
+      "style"
+    ],
+    "horse_style_has_date_dimension": 0,
+    "horse_style_n_horses": 6255,
+    "horse_db_entries_with_prev_date": 4249,
+    "duplicate_raceid_umaban_keys": 0,
+    "provenance_counts": {
+      "遡及作成(対象日より後に生成)": 27,
+      "遡及作成(対象日より後に生成) / 再スコア済": 31,
+      "当日生成(発走前後は時刻のみでは不明) / 再スコア済": 5,
+      "当時保存(前日以前の生成) / 再スコア済": 18,
+      "当時保存(前日以前の生成)": 36,
+      "当日生成(発走前後は時刻のみでは不明)": 3
+    },
+    "n_dates_profiled": 120
+  },
+  "field_specs": [
+    {
+      "field": "race_id",
+      "desc": "レースID",
+      "origin": "pre"
+    },
+    {
+      "field": "horse_id",
+      "desc": "馬ID",
+      "origin": "pre"
+    },
+    {
+      "field": "umaban",
+      "desc": "馬番",
+      "origin": "pre"
+    },
+    {
+      "field": "field_size_prerace",
+      "desc": "出走頭数（予想時点の保存値）",
+      "origin": "none"
+    },
+    {
+      "field": "field_size_postrace",
+      "desc": "出走頭数（race_conditions由来）",
+      "origin": "post"
+    },
+    {
+      "field": "scratch_state",
+      "desc": "取消・除外・中止の明示状態",
+      "origin": "none"
+    },
+    {
+      "field": "idx_values_3",
+      "desc": "3指数の実数値3つ",
+      "origin": "pre"
+    },
+    {
+      "field": "idx_ranks_3",
+      "desc": "3指数の順位3つ",
+      "origin": "pre"
+    },
+    {
+      "field": "idx_basis_nraces",
+      "desc": "指数根拠の出走回数",
+      "origin": "none"
+    },
+    {
+      "field": "triple_flag",
+      "desc": "3指数重複条件の判定",
+      "origin": "pre"
+    },
+    {
+      "field": "breakdown",
+      "desc": "加点要素の内訳",
+      "origin": "pre"
+    },
+    {
+      "field": "score",
+      "desc": "スコア",
+      "origin": "pre"
+    },
+    {
+      "field": "scoring_version",
+      "desc": "scoring_version",
+      "origin": "pre"
+    },
+    {
+      "field": "generated_at",
+      "desc": "予想生成時刻",
+      "origin": "pre"
+    },
+    {
+      "field": "rescored_at",
+      "desc": "再スコア日時",
+      "origin": "pre"
+    },
+    {
+      "field": "odds_prerace",
+      "desc": "予想時点単勝オッズ",
+      "origin": "pre"
+    },
+    {
+      "field": "pop_prerace",
+      "desc": "予想時点人気",
+      "origin": "pre"
+    },
+    {
+      "field": "odds_fetch_time_per_race",
+      "desc": "オッズのレース単位取得時刻",
+      "origin": "none"
+    },
+    {
+      "field": "place_odds_prerace",
+      "desc": "予想時点の複勝レンジ",
+      "origin": "none"
+    },
+    {
+      "field": "prev_date",
+      "desc": "前走日",
+      "origin": "pre"
+    },
+    {
+      "field": "prev_fetch_time",
+      "desc": "前走の取得時刻",
+      "origin": "pre"
+    },
+    {
+      "field": "prev_snapshot_perdate",
+      "desc": "前走の日別スナップショット",
+      "origin": "pre"
+    },
+    {
+      "field": "style_history_dates",
+      "desc": "脚質履歴の日付",
+      "origin": "none"
+    },
+    {
+      "field": "final_rank",
+      "desc": "確定着順",
+      "origin": "post"
+    },
+    {
+      "field": "final_odds",
+      "desc": "確定単勝オッズ",
+      "origin": "post"
+    },
+    {
+      "field": "final_place_odds",
+      "desc": "確定複勝オッズ",
+      "origin": "post"
+    },
+    {
+      "field": "jra_payout",
+      "desc": "JRA払戻",
+      "origin": "post"
+    },
+    {
+      "field": "last3f",
+      "desc": "上がり3F",
+      "origin": "post"
+    },
+    {
+      "field": "corners",
+      "desc": "コーナー通過順",
+      "origin": "post"
+    },
+    {
+      "field": "margin",
+      "desc": "着差",
+      "origin": "post"
+    }
+  ]
+}
