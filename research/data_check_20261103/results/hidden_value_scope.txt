@@ -1,0 +1,80 @@
+表の数 {'200以上なし': 9312, '読めた整数値がすべて200以上': 732, '読めた整数なし': 19} 合計 10063
+レースごとの表の数（モードの数: レース数） {1: 19, 2: 150, 3: 3248}
+整数として読めない値（元の文字: 件数） {'-': 6034, '未経験': 30542}
+200以上の値がある表 732 うち読めない値を含む 365 空のセルを含む 0 200〜999の値を含む 2
+読めた整数の無い表 [('20260321', '中山8R', 'average', 10, 0, ['-']), ('20260321', '中山8R', 'distance', 10, 0, ['-', '未経験']), ('20260321', '中山8R', 'course', 10, 0, ['-', '未経験']), ('20260321', '中京3R', 'distance', 13, 0, ['未経験']), ('20260322', '中山4R', 'average', 14, 0, ['-']), ('20260322', '中山4R', 'distance', 14, 0, ['-', '未経験']), ('20260322', '中山4R', 'course', 14, 0, ['-', '未経験']), ('20260328', '阪神8R', 'average', 11, 0, ['-']), ('20260328', '阪神8R', 'distance', 11, 0, ['-', '未経験']), ('20260328', '阪神8R', 'course', 11, 0, ['-', '未経験']), ('20260329', '阪神4R', 'average', 14, 0, ['-']), ('20260329', '阪神4R', 'distance', 14, 0, ['-', '未経験']), ('20260329', '阪神4R', 'course', 14, 0, ['-', '未経験']), ('20260404', '中山4R', 'average', 14, 0, ['-']), ('20260404', '中山4R', 'distance', 14, 0, ['-', '未経験']), ('20260404', '中山4R', 'course', 14, 0, ['-', '未経験']), ('20260405', '中山4R', 'average', 14, 0, ['-']), ('20260405', '中山4R', 'distance', 14, 0, ['-', '未経験']), ('20260405', '中山4R', 'course', 14, 0, ['-', '未経験'])]
+
+200以上の値のあるレース 257 日数 109 範囲 20250920 〜 20261025
+
+[表が馬番1〜3だけの6日] レース 140 日数 6 表の数 396
+  値がすべて1000ちょうど 7  200〜999の値を含む 2
+  候補の延べ 223 候補のあるレース 116 候補0頭 0 採点記録なし 24
+  障害戦の判定 {'平地': 133, '障害': 7}
+  判定の出所 {'race_conditions.json': 116, 'race_results_all.json': 24}
+  結果ファイルにレースがある {'race_results_all.json': 140}
+
+[ほかの日] レース 117 日数 103 表の数 336
+  値がすべて1000ちょうど 117  200〜999の値を含む 0
+  候補の延べ 91 候補のあるレース 68 候補0頭 0 採点記録なし 49
+  障害戦の判定 {'障害': 93, '条件の記録なし': 24}
+  判定の出所 {'race_conditions.json': 69, 'race_results_all.json': 24, None: 24}
+  結果ファイルにレースがある {'race_results_all.json': 69, 'race_results.json': 24, None: 24}
+  条件の記録なし [('20260530', '東京4R', None), ('20260606', '東京1R', None), ('20260620', '阪神1R', None), ('20260621', '東京1R', None), ('20260627', '福島4R', None), ('20260705', '小倉1R', None), ('20260711', '福島1R', None), ('20260712', '福島1R', None), ('20260725', '新潟9R', None), ('20260801', '中京9R', None), ('20260802', '中京9R', None), ('20260809', '中京9R', None), ('20260815', '新潟9R', None), ('20260816', '新潟9R', None), ('20260822', '中京9R', None), ('20260829', '新潟1R', None), ('20260830', '新潟1R', None), ('20260906', '中山1R', None), ('20260913', '中山1R', None), ('20260926', '中山4R', None), ('20261003', '東京4R', None), ('20261010', '京都4R', None), ('20261011', '京都4R', None), ('20261017', '京都4R', None)]
+
+[旧集計: 今の候補の一覧に1000以上の行がある日] 66 日 314 行
+  今の一覧には無いが、git の過去の版に1000以上の行がある日 {'20261031': [('c4c7f64', 1)]}
+  新集計に含まれない日 []
+  新集計だけにある日 43
+   その日の対象レース 44 候補あり 0 候補0頭 0 採点記録なし 44 200〜999の値を含む 0
+   候補があるのに旧集計に無いレース []
+
+[ペーパートレード期間（20260912〜）の対象レースすべて]
+  レース 16 {'見送り': 9, 'races にも skipped_races にも無い': 6, '買い目あり': 1}
+   {'date': '20260912', 'race': '阪神1R', 'candidates': 1, 'scored_record': True, 'paper': '見送り: no_axis(score<8 or unscored)', 'invalidated': False, 'steeple': True, 'all_exactly_1000': True}
+   {'date': '20260913', 'race': '中山1R', 'candidates': None, 'scored_record': False, 'paper': 'races にも skipped_races にも無い', 'invalidated': False, 'steeple': None, 'all_exactly_1000': True}
+   {'date': '20260919', 'race': '阪神4R', 'candidates': 1, 'scored_record': True, 'paper': '見送り: no_axis(score<8 or unscored)', 'invalidated': False, 'steeple': True, 'all_exactly_1000': True}
+   {'date': '20260920', 'race': '阪神1R', 'candidates': 2, 'scored_record': True, 'paper': '見送り: no_axis(score<8 or unscored)', 'invalidated': False, 'steeple': True, 'all_exactly_1000': True}
+   {'date': '20260922', 'race': '中山1R', 'candidates': 2, 'scored_record': True, 'paper': '見送り: no_axis(score<8 or unscored)', 'invalidated': False, 'steeple': True, 'all_exactly_1000': True}
+   {'date': '20260926', 'race': '中山4R', 'candidates': None, 'scored_record': False, 'paper': 'races にも skipped_races にも無い', 'invalidated': False, 'steeple': None, 'all_exactly_1000': True}
+   {'date': '20260927', 'race': '阪神1R', 'candidates': 1, 'scored_record': True, 'paper': '見送り: no_axis(score<8 or unscored)', 'invalidated': False, 'steeple': True, 'all_exactly_1000': True}
+   {'date': '20261003', 'race': '東京4R', 'candidates': None, 'scored_record': False, 'paper': 'races にも skipped_races にも無い', 'invalidated': False, 'steeple': None, 'all_exactly_1000': True}
+   {'date': '20261004', 'race': '東京4R', 'candidates': 1, 'scored_record': True, 'paper': '見送り: no_axis(score<8 or unscored)', 'invalidated': False, 'steeple': True, 'all_exactly_1000': True}
+   {'date': '20261010', 'race': '京都4R', 'candidates': None, 'scored_record': False, 'paper': 'races にも skipped_races にも無い', 'invalidated': False, 'steeple': None, 'all_exactly_1000': True}
+   {'date': '20261011', 'race': '京都4R', 'candidates': None, 'scored_record': False, 'paper': 'races にも skipped_races にも無い', 'invalidated': False, 'steeple': None, 'all_exactly_1000': True}
+   {'date': '20261012', 'race': '東京4R', 'candidates': 1, 'scored_record': True, 'paper': '見送り: no_axis(score<8 or unscored)', 'invalidated': False, 'steeple': True, 'all_exactly_1000': True}
+   {'date': '20261017', 'race': '京都4R', 'candidates': None, 'scored_record': False, 'paper': 'races にも skipped_races にも無い', 'invalidated': False, 'steeple': None, 'all_exactly_1000': True}
+   {'date': '20261018', 'race': '東京9R', 'candidates': 1, 'scored_record': True, 'paper': '見送り: no_axis(score<8 or unscored)', 'invalidated': False, 'steeple': True, 'all_exactly_1000': True}
+   {'date': '20261024', 'race': '京都4R', 'candidates': 2, 'scored_record': True, 'paper': '見送り: no_axis(score<8 or unscored)', 'invalidated': False, 'steeple': True, 'all_exactly_1000': True}
+   {'date': '20261025', 'race': '東京4R', 'candidates': 1, 'scored_record': True, 'paper': '買い目あり', 'invalidated': False, 'steeple': True, 'all_exactly_1000': True}
+
+[当時のコードの再現: find_triple_top5_rows と候補の一覧の馬番]
+   {'一致': 184} 使ったコミット {'3f80997': 26, '5f98199': 42, '33231c8': 99, 'd9a4002': 14, 'f3f7142': 3}
+   {'date': '20260912', 'race': '阪神1R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['1'], 'old_code': ['1'], 'status': '一致'}
+   {'date': '20260919', 'race': '阪神4R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['2'], 'old_code': ['2'], 'status': '一致'}
+   {'date': '20260920', 'race': '阪神1R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['1', '2'], 'old_code': ['1', '2'], 'status': '一致'}
+   {'date': '20260922', 'race': '中山1R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['1', '2'], 'old_code': ['1', '2'], 'status': '一致'}
+   {'date': '20260927', 'race': '阪神1R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['3'], 'old_code': ['3'], 'status': '一致'}
+   {'date': '20261004', 'race': '東京4R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['3'], 'old_code': ['3'], 'status': '一致'}
+   {'date': '20261012', 'race': '東京4R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['1'], 'old_code': ['1'], 'status': '一致'}
+   {'date': '20261018', 'race': '東京9R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['2'], 'old_code': ['2'], 'status': '一致'}
+   {'date': '20261024', 'race': '京都4R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['1', '3'], 'old_code': ['1', '3'], 'status': '一致'}
+   {'date': '20261025', 'race': '東京4R', 'scraper': '3f80997', 'csv_commits': 1, 'csv': ['3'], 'old_code': ['3'], 'status': '一致'}
+   候補の一覧を2回以上コミットした日（対象レースに候補のある日のうち） ['20260411', '20260412', '20260523', '20260524']
+    20260912 表の更新時刻 2026-09-11T17:19:00 候補の一覧のコミット ['f0069e7 2026-09-11T17:28:23+09:00']
+    20260913 表の更新時刻 2026-09-12T17:16:04 候補の一覧のコミット ['d689dd6 2026-09-12T17:25:56+09:00']
+    20260919 表の更新時刻 2026-09-19T05:04:52 候補の一覧のコミット ['e6899e7 2026-09-19T05:14:16+09:00']
+    20260920 表の更新時刻 2026-09-19T17:18:50 候補の一覧のコミット ['12741ab 2026-09-19T17:31:24+09:00']
+    20260922 表の更新時刻 2026-09-21T20:15:36 候補の一覧のコミット ['ca695a4 2026-09-21T20:24:21+09:00']
+    20260926 表の更新時刻 2026-09-25T17:19:02 候補の一覧のコミット ['3955f57 2026-09-25T17:29:26+09:00']
+    20260927 表の更新時刻 2026-09-26T17:17:58 候補の一覧のコミット ['bfa4f80 2026-09-26T17:28:14+09:00']
+    20261003 表の更新時刻 2026-10-02T17:17:42 候補の一覧のコミット ['422d4a3 2026-10-02T17:27:51+09:00']
+    20261004 表の更新時刻 2026-10-03T17:20:47 候補の一覧のコミット ['9ea183b 2026-10-03T17:29:04+09:00']
+    20261010 表の更新時刻 2026-10-09T17:19:47 候補の一覧のコミット ['94d599a 2026-10-09T17:29:07+09:00']
+    20261011 表の更新時刻 2026-10-10T22:56:25 候補の一覧のコミット ['2e4a897 2026-10-10T23:06:39+09:00']
+    20261012 表の更新時刻 2026-10-11T19:29:52 候補の一覧のコミット ['9ed6719 2026-10-11T19:39:51+09:00']
+    20261017 表の更新時刻 2026-10-16T19:10:23 候補の一覧のコミット ['2d6d588 2026-10-16T19:21:00+09:00']
+    20261018 表の更新時刻 2026-10-17T18:33:37 候補の一覧のコミット ['a08b80c 2026-10-17T18:48:10+09:00']
+    20261024 表の更新時刻 2026-10-23T17:34:57 候補の一覧のコミット ['4b81df9 2026-10-23T17:48:18+09:00']
+    20261025 表の更新時刻 2026-10-24T22:17:22 候補の一覧のコミット ['ac00260 2026-10-24T22:35:27+09:00']
+
+読んだ入力ファイル 703 実行中に変わったファイル []

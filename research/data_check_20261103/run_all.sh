@@ -9,6 +9,7 @@ python3 $D/tansho_check.py > $D/results/tansho.txt
 python3 $D/prev_pop_check.py > $D/results/prev_pop.txt
 python3 $D/prev_pop_groups.py > $D/results/prev_pop_groups.txt
 python3 $D/payout_combo_check.py > $D/results/payout_combo.txt
+python3 $D/hidden_value_scope.py output > $D/results/hidden_value_scope.txt  # 2026-11-04 の結果は output/ の写しで実行したもの
 python3 $D/manifest.py after
 python3 - <<'PY'
 import json

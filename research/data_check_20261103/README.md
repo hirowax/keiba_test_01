@@ -28,6 +28,7 @@ bash research/data_check_20261103/run_all.sh
 | `prev_pop_check.py` | 4-2: 馬ページから読んだ前走の着順・人気（`prev_data.json`）と自前の結果 | 同じ馬ID・同じ日付のレースが結果に1つだけあるときだけ照合する。（馬ID, 前走日）の組は1回だけ数える（`prev_data.json` を日付順に読んで最初の値） |
 | `prev_pop_groups.py` | 4-2 追加: 人気が違った組（同じ単勝オッズの馬）ごとの人気の集まり、前走好走の判定が変わるか | 馬ページの値は（前走日, 馬ID）が合う全 `prev_data.json` から集める。「前走好走」の判定は、この（前走日, 馬ID）の組ごとに数える |
 | `payout_combo_check.py` | 4-3: 払戻の組み合わせと着順 | 3着以内に同着があるレースは外す。金額は見ない。複勝は払戻の頭数 k について上から k 頭と一致するかだけを見る（k が正しいかは見ていない）。枠連の発売の有無と複勝の払戻頭数は、着順のある頭数との対応を「未検証」として出すだけ。着順のある頭数は出走頭数ではない |
+| `hidden_value_scope.py` | タスク9（2026-11-04 追加）: 指数の列で、読めた整数値が200以上の表・レース・日。候補・障害戦・ペーパートレードの買い目・旧集計との関係・当時のコードの再現 | 引数で入力のフォルダを渡す（2026-11-04 は `output/` の写しを読んだ。sha256 は `results/hidden_value_scope_manifest.json`）。`YYYYMMDD.xlsx` だけを対象にする。セルを空・整数・読めない値に分けて表ごとに件数を残す。障害戦はクラス名に「障害」を含むか（`race_conditions.json`→`race_results_all.json`→`race_results.json` の順に探す）。買い目は `paper_bets.json` の `races` と `skipped_races` を区別する。再現は、候補の一覧を最後にコミットした時点の `scraper.find_triple_top5_rows()` を git から取り出して呼ぶ |
 | `manifest.py` | 入力の一覧と sha256 | — |
 
 ## 確かめていないこと
