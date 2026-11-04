@@ -1,10 +1,13 @@
 """タスク9: 保存済みの指数の表で、値が200以上（検出の条件）の表・レース・日を数える。
 
 使い方（リポジトリの根から）:
-    python3 research/data_check_20261103/hidden_value_scope.py [入力の output フォルダ]
-入力のフォルダを省くと output/ を読む。2026-11-04 の実行は、結果の取り直しが書き込む途中の
-ファイルを避けるため、output/ の必要なファイルを別のフォルダに写してから、その写しを読んだ。
-読んだファイルの sha256 は results/hidden_value_scope_manifest.json に書く（実行の前と後で比べる）。
+    python3 research/data_check_20261103/hidden_value_scope.py 入力の_output_フォルダ --base-commit SHA
+- 入力のフォルダ: 2026-11-04 の実行は、結果の取り直しが書き込む途中のファイルを避けるため、
+  output/ の必要なファイルを別のフォルダに写し、その写しを読んだ。
+- --base-commit: 候補の一覧（全場_3指数重複馬.csv）の git の履歴を、このコミットから探す。
+  実行時の HEAD に頼らないので、後で候補の一覧が変わっても同じコードを選ぶ。完全な SHA を出力に残す。
+- 読んだファイルの sha256 は results/hidden_value_scope_manifest.json に書く。実行の前と後で比べ、
+  変わったファイルがあれば、結果ファイル（.txt・.json・manifest）を書かずに終了コード1で止まる。
 
 数え方:
 - 対象: 入力フォルダの YYYYMMDD.xlsx すべて。2段目の見出し行（1列目が「5走前」「着度数」）は読み飛ばす。
@@ -20,11 +23,14 @@
 - 旧集計（候補の一覧の1000以上）: 全場_3指数重複馬.csv の指数の列のどれかが1000以上の行がある日。
 - ペーパートレード: 2026-09-12 以降の対象レースすべてを、paper_bets.json の races（買い目あり）・
   skipped_races（見送り）・どちらにも無い、に分ける。invalidated.json に載っているかも見る。
-- 当時のコードの再現: 対象レースの候補の一覧について、その日の全場_3指数重複馬.csv を最初にコミットした
-  時点の scraper.py を git から取り出し、find_triple_top5_rows() に保存済みの表を渡して、出た馬番を
-  CSV の馬番と比べる（書き写さず、元の関数を呼ぶ）。
+- 当時のコードの再現: 候補のある対象レースについて、--base-commit から見て、その日の候補の一覧を最後に
+  変えたコミットを探す。そのコミット時点の scraper.py（そのコミットで scraper.py も変えていれば変えた後の版）を
+  git から取り出し、find_triple_top5_rows() に保存済みの表を渡して、出た馬番を候補の一覧の馬番と比べる
+  （書き写さず、元の関数を呼ぶ）。入力の候補の一覧が、選んだコミットの内容とバイト単位で一致するかも確かめる。
+  一致しても、選んだコードと保存済みの表から保存済みの候補の一覧を再現できたことまでしか言えない。
+  当時実際に使った入力と実行コードの証明ではない。
 """
-import collections, hashlib, importlib.util, json, re, subprocess, sys, tempfile
+import argparse, builtins, collections, hashlib, importlib.util, json, re, subprocess, sys, tempfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -32,7 +38,18 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 from xlsx_blocks import load_day
 
-OUT = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else ROOT / "output"
+ap = argparse.ArgumentParser()
+ap.add_argument("input_dir")
+ap.add_argument("--base-commit", required=True)
+ARGS = ap.parse_args()
+OUT = Path(ARGS.input_dir).resolve()
+RESULTS = HERE / "results"
+LOG = []
+
+
+def print(*a, **k):  # 画面に出しつつ、変化が無かったときだけ .txt に書く
+    LOG.append(" ".join(str(x) for x in a))
+    builtins.print(*a, **k)
 NUM = re.compile(r"-?\d+")
 SUB = ("5走前", "着度数")
 SIX_DAYS = {"20251102", "20260110", "20260111", "20260117", "20260118", "20260124"}  # タスク3: 表が馬番1〜3だけの日
@@ -54,13 +71,17 @@ def day_xlsx():
     return sorted(f for f in OUT.glob("[0-9]*.xlsx") if re.fullmatch(r"\d{8}", f.stem))
 
 
-def git(*args):
-    return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True).stdout
+def git(*args, binary=False):
+    r = subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=not binary, check=True)
+    return r.stdout
+
+
+BASE = git("rev-parse", "--verify", ARGS.base_commit + "^{commit}").strip()
 
 
 def csv_commits(d):
-    """その日の候補の一覧を変えたコミット（新しい順）"""
-    return git("log", "--format=%H %cI", "--", f"output/{d}/全場_3指数重複馬.csv").split("\n")[:-1]
+    """--base-commit から見て、その日の候補の一覧を変えたコミット（新しい順）"""
+    return git("log", "--format=%H %cI", BASE, "--", f"output/{d}/全場_3指数重複馬.csv").split("\n")[:-1]
 
 
 def jload(p):
@@ -110,9 +131,13 @@ def old_finder(d):
     （そのコミットで scraper.py も変えていれば、変えた後の版）"""
     cs = csv_commits(d)
     if not cs:
-        return None, "候補の一覧がgitに無い"
+        return None, {"error": "候補の一覧がgitに無い"}
     csv_commit = cs[0].split()[0]
     sc = git("rev-list", "-1", csv_commit, "--", "scraper.py").strip()
+    same = git("show", f"{csv_commit}:output/{d}/全場_3指数重複馬.csv", binary=True) == \
+        (OUT / d / "全場_3指数重複馬.csv").read_bytes()
+    info = {"csv_commit": csv_commit, "csv_commits_count": len(cs), "scraper_commit": sc,
+            "input_csv_equals_commit": same}
     if sc not in _old_cache:
         src = subprocess.run(["git", "show", f"{sc}:scraper.py"], cwd=ROOT, capture_output=True, text=True).stdout
         tmp = Path(tempfile.mkdtemp()) / f"scraper_{sc[:7]}.py"
@@ -121,7 +146,7 @@ def old_finder(d):
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
         _old_cache[sc] = getattr(mod, "find_triple_top5_rows", None)
-    return _old_cache[sc], sc[:7]
+    return _old_cache[sc], info
 
 
 def main():
@@ -284,20 +309,23 @@ def main():
         venue = re.match(r"^\D+", r["race"]).group(0)
         num = r["race"][len(venue):]
         csv_nums = sorted(df[(df["開催場"] == venue) & (df["レース番号"] == num)]["馬番"].astype(str))
-        fn, ver = old_finder(r["date"])
+        fn, info = old_finder(r["date"])
         if fn is None:
-            repro.append({"date": r["date"], "race": r["race"], "status": f"再現できない（{ver}）"})
+            repro.append({"date": r["date"], "race": r["race"], **info, "status": "再現できない"})
             continue
         got = sorted(str(x["馬番"]) for x in fn(r["race"], day_dfs[r["date"]][r["race"]]))
-        repro.append({"date": r["date"], "race": r["race"], "scraper": ver, "csv_commits": len(csv_commits(r["date"])),
-                      "csv": csv_nums, "old_code": got,
+        repro.append({"date": r["date"], "race": r["race"], **info, "csv": csv_nums, "old_code": got,
                       "status": "一致" if got == csv_nums else "不一致"})
+    print("   基準のコミット", BASE)
     print("  ", dict(collections.Counter(x["status"] for x in repro)),
-          "使ったコミット", dict(collections.Counter(x.get("scraper") for x in repro)))
+          "使った scraper.py のコミット", dict(collections.Counter(x.get("scraper_commit") for x in repro)))
+    print("   入力の候補の一覧が選んだコミットの内容と一致",
+          dict(collections.Counter(x.get("input_csv_equals_commit") for x in repro)))
     for x in repro:
-        if x["status"] != "一致" or x["date"] >= PAPER_START:
-            print("  ", x)
-    multi = sorted({x["date"] for x in repro if x.get("csv_commits", 0) > 1})
+        if x["status"] != "一致" or not x.get("input_csv_equals_commit") or x["date"] >= PAPER_START:
+            print("  ", {k: x.get(k) for k in ("date", "race", "csv_commit", "scraper_commit",
+                                               "input_csv_equals_commit", "csv", "old_code", "status")})
+    multi = sorted({x["date"] for x in repro if x.get("csv_commits_count", 0) > 1})
     print("   候補の一覧を2回以上コミットした日（対象レースに候補のある日のうち）", multi)
     for d in sorted({r["date"] for r in rows if r["date"] >= PAPER_START}):
         import datetime
@@ -307,12 +335,17 @@ def main():
     after = manifest()
     changed = sorted(k for k in set(before) | set(after) if before.get(k) != after.get(k))
     print("\n読んだ入力ファイル", len(after), "実行中に変わったファイル", changed)
-    json.dump({"input_dir": str(OUT), "files": after, "changed_during_run": changed},
-              open(HERE / "results" / "hidden_value_scope_manifest.json", "w"), ensure_ascii=False, indent=0)
-    json.dump({"tables": dict(tables), "modes_per_race": dict(modes_per_race),
+    if changed:
+        builtins.print("実行中に入力が変わったので、結果ファイルを書かずに止める", file=sys.stderr)
+        sys.exit(1)
+    json.dump({"input_dir": str(OUT), "base_commit": BASE, "files": after, "changed_during_run": changed},
+              open(RESULTS / "hidden_value_scope_manifest.json", "w"), ensure_ascii=False, indent=0)
+    json.dump({"base_commit": BASE, "tables": dict(tables), "modes_per_race": dict(modes_per_race),
                "unreadable_raw": dict(raw_unreadable), "table_detail": table_rows, "races": rows,
-               "old_csv_days": old_days, "paper": paper, "reproduction": repro},
-              open(HERE / "results" / "hidden_value_scope.json", "w"), ensure_ascii=False, indent=1)
+               "old_csv_days": old_days, "old_csv_history_only_days": hist_days,
+               "paper": paper, "reproduction": repro},
+              open(RESULTS / "hidden_value_scope.json", "w"), ensure_ascii=False, indent=1)
+    (RESULTS / "hidden_value_scope.txt").write_text("\n".join(LOG) + "\n")
 
 
 if __name__ == "__main__":

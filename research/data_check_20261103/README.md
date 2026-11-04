@@ -31,6 +31,13 @@ bash research/data_check_20261103/run_all.sh
 | `hidden_value_scope.py` | タスク9（2026-11-04 追加）: 指数の列で、読めた整数値が200以上の表・レース・日。候補・障害戦・ペーパートレードの買い目・旧集計との関係・当時のコードの再現 | 引数で入力のフォルダを渡す（2026-11-04 は `output/` の写しを読んだ。sha256 は `results/hidden_value_scope_manifest.json`）。`YYYYMMDD.xlsx` だけを対象にする。セルを空・整数・読めない値に分けて表ごとに件数を残す。障害戦はクラス名に「障害」を含むか（`race_conditions.json`→`race_results_all.json`→`race_results.json` の順に探す）。買い目は `paper_bets.json` の `races` と `skipped_races` を区別する。再現は、候補の一覧を最後にコミットした時点の `scraper.find_triple_top5_rows()` を git から取り出して呼ぶ |
 | `manifest.py` | 入力の一覧と sha256 | — |
 
+## タスク9の実行の記録（2026-11-04）
+- 入力: `output/` の必要なファイル703件の写し（リポジトリに無い）。sha256 は `results/hidden_value_scope_manifest.json`。
+- 基準のコミット: `--base-commit 2d1bc13`（2d1bc1397becd5cfa54f4430b7726d75205f3a7b。集計した時点の HEAD）。
+- 実行中に入力が変わると、スクリプトは結果ファイルを書かずに終了コード1で止まる。これは小さな写しで試した。
+- 集計は、10/25 東京4R を無効にする（`output/20261025/invalidated.json`、コミット c22f1e4）前の入力で行った。そのため結果の 10/25 は `invalidated: false` で、manifest にもこのファイルは無い。
+- 無効にした後の確認は別に行った。`paper_trade.py report` の前後の出力が `results/paper_report_before_invalidate_20261025.txt`・`paper_report_after_invalidate_20261025.txt`。
+
 ## 確かめていないこと
 - 単勝以外の払戻の金額。
 - 同着のあるレース（単勝の1レースを除く）。

@@ -1,4 +1,5 @@
 {
+ "base_commit": "2d1bc1397becd5cfa54f4430b7726d75205f3a7b",
  "tables": {
   "200以上なし": 9312,
   "読めた整数値がすべて200以上": 732,
@@ -16974,6 +16975,14 @@
   "20261024": 2,
   "20261025": 1
  },
+ "old_csv_history_only_days": {
+  "20261031": [
+   [
+    "c4c7f64",
+    1
+   ]
+  ]
+ },
  "paper": [
   {
    "date": "20260912",
@@ -17140,8 +17149,10 @@
   {
    "date": "20250920",
    "race": "阪神4R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "1e056c7222358be1b6f784afd1f90569f02ac9ff",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17153,8 +17164,10 @@
   {
    "date": "20251005",
    "race": "東京4R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "d54ed6024752d3ee91e8fab325a7389956b70dd7",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -17166,8 +17179,10 @@
   {
    "date": "20251019",
    "race": "東京9R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "fa8cf0582873dbe9ad426e589217f6017aa6dc53",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -17181,8 +17196,10 @@
   {
    "date": "20251102",
    "race": "東京1R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -17194,8 +17211,10 @@
   {
    "date": "20251102",
    "race": "東京2R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17207,8 +17226,10 @@
   {
    "date": "20251102",
    "race": "東京3R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -17224,8 +17245,10 @@
   {
    "date": "20251102",
    "race": "東京6R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -17241,8 +17264,10 @@
   {
    "date": "20251102",
    "race": "東京7R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -17256,8 +17281,10 @@
   {
    "date": "20251102",
    "race": "東京9R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -17271,8 +17298,10 @@
   {
    "date": "20251102",
    "race": "東京10R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -17286,8 +17315,10 @@
   {
    "date": "20251102",
    "race": "東京11R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -17303,8 +17334,10 @@
   {
    "date": "20251102",
    "race": "東京12R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -17316,8 +17349,10 @@
   {
    "date": "20251102",
    "race": "京都2R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -17331,8 +17366,10 @@
   {
    "date": "20251102",
    "race": "京都4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -17346,8 +17383,10 @@
   {
    "date": "20251102",
    "race": "京都6R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -17359,8 +17398,10 @@
   {
    "date": "20251102",
    "race": "京都7R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17372,8 +17413,10 @@
   {
    "date": "20251102",
    "race": "京都8R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -17387,8 +17430,10 @@
   {
    "date": "20251102",
    "race": "京都9R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -17400,8 +17445,10 @@
   {
    "date": "20251102",
    "race": "京都11R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -17413,8 +17460,10 @@
   {
    "date": "20251102",
    "race": "京都12R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "a8a1921c608e7b46bce1ef57f21618f0dc1f64ce",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17426,8 +17475,10 @@
   {
    "date": "20251108",
    "race": "京都8R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "1bbec3c0e2c79567bfa094c4888e56df775caaab",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17439,8 +17490,10 @@
   {
    "date": "20251109",
    "race": "福島4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "1bbec3c0e2c79567bfa094c4888e56df775caaab",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -17452,8 +17505,10 @@
   {
    "date": "20251109",
    "race": "福島5R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "1bbec3c0e2c79567bfa094c4888e56df775caaab",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -17467,8 +17522,10 @@
   {
    "date": "20251115",
    "race": "東京8R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "4406e3845985ac7ddc55583a88359ac2285c4190",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -17480,8 +17537,10 @@
   {
    "date": "20251116",
    "race": "福島4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "4406e3845985ac7ddc55583a88359ac2285c4190",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -17493,8 +17552,10 @@
   {
    "date": "20251116",
    "race": "福島5R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "4406e3845985ac7ddc55583a88359ac2285c4190",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -17506,8 +17567,10 @@
   {
    "date": "20251122",
    "race": "福島5R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "2dca7d74e6db0b7905abf9edb979ab1fd546e47a",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17519,8 +17582,10 @@
   {
    "date": "20251129",
    "race": "京都4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "f9291901cb51a052d670bf8d02736ab168b72035",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17532,8 +17597,10 @@
   {
    "date": "20251130",
    "race": "京都5R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "f9291901cb51a052d670bf8d02736ab168b72035",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -17547,8 +17614,10 @@
   {
    "date": "20251213",
    "race": "阪神4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "69a6c2b33626d0a6f81d5d700a58717a56ddb419",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -17560,8 +17629,10 @@
   {
    "date": "20251214",
    "race": "中山4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "38e373343ece870ba1c3a0db495a153234b33b0e",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17573,8 +17644,10 @@
   {
    "date": "20251221",
    "race": "中山4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "e34a31cff97ada3653422fdc608ca7e24dd96e59",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17586,8 +17659,10 @@
   {
    "date": "20251227",
    "race": "中山10R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "62cdf3197801ebf8b337aea87e1876b12a72ba1a",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -17599,8 +17674,10 @@
   {
    "date": "20251228",
    "race": "阪神5R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "2ab8687b6c2af57ed1d745cb2630a873175816dd",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -17612,8 +17689,10 @@
   {
    "date": "20260110",
    "race": "中山1R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -17627,8 +17706,10 @@
   {
    "date": "20260110",
    "race": "中山2R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17640,8 +17721,10 @@
   {
    "date": "20260110",
    "race": "中山3R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -17653,8 +17736,10 @@
   {
    "date": "20260110",
    "race": "中山6R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -17670,8 +17755,10 @@
   {
    "date": "20260110",
    "race": "中山8R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -17685,8 +17772,10 @@
   {
    "date": "20260110",
    "race": "中山9R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -17702,8 +17791,10 @@
   {
    "date": "20260110",
    "race": "中山12R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -17719,8 +17810,10 @@
   {
    "date": "20260110",
    "race": "京都1R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -17732,8 +17825,10 @@
   {
    "date": "20260110",
    "race": "京都4R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -17749,8 +17844,10 @@
   {
    "date": "20260110",
    "race": "京都5R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17762,8 +17859,10 @@
   {
    "date": "20260110",
    "race": "京都7R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17775,8 +17874,10 @@
   {
    "date": "20260110",
    "race": "京都8R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -17792,8 +17893,10 @@
   {
    "date": "20260110",
    "race": "京都9R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -17807,8 +17910,10 @@
   {
    "date": "20260110",
    "race": "京都10R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -17824,8 +17929,10 @@
   {
    "date": "20260110",
    "race": "京都11R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -17841,8 +17948,10 @@
   {
    "date": "20260110",
    "race": "京都12R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -17858,8 +17967,10 @@
   {
    "date": "20260111",
    "race": "中山1R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17871,8 +17982,10 @@
   {
    "date": "20260111",
    "race": "中山2R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17884,8 +17997,10 @@
   {
    "date": "20260111",
    "race": "中山3R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -17899,8 +18014,10 @@
   {
    "date": "20260111",
    "race": "中山4R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -17916,8 +18033,10 @@
   {
    "date": "20260111",
    "race": "中山7R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17929,8 +18048,10 @@
   {
    "date": "20260111",
    "race": "中山8R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -17942,8 +18063,10 @@
   {
    "date": "20260111",
    "race": "中山9R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -17959,8 +18082,10 @@
   {
    "date": "20260111",
    "race": "中山10R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -17974,8 +18099,10 @@
   {
    "date": "20260111",
    "race": "中山11R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -17987,8 +18114,10 @@
   {
    "date": "20260111",
    "race": "中山12R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18004,8 +18133,10 @@
   {
    "date": "20260111",
    "race": "京都1R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -18017,8 +18148,10 @@
   {
    "date": "20260111",
    "race": "京都3R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -18030,8 +18163,10 @@
   {
    "date": "20260111",
    "race": "京都4R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -18045,8 +18180,10 @@
   {
    "date": "20260111",
    "race": "京都5R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -18058,8 +18195,10 @@
   {
    "date": "20260111",
    "race": "京都6R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -18073,8 +18212,10 @@
   {
    "date": "20260111",
    "race": "京都7R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18090,8 +18231,10 @@
   {
    "date": "20260111",
    "race": "京都8R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -18105,8 +18248,10 @@
   {
    "date": "20260111",
    "race": "京都9R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -18118,8 +18263,10 @@
   {
    "date": "20260111",
    "race": "京都10R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -18133,8 +18280,10 @@
   {
    "date": "20260111",
    "race": "京都11R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18150,8 +18299,10 @@
   {
    "date": "20260112",
    "race": "中山4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "006a0bddb1f61f275940cd8f5bbdab75d10faeb5",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -18163,8 +18314,10 @@
   {
    "date": "20260117",
    "race": "中山1R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -18176,8 +18329,10 @@
   {
    "date": "20260117",
    "race": "中山2R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18193,8 +18348,10 @@
   {
    "date": "20260117",
    "race": "中山4R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -18208,8 +18365,10 @@
   {
    "date": "20260117",
    "race": "中山6R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18225,8 +18384,10 @@
   {
    "date": "20260117",
    "race": "中山7R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -18240,8 +18401,10 @@
   {
    "date": "20260117",
    "race": "中山8R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18257,8 +18420,10 @@
   {
    "date": "20260117",
    "race": "中山9R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -18270,8 +18435,10 @@
   {
    "date": "20260117",
    "race": "中山10R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -18285,8 +18452,10 @@
   {
    "date": "20260117",
    "race": "中山11R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -18300,8 +18469,10 @@
   {
    "date": "20260117",
    "race": "中山12R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18317,8 +18488,10 @@
   {
    "date": "20260117",
    "race": "京都1R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -18330,8 +18503,10 @@
   {
    "date": "20260117",
    "race": "京都2R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -18343,8 +18518,10 @@
   {
    "date": "20260117",
    "race": "京都3R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -18356,8 +18533,10 @@
   {
    "date": "20260117",
    "race": "京都7R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -18371,8 +18550,10 @@
   {
    "date": "20260117",
    "race": "京都8R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -18386,8 +18567,10 @@
   {
    "date": "20260117",
    "race": "京都9R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -18401,8 +18584,10 @@
   {
    "date": "20260117",
    "race": "京都10R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -18414,8 +18599,10 @@
   {
    "date": "20260117",
    "race": "京都11R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18431,8 +18618,10 @@
   {
    "date": "20260117",
    "race": "京都12R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -18444,8 +18633,10 @@
   {
    "date": "20260118",
    "race": "中山1R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -18459,8 +18650,10 @@
   {
    "date": "20260118",
    "race": "中山2R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -18472,8 +18665,10 @@
   {
    "date": "20260118",
    "race": "中山3R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -18487,8 +18682,10 @@
   {
    "date": "20260118",
    "race": "中山4R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -18500,8 +18697,10 @@
   {
    "date": "20260118",
    "race": "中山6R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -18515,8 +18714,10 @@
   {
    "date": "20260118",
    "race": "中山8R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -18530,8 +18731,10 @@
   {
    "date": "20260118",
    "race": "中山9R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18547,8 +18750,10 @@
   {
    "date": "20260118",
    "race": "中山10R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -18562,8 +18767,10 @@
   {
    "date": "20260118",
    "race": "中山11R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18579,8 +18786,10 @@
   {
    "date": "20260118",
    "race": "中山12R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -18592,8 +18801,10 @@
   {
    "date": "20260118",
    "race": "京都1R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -18607,8 +18818,10 @@
   {
    "date": "20260118",
    "race": "京都4R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18624,8 +18837,10 @@
   {
    "date": "20260118",
    "race": "京都6R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -18637,8 +18852,10 @@
   {
    "date": "20260118",
    "race": "京都7R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -18652,8 +18869,10 @@
   {
    "date": "20260118",
    "race": "京都8R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -18667,8 +18886,10 @@
   {
    "date": "20260118",
    "race": "京都9R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18684,8 +18905,10 @@
   {
    "date": "20260118",
    "race": "京都10R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -18699,8 +18922,10 @@
   {
    "date": "20260118",
    "race": "京都11R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18716,8 +18941,10 @@
   {
    "date": "20260118",
    "race": "京都12R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18733,8 +18960,10 @@
   {
    "date": "20260124",
    "race": "中山1R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -18746,8 +18975,10 @@
   {
    "date": "20260124",
    "race": "中山2R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -18759,8 +18990,10 @@
   {
    "date": "20260124",
    "race": "中山4R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18776,8 +19009,10 @@
   {
    "date": "20260124",
    "race": "中山6R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -18791,8 +19026,10 @@
   {
    "date": "20260124",
    "race": "中山7R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18808,8 +19045,10 @@
   {
    "date": "20260124",
    "race": "中山8R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18825,8 +19064,10 @@
   {
    "date": "20260124",
    "race": "中山9R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18842,8 +19083,10 @@
   {
    "date": "20260124",
    "race": "中山10R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18859,8 +19102,10 @@
   {
    "date": "20260124",
    "race": "中山11R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18876,8 +19121,10 @@
   {
    "date": "20260124",
    "race": "中山12R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -18893,8 +19140,10 @@
   {
    "date": "20260124",
    "race": "京都1R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -18906,8 +19155,10 @@
   {
    "date": "20260124",
    "race": "京都2R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -18921,8 +19172,10 @@
   {
    "date": "20260124",
    "race": "京都4R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -18936,8 +19189,10 @@
   {
    "date": "20260124",
    "race": "京都7R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -18949,8 +19204,10 @@
   {
    "date": "20260124",
    "race": "京都8R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -18962,8 +19219,10 @@
   {
    "date": "20260124",
    "race": "京都9R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -18975,8 +19234,10 @@
   {
    "date": "20260124",
    "race": "京都10R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -18988,8 +19249,10 @@
   {
    "date": "20260124",
    "race": "京都11R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -19005,8 +19268,10 @@
   {
    "date": "20260124",
    "race": "京都12R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -19020,8 +19285,10 @@
   {
    "date": "20260124",
    "race": "小倉5R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19033,8 +19300,10 @@
   {
    "date": "20260124",
    "race": "小倉7R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -19046,8 +19315,10 @@
   {
    "date": "20260124",
    "race": "小倉8R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -19059,8 +19330,10 @@
   {
    "date": "20260124",
    "race": "小倉9R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19072,8 +19345,10 @@
   {
    "date": "20260124",
    "race": "小倉10R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -19089,8 +19364,10 @@
   {
    "date": "20260124",
    "race": "小倉11R",
-   "scraper": "33231c8",
-   "csv_commits": 1,
+   "csv_commit": "9ea9bed78f5c2c21248ce660f1b5651409883003",
+   "csv_commits_count": 1,
+   "scraper_commit": "33231c89ff09b4d0011aa2d08f7b4e4ee99b11d6",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19102,8 +19379,10 @@
   {
    "date": "20260125",
    "race": "小倉4R",
-   "scraper": "d9a4002",
-   "csv_commits": 1,
+   "csv_commit": "5c9cb7678de66f2c08391070beaa017957362c9c",
+   "csv_commits_count": 1,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19115,8 +19394,10 @@
   {
    "date": "20260131",
    "race": "小倉5R",
-   "scraper": "d9a4002",
-   "csv_commits": 1,
+   "csv_commit": "3c494a4249d92d247d86795dda4576306e07ac97",
+   "csv_commits_count": 1,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19128,8 +19409,10 @@
   {
    "date": "20260207",
    "race": "小倉4R",
-   "scraper": "d9a4002",
-   "csv_commits": 1,
+   "csv_commit": "ac2e6c793e5d8d65daf7a6c5029282c86688c9ba",
+   "csv_commits_count": 1,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19141,8 +19424,10 @@
   {
    "date": "20260214",
    "race": "小倉4R",
-   "scraper": "d9a4002",
-   "csv_commits": 1,
+   "csv_commit": "764ad2ad151bb487b2df63faca622cf6c522ffe6",
+   "csv_commits_count": 1,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -19154,8 +19439,10 @@
   {
    "date": "20260214",
    "race": "小倉8R",
-   "scraper": "d9a4002",
-   "csv_commits": 1,
+   "csv_commit": "764ad2ad151bb487b2df63faca622cf6c522ffe6",
+   "csv_commits_count": 1,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -19171,8 +19458,10 @@
   {
    "date": "20260215",
    "race": "小倉4R",
-   "scraper": "d9a4002",
-   "csv_commits": 1,
+   "csv_commit": "764ad2ad151bb487b2df63faca622cf6c522ffe6",
+   "csv_commits_count": 1,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19184,8 +19473,10 @@
   {
    "date": "20260221",
    "race": "小倉4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "006a0bddb1f61f275940cd8f5bbdab75d10faeb5",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -19197,8 +19488,10 @@
   {
    "date": "20260221",
    "race": "小倉5R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "006a0bddb1f61f275940cd8f5bbdab75d10faeb5",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -19212,8 +19505,10 @@
   {
    "date": "20260222",
    "race": "小倉4R",
-   "scraper": "d9a4002",
-   "csv_commits": 1,
+   "csv_commit": "8f9df93344800dbc0e17424f1d3054cc21a0f7de",
+   "csv_commits_count": 1,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19225,8 +19520,10 @@
   {
    "date": "20260228",
    "race": "小倉4R",
-   "scraper": "d9a4002",
-   "csv_commits": 1,
+   "csv_commit": "bdff920049f6642f82149f5cc29b8d2c5f6814c3",
+   "csv_commits_count": 1,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -19240,8 +19537,10 @@
   {
    "date": "20260228",
    "race": "小倉5R",
-   "scraper": "d9a4002",
-   "csv_commits": 1,
+   "csv_commit": "bdff920049f6642f82149f5cc29b8d2c5f6814c3",
+   "csv_commits_count": 1,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -19253,8 +19552,10 @@
   {
    "date": "20260301",
    "race": "小倉4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "006a0bddb1f61f275940cd8f5bbdab75d10faeb5",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -19270,8 +19571,10 @@
   {
    "date": "20260308",
    "race": "中山4R",
-   "scraper": "d9a4002",
-   "csv_commits": 1,
+   "csv_commit": "21f5598ef3ea5000f0b59b8640b082c05e001b90",
+   "csv_commits_count": 1,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -19287,8 +19590,10 @@
   {
    "date": "20260314",
    "race": "阪神8R",
-   "scraper": "d9a4002",
-   "csv_commits": 1,
+   "csv_commit": "eabb1c5c9338508d4be3a91c8fff8ddc7e022473",
+   "csv_commits_count": 1,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -19300,8 +19605,10 @@
   {
    "date": "20260315",
    "race": "阪神4R",
-   "scraper": "d9a4002",
-   "csv_commits": 1,
+   "csv_commit": "eabb1c5c9338508d4be3a91c8fff8ddc7e022473",
+   "csv_commits_count": 1,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -19313,8 +19620,10 @@
   {
    "date": "20260411",
    "race": "中山4R",
-   "scraper": "d9a4002",
-   "csv_commits": 2,
+   "csv_commit": "bc7ff5635daaa3d329e09ab737195a3633830286",
+   "csv_commits_count": 2,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -19328,8 +19637,10 @@
   {
    "date": "20260412",
    "race": "中山4R",
-   "scraper": "d9a4002",
-   "csv_commits": 2,
+   "csv_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "csv_commits_count": 2,
+   "scraper_commit": "d9a4002a9bcedac9c8b281f139641acb0f16199e",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19341,8 +19652,10 @@
   {
    "date": "20260419",
    "race": "阪神4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "7c48b11d85caefc7742958748c90c7df139a0dff",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19354,8 +19667,10 @@
   {
    "date": "20260425",
    "race": "京都4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "0ddf2cc6de99e77fbb67798681c1ffd3096bec14",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -19369,8 +19684,10 @@
   {
    "date": "20260426",
    "race": "京都4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "dda495056513c221959a2050bc62351de62bafdf",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -19382,8 +19699,10 @@
   {
    "date": "20260502",
    "race": "新潟4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "3c658c3aac89b9fee006fdd7db2d39572f8a684c",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -19395,8 +19714,10 @@
   {
    "date": "20260509",
    "race": "新潟1R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "bff07984517c78941b5e2c5c3a728f902bfcf8bf",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19408,8 +19729,10 @@
   {
    "date": "20260509",
    "race": "新潟4R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "bff07984517c78941b5e2c5c3a728f902bfcf8bf",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -19423,8 +19746,10 @@
   {
    "date": "20260516",
    "race": "京都8R",
-   "scraper": "5f98199",
-   "csv_commits": 1,
+   "csv_commit": "85bede99720f0364e761367ab619f50d35f8111c",
+   "csv_commits_count": 1,
+   "scraper_commit": "5f981999129e83aa5114c00fededff7fcf9d3966",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -19436,8 +19761,10 @@
   {
    "date": "20260523",
    "race": "新潟1R",
-   "scraper": "f3f7142",
-   "csv_commits": 2,
+   "csv_commit": "9d639daf6b53e6b4b3e2bed278f72d66f40495d2",
+   "csv_commits_count": 2,
+   "scraper_commit": "f3f7142d122131902d8b808f0f08336788edbd5c",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -19449,8 +19776,10 @@
   {
    "date": "20260523",
    "race": "新潟4R",
-   "scraper": "f3f7142",
-   "csv_commits": 2,
+   "csv_commit": "9d639daf6b53e6b4b3e2bed278f72d66f40495d2",
+   "csv_commits_count": 2,
+   "scraper_commit": "f3f7142d122131902d8b808f0f08336788edbd5c",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -19462,8 +19791,10 @@
   {
    "date": "20260524",
    "race": "新潟4R",
-   "scraper": "f3f7142",
-   "csv_commits": 2,
+   "csv_commit": "89875bc137703670e1ea3d4d604439d766a27c00",
+   "csv_commits_count": 2,
+   "scraper_commit": "f3f7142d122131902d8b808f0f08336788edbd5c",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19475,8 +19806,10 @@
   {
    "date": "20260531",
    "race": "京都4R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "43c50f5c7c71bd2c9ee2f11e3fbcb0c6e4b57c05",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -19490,8 +19823,10 @@
   {
    "date": "20260607",
    "race": "阪神1R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "ef8dc6a15689ae74ff5f1ff985993f6d6f0d6654",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -19503,8 +19838,10 @@
   {
    "date": "20260613",
    "race": "東京4R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "3a90763b12ae94d9df47afe179cfc019394f6a50",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "2",
     "3"
@@ -19518,8 +19855,10 @@
   {
    "date": "20260627",
    "race": "福島1R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "6d8fc25f3d27291ec6c4b8572ff5938010a872c5",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19531,8 +19870,10 @@
   {
    "date": "20260628",
    "race": "福島1R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "51b1cc91227027a7eacfd8a0165ec3a226bab498",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -19544,8 +19885,10 @@
   {
    "date": "20260704",
    "race": "小倉1R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "1ee2cccef69d6daae904eac9985d7cbf1154f438",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2",
@@ -19561,8 +19904,10 @@
   {
    "date": "20260718",
    "race": "小倉1R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "e5da289866ec9e522573e3c17e07faa645213b43",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -19576,8 +19921,10 @@
   {
    "date": "20260718",
    "race": "小倉4R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "e5da289866ec9e522573e3c17e07faa645213b43",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -19589,8 +19936,10 @@
   {
    "date": "20260719",
    "race": "小倉1R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "eab2840147401cd326ba2464a02a57aae009cf85",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -19602,8 +19951,10 @@
   {
    "date": "20260726",
    "race": "新潟9R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "a5872ebdef30bdb093d5c78e20dbc861a02028a8",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19615,8 +19966,10 @@
   {
    "date": "20260808",
    "race": "中京9R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "cfa1171155e5c8a3a4c26a5f4f427e516415c8de",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -19630,8 +19983,10 @@
   {
    "date": "20260823",
    "race": "中京9R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "27a44ef2d8749b2d0c33bdf0404f13369a1617c2",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19643,8 +19998,10 @@
   {
    "date": "20260905",
    "race": "中山1R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "6bbd092104dd48876c5302f8f848cf8dd79c6d1f",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -19656,8 +20013,10 @@
   {
    "date": "20260912",
    "race": "阪神1R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "f0069e7f890b82466794f194f6f7f73796734803",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19669,8 +20028,10 @@
   {
    "date": "20260919",
    "race": "阪神4R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "e6899e77047f1d368de6e3882a578f647e7d313c",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -19682,8 +20043,10 @@
   {
    "date": "20260920",
    "race": "阪神1R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "12741ab0b1db03ff53d9e5e3cc2ba913b87eb149",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -19697,8 +20060,10 @@
   {
    "date": "20260922",
    "race": "中山1R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "ca695a472df717415c224ad16d23be6528a3f8f7",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "2"
@@ -19712,8 +20077,10 @@
   {
    "date": "20260927",
    "race": "阪神1R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "bfa4f801af587bf685f59c1ca91703293b2d850c",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -19725,8 +20092,10 @@
   {
    "date": "20261004",
    "race": "東京4R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "9ea183b247f9cd64993f8de100f367e3f3c5d3ca",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
@@ -19738,8 +20107,10 @@
   {
    "date": "20261012",
    "race": "東京4R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "9ed67199298c1fdb18af3530f12daf07aa889455",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "1"
    ],
@@ -19751,8 +20122,10 @@
   {
    "date": "20261018",
    "race": "東京9R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "a08b80ca557067973307184e4f1bed4e2e851bdb",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "2"
    ],
@@ -19764,8 +20137,10 @@
   {
    "date": "20261024",
    "race": "京都4R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "4b81df946f5c6efd488a210e2cfb08b3de2b3a78",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "1",
     "3"
@@ -19779,8 +20154,10 @@
   {
    "date": "20261025",
    "race": "東京4R",
-   "scraper": "3f80997",
-   "csv_commits": 1,
+   "csv_commit": "ac0026081e6f22f8ab869d881cdf051fce8aaf65",
+   "csv_commits_count": 1,
+   "scraper_commit": "3f8099700172c67d67179cfc5649f8dda4e9871b",
+   "input_csv_equals_commit": true,
    "csv": [
     "3"
    ],
