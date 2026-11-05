@@ -1,0 +1,21 @@
+{
+  "write": true,
+  "dates": {
+    "20261031": {
+      "races": 4,
+      "horses": 46,
+      "counts": {
+        "書き写した": 46
+      },
+      "skipped": []
+    },
+    "20261101": {
+      "races": 8,
+      "horses": 104,
+      "counts": {
+        "書き写した": 104
+      },
+      "skipped": []
+    }
+  }
+}
