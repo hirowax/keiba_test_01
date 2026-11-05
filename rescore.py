@@ -27,7 +27,18 @@ def _prev_is_valid(entry: dict, date: str) -> bool:
     return len(pd_str) == 8 and pd_str.isdigit() and pd_str < date
 
 
+STOP_REASON = (
+    "rescore.py は 2026-11-05 から止めています（docs/prev_cache_fix_plan_202611.md 案E・決めたこと）。\n"
+    "  - 写しに無い馬の前走を horse_db.json（全期間のキャッシュ）から補い、別の対象日のために取った古い前走が混ざる。\n"
+    "  - 前走指数レース内1位を古いやり方（比較値が欠けても分かった馬の中で1位）で計算したまま、新しい SCORING_VERSION を書いてしまう。\n"
+    "  - 再採点しても元の quality が残り、直した後のデータに見える。\n"
+    "  保存済みの前走データの記録（output/{日}/prev_inputs/）だけで採点する形に直すまで使わない。過去日付には実行しない決まりも変わらない。"
+)
+
+
 def main():
+    print(STOP_REASON)
+    sys.exit(2)
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     allow_global_db = "--allow-global-db" in sys.argv
     date = args[0] if args else datetime.now().strftime("%Y%m%d")

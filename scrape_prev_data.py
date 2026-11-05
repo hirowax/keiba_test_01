@@ -100,7 +100,17 @@ def scrape_horse_prev(page, horse_id: str, target_date: str) -> dict:
     }
 
 
+STOP_REASON = (
+    "scrape_prev_data.py は 2026-11-05 から止めています（docs/prev_cache_fix_plan_202611.md 決めたこと4）。\n"
+    "  - cron・run.sh からは呼ばれていない。\n"
+    "  - 前走のキャッシュを別の対象日に使い回し（7日以内なら再利用）、列を位置で読み、prev_data.json を後から書き換える。\n"
+    "  前走データは run_pickup_all.py（prev_inputs.py）が対象日ごとに取得して記録する。"
+)
+
+
 def main():
+    print(STOP_REASON)
+    sys.exit(2)
     date = sys.argv[1] if len(sys.argv) >= 2 else datetime.now().strftime("%Y%m%d")
     results_path = BASE_DIR / "output" / date / "race_results.json"
     if not results_path.exists():
