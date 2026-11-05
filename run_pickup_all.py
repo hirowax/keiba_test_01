@@ -22,8 +22,8 @@ from scraper import (
 from data_quality import build_quality, load_index_sources, race_quality_issues
 from race_pickup import (scrape_shutuba, scrape_data_top, score_horses, active_horse_ids,
                          SCORING_VERSION, COLLECTOR_VERSION)
-from prev_inputs import (FAILED, RunRecord, fetch_entry, load_runs, prev_db_entry, prev_status_summary,
-                         race_top1, reusable_entries, PREV_FETCH_VERSION)
+from prev_inputs import (FAILED, DateLock, RunRecord, fetch_entry, load_runs, prev_db_entry, prev_status_summary,
+                         race_top1, reusable_entries, write_json_atomic, PREV_FETCH_VERSION)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -73,7 +73,8 @@ def collect_prev_for_race(page, date: str, race_label: str, race_id: str, shutub
         v = prev_db_entry(e)
         if v is not None:
             prev_db[hid] = v
-    status = prev_status_summary([str(n) for n in candidate_nums], active, entries, top1)
+    status = prev_status_summary([str(n) for n in candidate_nums], active, entries, top1,
+                                 scratched=shutuba_data.get("scratched_nums") or {})
     return prev_db, top1, status
 
 
@@ -89,8 +90,7 @@ def write_prev_data_snapshot(out_dir: Path, races: dict) -> int:
             v = prev_db_entry(e)
             if v is not None:
                 snapshot[hid] = dict(v, target_date=e["target_date"], status=e["status"])
-    with open(out_dir / "prev_data.json", "w", encoding="utf-8") as f:
-        json.dump(snapshot, f, ensure_ascii=False, indent=2)
+    write_json_atomic(out_dir / "prev_data.json", snapshot)
     return len(snapshot)
 
 
@@ -252,11 +252,13 @@ def main():
     email, password = load_env()
 
     # 前走データ: 同じ対象日のために取った値だけを再利用する（docs/prev_cache_fix_plan_202611.md）
+    # ロックは、入力の読み取りから採点結果・派生ファイルの保存が終わるまで持つ（同じ日の再実行と競合させない）
     out_dir = BASE_DIR / "output" / date
     out_dir.mkdir(parents=True, exist_ok=True)
+    lock = DateLock(out_dir)
     reusable = reusable_entries(out_dir, date)
     logger.info(f"前走データ: 再利用できる値 {len(reusable)}頭")
-    record = RunRecord(out_dir, date, "run_pickup_all.py", SCORING_VERSION)
+    record = RunRecord(out_dir, date, "run_pickup_all.py", SCORING_VERSION, lock)
     logger.info(f"前走データの記録: {record.path}")
     horse_style_db = load_horse_style()
     logger.info(f"horse_style: {len(horse_style_db)}頭")
@@ -328,7 +330,7 @@ def main():
 
         browser.close()
 
-    record.close()
+    record.finish()
 
     # quality_issues: 品質の判定（data_quality.race_quality_issues）をこの時点で記録する。サイト・買い目はこれを使う
     for label, rdata in results.items():
@@ -338,13 +340,10 @@ def main():
     n_snap = write_prev_data_snapshot(out_dir, results)
     logger.info(f"prev_data.json 保存（記録から作った派生ファイル）: {n_snap}頭")
     out_path = out_dir / "pickup_scores.json"
-    with open(out_path, "w", encoding="utf-8") as f:
-        json.dump(
-            {"date": date, "generated_at": datetime.now().isoformat(),
-             "scoring_version": SCORING_VERSION, "collector_version": COLLECTOR_VERSION,
-             "races": results},
-            f, ensure_ascii=False, indent=2, default=str
-        )
+    write_json_atomic(out_path, {"date": date, "generated_at": datetime.now().isoformat(),
+                                 "scoring_version": SCORING_VERSION, "collector_version": COLLECTOR_VERSION,
+                                 "races": results})
+    lock.release()
 
     logger.info(f"保存: {out_path} ({len(results)}レース)")
 

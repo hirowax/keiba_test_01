@@ -5,21 +5,25 @@
 - 取得と採点を分ける。入力の記録 output/{日}/prev_inputs/{実行ID}.json を唯一の正本にする。
 - 各馬の状態: 取れた / 前走なし / 指数が空（着順が数字でない） / 取得失敗 / 期限後の取得。
   取得異常を空の値や0点にしない。
-- 「指数が空（着順が数字でない）」は 2026-11-05 の実ページ確認で足した（競走中止の行は指数が空欄。
+- 「指数が空（着順が数字でない）」は 2026-11-05 の実ページ確認で足した（競走中止の行は着順「中」・指数が空欄。
   例: 2023105659 の 2026/11/01 京都4R）。着順が数字なのに指数が空なら取得失敗。
+  正常とする数字でない着順は、実ページで確かめた表記だけ（CONFIRMED_NONNUMERIC_RANKS）。空・未知の文字は取得失敗
+  （2026-11-05 外部レビュー指摘）。着順が数字の行は、人気・指数も数字でなければ取得失敗。
 - 指数の「**」は取得失敗（2026-11-05 決定）。ログインしていない状態の表示だった（プレミアム登録の案内へのリンク。
   ログインし直すと同じ行が数字になった）。案Aの状態「指数が「**」」はやめた。
-- 再利用は「同じ対象日・同じ取得の版・期限内・状態が取得失敗以外」の値だけ。取得失敗は前の値に戻らない。
+- 再利用は、馬ごとの最新の取得結果が「同じ対象日・同じ取得の版・期限内・状態が取得失敗以外」のときだけ。
+  後の取得が失敗したら前の値に戻らない。
 - 前走指数レース内1位: 比較に必要な値が分からない馬（取得失敗・期限後の取得・馬ID無し・入力が無い）がいれば保留（加点しない）。
   正常と確かめた前走なしの馬と、指数が空（着順が数字でない）の馬は比較の対象外。
 """
 import json
+import logging
 import os
 import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-PREV_FETCH_VERSION = "見出しで列を特定_対象日ごとに取得_20261105"
+PREV_FETCH_VERSION = "見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105"
 TOP1_RULE = "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
 
 OK = "取れた"
@@ -27,8 +31,12 @@ NO_PREV = "前走なし"
 IDX_EMPTY = "指数が空（着順が数字でない）"   # 競走中止など。指数が無いことが分かっている（正常）
 FAILED = "取得失敗"
 AFTER_DEADLINE = "期限後の取得"   # 期限（対象日 00:00 JST）の後に取り終えた値。採点にも再利用にも使わない
+SCRATCHED = "取消・除外（出馬表）"   # 候補が出馬表で取消・除外。前走データを取らず、品質の判定の対象外
 REUSABLE_STATUSES = {OK, NO_PREV, IDX_EMPTY}
-USABLE_STATUSES = REUSABLE_STATUSES   # 品質の判定で「取れている」とする状態（data_quality.race_quality_issues）
+USABLE_STATUSES = REUSABLE_STATUSES   # 採点に使える状態
+# 品質の判定（data_quality.race_quality_issues）で、候補の状態として問題なしとするもの。
+# 出馬表で取消・除外の候補は採点もしないので対象外（問題にしない）
+QUALITY_OK_STATUSES = USABLE_STATUSES | {SCRATCHED}
 
 JST = timezone(timedelta(hours=9))
 IDX_MAX = 200          # 指数の表と同じく、200以上は異常（docs/data_sources.md）
@@ -51,6 +59,10 @@ HEADERS = {
     "idx": "ﾀｲﾑ指数",
 }
 IDX_CELL_CLASS = "TimeIndexHeadCell01"
+# 正常とする数字でない着順（表記 → 意味）。実ページで確かめた表記だけを入れる。
+# - 「中」: 競走中止（2026-11-05、tests/fixtures/horse_2023105659_results_20261105.html。人気は数字、指数は空欄）
+# 取消・除外・失格などの馬ページでの表記はまだ確かめていない（取得失敗になる。実例を見てから足す）
+CONFIRMED_NONNUMERIC_RANKS = {"中": "競走中止"}
 
 
 class FetchError(Exception):
@@ -143,8 +155,12 @@ def parse_results_table(html: str, target_date: str) -> dict:
     raw["race_id"] = RACE_LINK_RE.search(link["href"]).group(1) if link else ""
 
     values = {"date": d, "race_id": raw["race_id"]}
-    for k in ("pop", "rank"):
-        values[k] = int(raw[k]) if INT_RE.match(raw[k]) else None   # 中止・取消などは数字でない（正当）
+    values["rank"] = int(raw["rank"]) if INT_RE.match(raw["rank"]) else None
+    values["pop"] = int(raw["pop"]) if INT_RE.match(raw["pop"]) else None
+    if values["rank"] is None and raw["rank"] not in CONFIRMED_NONNUMERIC_RANKS:
+        return _failed(f"着順が数字でなく、確かめた表記でもない（{raw['rank']!r}）", headers=header_cells, raw=raw)
+    if values["rank"] is not None and values["pop"] is None:
+        return _failed(f"着順が数字なのに人気が数字でない（{raw['pop']!r}）", headers=header_cells, raw=raw)
     m = re.search(r"(\d{3,4})", raw["dist"])
     if not m:
         return _failed(f"距離を読めない（{raw['dist']!r}）", headers=header_cells, raw=raw)
@@ -159,7 +175,9 @@ def parse_results_table(html: str, target_date: str) -> dict:
         return _failed("指数が「**」（ログインしていない状態の表示）", headers=header_cells, raw=raw)
     elif raw["idx"] == "" and values["rank"] is None:
         values["idx"] = None
-        status, reason = IDX_EMPTY, f"指数が空で、着順が数字でない（{raw['rank']!r}）"
+        status, reason = IDX_EMPTY, f"指数が空で、着順が「{raw['rank']}」（{CONFIRMED_NONNUMERIC_RANKS[raw['rank']]}）"
+    elif values["rank"] is None:
+        return _failed(f"着順が「{raw['rank']}」なのに指数が空でない（{raw['idx']!r}）", headers=header_cells, raw=raw)
     elif INT_RE.match(raw["idx"]):
         v = int(raw["idx"])
         if v >= IDX_MAX:
@@ -213,30 +231,109 @@ def inputs_dir(out_dir: Path) -> Path:
     return out_dir / "prev_inputs"
 
 
-class RunRecord:
-    """1回の実行の記録。output/{日}/prev_inputs/{実行ID}.json。
-    書くたびに一時ファイルから名前を変える。同じ日の二重起動はロックファイルで止める。"""
+def _pid_alive(pid: int) -> bool:
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:   # 別のユーザーのプロセス（生きている）
+        return True
+    return True
 
-    def __init__(self, out_dir: Path, target_date: str, program: str, scoring_version: str):
-        self.dir = inputs_dir(out_dir)
-        self.dir.mkdir(parents=True, exist_ok=True)
-        self.lock = self.dir / ".lock"
-        try:
-            fd = os.open(self.lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-        except FileExistsError:
-            raise RuntimeError(f"同じ日の取得が実行中か、前の実行が途中で止まった（{self.lock} を確かめてから消す）")
+
+class DateLock:
+    """同じ対象日の実行（run_pickup_all.py / rerun_failed_pickup.py）の二重起動を止めるロック。
+    output/{日}/prev_inputs/.lock（.gitignore 済み）。入力の読み取りから、採点結果・派生ファイルの保存が
+    終わるまで持つ（2026-11-05 外部レビュー指摘）。
+    - 例外・sys.exit では atexit で外す。
+    - 強制終了で残った場合: 中のプロセス番号のプロセスが無ければ、次の実行が古いロックとして外して進む
+      （外したことはログと実行の記録 stale_lock に残す）。プロセスが生きていれば止まる。
+    - 手で直すとき: ps -p <番号> でプロセスが無いことを確かめてから、そのファイルを消す。"""
+
+    def __init__(self, out_dir: Path):
+        d = inputs_dir(out_dir)
+        d.mkdir(parents=True, exist_ok=True)
+        self.path = d / ".lock"
+        self.stale = None
+        for _ in range(2):
+            try:
+                fd = os.open(self.path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+                break
+            except FileExistsError:
+                text = self._read()
+                pid = _lock_pid(text)
+                if pid is None or _pid_alive(pid):
+                    raise RuntimeError(
+                        f"同じ日の実行が動いている（ロック {self.path}: {text.strip()!r}）。"
+                        f"そのプロセスが無いことを ps -p で確かめてから消す")
+                self.stale = text.strip()
+                logging.getLogger(__name__).warning(
+                    f"古いロックを外す（プロセス {pid} は動いていない）: {self.path} {self.stale!r}")
+                try:
+                    self.path.unlink()
+                except FileNotFoundError:
+                    pass
+        else:
+            raise RuntimeError(f"ロックを取れない（{self.path}）")
         os.write(fd, f"{os.getpid()} {now_jst().isoformat(timespec='seconds')}\n".encode())
         os.close(fd)
+        self.pid = os.getpid()
+        self._released = False
+        import atexit
+        atexit.register(self.release)
+
+    def _read(self) -> str:
+        try:
+            return self.path.read_text(encoding="utf-8")
+        except (FileNotFoundError, UnicodeDecodeError):
+            return ""
+
+    def release(self):
+        if self._released:
+            return
+        self._released = True
+        if _lock_pid(self._read()) == self.pid:   # 自分のロックだけ外す
+            try:
+                self.path.unlink()
+            except FileNotFoundError:
+                pass
+
+
+def _lock_pid(text: str):
+    try:
+        return int(text.split()[0])
+    except (IndexError, ValueError):
+        return None
+
+
+def new_run_id(started: datetime) -> str:
+    """実行ID: 開始時刻（マイクロ秒まで）＋ランダムな文字。名前の順が開始の順になり、同じ秒でも衝突しない"""
+    import uuid
+    return started.strftime("%Y%m%dT%H%M%S%f") + "_" + uuid.uuid4().hex[:8]
+
+
+class RunRecord:
+    """1回の実行の記録。output/{日}/prev_inputs/{実行ID}.json。
+    書くたびに一時ファイルから名前を変える。lock（DateLock）を持っている間だけ作る。
+    finish() は記録を閉じるだけで、ロックは呼び出し元が結果の保存の後に外す。"""
+
+    def __init__(self, out_dir: Path, target_date: str, program: str, scoring_version: str, lock: DateLock):
+        if lock is None or lock._released:
+            raise RuntimeError("ロック（DateLock）を持たずに記録を作ろうとした")
+        self.dir = inputs_dir(out_dir)
         started = now_jst()
-        self.run_id = started.strftime("%Y%m%dT%H%M%S") + f"_{os.getpid()}"
+        self.run_id = new_run_id(started)
         self.path = self.dir / f"{self.run_id}.json"
+        fd = os.open(self.path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)   # 既存の記録を上書きしない
+        os.close(fd)
         self._closed = False
         import atexit
-        atexit.register(self.close)   # 例外・sys.exit でもロックを外す（強制終了のときだけ残る）
+        atexit.register(self.finish)
         self.data = {"run_id": self.run_id, "target_date": target_date, "program": program,
                      "started_at": started.isoformat(timespec="seconds"), "finished_at": None,
                      "commit": _git_head(), "fetch_version": PREV_FETCH_VERSION,
-                     "scoring_version": scoring_version, "top1_rule": TOP1_RULE, "races": {}}
+                     "scoring_version": scoring_version, "top1_rule": TOP1_RULE,
+                     "stale_lock": lock.stale, "races": {}}
         self.save()
 
     def add_race(self, race_label: str, race_id: str, entries: dict, top1: dict):
@@ -249,16 +346,21 @@ class RunRecord:
             json.dump(self.data, f, ensure_ascii=False, indent=1)
         os.replace(tmp, self.path)
 
-    def close(self):
+    def finish(self):
         if self._closed:
             return
         self._closed = True
         self.data["finished_at"] = now_jst().isoformat(timespec="seconds")
         self.save()
-        try:
-            self.lock.unlink()
-        except FileNotFoundError:
-            pass
+
+
+def write_json_atomic(path: Path, data) -> None:
+    """一時ファイル（同じフォルダ・名前は実行ごとに別）に書いてから名前を変える。途中で止まっても元のファイルは壊れない"""
+    path = Path(path)
+    tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2, default=str)
+    os.replace(tmp, path)
 
 
 def _git_head() -> str:
@@ -271,26 +373,28 @@ def _git_head() -> str:
 
 
 def load_runs(out_dir: Path) -> list:
-    """その日の記録を、実行IDの順に返す"""
+    """その日の記録を、実行IDの順（＝開始の順）に返す"""
     d = inputs_dir(out_dir)
     if not d.exists():
         return []
     runs = []
-    for p in sorted(d.glob("*.json")):
+    for p in d.glob("*.json"):
         with open(p, encoding="utf-8") as f:
             runs.append(json.load(f))
-    return runs
+    return sorted(runs, key=lambda r: (r.get("started_at") or "", r.get("run_id") or ""))
 
 
 def reusable_entries(out_dir: Path, target_date: str) -> dict:
-    """再利用してよい値 {馬ID: entry}（同じ馬が複数あれば、後の実行のもの）。元の実行IDを付ける"""
-    out = {}
+    """再利用してよい値 {馬ID: entry}。元の実行IDを付ける。
+    馬ごとに最新の取得結果（source=取得）を先に選び、それが再利用できるときだけ返す。
+    後の取得が失敗・期限後なら、前の成功値には戻らない（2026-11-05 外部レビュー指摘）。"""
+    latest = {}
     for run in load_runs(out_dir):
         for race in run.get("races", {}).values():
             for hid, e in race.get("horses", {}).items():
-                if e.get("source") == "取得" and is_reusable(e, target_date):
-                    out[hid] = dict(e, origin_run=run["run_id"])
-    return out
+                if e.get("source") == "取得":
+                    latest[hid] = (run["run_id"], e)
+    return {hid: dict(e, origin_run=rid) for hid, (rid, e) in latest.items() if is_reusable(e, target_date)}
 
 
 # ── 採点への受け渡し ──
@@ -331,12 +435,21 @@ def race_top1(active: dict, entries: dict) -> dict:
             "excluded": excluded, "unknown": {}, "rule": TOP1_RULE}
 
 
-def prev_status_summary(candidate_nums, active: dict, entries: dict, top1: dict) -> dict:
-    """quality.prev_status に入れる要約"""
+def prev_status_summary(candidate_nums, active: dict, entries: dict, top1: dict, scratched: dict = None) -> dict:
+    """quality.prev_status に入れる要約。
+    scratched: 出馬表で取消・除外と明示された馬番（shutuba_data["scratched_nums"]）。その候補は採点もしないので
+    「取消・除外（出馬表）」として、品質の判定の対象から外す（2026-11-05 外部レビュー指摘）。
+    出馬表に取消・除外の印が無いのに馬IDが無い候補は「馬IDが無い」（問題あり）。"""
+    scratched = scratched or {}
     cand = {}
     for num in candidate_nums:
-        hid = active.get(num)
-        e = entries.get(hid) if hid else None
+        if num in scratched:
+            cand[num] = SCRATCHED
+            continue
+        if num not in active or not active.get(num):
+            cand[num] = "馬IDが無い"
+            continue
+        e = entries.get(active[num])
         cand[num] = e["status"] if e else "入力が無い"
     others = {}
     for num, hid in active.items():
