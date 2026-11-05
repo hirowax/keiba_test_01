@@ -78,15 +78,34 @@ class ParseTest(unittest.TestCase):
         self.assertEqual((e["status"], e["values"]["rank"], e["values"]["pop"], e["values"]["idx"]),
                          (pi.IDX_EMPTY, None, 9, None))
 
+    def test_unconfirmed_nonnumeric_rank_is_failed(self):
+        """空・未知の着順は競走中止と確かめた状態ではないので取得失敗（2026-11-05 外部レビュー指摘）"""
+        for rank in ("", "不明", "取", "除", "失", "4(降)"):
+            for idx in ("", "85"):
+                rows = [("2026/10/12", "202605040411", "9", rank, "芝1800", idx)]
+                e = pi.parse_results_table(table(rows), "20261107")
+                self.assertEqual(e["status"], pi.FAILED, (rank, idx))
+
+    def test_confirmed_rank_with_idx_is_failed(self):
+        """「中」なのに指数がある行は、想定と違うので取得失敗"""
+        rows = [("2026/10/12", "202605040411", "9", "中", "芝1800", "85")]
+        self.assertEqual(pi.parse_results_table(table(rows), "20261107")["status"], pi.FAILED)
+
+    def test_finisher_without_popularity_is_failed(self):
+        """着順が数字（完走）なのに人気が空・数字でない → 取得失敗（2026-11-05 外部レビュー指摘）"""
+        for pop in ("", "-", "取"):
+            rows = [("2026/10/12", "202605040411", pop, "2", "芝1800", "85")]
+            self.assertEqual(pi.parse_results_table(table(rows), "20261107")["status"], pi.FAILED, pop)
+
     def test_idx_cell_without_class_is_failed(self):
         html = table(ROWS).replace(f' class="{pi.IDX_CELL_CLASS}"', "", 1)
         self.assertEqual(pi.parse_results_table(html, "20261107")["status"], pi.FAILED)
 
-    def test_cancelled_rank_is_kept_as_none(self):
-        """前走が中止など（着順が数字でない）は正当な値。着順・人気は None"""
+    def test_unconfirmed_cancel_spelling_with_idx_is_failed(self):
+        """以前は「中止」・人気空・指数あり を「取れた」にしていた（2026-11-05 外部レビュー指摘で取得失敗に変えた）。
+        馬ページの競走中止の表記は「中」（実ページで確認）。「中止」は確かめていない表記"""
         rows = [("2026/10/12", "202605040411", "", "中止", "芝1800", "50")]
-        e = pi.parse_results_table(table(rows), "20261107")
-        self.assertEqual((e["status"], e["values"]["rank"], e["values"]["pop"]), (pi.OK, None, None))
+        self.assertEqual(pi.parse_results_table(table(rows), "20261107")["status"], pi.FAILED)
 
     # ── 前走なしの条件（すべてを満たすときだけ。満たさなければ取得失敗）──
     def test_no_prev_when_no_rows(self):
@@ -194,6 +213,17 @@ class Top1Test(unittest.TestCase):
         t = pi.race_top1({"1": "A"}, {"A": entry(pi.NO_PREV)})
         self.assertEqual((t["decision"], t["race_max"]), ("判定", None))
 
+    def test_prev_status_summary_scratched_candidate_is_not_issue(self):
+        """出馬表で取消・除外の候補は「取消・除外（出馬表）」。品質の判定の対象外（2026-11-05 外部レビュー指摘）。
+        取消の印が無く馬IDも無い候補は「馬IDが無い」（問題あり）"""
+        from data_quality import USABLE_PREV_STATUSES
+        ents = {"A": entry(pi.OK)}
+        active = {"1": "A"}   # 2番は取消（active に無い）、3番は馬IDが無い
+        st = pi.prev_status_summary(["1", "2", "3"], active, ents, pi.race_top1(active, ents), scratched={"2": "取消"})
+        self.assertEqual(st["candidates"], {"1": pi.OK, "2": pi.SCRATCHED, "3": "馬IDが無い"})
+        self.assertIn(pi.SCRATCHED, USABLE_PREV_STATUSES)
+        self.assertNotIn("馬IDが無い", USABLE_PREV_STATUSES)
+
     def test_prev_status_summary(self):
         ents = {"A": entry(pi.OK), "B": entry(pi.FAILED), "C": entry(pi.IDX_EMPTY)}
         active = {"1": "A", "2": "B", "3": "C", "4": "D"}
@@ -228,6 +258,13 @@ class ScoreHandoffTest(unittest.TestCase):
         self.assertTrue(any("レース内1位" in b["label"] for b in top["breakdown"]))
 
 
+def new_run(out, program="test"):
+    """ロックを取って記録を作り、記録を閉じてロックを外す（1回の実行の形）"""
+    lock = pi.DateLock(out)
+    r = pi.RunRecord(out, "20261107", program, "v", lock)
+    return lock, r
+
+
 class RecordTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -237,40 +274,104 @@ class RecordTest(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
-    def test_lock_blocks_second_run_and_close_releases(self):
-        r = pi.RunRecord(self.out, "20261107", "test", "v")
+    def test_lock_blocks_second_run_until_release(self):
+        lock, r = new_run(self.out)
         with self.assertRaises(RuntimeError):
-            pi.RunRecord(self.out, "20261107", "test", "v")
-        r.close()
-        r2 = pi.RunRecord(self.out, "20261107", "test", "v")
-        r2.close()
+            pi.DateLock(self.out)
+        r.finish()   # 記録を閉じてもロックは外れない（結果の保存が終わるまで持つ）
+        with self.assertRaises(RuntimeError):
+            pi.DateLock(self.out)
+        lock.release()
+        lock2, r2 = new_run(self.out)
+        r2.finish()
+        lock2.release()
+
+    def test_record_requires_lock(self):
+        with self.assertRaises(RuntimeError):
+            pi.RunRecord(self.out, "20261107", "test", "v", None)
+
+    def test_stale_lock_of_dead_process_is_removed(self):
+        """強制終了で残ったロック（プロセスが無い）は外して進み、記録に残す。動いているプロセスのロックでは止まる"""
+        d = self.out / "prev_inputs"
+        d.mkdir()
+        (d / ".lock").write_text("999999 2026-11-06T17:05:00+09:00\n")
+        with mock.patch("prev_inputs._pid_alive", return_value=False):
+            lock, r = new_run(self.out)
+        self.assertIn("999999", r.data["stale_lock"])
+        r.finish()
+        lock.release()
+        self.assertFalse((d / ".lock").exists())
+        (d / ".lock").write_text("12345 2026-11-06T17:05:00+09:00\n")
+        with mock.patch("prev_inputs._pid_alive", return_value=True):
+            with self.assertRaises(RuntimeError):
+                pi.DateLock(self.out)
+        (d / ".lock").write_text("こわれた中身")
+        with self.assertRaises(RuntimeError):   # 中身を読めないロックは消さずに止まる
+            pi.DateLock(self.out)
+
+    def test_release_does_not_remove_others_lock(self):
+        lock = pi.DateLock(self.out)
+        (self.out / "prev_inputs" / ".lock").write_text("12345 別の実行\n")
+        lock.release()
+        self.assertTrue((self.out / "prev_inputs" / ".lock").exists())
+
+    def test_same_second_runs_do_not_collide(self):
+        """同じプロセス・同じ時刻でも実行IDが別になり、前の記録を上書きしない（2026-11-05 外部レビュー指摘）"""
+        fixed = pi.now_jst()
+        with mock.patch("prev_inputs.now_jst", return_value=fixed):
+            lock, r1 = new_run(self.out)
+            r1.add_race("東京1R", "1", {"A": entry(pi.OK)}, {})
+            r1.finish()
+            first = json.loads(r1.path.read_text())
+            r2 = pi.RunRecord(self.out, "20261107", "test", "v", lock)
+            r2.finish()
+            lock.release()
+        self.assertNotEqual(r1.run_id, r2.run_id)
+        self.assertEqual(json.loads(r1.path.read_text()), first)
 
     def test_runs_are_separate_files_and_not_overwritten(self):
-        r1 = pi.RunRecord(self.out, "20261107", "test", "v")
+        lock, r1 = new_run(self.out)
         r1.add_race("東京1R", "1", {"A": entry(pi.OK)}, {"decision": "判定"})
-        r1.close()
+        r1.finish()
         first = json.loads(r1.path.read_text())
-        with mock.patch("prev_inputs.now_jst", return_value=pi.now_jst().replace(year=2030)):
-            r2 = pi.RunRecord(self.out, "20261107", "test", "v")
+        r2 = pi.RunRecord(self.out, "20261107", "test", "v", lock)
         r2.add_race("東京1R", "1", {"A": entry(pi.FAILED)}, {"decision": "保留"})
-        r2.close()
+        r2.finish()
+        lock.release()
         self.assertNotEqual(r1.path, r2.path)
         self.assertEqual(json.loads(r1.path.read_text()), first)   # 前の記録は変わらない
         self.assertFalse(list((self.out / "prev_inputs").glob("*.tmp")))
 
     def test_reusable_entries_skip_failed_and_keep_origin(self):
-        r1 = pi.RunRecord(self.out, "20261107", "test", "v")
+        lock, r1 = new_run(self.out)
         r1.add_race("東京1R", "1", {"A": entry(pi.OK), "B": entry(pi.FAILED)}, {})
-        r1.close()
+        r1.finish()
         reuse = pi.reusable_entries(self.out, "20261107")
         self.assertEqual(set(reuse), {"A"})
         self.assertEqual(reuse["A"]["origin_run"], r1.run_id)
         # 再利用した値（source=再利用）を、次の実行が再利用の元にしない（元の実行だけを元にする）
-        with mock.patch("prev_inputs.now_jst", return_value=pi.now_jst().replace(year=2030)):
-            r2 = pi.RunRecord(self.out, "20261107", "test", "v")
+        r2 = pi.RunRecord(self.out, "20261107", "test", "v", lock)
         r2.add_race("東京1R", "1", {"A": dict(reuse["A"], source="再利用")}, {})
-        r2.close()
+        r2.finish()
+        lock.release()
         self.assertEqual(pi.reusable_entries(self.out, "20261107")["A"]["origin_run"], r1.run_id)
+
+    def test_later_failure_disables_earlier_success(self):
+        """成功した記録の後に同じ馬の取得が失敗・期限後なら、前の成功値に戻らない（2026-11-05 外部レビュー指摘）"""
+        for later in (entry(pi.FAILED), dict(entry(pi.OK), status=pi.AFTER_DEADLINE, status_observed=pi.OK)):
+            with tempfile.TemporaryDirectory() as t:
+                out = Path(t) / "20261107"
+                out.mkdir()
+                lock, r1 = new_run(out)
+                r1.add_race("東京1R", "1", {"A": entry(pi.OK, idx=80), "B": entry(pi.OK)}, {})
+                r1.finish()
+                r2 = pi.RunRecord(out, "20261107", "test", "v", lock)
+                r2.add_race("東京1R", "1", {"A": later, "B": dict(entry(pi.OK), source="再利用")}, {})
+                r2.finish()
+                lock.release()
+                reuse = pi.reusable_entries(out, "20261107")
+                self.assertNotIn("A", reuse, later["status"])
+                self.assertEqual(reuse["B"]["origin_run"], r1.run_id)   # 再利用は後の取得とみなさない
 
 
 class RerunTest(unittest.TestCase):
@@ -285,16 +386,48 @@ class RerunTest(unittest.TestCase):
     def test_prev_failure_is_rerun_even_with_other_points(self):
         self.assertTrue(self.needs(self.rd({"1": pi.FAILED})))
         self.assertTrue(self.needs(self.rd({"1": "入力が無い"})))
+        self.assertTrue(self.needs(self.rd({"1": "馬IDが無い"})))
         self.assertTrue(self.needs(self.rd({"1": pi.OK}, {pi.FAILED: 1})))
 
     def test_normal_statuses_are_not_rerun(self):
         self.assertEqual(self.needs(self.rd({"1": pi.OK, "2": pi.NO_PREV}, {pi.IDX_EMPTY: 2, pi.OK: 5})), [])
         self.assertEqual(self.needs(self.rd({"1": pi.IDX_EMPTY})), [])
+        self.assertEqual(self.needs(self.rd({"1": pi.OK, "2": pi.SCRATCHED})), [])
 
     def test_existing_rules(self):
         self.assertTrue(self.needs({"error": "x"}))
         self.assertTrue(self.needs({"pop_map": {}, "scored": [{"score": 0}]}))
         self.assertEqual(self.needs({"pop_map": {"1": "2"}, "scored": [{"score": 0}]}), [])
+
+
+class CollectFlowTest(unittest.TestCase):
+    """1レース分の前走データの処理（run_pickup_all.collect_prev_for_race）から品質の判定まで通す"""
+    def test_scratched_candidate_does_not_make_race_bad(self):
+        import run_pickup_all as rpa
+        from data_quality import build_quality, race_quality_issues
+        shutuba = {"horse_id_map": {"1": "A", "2": "B", "3": "C"}, "scratched_nums": {"2": "取消"}}
+        fetched = []
+
+        def fake_fetch(page, hid, date, browse, settle):
+            fetched.append(hid)
+            return entry(pi.OK, idx={"A": 80, "C": 70}[hid])
+        with tempfile.TemporaryDirectory() as t:
+            out = Path(t) / "20261107"
+            out.mkdir()
+            lock, rec = new_run(out)
+            with mock.patch.object(rpa, "fetch_entry", fake_fetch), mock.patch.object(rpa, "human_sleep"):
+                prev_db, top1, st = rpa.collect_prev_for_race(None, "20261107", "東京1R", "1", shutuba,
+                                                              {"1", "2"}, {}, rec)
+            rec.finish()
+            lock.release()
+        self.assertEqual(sorted(fetched), ["A", "C"])   # 取消の馬は取らない
+        self.assertEqual(st["candidates"], {"1": pi.OK, "2": pi.SCRATCHED})
+        self.assertEqual((top1["decision"], top1["race_max"]), ("判定", 80))
+        rd = {"collector_version": "v", "quality": build_quality(
+            "v", {"index_reader_version": "r", "candidate_rule_version": "c",
+                  "races": {"東京1R": {"modes": {"average": "type=rank"}}}}, "東京1R",
+            prev=dict(prev_fetch=pi.PREV_FETCH_VERSION, prev_inputs_run="x", prev_status=st))}
+        self.assertEqual(race_quality_issues(rd), [])
 
 
 class SnapshotTest(unittest.TestCase):
@@ -303,13 +436,13 @@ class SnapshotTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as t:
             out = Path(t) / "20261107"
             out.mkdir()
-            r1 = pi.RunRecord(out, "20261107", "test", "v")
+            lock, r1 = new_run(out)
             r1.add_race("東京1R", "1", {"A": entry(pi.OK, idx=70)}, {})
-            r1.close()
-            with mock.patch("prev_inputs.now_jst", return_value=pi.now_jst().replace(year=2030)):
-                r2 = pi.RunRecord(out, "20261107", "test", "v")
+            r1.finish()
+            r2 = pi.RunRecord(out, "20261107", "test", "v", lock)
             r2.add_race("東京1R", "1", {"A": entry(pi.OK, idx=99), "B": entry(pi.FAILED)}, {})
-            r2.close()
+            r2.finish()
+            lock.release()
             n = write_prev_data_snapshot(out, {"東京1R": {"prev_inputs_run": r1.run_id}})
             snap = json.loads((out / "prev_data.json").read_text())
             self.assertEqual((n, snap["A"]["prev_idx"]), (1, "70"))   # 採点が参照した r1 の値だけ

@@ -7,3 +7,7 @@ debug_*.png
 *.xlsx
 cron.log
 rescrape_full.log
+
+# 前走データの実行のロック・一時ファイル（強制終了で残っても run.sh の git add output/ に入れない。2026-11-05）
+output/*/prev_inputs/.lock
+*.tmp

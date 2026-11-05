@@ -18,7 +18,7 @@ pickup_scores.json の各レースに "quality" を保存し、研究・閾値�
 import json
 from pathlib import Path
 
-from prev_inputs import USABLE_STATUSES as USABLE_PREV_STATUSES
+from prev_inputs import QUALITY_OK_STATUSES as USABLE_PREV_STATUSES
 
 OUTPUT_DIR = Path(__file__).parent / "output"
 INDEX_SOURCES_FILE = "index_sources.json"

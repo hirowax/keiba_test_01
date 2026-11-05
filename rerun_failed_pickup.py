@@ -6,10 +6,13 @@ usage: python3 rerun_failed_pickup.py 20260412
 再実行の対象（needs_rerun）:
 - レースの error
 - 候補全員0点かつ人気が空（出馬表が読めていない）
-- 前走データ: 候補または比較相手に「取得失敗」、候補に「入力が無い」（docs/prev_cache_fix_plan_202611.md 案D）
+- 前走データ: 候補または比較相手に「取得失敗」、候補に「入力が無い」「馬IDが無い」（docs/prev_cache_fix_plan_202611.md 案D）
+  出馬表で取消・除外の候補（「取消・除外（出馬表）」）は対象にしない。
   指数の「**」（ログインしていない状態の表示）は取得失敗として扱うので、対象になる（2026-11-05 決定）。
 1レース分の処理は run_pickup_all.score_race と同じ（同じ処理を1か所にまとめる）。
-前走データは、同じ対象日のために取った成功分（prev_inputs.reusable_entries）を再利用し、失敗分だけ取り直す。
+前走データは、同じ対象日のために取った値のうち、馬ごとの最新の取得が成功しているもの（prev_inputs.reusable_entries）を
+再利用し、それ以外を取り直す。
+ロック（prev_inputs.DateLock）は pickup_scores.json の読み取りから、保存・派生ファイルの保存が終わるまで持つ。
 """
 
 import sys
@@ -24,7 +27,7 @@ from playwright.sync_api import sync_playwright
 from scraper import load_env, load_cookies, get_race_ids
 from data_quality import load_index_sources, race_quality_issues
 from race_pickup import SCORING_VERSION
-from prev_inputs import FAILED, RunRecord, reusable_entries
+from prev_inputs import FAILED, DateLock, RunRecord, reusable_entries, write_json_atomic
 from run_pickup_all import load_horse_style, score_race, write_prev_data_snapshot
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -43,7 +46,7 @@ def needs_rerun(rdata: dict) -> list:
         if scored and all(h.get("score", 0) == 0 for h in scored):
             reasons.append("候補全員0点かつ人気が空")
     st = (rdata.get("quality") or {}).get("prev_status") or {}
-    bad = {n: s for n, s in (st.get("candidates") or {}).items() if s in (FAILED, "入力が無い")}
+    bad = {n: s for n, s in (st.get("candidates") or {}).items() if s in (FAILED, "入力が無い", "馬IDが無い")}
     if bad:
         reasons.append(f"候補の前走データ: {bad}")
     n_fail = (st.get("others") or {}).get(FAILED, 0)
@@ -61,12 +64,14 @@ def main():
         logger.error(f"pickup_scores.json が見つかりません: {pickup_path}")
         sys.exit(1)
 
+    lock = DateLock(out_dir)   # 読み取りから保存までの間に、同じ日の別の実行が書かないようにする
     with open(pickup_path, encoding="utf-8") as f:
         existing = json.load(f)
 
     failed = {label: r for label, rdata in existing.get("races", {}).items() if (r := needs_rerun(rdata))}
     if not failed:
         logger.info("再取得が必要なレースはありません")
+        lock.release()
         return
     for label, r in sorted(failed.items()):
         logger.info(f"再取得対象: {label} {r}")
@@ -81,7 +86,7 @@ def main():
     index_sources = load_index_sources(date)
     reusable = reusable_entries(out_dir, date)
     logger.info(f"前走データ: 再利用できる値 {len(reusable)}頭")
-    record = RunRecord(out_dir, date, "rerun_failed_pickup.py", SCORING_VERSION)
+    record = RunRecord(out_dir, date, "rerun_failed_pickup.py", SCORING_VERSION, lock)
     logger.info(f"前走データの記録: {record.path}")
 
     load_env()
@@ -138,21 +143,19 @@ def main():
 
         browser.close()
 
-    record.close()
+    record.finish()
     for label in failed:
         rdata = existing["races"].get(label)
         if isinstance(rdata, dict) and "error" not in rdata:
             rdata["quality_issues"] = race_quality_issues(rdata)
 
     existing["generated_at"] = datetime.now().isoformat()
-    tmp = pickup_path.with_suffix(".json.tmp")
-    with open(tmp, "w", encoding="utf-8") as f:
-        json.dump(existing, f, ensure_ascii=False, indent=2, default=str)
-    tmp.replace(pickup_path)
+    write_json_atomic(pickup_path, existing)
     logger.info(f"マージ保存完了: {pickup_path}")
 
     n_snap = write_prev_data_snapshot(out_dir, existing.get("races", {}))
     logger.info(f"prev_data.json 保存（記録から作った派生ファイル）: {n_snap}頭")
+    lock.release()
 
     for label in sorted(failed):
         rdata = existing["races"].get(label, {})
