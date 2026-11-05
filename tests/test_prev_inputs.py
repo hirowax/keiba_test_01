@@ -290,30 +290,65 @@ class RecordTest(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             pi.RunRecord(self.out, "20261107", "test", "v", None)
 
-    def test_stale_lock_of_dead_process_is_removed(self):
-        """強制終了で残ったロック（プロセスが無い）は外して進み、記録に残す。動いているプロセスのロックでは止まる"""
-        d = self.out / "prev_inputs"
-        d.mkdir()
-        (d / ".lock").write_text("999999 2026-11-06T17:05:00+09:00\n")
-        with mock.patch("prev_inputs._pid_alive", return_value=False):
-            lock, r = new_run(self.out)
-        self.assertIn("999999", r.data["stale_lock"])
-        r.finish()
-        lock.release()
-        self.assertFalse((d / ".lock").exists())
-        (d / ".lock").write_text("12345 2026-11-06T17:05:00+09:00\n")
-        with mock.patch("prev_inputs._pid_alive", return_value=True):
+    def _hold_lock_in_child(self):
+        """別のプロセスでロックを取り、取れたら標準出力に1行出して待ち続ける"""
+        import subprocess
+        code = ("import sys, time; sys.path.insert(0, sys.argv[1]); import prev_inputs as pi; "
+                "from pathlib import Path; l = pi.DateLock(Path(sys.argv[2])); print('ok', flush=True); time.sleep(60)")
+        child = subprocess.Popen([sys.executable, "-c", code, str(Path(pi.__file__).parent), str(self.out)],
+                                 stdout=subprocess.PIPE, text=True)
+        self.assertEqual(child.stdout.readline().strip(), "ok")
+        return child
+
+    def test_lock_held_by_other_process_blocks_and_is_freed_by_kill(self):
+        """別のプロセスが持つロックでは止まる。そのプロセスを強制終了（SIGKILL）すると OS が外し、次の実行が取れる。
+        .lock のファイルは残るが、ロックの判定には使わない（2026-11-06 外部レビュー指摘）"""
+        import signal
+        child = self._hold_lock_in_child()
+        try:
             with self.assertRaises(RuntimeError):
                 pi.DateLock(self.out)
-        (d / ".lock").write_text("こわれた中身")
-        with self.assertRaises(RuntimeError):   # 中身を読めないロックは消さずに止まる
-            pi.DateLock(self.out)
-
-    def test_release_does_not_remove_others_lock(self):
-        lock = pi.DateLock(self.out)
-        (self.out / "prev_inputs" / ".lock").write_text("12345 別の実行\n")
-        lock.release()
+        finally:
+            child.send_signal(signal.SIGKILL)
+            child.wait()
+            child.stdout.close()
         self.assertTrue((self.out / "prev_inputs" / ".lock").exists())
+        lock = pi.DateLock(self.out)
+        lock.release()
+
+    def test_two_processes_cannot_both_lock(self):
+        """4つのプロセスが同時にロックを取りに行っても、取れるのは1つだけ"""
+        import subprocess
+        code = ("import sys, time; sys.path.insert(0, sys.argv[1]); import prev_inputs as pi; "
+                "from pathlib import Path\n"
+                "try:\n l = pi.DateLock(Path(sys.argv[2])); print('ok', flush=True); time.sleep(2)\n"
+                "except RuntimeError:\n print('blocked', flush=True)")
+        args = [sys.executable, "-c", code, str(Path(pi.__file__).parent), str(self.out)]
+        procs = [subprocess.Popen(args, stdout=subprocess.PIPE, text=True) for _ in range(4)]
+        outs = sorted(pr.communicate(timeout=30)[0].strip() for pr in procs)
+        self.assertEqual(outs.count("ok"), 1, outs)
+
+    def test_crash_while_creating_record_leaves_no_json(self):
+        """記録の最初の保存の途中で止まっても、正式な .json は置かれず、次の実行の load_runs が止まらない
+        （2026-11-06 外部レビュー指摘: 空の .json で JSONDecodeError になった）"""
+        lock = pi.DateLock(self.out)
+        with mock.patch("prev_inputs.json.dump", side_effect=KeyboardInterrupt):
+            with self.assertRaises(KeyboardInterrupt):
+                pi.RunRecord(self.out, "20261107", "test", "v", lock)
+        self.assertEqual(list((self.out / "prev_inputs").glob("*.json")), [])
+        self.assertEqual(pi.load_runs(self.out), [])
+        r = pi.RunRecord(self.out, "20261107", "test", "v", lock)   # その後の記録は作れる
+        r.finish()
+        lock.release()
+        self.assertEqual(len(pi.load_runs(self.out)), 1)
+
+    def test_broken_record_is_not_skipped(self):
+        """壊れた記録は黙って読み飛ばさない（採点結果が参照する証拠を失うため）"""
+        d = self.out / "prev_inputs"
+        d.mkdir()
+        (d / "20261106T170000000000_abcd1234.json").write_text("")
+        with self.assertRaises(ValueError):
+            pi.load_runs(self.out)
 
     def test_same_second_runs_do_not_collide(self):
         """同じプロセス・同じ時刻でも実行IDが別になり、前の記録を上書きしない（2026-11-05 外部レビュー指摘）"""

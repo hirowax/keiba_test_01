@@ -231,79 +231,46 @@ def inputs_dir(out_dir: Path) -> Path:
     return out_dir / "prev_inputs"
 
 
-def _pid_alive(pid: int) -> bool:
-    try:
-        os.kill(pid, 0)
-    except ProcessLookupError:
-        return False
-    except PermissionError:   # 別のユーザーのプロセス（生きている）
-        return True
-    return True
-
-
 class DateLock:
     """同じ対象日の実行（run_pickup_all.py / rerun_failed_pickup.py）の二重起動を止めるロック。
-    output/{日}/prev_inputs/.lock（.gitignore 済み）。入力の読み取りから、採点結果・派生ファイルの保存が
-    終わるまで持つ（2026-11-05 外部レビュー指摘）。
-    - 例外・sys.exit では atexit で外す。
-    - 強制終了で残った場合: 中のプロセス番号のプロセスが無ければ、次の実行が古いロックとして外して進む
-      （外したことはログと実行の記録 stale_lock に残す）。プロセスが生きていれば止まる。
-    - 手で直すとき: ps -p <番号> でプロセスが無いことを確かめてから、そのファイルを消す。"""
+    output/{日}/prev_inputs/.lock（.gitignore 済み）に OS のファイルロック（fcntl.flock・排他・待たない）をかける。
+    入力の読み取りから、採点結果・派生ファイルの保存が終わるまで持つ（2026-11-05 外部レビュー指摘）。
+    - ロックはファイルの有無ではなく、開いているプロセスが持つ。プロセスが終われば（強制終了を含む）OS が外すので、
+      古いロックを回収する処理は無い（2026-11-06 外部レビュー指摘: 回収の競合で二重起動を許した）。
+    - .lock のファイル自体は消さない（消すと、別のプロセスが別のファイルにロックをかけられてしまう）。
+      中身は最後にロックを取ったプロセスの番号と時刻（参考。判定には使わない）。
+    - 同じ Mac の上での実行を前提にする（ネットワーク上のフォルダでは確かめていない）。"""
 
     def __init__(self, out_dir: Path):
+        import fcntl
         d = inputs_dir(out_dir)
         d.mkdir(parents=True, exist_ok=True)
         self.path = d / ".lock"
-        self.stale = None
-        for _ in range(2):
+        fd = os.open(self.path, os.O_CREAT | os.O_RDWR, 0o644)
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
             try:
-                fd = os.open(self.path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-                break
-            except FileExistsError:
-                text = self._read()
-                pid = _lock_pid(text)
-                if pid is None or _pid_alive(pid):
-                    raise RuntimeError(
-                        f"同じ日の実行が動いている（ロック {self.path}: {text.strip()!r}）。"
-                        f"そのプロセスが無いことを ps -p で確かめてから消す")
-                self.stale = text.strip()
-                logging.getLogger(__name__).warning(
-                    f"古いロックを外す（プロセス {pid} は動いていない）: {self.path} {self.stale!r}")
-                try:
-                    self.path.unlink()
-                except FileNotFoundError:
-                    pass
-        else:
-            raise RuntimeError(f"ロックを取れない（{self.path}）")
-        os.write(fd, f"{os.getpid()} {now_jst().isoformat(timespec='seconds')}\n".encode())
-        os.close(fd)
-        self.pid = os.getpid()
+                holder = os.pread(fd, 200, 0).decode("utf-8", "replace").strip()
+            finally:
+                os.close(fd)
+            raise RuntimeError(f"同じ日の実行が動いている（ロック {self.path}。最後に取ったプロセス: {holder!r}）")
+        os.ftruncate(fd, 0)
+        os.pwrite(fd, f"{os.getpid()} {now_jst().isoformat(timespec='seconds')}\n".encode(), 0)
+        self._fd = fd
         self._released = False
         import atexit
         atexit.register(self.release)
-
-    def _read(self) -> str:
-        try:
-            return self.path.read_text(encoding="utf-8")
-        except (FileNotFoundError, UnicodeDecodeError):
-            return ""
 
     def release(self):
         if self._released:
             return
         self._released = True
-        if _lock_pid(self._read()) == self.pid:   # 自分のロックだけ外す
-            try:
-                self.path.unlink()
-            except FileNotFoundError:
-                pass
-
-
-def _lock_pid(text: str):
-    try:
-        return int(text.split()[0])
-    except (IndexError, ValueError):
-        return None
+        import fcntl
+        try:
+            fcntl.flock(self._fd, fcntl.LOCK_UN)
+        finally:
+            os.close(self._fd)
 
 
 def new_run_id(started: datetime) -> str:
@@ -314,7 +281,10 @@ def new_run_id(started: datetime) -> str:
 
 class RunRecord:
     """1回の実行の記録。output/{日}/prev_inputs/{実行ID}.json。
-    書くたびに一時ファイルから名前を変える。lock（DateLock）を持っている間だけ作る。
+    書くたびに一時ファイルに書き終えてから正式な名前にする。中身の無い・途中の .json を置かない
+    （2026-11-06 外部レビュー指摘: 空の .json で次の実行の load_runs が止まった）。
+    最初の保存は os.link で、同じ名前の記録が既にあれば失敗する（上書きしない）。
+    lock（DateLock）を持っている間だけ作る。
     finish() は記録を閉じるだけで、ロックは呼び出し元が結果の保存の後に外す。"""
 
     def __init__(self, out_dir: Path, target_date: str, program: str, scoring_version: str, lock: DateLock):
@@ -324,17 +294,15 @@ class RunRecord:
         started = now_jst()
         self.run_id = new_run_id(started)
         self.path = self.dir / f"{self.run_id}.json"
-        fd = os.open(self.path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)   # 既存の記録を上書きしない
-        os.close(fd)
+        self._published = False
         self._closed = False
-        import atexit
-        atexit.register(self.finish)
         self.data = {"run_id": self.run_id, "target_date": target_date, "program": program,
                      "started_at": started.isoformat(timespec="seconds"), "finished_at": None,
                      "commit": _git_head(), "fetch_version": PREV_FETCH_VERSION,
-                     "scoring_version": scoring_version, "top1_rule": TOP1_RULE,
-                     "stale_lock": lock.stale, "races": {}}
+                     "scoring_version": scoring_version, "top1_rule": TOP1_RULE, "races": {}}
         self.save()
+        import atexit
+        atexit.register(self.finish)   # 最初の保存が成功した記録だけ、終了時に閉じる
 
     def add_race(self, race_label: str, race_id: str, entries: dict, top1: dict):
         self.data["races"][race_label] = {"race_id": race_id, "horses": entries, "top1": top1}
@@ -344,7 +312,14 @@ class RunRecord:
         tmp = self.path.with_suffix(".json.tmp")
         with open(tmp, "w", encoding="utf-8") as f:
             json.dump(self.data, f, ensure_ascii=False, indent=1)
-        os.replace(tmp, self.path)
+            f.flush()
+            os.fsync(f.fileno())
+        if not self._published:
+            os.link(tmp, self.path)   # 既にあれば FileExistsError（既存の記録を上書きしない）
+            os.unlink(tmp)
+            self._published = True
+        else:
+            os.replace(tmp, self.path)
 
     def finish(self):
         if self._closed:
