@@ -40,12 +40,13 @@ netkeiba のタイム指数（近走平均・当該距離・当該コース）�
 
 ### 版と品質
 - **版を分ける**: 取り方を変えたら該当する版の値を変える。
-  - スコア式: `race_pickup.SCORING_VERSION`（現行 v5）
+  - スコア式: `race_pickup.SCORING_VERSION`（現行 v5.1）
+  - 前走データの取り方: `prev_inputs.PREV_FETCH_VERSION`、前走指数レース内1位の扱い: `prev_inputs.TOP1_RULE`
   - 馬番・馬IDの取り方: `race_pickup.COLLECTOR_VERSION`
   - 指数の読み方: `scraper.INDEX_READER_VERSION`
   - 候補の選び方: `scraper.CANDIDATE_RULE_VERSION`
 - **品質はレース単位で判定する**:
-  - pickup_scores.json の各レースの `quality`（馬番の版・指数の読み方の版・指数の取得経路）と `invalidated.json` を、`data_quality.race_quality_issues()` で判定する。
+  - pickup_scores.json の各レースの `quality`（馬番の版・指数の読み方の版・指数の取得経路・前走データの取り方の版と候補の前走の状態）と `invalidated.json` を、`data_quality.race_quality_issues()` で判定する。
   - 版が1つあるだけで使える扱いにしない。研究・閾値調整・精算はこの判定を通す。
 - **修正前のデータ**:
   - `collector_version` が無い pickup_scores.json（〜2026-10-30）は、前走成績・オッズ・人気が他の馬の値になっている。研究・検証に使わない。
@@ -102,7 +103,8 @@ netkeiba/
 │   ├── race_pickup.py        # レース別スコアリング（shutuba + data_top スクレイプ）
 │   ├── run_pickup_all.py     # 全レース一括ピックアップ実行
 │   ├── rerun_failed_pickup.py # エラーレースのみ再ピックアップ・pickup_scores.jsonにマージ
-│   ├── scrape_prev_data.py   # 馬別前走データ収集（horse_db.jsonキャッシュ使用）
+│   ├── prev_inputs.py        # 前走データ（馬ページ）の読み取り・入力の記録 prev_inputs/・前走指数レース内1位の判定
+│   ├── scrape_prev_data.py   # 停止中（2026-11-05〜。実行すると理由を出して止まる）
 │   ├── scrape_results.py     # レース結果を包括的スクレイプ（当日夜〜翌日実行）
 │   ├── scrape_jra_payouts.py # JRA公式(jra.go.jp)から払戻を取得（Issue #1）
 │   ├── scrape_history.py     # 過去日付のレース結果を一括取得（pickup_scores.json不要）
@@ -115,7 +117,7 @@ netkeiba/
 │   ├── verify_results.py     # 結果取得後の全頭照合（馬番・馬ID・馬名・レースID）
 │   ├── calibrate_threshold.py # 🔥閾値を過去データから自動計算
 │   ├── paper_trade.py        # ペーパートレード台帳 generate/settle/report（Issue #3）
-│   ├── rescore.py            # pickup_scores.jsonを再スコアリング（過去日付には使わない）
+│   ├── rescore.py            # 停止中（2026-11-05〜。古い前走キャッシュを使うため。実行すると理由を出して止まる）
 │   ├── build_horse_style.py  # コーナー通過順から脚質推定・horse_style.json更新
 │   └── export_json.py        # CSV/Excel → JSON変換 + dates.json生成（GitHub Pages用）
 ├── 研究・検証
@@ -138,7 +140,9 @@ netkeiba/
 │   ├── YYYYMMDD/
 │   │   ├── 全場_3指数重複馬.csv   # 3指数すべてでトップ3の馬
 │   │   ├── index_sources.json   # 指数の取得経路・取得異常（2026-11-01〜）
-│   │   ├── pickup_scores.json   # スコアリング結果（Webアプリが読む。quality を含む）
+│   │   ├── prev_inputs/{実行ID}.json # 前走データの入力の記録（正本。2026-11-05〜）
+│   │   ├── prev_data.json       # 上の記録から作った派生ファイル
+│   │   ├── pickup_scores.json   # スコアリング結果（Webアプリが読む。quality・quality_issues を含む）
 │   │   ├── triple.json          # 3指数重複馬（GitHub Pages用JSON）
 │   │   ├── race_results.json    # 着順のある全馬の着順・人気・馬番・馬ID等（取消・除外・中止は載らない）
 │   │   ├── race_nonfinishers.json # 着順が数字でない馬（取消・除外・中止・失格。2026-11-02〜）
@@ -147,7 +151,7 @@ netkeiba/
 │   │   ├── payouts_jra.json     # JRA公式払戻
 │   │   ├── paper_bets.json      # ペーパートレード買い目・精算結果
 │   │   └── invalidated.json     # 無効にしたレースと理由（ある日だけ）
-│   ├── horse_db.json         # 馬別前走データ キャッシュ（28日有効）
+│   ├── horse_db.json         # 旧・馬別前走データ キャッシュ（2026-11-05 から採点に使わない）
 │   ├── horse_pedigree.json   # 馬別血統（父・母父）永続キャッシュ
 │   ├── horse_style.json      # 馬別脚質データ
 │   ├── dates.json            # 利用可能な日付一覧
@@ -212,11 +216,7 @@ report は `status: settled` のメニューだけを集計する。2026-10-30 �
 
 ### 5. 前走データのみ収集
 
-```bash
-python3 scrape_prev_data.py 20260404
-```
-
-horse_db.json のキャッシュを使い、未取得の馬のみスクレイプ。
+2026-11-05 から停止中（`scrape_prev_data.py` は理由を出して止まる）。前走データは `run_pickup_all.py`／`rerun_failed_pickup.py` が、採点するレースの全馬についてその対象日のために取り、`output/{date}/prev_inputs/` に記録する。設計は `docs/prev_cache_fix_plan_202611.md`。
 
 ### 6. 過去開催のスクレイプ（未取得週末の遡及）
 
@@ -224,7 +224,7 @@ horse_db.json のキャッシュを使い、未取得の馬のみスクレイプ
 
 ---
 
-## スコアリングロジック（race_pickup.py・現行 v5）
+## スコアリングロジック（race_pickup.py・現行 v5.1）
 
 候補は**3指数すべてでトップ3**の馬（旧: トップ5）。トップ3の定義は変更予定（上の「順位はページの順位を使う」）。候補に以下を加点する。
 
@@ -234,14 +234,14 @@ horse_db.json のキャッシュを使い、未取得の馬のみスクレイプ
 | 各データ上位3頭 | +1/カテゴリー（上限2pt） | shutuba の各データ上位3頭に登場した回数分 |
 | データ分析ピックアップ | +1 | data_top のピックアップ3頭（旧+2→+1: 単体回収率66%、組合せ依存） |
 | 出走馬分析 | +1/条件 | data_top の出走馬分析テーブル登場数 |
-| 前走タイム指数90以上 | +2 | horse_db から取得 |
-| 前走タイム指数70〜89 | +1 | horse_db から取得 |
-| 前走指数レース内1位 | +2 | horse_db × 出走全馬比較（旧+1→+2: N=73勝率29%回収146%） |
-| 中4週以内（前走28日以内） | +2 | horse_db の prev_date から計算 |
+| 前走タイム指数90以上 | +2 | 前走データの記録から取得 |
+| 前走タイム指数70〜89 | +1 | 前走データの記録から取得 |
+| 前走指数レース内1位 | +2 | 出走全馬（取消・除外を除く）の前走指数と比較。比較に必要な値が分からない馬がいれば保留（加点しない。v5.1） |
+| 中4週以内（前走28日以内） | +2 | 前走の日付から計算 |
 | 逃げ馬（Sペース予測時のみ・2走以上実績） | +1 | horse_style.json のコーナー通過順履歴から推定。Sペース(スロー)のときのみ加点 |
 | 巻き返し馬 | 0（廃止） | 前走1〜3番人気かつ4着以下（N=83勝率2%回収10%→廃止） |
-| 前走好走 | +2 | 前走1〜6番人気かつ1〜3着（horse_db使用） |
-| 同距離前走（±50m） | +1 | horse_db の prev_dist と当日距離を比較 |
+| 前走好走 | +2 | 前走1〜6番人気かつ1〜3着 |
+| 同距離前走（±50m） | +1 | 前走の距離と当日距離を比較 |
 
 - 表の N・回収率は、すべて修正前（馬番の誤り）のデータで出した数字。修正後のデータで確かめ直していない。
 - 最高合計: 名目 **13pt**（出走馬分析は上限なしのため固定上限ではない。実データの最高は13pt）。
@@ -326,12 +326,14 @@ Issue管理・スケジュール・担当割当は `docs/betting_workflow_issues
 
 ---
 
-## horse_db.json キャッシュ
+## 前走データ（2026-11-05〜。設計は docs/prev_cache_fix_plan_202611.md）
 
-- キー: horse_id（netkeiba の馬ID）。有効期限 28日（`HORSE_DB_STALE_DAYS`）
-- 内容: `prev_date, prev_pop, prev_rank, prev_idx, prev_idx_m, prev_dist, scraped_at`
-- git にコミットして蓄積する（初回は scrape_prev_data.py で全馬取得 約30分）
-- 前走タイム指数の列が正しいかは未確認（残りのタスク1）
+- 採点するレースの全馬（取消・除外を除く）の馬ページを、その対象日のために取る。記録は `output/{date}/prev_inputs/{実行ID}.json`（正本）。
+- 各馬の状態: 取れた／前走なし／指数が空（着順が数字でない。競走中止など）／取得失敗／期限後の取得。指数の「**」は取得失敗。
+- 再利用は「同じ対象日・同じ取得の版・期限（対象日 00:00 日本時間）より前・取得失敗でない」値だけ。失敗しても古い値に戻らない。
+- 候補の前走が取れていないレースは `race_quality_issues()` で問題ありになり、買い目を作らず、サイトでは理由を出して🔥・最注目馬から外す。
+- `horse_db.json`（旧キャッシュ。28日有効・対象日なし）は採点に使わない。研究用スクリプトの一部はまだ読む。
+- 2026-11-05 の確認: ログアウト状態の馬ページは、最新の行より前の指数が「**」（プレミアム登録の案内へのリンク）になる。ログインした状態では全行が数字。
 
 ---
 
