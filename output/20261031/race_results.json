@@ -16,7 +16,10 @@
       "time": "1:33.2",
       "margin": "",
       "last3f": 33.9,
-      "corners": [],
+      "corners": [
+        3,
+        3
+      ],
       "sex_age": "牡3",
       "gate": "7",
       "sire": "ミスターメロディ",
@@ -38,7 +41,10 @@
       "time": "1:33.3",
       "margin": "",
       "last3f": 34.1,
-      "corners": [],
+      "corners": [
+        3,
+        3
+      ],
       "sex_age": "牝4",
       "gate": "3",
       "sire": "レイデオロ",
@@ -60,7 +66,10 @@
       "time": "1:33.4",
       "margin": "",
       "last3f": 33.7,
-      "corners": [],
+      "corners": [
+        8,
+        8
+      ],
       "sex_age": "セ5",
       "gate": "1",
       "sire": "イスラボニータ",
@@ -82,7 +91,10 @@
       "time": "1:33.5",
       "margin": "",
       "last3f": 34.0,
-      "corners": [],
+      "corners": [
+        6,
+        6
+      ],
       "sex_age": "セ5",
       "gate": "5",
       "sire": "キズナ",
@@ -104,7 +116,10 @@
       "time": "1:33.6",
       "margin": "",
       "last3f": 34.4,
-      "corners": [],
+      "corners": [
+        3,
+        3
+      ],
       "sex_age": "牡3",
       "gate": "8",
       "sire": "フォーウィールドライブ",
@@ -126,7 +141,10 @@
       "time": "1:34.0",
       "margin": "",
       "last3f": 34.1,
-      "corners": [],
+      "corners": [
+        10,
+        10
+      ],
       "sex_age": "牡6",
       "gate": "6",
       "sire": "ダノンバラード",
@@ -148,7 +166,10 @@
       "time": "1:34.1",
       "margin": "",
       "last3f": 35.1,
-      "corners": [],
+      "corners": [
+        1,
+        1
+      ],
       "sex_age": "牡3",
       "gate": "4",
       "sire": "ロードカナロア",
@@ -170,7 +191,10 @@
       "time": "1:34.1",
       "margin": "",
       "last3f": 35.1,
-      "corners": [],
+      "corners": [
+        2,
+        2
+      ],
       "sex_age": "牡4",
       "gate": "7",
       "sire": "ブリックスアンドモルタル",
@@ -192,7 +216,10 @@
       "time": "1:34.7",
       "margin": "",
       "last3f": 35.0,
-      "corners": [],
+      "corners": [
+        8,
+        8
+      ],
       "sex_age": "牝5",
       "gate": "2",
       "sire": "サトノアラジン",
@@ -214,7 +241,10 @@
       "time": "1:34.7",
       "margin": "",
       "last3f": 35.2,
-      "corners": [],
+      "corners": [
+        7,
+        6
+      ],
       "sex_age": "牡5",
       "gate": "8",
       "sire": "ホークビル",
@@ -238,7 +268,11 @@
       "time": "1:47.7",
       "margin": "",
       "last3f": 33.3,
-      "corners": [],
+      "corners": [
+        2,
+        2,
+        2
+      ],
       "sex_age": "牡3",
       "gate": "6",
       "sire": "ロードカナロア",
@@ -260,7 +294,11 @@
       "time": "1:47.8",
       "margin": "",
       "last3f": 33.1,
-      "corners": [],
+      "corners": [
+        8,
+        6,
+        6
+      ],
       "sex_age": "牝4",
       "gate": "7",
       "sire": "モーリス",
@@ -282,7 +320,11 @@
       "time": "1:47.9",
       "margin": "",
       "last3f": 33.3,
-      "corners": [],
+      "corners": [
+        4,
+        3,
+        4
+      ],
       "sex_age": "牡3",
       "gate": "6",
       "sire": "サートゥルナーリア",
@@ -304,7 +346,11 @@
       "time": "1:48.0",
       "margin": "",
       "last3f": 33.5,
-      "corners": [],
+      "corners": [
+        5,
+        3,
+        2
+      ],
       "sex_age": "牡3",
       "gate": "8",
       "sire": "レイデオロ",
@@ -326,7 +372,11 @@
       "time": "1:48.2",
       "margin": "",
       "last3f": 32.9,
-      "corners": [],
+      "corners": [
+        11,
+        11,
+        11
+      ],
       "sex_age": "牡3",
       "gate": "5",
       "sire": "Lucky Vega",
@@ -348,7 +398,11 @@
       "time": "1:48.2",
       "margin": "",
       "last3f": 33.4,
-      "corners": [],
+      "corners": [
+        6,
+        7,
+        6
+      ],
       "sex_age": "牝3",
       "gate": "1",
       "sire": "モズアスコット",
@@ -370,7 +424,11 @@
       "time": "1:48.3",
       "margin": "",
       "last3f": 33.4,
-      "corners": [],
+      "corners": [
+        6,
+        7,
+        8
+      ],
       "sex_age": "牡3",
       "gate": "7",
       "sire": "ダノンキングリー",
@@ -392,7 +450,11 @@
       "time": "1:48.4",
       "margin": "",
       "last3f": 33.8,
-      "corners": [],
+      "corners": [
+        3,
+        3,
+        4
+      ],
       "sex_age": "牡3",
       "gate": "3",
       "sire": "レイデオロ",
@@ -414,7 +476,11 @@
       "time": "1:48.7",
       "margin": "",
       "last3f": 33.6,
-      "corners": [],
+      "corners": [
+        8,
+        10,
+        10
+      ],
       "sex_age": "牡3",
       "gate": "2",
       "sire": "レイデオロ",
@@ -436,7 +502,11 @@
       "time": "1:48.7",
       "margin": "",
       "last3f": 33.7,
-      "corners": [],
+      "corners": [
+        8,
+        9,
+        9
+      ],
       "sex_age": "牡3",
       "gate": "4",
       "sire": "シルバーステート",
@@ -458,7 +528,11 @@
       "time": "1:48.7",
       "margin": "",
       "last3f": 34.4,
-      "corners": [],
+      "corners": [
+        1,
+        1,
+        1
+      ],
       "sex_age": "牡3",
       "gate": "5",
       "sire": "ダノンバラード",
@@ -480,7 +554,11 @@
       "time": "1:50.4",
       "margin": "",
       "last3f": 34.8,
-      "corners": [],
+      "corners": [
+        12,
+        12,
+        12
+      ],
       "sex_age": "牡3",
       "gate": "8",
       "sire": "コントレイル",
@@ -504,7 +582,11 @@
       "time": "1:58.5",
       "margin": "",
       "last3f": 33.9,
-      "corners": [],
+      "corners": [
+        8,
+        8,
+        8
+      ],
       "sex_age": "牝3",
       "gate": "5",
       "sire": "コントレイル",
@@ -526,7 +608,11 @@
       "time": "1:58.6",
       "margin": "",
       "last3f": 33.8,
-      "corners": [],
+      "corners": [
+        9,
+        11,
+        11
+      ],
       "sex_age": "牝4",
       "gate": "8",
       "sire": "サートゥルナーリア",
@@ -548,7 +634,11 @@
       "time": "1:58.6",
       "margin": "",
       "last3f": 33.9,
-      "corners": [],
+      "corners": [
+        9,
+        9,
+        8
+      ],
       "sex_age": "牝4",
       "gate": "8",
       "sire": "ブリックスアンドモルタル",
@@ -570,7 +660,11 @@
       "time": "1:58.7",
       "margin": "",
       "last3f": 34.8,
-      "corners": [],
+      "corners": [
+        1,
+        1,
+        1
+      ],
       "sex_age": "牝3",
       "gate": "3",
       "sire": "ダノンスマッシュ",
@@ -592,7 +686,11 @@
       "time": "1:59.2",
       "margin": "",
       "last3f": 35.0,
-      "corners": [],
+      "corners": [
+        4,
+        4,
+        3
+      ],
       "sex_age": "牝4",
       "gate": "2",
       "sire": "ドゥラメンテ",
@@ -614,7 +712,11 @@
       "time": "1:59.2",
       "margin": "",
       "last3f": 35.0,
-      "corners": [],
+      "corners": [
+        2,
+        3,
+        3
+      ],
       "sex_age": "牝3",
       "gate": "6",
       "sire": "コントレイル",
@@ -636,7 +738,11 @@
       "time": "1:59.7",
       "margin": "",
       "last3f": 35.1,
-      "corners": [],
+      "corners": [
+        11,
+        9,
+        8
+      ],
       "sex_age": "牝4",
       "gate": "4",
       "sire": "ブリックスアンドモルタル",
@@ -658,7 +764,11 @@
       "time": "1:59.8",
       "margin": "",
       "last3f": 35.3,
-      "corners": [],
+      "corners": [
+        6,
+        5,
+        5
+      ],
       "sex_age": "牝3",
       "gate": "7",
       "sire": "シルバーステート",
@@ -680,7 +790,11 @@
       "time": "2:00.3",
       "margin": "",
       "last3f": 35.9,
-      "corners": [],
+      "corners": [
+        6,
+        5,
+        5
+      ],
       "sex_age": "牝3",
       "gate": "1",
       "sire": "シルバーステート",
@@ -702,7 +816,11 @@
       "time": "2:00.5",
       "margin": "",
       "last3f": 36.1,
-      "corners": [],
+      "corners": [
+        5,
+        5,
+        5
+      ],
       "sex_age": "牝3",
       "gate": "6",
       "sire": "シルバーステート",
@@ -724,7 +842,11 @@
       "time": "2:00.6",
       "margin": "",
       "last3f": 36.6,
-      "corners": [],
+      "corners": [
+        2,
+        2,
+        2
+      ],
       "sex_age": "牝3",
       "gate": "7",
       "sire": "エピファネイア",
@@ -748,7 +870,10 @@
       "time": "1:25.0",
       "margin": "",
       "last3f": 36.0,
-      "corners": [],
+      "corners": [
+        2,
+        3
+      ],
       "sex_age": "牡3",
       "gate": "5",
       "sire": "ミスチヴィアスアレックス",
@@ -770,7 +895,10 @@
       "time": "1:25.1",
       "margin": "",
       "last3f": 35.3,
-      "corners": [],
+      "corners": [
+        11,
+        13
+      ],
       "sex_age": "牝3",
       "gate": "4",
       "sire": "パイロ",
@@ -792,7 +920,10 @@
       "time": "1:25.2",
       "margin": "",
       "last3f": 35.6,
-      "corners": [],
+      "corners": [
+        13,
+        11
+      ],
       "sex_age": "牝4",
       "gate": "7",
       "sire": "ナダル",
@@ -814,7 +945,10 @@
       "time": "1:25.2",
       "margin": "",
       "last3f": 36.3,
-      "corners": [],
+      "corners": [
+        2,
+        2
+      ],
       "sex_age": "牡4",
       "gate": "3",
       "sire": "モーニン",
@@ -836,7 +970,10 @@
       "time": "1:25.3",
       "margin": "",
       "last3f": 35.9,
-      "corners": [],
+      "corners": [
+        7,
+        9
+      ],
       "sex_age": "牝5",
       "gate": "4",
       "sire": "ホッコータルマエ",
@@ -858,7 +995,10 @@
       "time": "1:25.5",
       "margin": "",
       "last3f": 36.2,
-      "corners": [],
+      "corners": [
+        7,
+        7
+      ],
       "sex_age": "牡6",
       "gate": "8",
       "sire": "スクリーンヒーロー",
@@ -880,7 +1020,10 @@
       "time": "1:25.6",
       "margin": "",
       "last3f": 36.3,
-      "corners": [],
+      "corners": [
+        7,
+        7
+      ],
       "sex_age": "牡6",
       "gate": "6",
       "sire": "トーホウジャッカル",
@@ -902,7 +1045,10 @@
       "time": "1:25.7",
       "margin": "",
       "last3f": 36.6,
-      "corners": [],
+      "corners": [
+        4,
+        4
+      ],
       "sex_age": "牡3",
       "gate": "2",
       "sire": "ディーマジェスティ",
@@ -924,7 +1070,10 @@
       "time": "1:25.9",
       "margin": "",
       "last3f": 36.8,
-      "corners": [],
+      "corners": [
+        4,
+        4
+      ],
       "sex_age": "牝4",
       "gate": "8",
       "sire": "シニスターミニスター",
@@ -946,7 +1095,10 @@
       "time": "1:25.9",
       "margin": "",
       "last3f": 36.7,
-      "corners": [],
+      "corners": [
+        4,
+        4
+      ],
       "sex_age": "牝6",
       "gate": "5",
       "sire": "リオンディーズ",
@@ -968,7 +1120,10 @@
       "time": "1:26.2",
       "margin": "",
       "last3f": 37.4,
-      "corners": [],
+      "corners": [
+        1,
+        1
+      ],
       "sex_age": "牡5",
       "gate": "1",
       "sire": "ルーラーシップ",
@@ -990,7 +1145,10 @@
       "time": "1:26.3",
       "margin": "",
       "last3f": 36.8,
-      "corners": [],
+      "corners": [
+        7,
+        9
+      ],
       "sex_age": "牝5",
       "gate": "7",
       "sire": "オルフェーヴル",
@@ -1012,7 +1170,10 @@
       "time": "1:26.7",
       "margin": "",
       "last3f": 37.0,
-      "corners": [],
+      "corners": [
+        11,
+        11
+      ],
       "sex_age": "牡6",
       "gate": "6",
       "sire": "イスラボニータ",
