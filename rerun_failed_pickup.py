@@ -2,6 +2,14 @@
 """
 失敗したレースのみ再ピックアップして pickup_scores.json にマージ。
 usage: python3 rerun_failed_pickup.py 20260412
+
+再実行の対象（needs_rerun）:
+- レースの error
+- 候補全員0点かつ人気が空（出馬表が読めていない）
+- 前走データ: 候補または比較相手に「取得失敗」、候補に「入力が無い」（docs/prev_cache_fix_plan_202611.md 案D）
+  指数の「**」（ログインしていない状態の表示）は取得失敗として扱うので、対象になる（2026-11-05 決定）。
+1レース分の処理は run_pickup_all.score_race と同じ（同じ処理を1か所にまとめる）。
+前走データは、同じ対象日のために取った成功分（prev_inputs.reusable_entries）を再利用し、失敗分だけ取り直す。
 """
 
 import sys
@@ -13,18 +21,35 @@ from pathlib import Path
 import pandas as pd
 from playwright.sync_api import sync_playwright
 
-from scraper import load_env, load_cookies, get_race_ids, human_sleep, human_browse, _random_scroll
-from data_quality import build_quality, load_index_sources
-from race_pickup import scrape_shutuba, scrape_data_top, score_horses, active_horse_ids, COLLECTOR_VERSION
-from run_pickup_all import (
-    load_horse_db, load_horse_style, save_horse_db,
-    is_cache_fresh, _prev_is_valid, scrape_horse_prev_page,
-)
+from scraper import load_env, load_cookies, get_race_ids
+from data_quality import load_index_sources, race_quality_issues
+from race_pickup import SCORING_VERSION
+from prev_inputs import FAILED, RunRecord, reusable_entries
+from run_pickup_all import load_horse_style, score_race, write_prev_data_snapshot
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).parent
+
+
+def needs_rerun(rdata: dict) -> list:
+    """再実行が必要な理由のリスト（空なら不要）。点数からは推測せず、記録の状態で判断する"""
+    reasons = []
+    if "error" in rdata:
+        return [f"採点エラー: {rdata['error']}"]
+    if rdata.get("pop_map") is not None and len(rdata.get("pop_map", {})) == 0:
+        scored = rdata.get("scored", [])
+        if scored and all(h.get("score", 0) == 0 for h in scored):
+            reasons.append("候補全員0点かつ人気が空")
+    st = (rdata.get("quality") or {}).get("prev_status") or {}
+    bad = {n: s for n, s in (st.get("candidates") or {}).items() if s in (FAILED, "入力が無い")}
+    if bad:
+        reasons.append(f"候補の前走データ: {bad}")
+    n_fail = (st.get("others") or {}).get(FAILED, 0)
+    if n_fail:
+        reasons.append(f"比較相手の前走データの取得失敗 {n_fail}頭")
+    return reasons
 
 
 def main():
@@ -39,21 +64,12 @@ def main():
     with open(pickup_path, encoding="utf-8") as f:
         existing = json.load(f)
 
-    # 失敗レースを特定: error あり、または scored 全員 0pt かつ pop_map 空
-    failed_labels = []
-    for label, rdata in existing.get("races", {}).items():
-        if "error" in rdata:
-            failed_labels.append(label)
-        elif rdata.get("pop_map") is not None and len(rdata.get("pop_map", {})) == 0:
-            scored = rdata.get("scored", [])
-            if scored and all(h.get("score", 0) == 0 for h in scored):
-                failed_labels.append(label)
-
-    if not failed_labels:
+    failed = {label: r for label, rdata in existing.get("races", {}).items() if (r := needs_rerun(rdata))}
+    if not failed:
         logger.info("再取得が必要なレースはありません")
         return
-
-    logger.info(f"再取得対象: {sorted(failed_labels)}")
+    for label, r in sorted(failed.items()):
+        logger.info(f"再取得対象: {label} {r}")
 
     csv_path = out_dir / "全場_3指数重複馬.csv"
     if not csv_path.exists():
@@ -61,10 +77,14 @@ def main():
         sys.exit(1)
 
     triple_df = pd.read_csv(csv_path, encoding="utf-8-sig")
-    horse_db = load_horse_db()
     horse_style_db = load_horse_style()
+    index_sources = load_index_sources(date)
+    reusable = reusable_entries(out_dir, date)
+    logger.info(f"前走データ: 再利用できる値 {len(reusable)}頭")
+    record = RunRecord(out_dir, date, "rerun_failed_pickup.py", SCORING_VERSION)
+    logger.info(f"前走データの記録: {record.path}")
 
-    email, password = load_env()
+    load_env()
 
     with sync_playwright() as p:
         browser = p.chromium.launch(
@@ -91,157 +111,54 @@ def main():
             browser.close()
             sys.exit(1)
 
-        # レース一覧取得
         races_all = get_race_ids(page, date)
         race_id_map = {r["label"]: r["race_id"] for r in races_all}
         logger.info(f"レース一覧: {len(race_id_map)}レース取得")
 
-        race_groups = list(triple_df.groupby(["開催場", "レース番号"]))
-
-        for (venue, race_num_raw), group in race_groups:
+        for (venue, race_num_raw), group in triple_df.groupby(["開催場", "レース番号"]):
             race_num = race_num_raw.strip()
             race_label = f"{venue}{race_num}"
-
-            if race_label not in failed_labels:
+            if race_label not in failed:
                 continue
-
             race_id = race_id_map.get(race_label)
             if not race_id:
                 logger.warning(f"{race_label}: race_id が見つかりません (スキップ)")
                 continue
-
             logger.info(f"再取得中: {race_label} ({race_id})")
-            triple_horses = group.to_dict(orient="records")
-
-            try:
-                shutuba_data = scrape_shutuba(page, race_id)
-
-                if not shutuba_data.get("horse_map"):
-                    logger.warning(f"  {race_label}: shutuba 空 → ページ再作成してリトライ")
-                    page.close()
-                    page = context.new_page()
-                    human_sleep(3.0, 6.0)
-                    shutuba_data = scrape_shutuba(page, race_id)
-                    if not shutuba_data.get("horse_map"):
-                        logger.error(f"  {race_label}: リトライ後も空 (スキップ)")
-                        continue
-
-                # 馬番↔馬ID対応が検証できないレースはスコアリングしない（既存の error エントリを残す）
-                if shutuba_data.get("map_issues"):
-                    logger.warning(f"  {race_label}: 出馬表の対応検証NG {shutuba_data['map_issues']} → 待機して再取得")
-                    human_sleep(8.0, 15.0)
-                    shutuba_data = scrape_shutuba(page, race_id)
-                if shutuba_data.get("map_issues"):
-                    logger.error(f"  {race_label}: 出馬表の対応検証NG {shutuba_data['map_issues']} (スキップ)")
-                    continue
-
-                human_sleep(4.0, 10.0)
-                data_top_data = scrape_data_top(page, race_id, shutuba_data["horse_map"])
-                human_sleep(4.0, 10.0)
-
-                # 前走データ
-                horse_id_map = shutuba_data.get("horse_id_map", {})
-                for num, hid in horse_id_map.items():
-                    if hid and (hid not in horse_db
-                                or not is_cache_fresh(horse_db[hid], date)
-                                or not _prev_is_valid(horse_db[hid], date)):
-                        try:
-                            prev = scrape_horse_prev_page(page, hid, date)
-                            prev["scraped_at"] = date
-                            horse_db[hid] = prev
-                            human_sleep(2.0, 6.0)
-                        except Exception as e:
-                            logger.warning(f"  前走データ取得失敗 {hid}: {e}")
-
-                race_max_prev_idx = None
-                prev_idxs = []
-                for hid in active_horse_ids(shutuba_data).values():  # 取消・除外は比較対象外
-                    if hid in horse_db and _prev_is_valid(horse_db[hid], date):
-                        try:
-                            prev_idxs.append(float(horse_db[hid].get("prev_idx", "")))
-                        except (ValueError, TypeError):
-                            pass
-                if prev_idxs:
-                    race_max_prev_idx = max(prev_idxs)
-
-                race_dist = shutuba_data.get("race_dist")
-                scored = score_horses(triple_horses, shutuba_data, data_top_data,
-                                      prev_db=horse_db, race_max_prev_idx=race_max_prev_idx,
-                                      race_date=date, horse_style_db=horse_style_db,
-                                      race_dist=race_dist,
-                                      predicted_pace=shutuba_data.get("predicted_pace"))
-
-                has_any_bonus = any(h["score"] > 0 for h in scored)
-                advice = None
-                if not has_any_bonus:
-                    advice = "3指数重複馬全員のボーナス点が0です。他の指標を参考にしてください。"
-
-                existing["races"][race_label] = {
-                    "race_id": race_id,
-                    "venue": venue,
-                    "race_num": race_num,
-                    "scored": scored,
-                    "pop_map": shutuba_data.get("pop_map", {}),
-                    "odds_map": shutuba_data.get("odds_map", {}),
-                    "odds_status": shutuba_data.get("odds_status", {}),
-                    "scratched_nums": shutuba_data.get("scratched_nums", {}),
-                    "horse_name_full": shutuba_data.get("horse_name_full", {}),
-                    "horse_id_map": horse_id_map,  # 後日の照合・prev_data.json スナップショット用
-                    "collector_version": COLLECTOR_VERSION,
-                    "quality": build_quality(COLLECTOR_VERSION, load_index_sources(date), race_label),
-                    "position_nums": shutuba_data["position_nums"],
-                    "top3_hits": shutuba_data["top3_hits"],
-                    "pickup_nums": data_top_data["pickup_nums"],
-                    "analysis_hits": data_top_data["analysis_hits"],
-                    "predicted_pace": shutuba_data.get("predicted_pace"),
-                    "race_dist": shutuba_data.get("race_dist"),
-                    "advice": advice,
-                }
-
-                max_score = max((h["score"] for h in scored), default=0)
-                top_horse = next((h["馬名"] for h in scored if h["score"] == max_score), "")
-                logger.info(f"  → {len(scored)}頭 最高{max_score}pt ({top_horse})")
-
-            except Exception as e:
-                logger.error(f"{race_label} 処理失敗: {e}")
-                try:
-                    page.close()
-                except Exception:
-                    pass
-                page = context.new_page()
+            result, page, blocked = score_race(page, context, date, race_label, race_id, venue, race_num,
+                                               group.to_dict(orient="records"), index_sources, reusable,
+                                               record, horse_style_db)
+            if blocked:
+                break
+            if "error" in result and "error" not in existing["races"].get(race_label, {}):
+                # 前は採点できていたレースが今回エラーなら、前の結果を残す（エラーで上書きしない）
+                logger.error(f"  {race_label}: 再取得がエラー（{result['error']}）→ 前の結果を残す")
+                continue
+            existing["races"][race_label] = result
 
         browser.close()
 
-    save_horse_db(horse_db)
-    existing["generated_at"] = datetime.now().isoformat()
-    with open(pickup_path, "w", encoding="utf-8") as f:
-        json.dump(existing, f, ensure_ascii=False, indent=2, default=str)
+    record.close()
+    for label in failed:
+        rdata = existing["races"].get(label)
+        if isinstance(rdata, dict) and "error" not in rdata:
+            rdata["quality_issues"] = race_quality_issues(rdata)
 
+    existing["generated_at"] = datetime.now().isoformat()
+    tmp = pickup_path.with_suffix(".json.tmp")
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(existing, f, ensure_ascii=False, indent=2, default=str)
+    tmp.replace(pickup_path)
     logger.info(f"マージ保存完了: {pickup_path}")
 
-    # per-date prev_data.json スナップショット（既存があればマージして上書き）
-    prev_data_path = pickup_path.parent / "prev_data.json"
-    snapshot = {}
-    if prev_data_path.exists():
-        with open(prev_data_path, encoding="utf-8") as f:
-            snapshot = json.load(f)
-    all_hids = set()
-    for rdata in existing["races"].values():
-        if isinstance(rdata, dict):
-            all_hids.update(v for v in rdata.get("horse_id_map", {}).values() if v)
-    # 既存スナップショット（当日時点の正データ）を優先し、欠けている馬のみ追加
-    for hid in all_hids:
-        if hid in horse_db and hid not in snapshot:
-            snapshot[hid] = horse_db[hid]
-    with open(prev_data_path, "w", encoding="utf-8") as f:
-        json.dump(snapshot, f, ensure_ascii=False, indent=2)
-    logger.info(f"prev_data.json 保存: {len(snapshot)}頭")
+    n_snap = write_prev_data_snapshot(out_dir, existing.get("races", {}))
+    logger.info(f"prev_data.json 保存（記録から作った派生ファイル）: {n_snap}頭")
 
-    # サマリー
-    for label in sorted(failed_labels):
+    for label in sorted(failed):
         rdata = existing["races"].get(label, {})
-        if "error" in rdata:
-            logger.info(f"  {label}: まだエラー")
+        left = needs_rerun(rdata)
+        if left:
+            logger.info(f"  {label}: まだ再実行が必要 {left}")
         else:
             for h in rdata.get("scored", []):
                 logger.info(f"  {label}: {h['馬名']} {h['score']}pt (人気{h.get('today_pop','')})")

@@ -9,10 +9,16 @@ pickup_scores.json の各レースに "quality" を保存し、研究・閾値�
 - candidate_rule: 3指数の候補の選び方（scraper.CANDIDATE_RULE_VERSION）。無ければ 2026-11-02 の修正前
                  （近走平均の「*」付きの値を外し、同じ値の馬を並び順で切っていた。docs/index_top3_definition_202611.md）
 - rank_notes:    ページの順位の食い違い（netkeiba のページ自体の不整合。記録のみ）
+- prev_fetch:    前走データの取り方（prev_inputs.PREV_FETCH_VERSION）。無ければ 2026-11-05 の修正前
+                 （別の対象日のために取った前走を使い回し、比較相手は取得日を見ないキャッシュ。docs/prev_cache_fix_plan_202611.md）
+- prev_inputs_run: 採点に使った前走データの記録（output/{date}/prev_inputs/{実行ID}.json）
+- prev_status:   候補ごとの前走データの状態・比較相手の状態ごとの頭数・前走指数レース内1位の判定（判定／保留）
 - 無効化:        output/{date}/invalidated.json に載ったレース（買い目・採点ファイルは書き換えない）
 """
 import json
 from pathlib import Path
+
+from prev_inputs import USABLE_STATUSES as USABLE_PREV_STATUSES
 
 OUTPUT_DIR = Path(__file__).parent / "output"
 INDEX_SOURCES_FILE = "index_sources.json"
@@ -36,10 +42,14 @@ def load_index_sources(date: str, output_dir: Path = None) -> dict:
     return _load((output_dir or OUTPUT_DIR) / date / INDEX_SOURCES_FILE) or {}
 
 
-def build_quality(collector_version: str, index_sources: dict, label: str) -> dict:
-    """採点時に pickup_scores.json の各レースへ保存する quality"""
+def build_quality(collector_version: str, index_sources: dict, label: str, prev: dict = None) -> dict:
+    """採点時に pickup_scores.json の各レースへ保存する quality。prev は前走データの版・記録・状態"""
     race = index_sources.get("races", {}).get(label, {})
+    prev = prev or {}
     return {
+        "prev_fetch": prev.get("prev_fetch"),
+        "prev_inputs_run": prev.get("prev_inputs_run"),
+        "prev_status": prev.get("prev_status"),
         "umaban": collector_version,
         "index_reader": index_sources.get("index_reader_version") if race else None,
         "index_sources": race.get("modes", {}),
@@ -67,4 +77,11 @@ def race_quality_issues(rdata: dict, invalid_reason: str = None) -> list:
             issues.append(f"指数が取れていない種類がある: {bad}")
     if not q.get("candidate_rule"):
         issues.append("候補の選び方が修正前（「*」付きを外す・同じ値は並び順。2026-11-02 より前）")
+    if not q.get("prev_fetch"):
+        issues.append("前走データの取り方が修正前（2026-11-05 より前）")
+    else:
+        bad = {n: s for n, s in ((q.get("prev_status") or {}).get("candidates") or {}).items()
+               if s not in USABLE_PREV_STATUSES}
+        if bad:
+            issues.append(f"候補の前走データが取れていない: {bad}")
     return issues
