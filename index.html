@@ -539,6 +539,13 @@ function render(date, cfg) {
 
 
 // ── 最注目馬 + 次点 ──────────────────────────────────────────
+// 品質に問題があるレース（採点時に data_quality.race_quality_issues で判定し quality_issues に記録したもの）。
+// 2026-11-05 決定: 理由を表示し、最注目馬・🔥から外す。quality_issues が無い（それより前の）データは今までどおり表示する。
+function raceIssues(rdata) {
+  const q = rdata?.quality_issues;
+  return Array.isArray(q) && q.length ? q : null;
+}
+
 function renderTopPickup() {
   if (!currentPickup?.races) return '';
 
@@ -552,6 +559,7 @@ function renderTopPickup() {
 
   const top = [], next = [];
   for (const [label, rdata] of Object.entries(currentPickup.races)) {
+    if (raceIssues(rdata)) continue;  // 品質に問題があるレースは最注目馬・次点に出さない
     for (const h of (rdata.scored || [])) {
       const e = {...h, race_label: label};
       if (h.score >= EV_THRESHOLD)           top.push(e);
@@ -669,16 +677,22 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
   const distBadge = dist ? `<span class="dist-badge">${dist}</span>` : '';
   const paceBadge = pace ? `<span class="pace-badge pace-${pace}">${pace}</span>` : '';
 
+  const issues = raceIssues(rdata);
+  const fireOk = !issues;  // 品質に問題があるレースは🔥を付けない
+  const issueBox = issues
+    ? `<div style="background:#fff3cd;color:#7a5b00;font-size:0.72rem;padding:6px 14px;border-bottom:1px solid #f0e0a0">⚠️ データに問題があるため、おすすめ・🔥の対象外: ${issues.map(x => String(x).replace(/[<>&]/g, '')).join(' / ')}</div>`
+    : '';
+
   // スコア降順でソート（0ptは非表示）
   const sortedScored = [...scored].filter(h => h.score > 0).sort((a,b) => b.score - a.score);
 
   const horseRows = sortedScored.map(h => {
     const pop = parseInt(h.today_pop || '0');
-    const isAnaba = h.score >= EV_THRESHOLD && pop >= 5;
+    const isAnaba = fireOk && h.score >= EV_THRESHOLD && pop >= 5;
     const popStr = h.today_pop ? `<span class="pop-badge${isAnaba?' low':''}" style="font-size:0.7rem">${h.today_pop}人気</span>` : '';
-    const evBadge = h.score >= EV_THRESHOLD
+    const evBadge = fireOk && h.score >= EV_THRESHOLD
       ? `<span style="background:#e8a000;color:white;border-radius:3px;padding:0 5px;font-size:0.65rem;font-weight:700">🔥</span>` : '';
-    const sc = h.score >= EV_THRESHOLD ? '' : h.score >= 3 ? 'mid' : 'low';
+    const sc = (fireOk && h.score >= EV_THRESHOLD) ? '' : h.score >= 3 ? 'mid' : 'low';
     const factors = (h.breakdown||[]).map(b=>`<span${b.pts < 0 ? ' class="minus"' : ''}>${b.label}</span>`).join('');
     const raceNum = raceNumOf(label);
     const sanko = raceNum >= 1 && raceNum <= 3 ? `<span class="sanko-badge">参考</span>` : '';
@@ -740,7 +754,7 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
       <div class="race-card-hd">
         <span>${rn}</span>${distBadge}${paceBadge}
       </div>
-      ${horseRows}${anabaRows}${singleRows}
+      ${issueBox}${horseRows}${anabaRows}${singleRows}
     </div>`;
 }
 
