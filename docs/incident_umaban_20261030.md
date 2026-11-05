@@ -240,7 +240,7 @@ netkeiba の出馬表に `td.Num` は存在せず、行の先頭は `td.Waku*`�
 15. ~~Git に入っていない `docs/sol_*.md` と `research/` の扱いを決める。~~ 2026-11-04 決定:
    - Git に入れる: `docs/sol_data_audit_20261028.md`・`docs/sol_stage_b_plan_20261028.md`（どちらも冒頭に撤回・未実施の注記あり。記録として残す）、監査のコード `research/audit_stage_a.py` と出力 `research/artifacts/audit_20261028/`（監査の文書が根拠として参照している）、取り直しを続ける `rescrape_full_batches.sh`。
    - Git に入れない: `rescrape_full.log`（実行ログ。`.gitignore` に追加）。
-   - Git に入れず保留: `research/data_check_20261103/prev_idx_check.py` と `results/prev_idx.json`（2026-11-03 23:15 の試作）。出力は 8,890頭中「不一致」5,300頭で、計画（`docs/prev_data_check_plan_202611.md`）の下調べの数字（1,877頭中97頭）と合わない。どの列を読んだかを確かめていないので、タスク1の証拠に使わない。タスク1の数え直しを承認後に行うときに、作り直すか消すかを決める。
+   - Git に入れず保留: `research/data_check_20261103/prev_idx_check.py` と `results/prev_idx.json`（2026-11-03 23:15 の試作）。出力は 8,890頭中「不一致」5,300頭で、計画（`docs/prev_data_check_plan_202611.md`）の下調べの数字（1,877頭中97頭）と合わない。どの列を読んだかを確かめていないので、タスク1の証拠に使わない。タスク1の数え直しを承認後に行うときに、作り直すか消すかを決める。2026-11-05 に消した（ユーザーの指示。証拠に使わない試作で、数え直しの最終版は別に作るため）。
    - `race_results_all.json`（取り直しの結果）は、取り直しが終わってからまとめて Git に入れる（タスク7・13）。
 
 ## データの取り直し・補完
