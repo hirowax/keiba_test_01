@@ -191,6 +191,10 @@ def main():
     cov = Counter((h["group"], "払戻あり" if "tansho" in h else "払戻なし") for h in horses if h["match"] == "一致")
     out["payout_coverage"] = {f"{g}・{c}": v for (g, c), v in sorted(cov.items())}
     print("払戻の記録があるレースの候補（頭数）:", out["payout_coverage"])
+    # 候補がいるのに払戻の記録が無いレース（回収率の前に払戻をそろえる対象。scrape_jra_payouts.py --races-file で使う）
+    out["races_without_payout"] = sorted({(h["date"], h["label"]) for h in horses
+                                          if h["match"] == "一致" and "tansho" not in h})
+    print("候補がいて払戻の記録が無いレース:", len(out["races_without_payout"]))
     out["run"] = run_record(args, days)
 
     if not args.counts_only:
