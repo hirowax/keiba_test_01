@@ -80,7 +80,7 @@ class ParseTest(unittest.TestCase):
 
     def test_unconfirmed_nonnumeric_rank_is_failed(self):
         """空・未知の着順は競走中止と確かめた状態ではないので取得失敗（2026-11-05 外部レビュー指摘）"""
-        for rank in ("", "不明", "取", "除", "失", "4(降)"):
+        for rank in ("", "不明", "取", "失", "4(降)"):   # 「除」は飛ばす表記（tests/test_prev_excluded.py）
             for idx in ("", "85"):
                 rows = [("2026/10/12", "202605040411", "9", rank, "芝1800", idx)]
                 e = pi.parse_results_table(table(rows), "20261107")
