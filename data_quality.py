@@ -13,6 +13,8 @@ pickup_scores.json の各レースに "quality" を保存し、研究・閾値�
                  （別の対象日のために取った前走を使い回し、比較相手は取得日を見ないキャッシュ。docs/prev_cache_fix_plan_202611.md）
 - prev_inputs_run: 採点に使った前走データの記録（output/{date}/prev_inputs/{実行ID}.json）
 - prev_status:   候補ごとの前走データの状態・比較相手の状態ごとの頭数・前走指数レース内1位の判定（判定／保留）
+- index_table_check: 指数の表ごとの、出馬表との照合（index_table_check.check_index_tables。2026-11-06〜）。
+                 前走データの取り方が修正後のデータで、記録が無い・照合で問題があれば、問題あり
 - 無効化:        output/{date}/invalidated.json に載ったレース（買い目・採点ファイルは書き換えない）
 """
 import json
@@ -42,11 +44,14 @@ def load_index_sources(date: str, output_dir: Path = None) -> dict:
     return _load((output_dir or OUTPUT_DIR) / date / INDEX_SOURCES_FILE) or {}
 
 
-def build_quality(collector_version: str, index_sources: dict, label: str, prev: dict = None) -> dict:
-    """採点時に pickup_scores.json の各レースへ保存する quality。prev は前走データの版・記録・状態"""
+def build_quality(collector_version: str, index_sources: dict, label: str, prev: dict = None,
+                  table_check: dict = None) -> dict:
+    """採点時に pickup_scores.json の各レースへ保存する quality。prev は前走データの版・記録・状態、
+    table_check は指数の表と出馬表の照合（index_table_check.check_index_tables の戻り値）"""
     race = index_sources.get("races", {}).get(label, {})
     prev = prev or {}
     return {
+        "index_table_check": table_check,
         "prev_fetch": prev.get("prev_fetch"),
         "prev_inputs_run": prev.get("prev_inputs_run"),
         "prev_status": prev.get("prev_status"),
@@ -84,4 +89,10 @@ def race_quality_issues(rdata: dict, invalid_reason: str = None) -> list:
                if s not in USABLE_PREV_STATUSES}
         if bad:
             issues.append(f"候補の前走データが取れていない: {bad}")
+        # 指数の表と出馬表の照合（2026-11-06〜）。記録が無いものも通さない
+        tc = q.get("index_table_check")
+        if not tc:
+            issues.append("指数の表と出馬表の照合の記録が無い")
+        elif not tc.get("ok"):
+            issues.append(f"指数の表が出馬表とそろわない: {tc.get('problems')}")
     return issues
