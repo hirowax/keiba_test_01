@@ -6,6 +6,10 @@ JRA公式サイト（jra.go.jp）からレース払戻金を取得する。
     python3 scrape_jra_payouts.py --all       # race_results.jsonがあり payouts_jra.json がない全日付（--max-days件まで）
     python3 scrape_jra_payouts.py --probe     # 月別ページを202510まで遡れるか確認
     python3 scrape_jra_payouts.py --verify    # 既知の払戻値と照合
+    python3 scrape_jra_payouts.py --races-file 一覧.json [--max-days N]
+        # 一覧（[[YYYYMMDD, レース名], ...]、または {"races_without_payout": [...]} の JSON）のレースのうち、
+        # payouts_jra.json に無いものだけを取り、既存のファイルに足す（既存のレースは書き換えない）。
+        # レースIDは race_results_all.json（全レースの取り直し）から引く（2026-11-06 追加。タスク7の回収率のため）
 
 重要: JRA公式のcnameパラメータ末尾のチェックサム（CS）は計算式が未解明。
 絶対に自前で生成せず、実際に取得したページからリンクとして収集したものだけを使うこと。
@@ -373,6 +377,69 @@ def scrape_date(date: str, cache: dict) -> dict:
     return payouts
 
 
+def fill_races(date: str, labels: list, cache: dict) -> dict:
+    """指定したレースのうち payouts_jra.json に無いものだけを取り、既存のファイルに足して保存する。
+    既存のレースの値は書き換えない。取れなかったレースは書かない（次の実行でまた対象になる）。
+    戻り値: {"added": [...], "failed": [...], "skipped_existing": [...], "no_race_id": [...]}"""
+    path = OUTPUT_DIR / date / "payouts_jra.json"
+    existing = {}
+    if path.exists():
+        with open(path, encoding="utf-8") as f:
+            existing = json.load(f)
+    allp = OUTPUT_DIR / date / "race_results_all.json"
+    race_ids = {}
+    if allp.exists():
+        with open(allp, encoding="utf-8") as f:
+            race_ids = {label: r.get("race_id") for label, r in json.load(f).get("races", {}).items()}
+    out = {"added": [], "failed": [], "skipped_existing": [], "no_race_id": []}
+    added = {}
+    consecutive_fail = 0
+    for label in labels:
+        if label in existing:
+            out["skipped_existing"].append(label)
+            continue
+        race_id = race_ids.get(label)
+        if not race_id:
+            out["no_race_id"].append(label)
+            continue
+        vv = race_id[4:6]
+        try:
+            sde_cname = ensure_sde_cname(date, vv, race_id, cache)
+            html = fetch_post(sde_cname)
+            if is_param_error_page(html):
+                cache.get("sde", {}).pop(race_id, None)
+                cache.get("srl", {}).pop(f"{date}_{vv}", None)
+                sde_cname = ensure_sde_cname(date, vv, race_id, cache)
+                html = fetch_post(sde_cname)
+                if is_param_error_page(html):
+                    raise RuntimeError("パラメータエラーページが返された（キャッシュ破棄後も失敗）")
+            result = parse_payouts(html)
+            if not result or "tansho" not in result:
+                raise RuntimeError(f"払戻を読めない（券種: {sorted(result)}）")
+        except Exception as e:
+            log.warning(f"{date} {label}: 払戻取得失敗 ({e})")
+            out["failed"].append(label)
+            consecutive_fail += 1
+            if consecutive_fail >= 5:
+                log.error(f"{date}: 連続{consecutive_fail}件失敗のため、この日の残りをやめる")
+                break
+            continue
+        consecutive_fail = 0
+        added[label] = result
+        out["added"].append(label)
+    if added:
+        merged = dict(existing)
+        for label, v in added.items():
+            assert label not in merged
+            merged[label] = v
+        tmp = path.with_name(f".{path.name}.{__import__('os').getpid()}.tmp")
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(merged, f, ensure_ascii=False, indent=2)
+        tmp.replace(path)
+        log.info(f"保存: {path}（{len(added)}レースを足した。既存{len(existing)}レースは変えていない）")
+    return out
+
+
 def write_payouts(date: str, payouts: dict) -> None:
     out_dir = OUTPUT_DIR / date
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -427,7 +494,8 @@ def main():
     parser.add_argument("--all", action="store_true", help="race_results.jsonがあり payouts_jra.json がない日付を処理")
     parser.add_argument("--probe", action="store_true", help=f"{PROBE_TARGET_MONTH}まで遡れるか確認")
     parser.add_argument("--verify", action="store_true", help="既知の払戻値と照合する")
-    parser.add_argument("--max-days", type=int, default=3, help="--all実行時の1回あたり処理日数上限（デフォルト3）")
+    parser.add_argument("--max-days", type=int, default=3, help="--all・--races-file の1回あたり処理日数上限（デフォルト3）")
+    parser.add_argument("--races-file", help="払戻を足すレースの一覧の JSON（[[日付, レース名], ...] か races_without_payout を持つ JSON）")
     args = parser.parse_args()
 
     cache = load_cache()
@@ -442,6 +510,40 @@ def main():
         save_cache(cache)
         log.info("検証結果: " + ("全件PASS" if ok else "一部FAIL"))
         sys.exit(0 if ok else 1)
+
+    if args.races_file:
+        with open(args.races_file, encoding="utf-8") as f:
+            data = json.load(f)
+        pairs = data.get("races_without_payout") if isinstance(data, dict) else data
+        by_date = {}
+        for d, label in pairs:
+            by_date.setdefault(d, []).append(label)
+        todo = {}
+        for d, labels in sorted(by_date.items()):
+            have = set()
+            pp = OUTPUT_DIR / d / "payouts_jra.json"
+            if pp.exists():
+                with open(pp, encoding="utf-8") as f:
+                    have = set(json.load(f))
+            left = [x for x in labels if x not in have]
+            if left:
+                todo[d] = left
+        target = list(todo)[: args.max_days]
+        log.info(f"一覧 {sum(len(v) for v in by_date.values())}レース・{len(by_date)}日のうち、"
+                 f"払戻が無いもの {sum(len(v) for v in todo.values())}レース・{len(todo)}日。今回 {len(target)}日を処理します")
+        summary = {}
+        for d in target:
+            summary[d] = fill_races(d, todo[d], cache)
+            save_cache(cache)
+        n_added = sum(len(v["added"]) for v in summary.values())
+        n_failed = sum(len(v["failed"]) for v in summary.values())
+        n_noid = sum(len(v["no_race_id"]) for v in summary.values())
+        log.info(f"完了: {len(target)}日。足した {n_added}レース・取れなかった {n_failed}・レースIDが無い {n_noid}。"
+                 f"残り {len(todo) - len(target)}日")
+        for d, v in summary.items():
+            if v["failed"] or v["no_race_id"]:
+                log.info(f"  {d}: 取れなかった {v['failed']} レースIDが無い {v['no_race_id']}")
+        return
 
     if args.all:
         candidates = sorted(
