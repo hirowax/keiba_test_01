@@ -8,7 +8,8 @@
   - tables/{日}_index_refetch.xlsx: 本番の scraper.write_excel と同じ形（シート＝開催場、「■ レース名  指数名」の行、見出しの行、
     馬の行、空行）。scraper.write_excel は output/ に書き、output/{日}/ の CSV を消すので呼ばない。黄色の塗りは付けない。
     入れる表は、順位の表ありのページと、全馬が値なしの表のページ（どちらも表がある）。新馬戦のページ（表なし）は入れない。
-  - tables/manifest.json: ページごとに、対象日・レースID・レース名・指数・ページの分類・取得日時・元ページ（gz と中の HTML）の
+  - tables/manifest.json（最初の書き出しの記録。作り直したときは上書きせず、manifest_regenerated_{日時}.json に書き、
+    元の記録とページ・分類・行の数が同じかを残す）: ページごとに、対象日・レースID・レース名・指数・ページの分類・取得日時・元ページ（gz と中の HTML）の
     sha256・xlsx に入れたか。書き出しと確認のコード（このスクリプト・scraper.py・index_table_check.py）の sha256、実行時の HEAD、
     作業ツリーの変更の有無、読み戻しの確認の結果。
 - ページの分類は check_six_days.py と同じ判定（scraper.parse_rank_html・_is_valid_speed_df、全馬が「-」で値なし、新馬戦の決まった文）。
@@ -29,6 +30,7 @@ import re
 import subprocess
 import sys
 from collections import Counter
+from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
@@ -189,7 +191,21 @@ def main():
                 "index_reader_version": scraper.INDEX_READER_VERSION, "python": sys.version.split()[0],
                 "pandas": pd.__version__},
         "page_kinds": dict(kinds), "read_back_check": check, "pages": pages}
-    (OUT / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
+    # 元の manifest.json（2026-11-07 の最初の書き出し）は上書きしない。作り直したときは日時付きの別ファイルに書き、
+    # 元の manifest との比較（元ページの sha256・読み戻しの確認の数）も残す（2026-11-07 外部レビューの勧め）
+    first = OUT / "manifest.json"
+    if first.exists():
+        orig = json.loads(first.read_text(encoding="utf-8"))
+        same_pages = [(p["page_gz"], p["page_gz_sha256"], p["kind"], p["in_xlsx"]) for p in orig["pages"]] == \
+            [(p["page_gz"], p["page_gz_sha256"], p["kind"], p["in_xlsx"]) for p in pages]
+        same_counts = all(orig["read_back_check"]["days"][d]["counts_page"] == check["days"][d]["counts_page"] for d in DAYS)
+        manifest["compared_with_first_manifest"] = {"pages_same": same_pages, "counts_same": same_counts}
+        print("元の manifest と比べて: ページと分類が同じ", same_pages, "・行の数が同じ", same_counts)
+        path = OUT / f"manifest_regenerated_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    else:
+        path = first
+    path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
+    print("記録:", path.relative_to(ROOT))
 
 
 if __name__ == "__main__":
