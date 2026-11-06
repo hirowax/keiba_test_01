@@ -9,7 +9,9 @@
 - 安全弁:
   - 開始時に1ページ目で「N位」の表が読めなければ止める（ログアウト・ブロック）。
   - IP ブロックの画面（scraper.is_ip_blocked）が出たら止める。
-  - 表が読めない・ランキング表でないページが続けて5回出たら止める。
+  - 順位の表が無いページのうち、新馬戦の決まった文（「新馬戦にはタイム指数はございません。」）があるものは正常として記録する。
+    理由不明の表なしのページが続けて5回出たら止める。順位の表をまだ1つも読めないうちに理由不明のページが出ても止める。
+    （2026-11-06 の最初の実行は、新馬戦2レースで「表なしが続けて5回」の条件に当たって止まった）
   - 表の馬の行が3行以下のページは、ログアウト時のプレビュー版の疑いとして止める（実際に3頭以下のレースは無い）。
 - 間隔: ページごとに 6〜12 秒、10レースごとに 90〜150 秒休む。
 
@@ -35,6 +37,7 @@ DAYS = ["20251102", "20260110", "20260111", "20260117", "20260118", "20260124"]
 MODES = ["average", "distance", "course"]
 SUB = ("5走前", "着度数")
 LOG = HERE / "refetch_log.jsonl"
+NEWCOMER_TEXT = "新馬戦にはタイム指数はございません"
 
 
 def log(**kw):
@@ -82,6 +85,7 @@ def main():
             raise SystemExit("cookies.json が無い")
         page = context.new_page()
         bad_streak = 0
+        seen_rank_table = False
         races_done = set()
         for i, (d, lab, rid, mode) in enumerate(todo):
             url = scraper.SPEED_URL.format(race_id=rid, mode=mode)
@@ -114,13 +118,20 @@ def main():
             with gzip.open(tmp, "wt", encoding="utf-8") as f:
                 f.write(html)
             tmp.replace(PAGES / d / f"{rid}_{mode}.html.gz")
-            log(event="page", date=d, label=lab, race_id=rid, mode=mode, rank_table=valid, horse_rows=n)
-            if i == 0 and not valid:
-                log(event="stop", reason="最初のページで順位の表が読めない（ログアウト・ブロックの疑い）")
+            # 表が無い理由: ページに決まった文があるものだけ正常として記録する（2026-11-06 の最初の実行で
+            # 新馬戦のページに「新馬戦にはタイム指数はございません。」とあるのを確かめた）。ほかは理由不明
+            no_table = None
+            if not valid:
+                no_table = "新馬戦（ページに指数なしの文）" if NEWCOMER_TEXT in html else "理由不明"
+            log(event="page", date=d, label=lab, race_id=rid, mode=mode, rank_table=valid, horse_rows=n,
+                no_table=no_table)
+            if not valid and no_table == "理由不明" and not seen_rank_table:
+                log(event="stop", reason="順位の表をまだ1つも読めないうちに、理由不明の表なしのページ（ログアウト・ブロックの疑い）")
                 break
-            bad_streak = 0 if valid else bad_streak + 1
+            seen_rank_table = seen_rank_table or valid
+            bad_streak = bad_streak + 1 if no_table == "理由不明" else 0
             if bad_streak >= 5:
-                log(event="stop", reason="ランキング表でないページが続けて5回")
+                log(event="stop", reason="理由不明の表なしのページが続けて5回")
                 break
             races_done.add(rid)
             time.sleep(random.uniform(6.0, 12.0))
