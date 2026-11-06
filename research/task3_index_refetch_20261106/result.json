@@ -1,0 +1,410 @@
+{
+ "date": "20260110",
+ "label": "中山11R",
+ "race_id": "202606010311",
+ "result_horses": 17,
+ "modes": {
+  "average": {
+   "parsed": true,
+   "valid_rank_table": true,
+   "rows": [
+    {
+     "rank": "1位",
+     "num": "4",
+     "name": "マイユニバース",
+     "value": "101",
+     "class": "ok"
+    },
+    {
+     "rank": "2位",
+     "num": "15",
+     "name": "ナイトインロンドン",
+     "value": "96",
+     "class": "ok"
+    },
+    {
+     "rank": "3位",
+     "num": "11",
+     "name": "マイネルラウレア",
+     "value": "95*",
+     "class": "ok"
+    },
+    {
+     "rank": "3位",
+     "num": "13",
+     "name": "アスクナイスショー",
+     "value": "95",
+     "class": "ok"
+    },
+    {
+     "rank": "3位",
+     "num": "17",
+     "name": "オールセインツ",
+     "value": "95",
+     "class": "ok"
+    },
+    {
+     "rank": "6位",
+     "num": "10",
+     "name": "メイテソーロ",
+     "value": "92*",
+     "class": "ok"
+    },
+    {
+     "rank": "7位",
+     "num": "6",
+     "name": "モズマーヴェリック",
+     "value": "91",
+     "class": "ok"
+    },
+    {
+     "rank": "7位",
+     "num": "8",
+     "name": "マイネルブリックス",
+     "value": "91",
+     "class": "ok"
+    },
+    {
+     "rank": "7位",
+     "num": "14",
+     "name": "スパークリシャール",
+     "value": "91",
+     "class": "ok"
+    },
+    {
+     "rank": "10位",
+     "num": "16",
+     "name": "イケイケドンドン",
+     "value": "90",
+     "class": "ok"
+    },
+    {
+     "rank": "11位",
+     "num": "1",
+     "name": "ロードオールライト",
+     "value": "86*",
+     "class": "ok"
+    },
+    {
+     "rank": "11位",
+     "num": "5",
+     "name": "コスモサガルマータ",
+     "value": "86*",
+     "class": "ok"
+    },
+    {
+     "rank": "13位",
+     "num": "2",
+     "name": "バレンタインガール",
+     "value": "85",
+     "class": "ok"
+    },
+    {
+     "rank": "13位",
+     "num": "7",
+     "name": "ルカランフィースト",
+     "value": "85",
+     "class": "ok"
+    },
+    {
+     "rank": "13位",
+     "num": "12",
+     "name": "ピンクジン",
+     "value": "85",
+     "class": "ok"
+    },
+    {
+     "rank": "16位",
+     "num": "9",
+     "name": "エラン",
+     "value": "80",
+     "class": "ok"
+    },
+    {
+     "rank": "-",
+     "num": "3",
+     "name": "グロッシェン",
+     "value": "-",
+     "class": "none"
+    }
+   ],
+   "n_rows": 17,
+   "missing": [],
+   "extra": [],
+   "dup": [],
+   "name_mismatch": [],
+   "classes": {
+    "ok": 16,
+    "none": 1
+   }
+  },
+  "distance": {
+   "parsed": true,
+   "valid_rank_table": true,
+   "rows": [
+    {
+     "rank": "1位",
+     "num": "15",
+     "name": "ナイトインロンドン",
+     "value": "101",
+     "class": "ok"
+    },
+    {
+     "rank": "1位",
+     "num": "17",
+     "name": "オールセインツ",
+     "value": "101",
+     "class": "ok"
+    },
+    {
+     "rank": "3位",
+     "num": "6",
+     "name": "モズマーヴェリック",
+     "value": "100",
+     "class": "ok"
+    },
+    {
+     "rank": "4位",
+     "num": "10",
+     "name": "メイテソーロ",
+     "value": "99",
+     "class": "ok"
+    },
+    {
+     "rank": "5位",
+     "num": "13",
+     "name": "アスクナイスショー",
+     "value": "97",
+     "class": "ok"
+    },
+    {
+     "rank": "6位",
+     "num": "16",
+     "name": "イケイケドンドン",
+     "value": "95",
+     "class": "ok"
+    },
+    {
+     "rank": "7位",
+     "num": "7",
+     "name": "ルカランフィースト",
+     "value": "88",
+     "class": "ok"
+    },
+    {
+     "rank": "8位",
+     "num": "1",
+     "name": "ロードオールライト",
+     "value": "87",
+     "class": "ok"
+    },
+    {
+     "rank": "8位",
+     "num": "11",
+     "name": "マイネルラウレア",
+     "value": "87",
+     "class": "ok"
+    },
+    {
+     "rank": "10位",
+     "num": "4",
+     "name": "マイユニバース",
+     "value": "84",
+     "class": "ok"
+    },
+    {
+     "rank": "10位",
+     "num": "12",
+     "name": "ピンクジン",
+     "value": "84",
+     "class": "ok"
+    },
+    {
+     "rank": "12位",
+     "num": "5",
+     "name": "コスモサガルマータ",
+     "value": "81",
+     "class": "ok"
+    },
+    {
+     "rank": "13位",
+     "num": "9",
+     "name": "エラン",
+     "value": "79",
+     "class": "ok"
+    },
+    {
+     "rank": "-",
+     "num": "2",
+     "name": "バレンタインガール",
+     "value": "未経験",
+     "class": "none"
+    },
+    {
+     "rank": "-",
+     "num": "3",
+     "name": "グロッシェン",
+     "value": "未経験",
+     "class": "none"
+    },
+    {
+     "rank": "-",
+     "num": "8",
+     "name": "マイネルブリックス",
+     "value": "未経験",
+     "class": "none"
+    },
+    {
+     "rank": "-",
+     "num": "14",
+     "name": "スパークリシャール",
+     "value": "未経験",
+     "class": "none"
+    }
+   ],
+   "n_rows": 17,
+   "missing": [],
+   "extra": [],
+   "dup": [],
+   "name_mismatch": [],
+   "classes": {
+    "ok": 13,
+    "none": 4
+   }
+  },
+  "course": {
+   "parsed": true,
+   "valid_rank_table": true,
+   "rows": [
+    {
+     "rank": "1位",
+     "num": "7",
+     "name": "ルカランフィースト",
+     "value": "105",
+     "class": "ok"
+    },
+    {
+     "rank": "2位",
+     "num": "4",
+     "name": "マイユニバース",
+     "value": "103",
+     "class": "ok"
+    },
+    {
+     "rank": "3位",
+     "num": "2",
+     "name": "バレンタインガール",
+     "value": "101",
+     "class": "ok"
+    },
+    {
+     "rank": "4位",
+     "num": "15",
+     "name": "ナイトインロンドン",
+     "value": "100",
+     "class": "ok"
+    },
+    {
+     "rank": "5位",
+     "num": "10",
+     "name": "メイテソーロ",
+     "value": "99",
+     "class": "ok"
+    },
+    {
+     "rank": "6位",
+     "num": "12",
+     "name": "ピンクジン",
+     "value": "97",
+     "class": "ok"
+    },
+    {
+     "rank": "6位",
+     "num": "13",
+     "name": "アスクナイスショー",
+     "value": "97",
+     "class": "ok"
+    },
+    {
+     "rank": "8位",
+     "num": "8",
+     "name": "マイネルブリックス",
+     "value": "95",
+     "class": "ok"
+    },
+    {
+     "rank": "9位",
+     "num": "6",
+     "name": "モズマーヴェリック",
+     "value": "93",
+     "class": "ok"
+    },
+    {
+     "rank": "9位",
+     "num": "14",
+     "name": "スパークリシャール",
+     "value": "93",
+     "class": "ok"
+    },
+    {
+     "rank": "11位",
+     "num": "9",
+     "name": "エラン",
+     "value": "92",
+     "class": "ok"
+    },
+    {
+     "rank": "12位",
+     "num": "11",
+     "name": "マイネルラウレア",
+     "value": "88",
+     "class": "ok"
+    },
+    {
+     "rank": "13位",
+     "num": "16",
+     "name": "イケイケドンドン",
+     "value": "87",
+     "class": "ok"
+    },
+    {
+     "rank": "14位",
+     "num": "5",
+     "name": "コスモサガルマータ",
+     "value": "81",
+     "class": "ok"
+    },
+    {
+     "rank": "15位",
+     "num": "3",
+     "name": "グロッシェン",
+     "value": "71",
+     "class": "ok"
+    },
+    {
+     "rank": "-",
+     "num": "1",
+     "name": "ロードオールライト",
+     "value": "未経験",
+     "class": "none"
+    },
+    {
+     "rank": "-",
+     "num": "17",
+     "name": "オールセインツ",
+     "value": "未経験",
+     "class": "none"
+    }
+   ],
+   "n_rows": 17,
+   "missing": [],
+   "extra": [],
+   "dup": [],
+   "name_mismatch": [],
+   "classes": {
+    "ok": 15,
+    "none": 2
+   }
+  }
+ }
+}
