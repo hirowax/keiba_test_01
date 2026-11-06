@@ -28,7 +28,7 @@ from scraper import load_env, load_cookies, get_race_ids
 from data_quality import load_index_sources, race_quality_issues
 from race_pickup import SCORING_VERSION
 from prev_inputs import FAILED, DateLock, RunRecord, reusable_entries, write_json_atomic
-from run_pickup_all import load_horse_style, score_race, write_prev_data_snapshot
+from run_pickup_all import load_horse_style, read_index_tables, score_race, write_prev_data_snapshot
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
@@ -84,6 +84,7 @@ def main():
     triple_df = pd.read_csv(csv_path, encoding="utf-8-sig")
     horse_style_db = load_horse_style()
     index_sources = load_index_sources(date)
+    index_tables = read_index_tables(date)
     reusable = reusable_entries(out_dir, date)
     logger.info(f"前走データ: 再利用できる値 {len(reusable)}頭")
     record = RunRecord(out_dir, date, "rerun_failed_pickup.py", SCORING_VERSION, lock)
@@ -132,7 +133,7 @@ def main():
             logger.info(f"再取得中: {race_label} ({race_id})")
             result, page, blocked = score_race(page, context, date, race_label, race_id, venue, race_num,
                                                group.to_dict(orient="records"), index_sources, reusable,
-                                               record, horse_style_db)
+                                               record, horse_style_db, index_tables)
             if blocked:
                 break
             if "error" in result and "error" not in existing["races"].get(race_label, {}):

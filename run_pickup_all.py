@@ -20,6 +20,7 @@ from scraper import (
     get_race_ids, human_sleep, human_browse, _random_scroll, is_ip_blocked,
 )
 from data_quality import build_quality, load_index_sources, race_quality_issues
+from index_table_check import check_index_tables, load_index_tables
 from race_pickup import (scrape_shutuba, scrape_data_top, score_horses, active_horse_ids,
                          SCORING_VERSION, COLLECTOR_VERSION)
 from prev_inputs import (FAILED, DateLock, RunRecord, fetch_entry, load_runs, prev_db_entry, prev_status_summary,
@@ -46,6 +47,18 @@ def _settle_horse_page(page) -> None:
     """馬ページを開いた後の待機（今までの取得と同じ）"""
     _random_scroll(page)
     human_sleep(1.0, 3.0)
+
+
+def read_index_tables(date: str) -> dict:
+    """scraper.py が保存した指数の表（output/{date}.xlsx）。読めなければ空（各レースの照合で問題ありになる）"""
+    path = BASE_DIR / "output" / f"{date}.xlsx"
+    try:
+        tables = load_index_tables(path)
+    except Exception as e:
+        logger.error(f"指数の表を読めない（{path}）: {type(e).__name__}: {e} → 全レースの照合が問題ありになる")
+        return {}
+    logger.info(f"指数の表: {len(tables)}レース（{path.name}）")
+    return tables
 
 
 def collect_prev_for_race(page, date: str, race_label: str, race_id: str, shutuba_data: dict,
@@ -95,7 +108,8 @@ def write_prev_data_snapshot(out_dir: Path, races: dict) -> int:
 
 
 def score_race(page, context, date: str, race_label: str, race_id: str, venue: str, race_num: str,
-               triple_horses: list, index_sources: dict, reusable: dict, record, horse_style_db: dict) -> tuple:
+               triple_horses: list, index_sources: dict, reusable: dict, record, horse_style_db: dict,
+               index_tables: dict) -> tuple:
     """1レース分: 出馬表・データ分析・前走データ（全馬）・採点・穴馬ライン。
     run_pickup_all.py と rerun_failed_pickup.py の両方から呼ぶ（同じ処理を1か所にまとめる）。
     戻り値: (pickup_scores.json のレースの値。IPブロックなら None, 使い続ける page, IPブロックか)"""
@@ -128,6 +142,14 @@ def score_race(page, context, date: str, race_label: str, race_id: str, venue: s
         if shutuba_data.get("map_issues"):
             logger.error(f"  {race_label}: 出馬表の対応検証NG {shutuba_data['map_issues']} (スキップ)")
             return {"error": "shutuba map invalid", "map_issues": shutuba_data["map_issues"]}, page, False
+
+        # 指数の表が出馬表とそろっているか（指数ごと。問題があれば quality で問題ありにする）
+        try:
+            table_check = check_index_tables(index_tables.get(race_label), shutuba_data)
+        except Exception as e:   # 検査そのものの失敗も、通さない
+            table_check = {"ok": False, "problems": [f"照合の処理でエラー: {type(e).__name__}: {e}"]}
+        if not table_check.get("ok"):
+            logger.warning(f"  {race_label}: 指数の表が出馬表とそろわない {table_check.get('problems')}")
 
         human_sleep(4.0, 10.0)
         data_top_data = scrape_data_top(page, race_id, shutuba_data["horse_map"])
@@ -205,7 +227,8 @@ def score_race(page, context, date: str, race_label: str, race_id: str, venue: s
             "collector_version": COLLECTOR_VERSION,
             "quality": build_quality(COLLECTOR_VERSION, index_sources, race_label,
                                      prev=dict(prev_fetch=PREV_FETCH_VERSION, prev_inputs_run=record.run_id,
-                                               prev_status=prev_status)),
+                                               prev_status=prev_status),
+                                     table_check=table_check),
             "prev_inputs_run": record.run_id,
             "horse_id_map": horse_id_map,
             "position_nums": shutuba_data["position_nums"],
@@ -262,6 +285,7 @@ def main():
     logger.info(f"前走データの記録: {record.path}")
     horse_style_db = load_horse_style()
     logger.info(f"horse_style: {len(horse_style_db)}頭")
+    index_tables = read_index_tables(date)
 
     results = {}  # race_label -> 結果dict
 
@@ -323,7 +347,8 @@ def main():
             triple_horses = group.to_dict(orient="records")
 
             result, page, blocked = score_race(page, context, date, race_label, race_id, venue, race_num,
-                                               triple_horses, index_sources, reusable, record, horse_style_db)
+                                               triple_horses, index_sources, reusable, record, horse_style_db,
+                                               index_tables)
             if blocked:
                 break
             results[race_label] = result

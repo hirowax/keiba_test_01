@@ -24,6 +24,7 @@ from pathlib import Path
 import pandas as pd
 
 import scraper
+from index_table_check import load_index_tables
 
 logging.disable(logging.CRITICAL)
 OUTPUT_DIR = Path(__file__).parent / "output"
@@ -48,30 +49,37 @@ def load_json(path):
 
 
 def load_day(path):
-    """保存済み xlsx を {label: {mode_key: DataFrame}} に戻す（type=rank の DataFrame と同じ形）"""
-    races = {}
-    for _, raw in pd.read_excel(path, sheet_name=None, header=None, dtype=str).items():
-        raw = raw.fillna("")
-        i = 0
-        while i < len(raw):
-            c0 = raw.iat[i, 0].strip()
-            if not c0.startswith("■"):
-                i += 1
-                continue
-            label, mode = c0[1:].split()
-            hdr = [str(x) for x in raw.iloc[i + 1]]
-            j = i + 2
-            rows = []
-            while j < len(raw) and raw.iat[j, 0].strip() != "" and not raw.iat[j, 0].startswith("■"):
-                rows.append(list(raw.iloc[j]))
-                j += 1
-            races.setdefault(label, {})[MODE_KEYS[mode]] = pd.DataFrame(rows, columns=hdr)
-            i = j
-    return races
+    """保存済み xlsx を {label: {mode_key: DataFrame}} に戻す（index_table_check.load_index_tables と同じ処理を使う）"""
+    return load_index_tables(path)
 
 
 def same_name(a, b):
     return SPACES.sub("", str(a)) == SPACES.sub("", str(b))
+
+
+def sha256(path):
+    import hashlib
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def run_record(args, days):
+    """実行の記録: コードの版・旧方式のファイル・入力ファイルの sha256（入力を Git の版とハッシュから確かめられるように）"""
+    import subprocess
+    import sys
+    repo = Path(__file__).parent
+    inputs = {}
+    for d in days:
+        for name in (f"{d}.xlsx", f"{d}/race_results_all.json", f"{d}/payouts_jra.json", f"{d}/invalidated.json",
+                     f"{d}/全場_3指数重複馬.csv"):
+            f = OUTPUT_DIR / name
+            if f.exists():
+                inputs[name] = sha256(f)
+    return {"command": " ".join(sys.argv), "counts_only": args.counts_only,
+            "head": subprocess.run(["git", "-C", str(repo), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip(),
+            "dirty": subprocess.run(["git", "-C", str(repo), "status", "--porcelain", "--", "compare_index_top3_202611.py",
+                                     "scraper.py", "index_table_check.py"], capture_output=True, text=True).stdout.strip(),
+            "old_module": str(args.old_module), "old_module_sha256": sha256(args.old_module),
+            "pandas": pd.__version__, "inputs_sha256": inputs}
 
 
 def main():
@@ -126,9 +134,10 @@ def main():
             r = res.get(label)
             if not r:
                 race_excl["結果が無い"] += 1; continue
-            table_nums = {h["馬番"] for c in checked for h in c[0]}
+            # 表の欠けは指数の表ごとに確かめる（3表をまとめると、ある表に無い馬が別の表にいれば通ってしまう。
+            # 2026-11-06 外部レビュー指摘。それまでの版は3表の合計で判定していた）
             result_nums = {str(x["num"]) for x in r["horses"]} | {str(x["num"]) for x in r["others"]}
-            if result_nums - table_nums:
+            if any(result_nums - {h["馬番"] for h in c[0]} for c in checked):
                 race_excl["表の欠け（結果の馬番が表に無い）"] += 1; continue
             race_excl["比較の対象"] += 1
 
@@ -178,6 +187,11 @@ def main():
         print(f"{g}: {sum(v for (gg, _), v in status.items() if gg == g)}頭 内訳",
               {s: v for (gg, s), v in status.items() if gg == g})
     out["status"] = {f"{g}・{s}": v for (g, s), v in status.items()}
+    # 払戻の記録があるレースの候補の頭数（金額は見ない。回収率の対象の偏りの確認。2026-11-06〜）
+    cov = Counter((h["group"], "払戻あり" if "tansho" in h else "払戻なし") for h in horses if h["match"] == "一致")
+    out["payout_coverage"] = {f"{g}・{c}": v for (g, c), v in sorted(cov.items())}
+    print("払戻の記録があるレースの候補（頭数）:", out["payout_coverage"])
+    out["run"] = run_record(args, days)
 
     if not args.counts_only:
         out["results"] = summarize(horses)

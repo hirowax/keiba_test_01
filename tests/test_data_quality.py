@@ -27,12 +27,13 @@ PREV_OK = {"prev_fetch": PREV_FETCH_VERSION, "prev_inputs_run": "run1",
                                            "9": "指数が空（着順が数字でない）"},
                            "others": {"取れた": 9}, "top1": "保留"}}
 OLD_PREV = "前走データの取り方が修正前（2026-11-05 より前）"
+TABLE_OK = {"version": "test", "ok": True, "modes": {}, "problems": []}
 
 
 class QualityTest(unittest.TestCase):
     def test_all_checks_pass(self):
         """候補が「前走なし」「指数が空（着順が数字でない）」でも、1位の判定が保留でも、品質の問題にはしない（決めたルールどおりの結果）"""
-        rdata = {"collector_version": "v", "quality": build_quality("v", SOURCES, "東京7R", prev=PREV_OK)}
+        rdata = {"collector_version": "v", "quality": build_quality("v", SOURCES, "東京7R", prev=PREV_OK, table_check=TABLE_OK)}
         self.assertEqual(race_quality_issues(rdata), [])
 
     def test_collector_version_alone_is_not_enough(self):
@@ -45,7 +46,7 @@ class QualityTest(unittest.TestCase):
     def test_old_candidate_rule(self):
         """11/1 のように指数の読み方が記録されていても、候補の選び方が修正前なら使わない"""
         old = {k: v for k, v in SOURCES.items() if k != "candidate_rule_version"}
-        rdata = {"collector_version": "v", "quality": build_quality("v", old, "東京7R", prev=PREV_OK)}
+        rdata = {"collector_version": "v", "quality": build_quality("v", old, "東京7R", prev=PREV_OK, table_check=TABLE_OK)}
         self.assertEqual(race_quality_issues(rdata),
                          ["候補の選び方が修正前（「*」付きを外す・同じ値は並び順。2026-11-02 より前）"])
 
@@ -58,14 +59,22 @@ class QualityTest(unittest.TestCase):
         """版があっても、候補の前走データが取得失敗・入力が無いなら使わない（版だけで品質を保証しない）"""
         for st in ("取得失敗", "入力が無い"):
             prev = dict(PREV_OK, prev_status=dict(PREV_OK["prev_status"], candidates={"3": "取れた", "5": st}))
-            rdata = {"collector_version": "v", "quality": build_quality("v", SOURCES, "東京7R", prev=prev)}
+            rdata = {"collector_version": "v", "quality": build_quality("v", SOURCES, "東京7R", prev=prev, table_check=TABLE_OK)}
             self.assertEqual(race_quality_issues(rdata), [f"候補の前走データが取れていない: {{'5': '{st}'}}"])
 
     def test_other_horse_prev_failed_is_not_an_issue(self):
         """比較相手の取得失敗は、1位の判定の保留として扱い、品質の問題にはしない"""
         prev = dict(PREV_OK, prev_status=dict(PREV_OK["prev_status"], others={"取れた": 5, "取得失敗": 2}))
-        rdata = {"collector_version": "v", "quality": build_quality("v", SOURCES, "東京7R", prev=prev)}
+        rdata = {"collector_version": "v", "quality": build_quality("v", SOURCES, "東京7R", prev=prev, table_check=TABLE_OK)}
         self.assertEqual(race_quality_issues(rdata), [])
+
+    def test_index_table_check_missing_or_bad(self):
+        """前走データが修正後のデータで、指数の表と出馬表の照合の記録が無い・問題があれば使わない（2026-11-06〜）"""
+        rdata = {"collector_version": "v", "quality": build_quality("v", SOURCES, "東京7R", prev=PREV_OK)}
+        self.assertEqual(race_quality_issues(rdata), ["指数の表と出馬表の照合の記録が無い"])
+        bad = {"version": "test", "ok": False, "modes": {}, "problems": ["average: {'missing': ['4']}"]}
+        rdata = {"collector_version": "v", "quality": build_quality("v", SOURCES, "東京7R", prev=PREV_OK, table_check=bad)}
+        self.assertEqual(race_quality_issues(rdata), ["指数の表が出馬表とそろわない: [\"average: {'missing': ['4']}\"]"])
 
     def test_race_missing_from_index_sources(self):
         q = build_quality("v", SOURCES, "京都1R")
@@ -76,7 +85,7 @@ class QualityTest(unittest.TestCase):
         self.assertIn("馬番の取り方が修正前", race_quality_issues({}))
 
     def test_invalidated(self):
-        rdata = {"collector_version": "v", "quality": build_quality("v", SOURCES, "東京7R", prev=PREV_OK)}
+        rdata = {"collector_version": "v", "quality": build_quality("v", SOURCES, "東京7R", prev=PREV_OK, table_check=TABLE_OK)}
         self.assertEqual(race_quality_issues(rdata, "指数1000で採点"), ["無効: 指数1000で採点"])
 
     def test_error_race(self):
