@@ -14,11 +14,14 @@
 固定（2026-11-06 外部レビュー指摘で強めた）:
 - 設定（FIXED）はこのファイルに書いた値を使う（実行時のモジュールの定数を使わない）。
 - 頼っている関数の中身（FROZEN_CODE の sha256）と、旧方式のファイル・開始時の閾値設定の sha256 が違えば、何も書かずに止める。
-- 入力の pickup_scores.json の採点の版（scoring_version）が FIXED と違えば止める。レースの候補の版が違えば、そのレースは評価の対象外。
+- 入力の pickup_scores.json の採点の版（scoring_version）が FIXED と違えば止める。レースの候補の版・前走データの取り方の版が
+  違えば、そのレースは評価の対象外。
+- 前走データの取り方の版（prev_inputs.PREV_FETCH_VERSION）と、前走の行の選び方・採点への受け渡し・レース内1位の比較の関数も固定する
+  （2026-11-06 外部レビュー指摘: 点数の式が同じでも、入力の定義が変われば🔥になる馬が変わる）。
 
 評価の対象（レースごとに1つの判定 eligible と理由 reasons）:
 - 採点の記録が無い（pickup_scores.json に無い・エラー）、品質の問題（実行時の race_quality_issues）、指数の表が無い、
-  候補の版が違う、採点の候補が指数の表から今の定義で選んだ候補と合わない → 対象外。対象外のレースには🔥・買い目を作らない。
+  候補の版が違う、前走データの取り方の版が違う、採点の候補が指数の表から今の定義で選んだ候補と合わない → 対象外。対象外のレースには🔥・買い目を作らない。
 - 採点の記録が無いレースは、指数の表から今の定義で候補がいるのに pickup_scores.json に無いレースも数える。
 
 保存: output/YYYYMMDD/new_candidates_variants/{実行ID}.json。入力・設定・コードのハッシュが同じ記録が既にあれば作らない
@@ -39,6 +42,7 @@ from datetime import datetime
 from pathlib import Path
 
 import paper_trade
+import prev_inputs
 import scraper
 import validate_trifecta_202608
 from data_quality import load_invalidated, race_quality_issues
@@ -50,8 +54,8 @@ OUTPUT_DIR = BASE_DIR / "output"
 SUMMARY_DIR = BASE_DIR / "summary"
 EVAL_DIR = BASE_DIR / "research" / "new_candidates_eval_202611"
 OLD_MODULE = BASE_DIR / "research" / "index_top3_compare_202611" / "old_scraper_6f2ed8d.py"
-THRESHOLD_START = EVAL_DIR / "threshold_config_start.json"   # 評価の期間の始め（2026-11-07 の採点）の閾値設定の写し
-VARIANTS_VERSION = "含める場合と外す場合_固定設定_20261106b"
+THRESHOLD_START = EVAL_DIR / "threshold_config_start.json"   # 2026-11-07 の採点の閾値設定の写し（評価の開始日を 11/8 に改めた後も閾値は同じ9点）
+VARIANTS_VERSION = "含める場合と外す場合_固定設定_前走の取り方も固定_20261106c"
 
 FIXED = {
     "ev_threshold": 9,
@@ -60,6 +64,7 @@ FIXED = {
     "bet_unit": 100,               # 1点の金額（validate_trifecta_202608.BET_UNIT の 2026-11-06 の値）
     "scoring_version": "v5.1",
     "candidate_rule_version": "ページの順位で3位以内_同じ順位は全員_20261102",
+    "prev_fetch_version": "見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_除外の行は飛ばす_20261106",   # 2026-11-06 に足した
 }
 FIXED_FILES_SHA256 = {
     "old_module": "4c8ea46e26a0899ec6762a09318858e7f907e6b766fb38ff00c0e031718fc5d9",
@@ -81,11 +86,19 @@ FROZEN_CODE = {
     "scraper.top_rank_horses": "dff209149b83071d",
     "scraper._table_columns": "72a44ba7b052a0ea",
     "scraper.classify_index_text": "bbb3579734b07702",
+    "prev_inputs.parse_results_table": "08c98403c81ceda8",
+    "prev_inputs._with_skipped": "d34231b0f68efdd3",
+    "prev_inputs._read_row": "0294e815914bb19e",
+    "prev_inputs.prev_db_entry": "ce3a8f1368234631",
+    "prev_inputs.race_top1": "08e0575a482b846d",
 }
 FROZEN_CONSTANTS = {   # 頼っているモジュールの定数（関数の中身のハッシュに入らないもの）
     "paper_trade.BET_UNIT": 100,
     "paper_trade.MIN_SCORE": 8,
     "scraper.CANDIDATE_RULE_VERSION": FIXED["candidate_rule_version"],
+    "prev_inputs.PREV_FETCH_VERSION": FIXED["prev_fetch_version"],
+    "prev_inputs.SKIP_RANKS": {"除": "競走除外"},
+    "prev_inputs.CONFIRMED_NONNUMERIC_RANKS": {"中": "競走中止"},
 }
 
 
@@ -94,7 +107,8 @@ def sha256_file(path: Path) -> str:
 
 
 def code_hashes() -> dict:
-    mods = {"paper_trade": paper_trade, "validate_trifecta_202608": validate_trifecta_202608, "scraper": scraper}
+    mods = {"paper_trade": paper_trade, "validate_trifecta_202608": validate_trifecta_202608, "scraper": scraper,
+            "prev_inputs": prev_inputs}
     out = {}
     for key in FROZEN_CODE:
         mod, name = key.split(".", 1)
@@ -109,7 +123,7 @@ def check_frozen() -> list:
     for k, v in FROZEN_CODE.items():
         if now[k] != v:
             problems.append(f"関数の中身が変わった: {k}（固定 {v}・今 {now[k]}）")
-    mods = {"paper_trade": paper_trade, "scraper": scraper}
+    mods = {"paper_trade": paper_trade, "scraper": scraper, "prev_inputs": prev_inputs}
     for k, v in FROZEN_CONSTANTS.items():
         mod, name = k.split(".", 1)
         if getattr(mods[mod], name) != v:
@@ -227,6 +241,9 @@ def main():
         rule = (rdata.get("quality") or {}).get("candidate_rule")
         if rule != FIXED["candidate_rule_version"]:
             reasons.append(f"候補の版が違う（{rule!r}）")
+        pf = (rdata.get("quality") or {}).get("prev_fetch")
+        if pf != FIXED["prev_fetch_version"]:
+            reasons.append(f"前走データの取り方の版が違う（{pf!r}）")
         rec = {"quality_issues_now": q_now}
         if has_tables and "error" not in rdata:
             old_def = candidates_from_tables(dfs, lambda _l, d: old.find_triple_top5_rows(label, d))

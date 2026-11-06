@@ -1,0 +1,340 @@
+{
+ "date": "20261107",
+ "run_id": "20261106T200103435885_b8d0c587",
+ "key": "6e402e5b3e8b1472afaf23d1812aa472d0026a02aaac061ea8023064988650fe",
+ "version": "含める場合と外す場合_固定設定_前走の取り方も固定_20261106c",
+ "generated_at": "2026-11-06T20:01:03+09:00",
+ "code_head": "0580857ee20dd4a59b7d234ef2a80286dee64c37",
+ "script_sha256": "e24bb4a947c38ce554ce7e0fac7dc828f89aefb3c2088da3cfb18545b07cd3ea",
+ "fixed": {
+  "ev_threshold": 9,
+  "next_range": [
+   7,
+   8
+  ],
+  "min_score_axis": 8,
+  "bet_unit": 100,
+  "scoring_version": "v5.1",
+  "candidate_rule_version": "ページの順位で3位以内_同じ順位は全員_20261102",
+  "prev_fetch_version": "見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_除外の行は飛ばす_20261106"
+ },
+ "frozen_code": {
+  "paper_trade.build_menus": "3dd1038fc58cc54d",
+  "paper_trade.maru_num_page_rank": "10e249153c5c56b1",
+  "paper_trade.himo_set_page_rank": "f6cf3893cef7400b",
+  "paper_trade._page_rank_lists": "17d8f9d4ba9c6a8b",
+  "paper_trade.menu_rule_of": "ae6c0cc3b9caff10",
+  "paper_trade.build_summary_index": "41207373ac301a68",
+  "validate_trifecta_202608.maru_num": "340b6e4536e23e9a",
+  "validate_trifecta_202608.himo_set": "13dadc08ce72c62d",
+  "validate_trifecta_202608.combo_key": "9b29a85c761dda28",
+  "scraper.find_triple_top5_rows": "93fbbaacdc715bbc",
+  "scraper.ranked_horses": "11b1eeb4000af71f",
+  "scraper.top_rank_horses": "dff209149b83071d",
+  "scraper._table_columns": "72a44ba7b052a0ea",
+  "scraper.classify_index_text": "bbb3579734b07702",
+  "prev_inputs.parse_results_table": "08c98403c81ceda8",
+  "prev_inputs._with_skipped": "d34231b0f68efdd3",
+  "prev_inputs._read_row": "0294e815914bb19e",
+  "prev_inputs.prev_db_entry": "ce3a8f1368234631",
+  "prev_inputs.race_top1": "08e0575a482b846d"
+ },
+ "inputs_sha256": {
+  "output/20261107/pickup_scores.json": "fd2a10c06e10c9d3e4e668b1cb3f3f091461fe94f945ebe81c73efd48682ca94",
+  "output/20261107.xlsx": "e2fb9651defeb6fe79f5f158929160b2ce92cfa4027b499652eea9c3de407ad8",
+  "summary/20261107.json": "b0337ea0f2c97d224b9de1612334dca6487e610aa074c4c46b957518e3c22e06",
+  "research/index_top3_compare_202611/old_scraper_6f2ed8d.py": "4c8ea46e26a0899ec6762a09318858e7f907e6b766fb38ff00c0e031718fc5d9",
+  "research/new_candidates_eval_202611/threshold_config_start.json": "f136d9e646dc8244949807a648a1c5d7d1a7f9f8b5e7d65b7f8ff14d8dd4ccdf"
+ },
+ "races": {
+  "京都10R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "8"
+   ],
+   "candidates_old_method": [],
+   "new_candidates": [
+    "8"
+   ],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "京都11R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "8"
+   ],
+   "candidates_old_method": [],
+   "new_candidates": [
+    "8"
+   ],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "京都12R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "4"
+   ],
+   "candidates_old_method": [],
+   "new_candidates": [
+    "4"
+   ],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "京都1R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "1",
+    "6"
+   ],
+   "candidates_old_method": [],
+   "new_candidates": [
+    "1",
+    "6"
+   ],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "京都2R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "3",
+    "5",
+    "14"
+   ],
+   "candidates_old_method": [],
+   "new_candidates": [
+    "3",
+    "5",
+    "14"
+   ],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "京都3R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "1",
+    "7",
+    "10"
+   ],
+   "candidates_old_method": [],
+   "new_candidates": [
+    "1",
+    "7",
+    "10"
+   ],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "京都4R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "2",
+    "10"
+   ],
+   "candidates_old_method": [],
+   "new_candidates": [
+    "2",
+    "10"
+   ],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "京都7R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "6",
+    "7"
+   ],
+   "candidates_old_method": [
+    "6",
+    "7"
+   ],
+   "new_candidates": [],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "京都9R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "4",
+    "9"
+   ],
+   "candidates_old_method": [],
+   "new_candidates": [
+    "4",
+    "9"
+   ],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "東京10R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "10"
+   ],
+   "candidates_old_method": [
+    "10"
+   ],
+   "new_candidates": [],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "東京12R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "13"
+   ],
+   "candidates_old_method": [],
+   "new_candidates": [
+    "13"
+   ],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "東京1R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "9",
+    "10"
+   ],
+   "candidates_old_method": [],
+   "new_candidates": [
+    "9",
+    "10"
+   ],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "東京4R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "4"
+   ],
+   "candidates_old_method": [
+    "1"
+   ],
+   "new_candidates": [
+    "4"
+   ],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "東京5R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "7",
+    "13"
+   ],
+   "candidates_old_method": [
+    "7",
+    "13"
+   ],
+   "new_candidates": [],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "東京8R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "5"
+   ],
+   "candidates_old_method": [
+    "5"
+   ],
+   "new_candidates": [],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "東京9R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "3"
+   ],
+   "candidates_old_method": [
+    "3",
+    "6"
+   ],
+   "new_candidates": [],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "福島10R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "5"
+   ],
+   "candidates_old_method": [
+    "5"
+   ],
+   "new_candidates": [],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "福島4R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "2"
+   ],
+   "candidates_old_method": [
+    "2"
+   ],
+   "new_candidates": [],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  },
+  "福島7R": {
+   "quality_issues_now": [],
+   "candidates_new_definition": [
+    "3"
+   ],
+   "candidates_old_method": [
+    "3"
+   ],
+   "new_candidates": [],
+   "eligible": false,
+   "reasons": [
+    "前走データの取り方の版が違う（'見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105'）"
+   ]
+  }
+ }
+}
