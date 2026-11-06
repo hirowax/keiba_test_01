@@ -21,6 +21,7 @@
   - 読み戻して、420表すべてが保存ページと全セル一致することを確かめた。
   - 取得日時・元ページの sha256・コードの sha256 は `tables/manifest.json` にある。
   - `output/{日}.xlsx`（3頭だけの古い表）は使わない。
+  - xlsx は `.gitignore` の `*.xlsx` に当たるので git に入っていない。元のページ（`pages/`）は git にあるので、`export_tables.py` で作り直せる。作り直すと xlsx の sha256 は変わる（ファイルの中に作った日時が入るため）。中身が同じかは、読み戻しの確認で確かめる。
 - 結果: `output/{日}/race_results_all.json`（6日とも `complete`）。
 - 払戻: `output/{日}/payouts_jra.json`（6日ともある。ただし払戻があるのは156レースのうち116レース）。
 - 無効レース: `invalidated.json` は6日とも無い（無効レース0）。
