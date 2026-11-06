@@ -1,0 +1,127 @@
+{
+ "files": {
+  "20251102": {
+   "xlsx": "research/task3_index_refetch_20261106/tables/20251102_index_refetch.xlsx",
+   "race_results_all": true,
+   "complete": true,
+   "payouts_jra": true,
+   "invalidated": false
+  },
+  "20260110": {
+   "xlsx": "research/task3_index_refetch_20261106/tables/20260110_index_refetch.xlsx",
+   "race_results_all": true,
+   "complete": true,
+   "payouts_jra": true,
+   "invalidated": false
+  },
+  "20260111": {
+   "xlsx": "research/task3_index_refetch_20261106/tables/20260111_index_refetch.xlsx",
+   "race_results_all": true,
+   "complete": true,
+   "payouts_jra": true,
+   "invalidated": false
+  },
+  "20260117": {
+   "xlsx": "research/task3_index_refetch_20261106/tables/20260117_index_refetch.xlsx",
+   "race_results_all": true,
+   "complete": true,
+   "payouts_jra": true,
+   "invalidated": false
+  },
+  "20260118": {
+   "xlsx": "research/task3_index_refetch_20261106/tables/20260118_index_refetch.xlsx",
+   "race_results_all": true,
+   "complete": true,
+   "payouts_jra": true,
+   "invalidated": false
+  },
+  "20260124": {
+   "xlsx": "research/task3_index_refetch_20261106/tables/20260124_index_refetch.xlsx",
+   "race_results_all": true,
+   "complete": true,
+   "payouts_jra": true,
+   "invalidated": false
+  }
+ },
+ "day_skip": {},
+ "days": 6,
+ "race_exclusions": {
+  "指数の表が無い（xlsxにレースが無い）": 16,
+  "比較の対象": 140
+ },
+ "unmatched": {},
+ "repro_diff_days": [],
+ "status": {
+  "両方で候補・着順あり": 48,
+  "新しく候補・着順あり": 83,
+  "候補から外れる・着順あり": 11,
+  "両方で候補・中止": 1
+ },
+ "payout_coverage": {
+  "両方で候補・払戻あり": 49,
+  "候補から外れる・払戻あり": 11,
+  "新しく候補・払戻あり": 83
+ },
+ "races_without_payout": [],
+ "payout_coverage_by_kind": {
+  "両方で候補・fukusho・払戻あり": 49,
+  "両方で候補・tansho・払戻あり": 49,
+  "候補から外れる・fukusho・払戻あり": 11,
+  "候補から外れる・tansho・払戻あり": 11,
+  "新しく候補・fukusho・払戻あり": 83,
+  "新しく候補・tansho・払戻あり": 83
+ },
+ "races_missing_payout_by_kind": {
+  "tansho": [],
+  "fukusho": []
+ },
+ "run": {
+  "index_files": {
+   "20251102": {
+    "path": "research/task3_index_refetch_20261106/tables/20251102_index_refetch.xlsx",
+    "sha256": "61613918c89f52436582c70901ea1dd5a45d9ed0691ea5ee9dc138909c7b3615"
+   },
+   "20260110": {
+    "path": "research/task3_index_refetch_20261106/tables/20260110_index_refetch.xlsx",
+    "sha256": "6fd9a597605bb2e5ac4f1d17ef578ff5ef0abecfa2674e9ed40e4c3c545d6092"
+   },
+   "20260111": {
+    "path": "research/task3_index_refetch_20261106/tables/20260111_index_refetch.xlsx",
+    "sha256": "d1312c76d5ce8c5675a51abe11e84d7e8a86fe8b3e10fc457d47fd995b6cba7c"
+   },
+   "20260117": {
+    "path": "research/task3_index_refetch_20261106/tables/20260117_index_refetch.xlsx",
+    "sha256": "0d381bf6c53f30a3bca2fdb32633db7f9227b79b0b42f808c0c3ee8d1c1a6a73"
+   },
+   "20260118": {
+    "path": "research/task3_index_refetch_20261106/tables/20260118_index_refetch.xlsx",
+    "sha256": "ec2a1130efc7ac121509a27df770d84a9c5b6cae5928f9f001f3f032c0e241e2"
+   },
+   "20260124": {
+    "path": "research/task3_index_refetch_20261106/tables/20260124_index_refetch.xlsx",
+    "sha256": "33f7b821e139b0cf2606ce6b4b9ddaf303343c18fdbcebecf7361787156b561b"
+   }
+  },
+  "command": "compare_index_top3_202611.py --old-module research/index_top3_compare_202611/old_scraper_6f2ed8d.py --days 20251102,20260110,20260111,20260117,20260118,20260124 --index-dir research/task3_index_refetch_20261106/tables --counts-only --out research/task3_index_refetch_20261106/reference/counts_after_fill.json",
+  "counts_only": true,
+  "head": "59fc9ef5e1c0b5e6c2031fb42625f4953f8bcb90",
+  "dirty": "",
+  "old_module": "research/index_top3_compare_202611/old_scraper_6f2ed8d.py",
+  "old_module_sha256": "4c8ea46e26a0899ec6762a09318858e7f907e6b766fb38ff00c0e031718fc5d9",
+  "pandas": "2.3.3",
+  "inputs_sha256": {
+   "20251102/race_results_all.json": "430dd035ac3e6afcaa3b92aec9b0f47308e25a8b527c238ef80d151bea3c3720",
+   "20251102/payouts_jra.json": "2a1ab5f1d9f4d1db3de037d1d5c407b09bf7f4ff556798d84d0059fe14ec21c8",
+   "20260110/race_results_all.json": "d745a08560959d9ba2aaedb6143556a6bcfb1655f3f2a8d4703c3136d7a424af",
+   "20260110/payouts_jra.json": "bb1e5e07d8d46042746a192614e3543ed2c7aa932122dbfdbf0867537a92873f",
+   "20260111/race_results_all.json": "8b12fca85f5fcf4d425418b7be762e12e83444a09136c6850c666f0b73b58346",
+   "20260111/payouts_jra.json": "a780b40cadb6ebafe189341b59c7d12c017af718f5b23b9c468680bece0f7d32",
+   "20260117/race_results_all.json": "f148a12ab86e925232d565d058ae5cc85afad8be38950b1765019195df1ba5ad",
+   "20260117/payouts_jra.json": "67ac8791f21fe8c9f739b3aac5f628089b7ca0c3f73a2ce25e3952bdaa34cdcc",
+   "20260118/race_results_all.json": "8d2c5e1bcf53b1f404315d67e32d6b237eec785816784ae4e7e954caad1dd4f4",
+   "20260118/payouts_jra.json": "320c661f25617eeac61ff7fdf789e0ec38cd3876741f21f86f88a649e26f67fd",
+   "20260124/race_results_all.json": "cf8c699e52bc1ea3f0cf6e85db0142775714c088c4ae430cf3dea89decec9026",
+   "20260124/payouts_jra.json": "fddf308110d088408145421a04a81d2985501e6c75d23aafc380b2c6319f674f"
+  }
+ }
+}
