@@ -15,8 +15,12 @@
 - 値: scraper.classify_index_text で分類。200以上・読めない値は問題。
 - 順位の形: scraper.index_read_errors・rank_notes（判定処理と同じもの）。
 - 「N位」の行の値が「-」「未経験」などの値なし、「-」の行の値が数字、は問題として数える。
-古い表（output/{日}.xlsx。書き換えない）との比較: 古い表にある馬（馬番1〜3）ごとに、古い値と新しい値を並べ、
-「古い値 = 1000 + 新しい値」「古い値が1000ちょうどで新しい値が値なし」「古い表で値なし（-）・新しい値も値なし」「それ以外」に分ける。
+古い表（output/{日}.xlsx。書き換えない）との比較: 古い表にある馬（馬番1〜3）の行ごと（単位は「馬×指数の行」）に、古い値と新しい値を並べ、
+「古い値 = 1000 + 新しい値」「古い値が1000ちょうどで新しい値が値なし」「新旧とも値なし（古い値が数字でない）」「それ以外」「新しい表に無い」に分ける。
+順位の表ありのページと、全馬が値なしの表のページの両方で比べる（2026-11-07 外部レビューの指摘で、全馬が値なしの表も比べるように直した。
+それまでは順位の表ありだけで、20表・60行が抜けていた）。
+manifest には、入力のファイルに加えて、このスクリプトと読み込んだコード（scraper.py・xlsx_blocks.py）の sha256 と、
+実行時の HEAD・作業ツリーの変更の有無を残す（2026-11-07 外部レビューの指摘。実行時の HEAD にこのスクリプトが無かったため）。
 
 実行: python3 research/task3_index_refetch_20261106/check_six_days.py
 出力: このフォルダの check_result.json・check_result.txt
@@ -112,7 +116,7 @@ def compare_old(old_df, new_rows):
             elif oldv == "1000" and not nok:
                 kind = "古い値1000・新しい値なし"
             elif not re.fullmatch(r"\d+", oldv) and not nok:
-                kind = "どちらも値なし"
+                kind = "新旧とも値なし"
             else:
                 kind = "それ以外"
         out_rows.append({"num": num, "old": oldv, "new": nx["value"] if nx else None, "kind": kind})
@@ -123,6 +127,8 @@ def main():
     result = {"races": {}, "summary": {}}
     page_kinds, problem_races, old_kinds = Counter(), [], Counter()
     unknown_notes = Counter()
+    old_kinds_by_page = {"順位の表あり": Counter(), "全馬が値なしの表": Counter()}
+    old_missing_pages = []  # 古い表にあるのに、新しいページが表なし・未取得のもの
     for d in DAYS:
         res_all = json.load(open(ROOT / "output" / d / "race_results_all.json", encoding="utf-8"))["races"]
         old = load_day(ROOT / "output" / f"{d}.xlsx")
@@ -147,6 +153,7 @@ def main():
                     if label in old_by_label and m in old_by_label[label]:
                         t["old_compare"] = compare_old(old_by_label[label][m], t["rows"])
                         old_kinds.update(x["kind"] for x in t["old_compare"])
+                        old_kinds_by_page[t["kind"]].update(x["kind"] for x in t["old_compare"])
                     rec["modes"][m] = t
                     if t["problems"]:
                         problem_races.append((d, label, m, t["problems"]))
@@ -154,15 +161,23 @@ def main():
                         all(x["rank"] == "-" and x["class"] == "none" for x in t["rows"]):
                     # 表はあるが「N位」の行が無く、全馬が値なし（その距離・コースの経験が全馬に無い。2026-11-06 に4ページで確認）
                     t["kind"] = "全馬が値なしの表"
+                    if label in old_by_label and m in old_by_label[label]:
+                        t["old_compare"] = compare_old(old_by_label[label][m], t["rows"])
+                        old_kinds.update(x["kind"] for x in t["old_compare"])
+                        old_kinds_by_page[t["kind"]].update(x["kind"] for x in t["old_compare"])
                     rec["modes"][m] = t
                     if t["problems"]:
                         problem_races.append((d, label, m, t["problems"]))
                 elif NEWCOMER_TEXT in html:
                     rec["modes"][m] = {"kind": "新馬戦"}
+                    if label in old_by_label and m in old_by_label[label]:
+                        old_missing_pages.append((d, label, m, "新馬戦"))
                 else:
                     note = page_note(html)
                     rec["modes"][m] = {"kind": "表なし（ほか）", "note": note}
                     unknown_notes[(note[:60], "障害" in cls_name)] += 1
+                    if label in old_by_label and m in old_by_label[label]:
+                        old_missing_pages.append((d, label, m, "表なし（ほか）"))
                 page_kinds[rec["modes"][m]["kind"]] += 1
             result["races"][f"{d} {label}"] = rec
     n_races = len(result["races"])
@@ -182,18 +197,31 @@ def main():
     out("レースの分類（ページの種類・障害戦・新馬戦）", {str(k): c for k, c in kinds.items()})
     vals = [x for v in result["races"].values() for x in v["modes"].values() if x.get("kind") == "順位の表あり"]
     out("値の範囲", min(x["min"] for x in vals if x["min"] is not None), "〜", max(x["max"] for x in vals if x["max"] is not None))
-    out("古い表との比較（馬ごと）", dict(old_kinds))
+    out("古い表との比較（馬×指数の行）", sum(old_kinds.values()), "行", dict(old_kinds))
+    for k, c in old_kinds_by_page.items():
+        out("  うち", k, sum(c.values()), "行", dict(c))
+    n_old_tables = sum(len(v) for d in DAYS for v in load_day(ROOT / "output" / f"{d}.xlsx").values())
+    n_cmp_tables = sum(1 for v in result["races"].values() for t in v["modes"].values() if "old_compare" in t)
+    out("古い表の数", n_old_tables, "・比べた表", n_cmp_tables, "・古い表があるのに新しいページが表なし", len(old_missing_pages), old_missing_pages[:10])
     others = [(k, m, x) for k, v in result["races"].items() for m, t in v["modes"].items()
               for x in t.get("old_compare", []) if x["kind"] in ("それ以外", "新しい表に無い")]
     for o in others[:30]:
         out("  ", o)
     result["summary"] = {"page_kinds": dict(page_kinds), "full_races": len(full), "problem_tables": problem_races,
-                         "old_compare": dict(old_kinds)}
+                         "old_compare": dict(old_kinds),
+                         "old_compare_by_page_kind": {k: dict(c) for k, c in old_kinds_by_page.items()},
+                         "old_tables": n_old_tables, "old_tables_compared": n_cmp_tables,
+                         "old_tables_without_new_table": old_missing_pages}
     import hashlib
     import subprocess
     files = sorted(PAGES.glob("*/*.html.gz")) + [ROOT / "output" / d / "race_results_all.json" for d in DAYS] + \
         [ROOT / "output" / f"{d}.xlsx" for d in DAYS]
-    result["manifest"] = {"commit": subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=ROOT).stdout.strip(),
+    code = [Path(__file__).resolve(), ROOT / "scraper.py", ROOT / "research" / "data_check_20261103" / "xlsx_blocks.py"]
+    git = lambda *a: subprocess.run(["git", *a], capture_output=True, text=True, cwd=ROOT).stdout.strip()
+    result["manifest"] = {"commit": git("rev-parse", "HEAD"),
+                          "code_dirty": git("status", "--porcelain", "--", *[str(c.relative_to(ROOT)) for c in code]),
+                          "code": {str(c.relative_to(ROOT)): hashlib.sha256(c.read_bytes()).hexdigest() for c in code},
+                          "python": sys.version.split()[0],
                           "files": {str(f.relative_to(ROOT)): hashlib.sha256(f.read_bytes()).hexdigest() for f in files}}
     out("読んだファイル", len(files), "（sha256 は check_result.json の manifest）")
     (HERE / "check_result.json").write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
