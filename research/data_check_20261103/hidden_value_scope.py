@@ -41,9 +41,11 @@ from xlsx_blocks import load_day
 ap = argparse.ArgumentParser()
 ap.add_argument("input_dir")
 ap.add_argument("--base-commit", required=True)
+ap.add_argument("--results-dir", default=None,
+                help="結果の置き場所（既定は results/。2026-11-06 の出し直しで、11/4 の結果を残すために足した）")
 ARGS = ap.parse_args()
 OUT = Path(ARGS.input_dir).resolve()
-RESULTS = HERE / "results"
+RESULTS = Path(ARGS.results_dir).resolve() if ARGS.results_dir else HERE / "results"
 LOG = []
 
 
