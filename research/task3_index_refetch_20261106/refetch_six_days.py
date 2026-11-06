@@ -58,6 +58,19 @@ def horse_rows(df):
     return n
 
 
+def all_no_value(df):
+    """全馬の順位が「-」で値なしの表なら馬の行数、そうでなければ0"""
+    n = 0
+    for _, r in df.iterrows():
+        v = [str(x) for x in r.values]
+        if v[0] in SUB:
+            continue
+        if v[0] != "-" or scraper.classify_index_text(v[5])[0] != "none":
+            return 0
+        n += 1
+    return n
+
+
 def targets():
     out = []
     for d in DAYS:
@@ -122,7 +135,14 @@ def main():
             # 新馬戦のページに「新馬戦にはタイム指数はございません。」とあるのを確かめた）。ほかは理由不明
             no_table = None
             if not valid:
-                no_table = "新馬戦（ページに指数なしの文）" if NEWCOMER_TEXT in html else "理由不明"
+                if NEWCOMER_TEXT in html:
+                    no_table = "新馬戦（ページに指数なしの文）"
+                elif df is not None and all_no_value(df) > 3:
+                    # 表はあるが「N位」の行が無く、全馬の順位が「-」で値なし（2026-11-06 21:06 に、障害戦などの
+                    # この形が5ページ続いて止まった。照合の check_six_days.py と同じ見分け方）。4行以上を条件にする
+                    no_table = "全馬が値なしの表"
+                else:
+                    no_table = "理由不明"
             log(event="page", date=d, label=lab, race_id=rid, mode=mode, rank_table=valid, horse_rows=n,
                 no_table=no_table)
             if not valid and no_table == "理由不明" and not seen_rank_table:
