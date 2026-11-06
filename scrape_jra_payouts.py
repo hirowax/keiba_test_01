@@ -282,24 +282,30 @@ def parse_payouts(html: str) -> dict:
 
 
 def parse_refund(container) -> dict:
-    """払戻欄の「返還」（取消・除外の馬番と枠）。2026-11-02 に実ページで確認した形:
-    <dl><dt>返還</dt><dd><p><strong>返還馬番　13番　返還同枠　7枠</strong></p></dd></dl>
-    競走中止のレース（11/1 京都4R）にはこの欄が無い。除外・複数頭の書き方は未確認なので、元の文字も残す。
+    """払戻欄の「返還」（取消・除外の馬番と枠）。実ページで確認した形:
+    <dl><dt>返還</dt><dd><p><strong>返還馬番　13番　返還同枠　7枠</strong></p></dd></dl>（2026-11-02、取消1頭）
+    「返還馬番　5番, 6番, 7番　返還枠番　5枠, 6枠」（2026-11-06、2026-01-18 京都12R の除外3頭）
+    「返還馬番　7番」（2026-11-06、2026-10-18 京都9R の除外1頭）
+    見出しは「返還馬番」「返還同枠」「返還枠番」の3つを別々に読む（2026-11-06 まで「返還枠番」を知らず、
+    枠の番号を馬番に足していた）。知らない見出し（「返還」で始まる語）があれば警告を出す。元の文字も残す。
+    競走中止のレース（11/1 京都4R）にはこの欄が無い。
     返還の欄が無いレースは空のリスト（"refund" キーがあること自体が、返還の欄を確かめた印）"""
-    out = {"umaban": [], "waku": [], "text": ""}
+    out = {"umaban": [], "waku": [], "wakuban": [], "text": ""}
+    keys = {"返還馬番": "umaban", "返還同枠": "waku", "返還枠番": "wakuban"}
     for dt in container.find_all("dt"):
         if "返還" not in dt.get_text():
             continue
         dd = dt.find_next_sibling("dd")
         text = re.sub(r"\s+", " ", dd.get_text(" ", strip=True)) if dd else ""
         out["text"] = (out["text"] + " " + text).strip()
-        m = re.search(r"返還馬番(.*?)(返還同枠|$)", text)
-        if m:
-            out["umaban"] += [int(n) for n in re.findall(r"\d+", m.group(1))]
-        m = re.search(r"返還同枠(.*)$", text)
-        if m:
-            out["waku"] += [int(n) for n in re.findall(r"\d+", m.group(1))]
-        if not out["umaban"] and not out["waku"]:
+        parts = re.split(r"(返還[^\s\d,、]+)", text)
+        unknown = [w for w in parts[1::2] if w not in keys]
+        if unknown:
+            log.warning(f"返還の欄に知らない見出し {unknown}: {text}")
+        for label, body in zip(parts[1::2], parts[2::2]):
+            if label in keys:
+                out[keys[label]] += [int(n) for n in re.findall(r"\d+", body)]
+        if text and not (out["umaban"] or out["waku"] or out["wakuban"]):
             log.warning(f"返還の欄を読めない: {text}")
     return out
 

@@ -2,7 +2,7 @@
 取消・除外の返還（残りのタスク5）の回帰テスト。
 - scrape_jra_payouts.parse_payouts の「返還」欄の読み取り（実ページ: 11/1 東京6R 13番取消、11/1 京都4R 8番中止）
 - paper_trade.settle_for_date の返還（賭け金を返す）・中止（不的中）・記録なし（要確認）の扱い（自作の JSON）
-除外・失格・複数頭の返還の実ページは手元に無い。
+除外の実ページ（2026-01-18 京都12R の3頭・「返還枠番」、2026-10-18 京都9R の1頭）は 2026-11-06 に足した。失格の返還の実ページは手元に無い。
 
 実行: python3 -m unittest discover -s tests -v
 """
@@ -25,12 +25,23 @@ DATE = "20261107"
 class ParseRefundTest(unittest.TestCase):
     def test_torikeshi(self):
         p = parse_payouts((FIX / "jra_payout_202605041106_torikeshi.html").read_text(encoding="utf-8"))
-        self.assertEqual(p["refund"], {"umaban": [13], "waku": [7], "text": "返還馬番 13番 返還同枠 7枠"})
+        self.assertEqual(p["refund"], {"umaban": [13], "waku": [7], "wakuban": [], "text": "返還馬番 13番 返還同枠 7枠"})
         self.assertEqual(p["tansho"], {"12": 260})
 
     def test_chushi_has_no_refund(self):
         p = parse_payouts((FIX / "jra_payout_202608041104_chushi.html").read_text(encoding="utf-8"))
-        self.assertEqual(p["refund"], {"umaban": [], "waku": [], "text": ""})
+        self.assertEqual(p["refund"], {"umaban": [], "waku": [], "wakuban": [], "text": ""})
+
+    def test_jogai_three_with_wakuban(self):
+        """「返還枠番」の枠の番号を馬番に足さない（2026-11-06 まで 5・6・7・5・6 と読んでいた）"""
+        p = parse_payouts((FIX / "jra_payout_202608010712_jogai3_wakuban.html").read_text(encoding="utf-8"))
+        self.assertEqual(p["refund"], {"umaban": [5, 6, 7], "waku": [], "wakuban": [5, 6],
+                                       "text": "返還馬番 5番, 6番, 7番 返還枠番 5枠, 6枠"})
+        self.assertEqual(p["tansho"], {"3": 1320})
+
+    def test_jogai_one(self):
+        p = parse_payouts((FIX / "jra_payout_202608040709_jogai1.html").read_text(encoding="utf-8"))
+        self.assertEqual(p["refund"], {"umaban": [7], "waku": [], "wakuban": [], "text": "返還馬番 7番"})
 
 
 class SettleRefundTest(unittest.TestCase):
