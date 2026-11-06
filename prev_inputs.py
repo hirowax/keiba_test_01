@@ -15,6 +15,10 @@
   後の取得が失敗したら前の値に戻らない。
 - 前走指数レース内1位: 比較に必要な値が分からない馬（取得失敗・期限後の取得・馬ID無し・入力が無い）がいれば保留（加点しない）。
   正常と確かめた前走なしの馬と、指数が空（着順が数字でない）の馬は比較の対象外。
+- 前走は「正式な発走を受けた直近のレース」（2026-11-06 決定。docs/prev_excluded_rank_plan_202611.md 案1）。
+  着順が「除」（競走除外。発走していない）の行は前走に選ばず飛ばす（続けて何行でも）。飛ばした次の行は今までと同じ規則で読み、
+  知らない表記・読めない行なら取得失敗（さらに古い行へは進まない）。飛ばした後に行が無ければ、前走なしとは確かめられないので
+  取得失敗。飛ばした行は skipped_rows、選んだ理由は selected_reason に残す。「中」（競走中止）は発走しているので今までどおり前走。
 """
 import json
 import logging
@@ -23,7 +27,7 @@ import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-PREV_FETCH_VERSION = "見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105"
+PREV_FETCH_VERSION = "見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_除外の行は飛ばす_20261106"
 TOP1_RULE = "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
 
 OK = "取れた"
@@ -61,8 +65,13 @@ HEADERS = {
 IDX_CELL_CLASS = "TimeIndexHeadCell01"
 # 正常とする数字でない着順（表記 → 意味）。実ページで確かめた表記だけを入れる。
 # - 「中」: 競走中止（2026-11-05、tests/fixtures/horse_2023105659_results_20261105.html。人気は数字、指数は空欄）
-# 取消・除外・失格などの馬ページでの表記はまだ確かめていない（取得失敗になる。実例を見てから足す）
+# 取消・失格などの馬ページでの表記はまだ確かめていない（取得失敗になる。実例を見てから足す）
 CONFIRMED_NONNUMERIC_RANKS = {"中": "競走中止"}
+# 前走に選ばず飛ばす着順（表記 → 意味）。発走していないレース。実ページで確かめた表記だけを入れる。
+# - 「除」: 競走除外（2026-11-06、tests/fixtures/horse_2020103876_20261106.html・horse_2021104929_20261106.html。
+#   人気・指数は空。自前の結果の状態「除外」と一致し、1頭は JRA 公式の払戻ページでも確かめた）
+# 取消の表記（「取」と見込んでいる）は確かめていないので、ここに入れない（取得失敗のまま）
+SKIP_RANKS = {"除": "競走除外"}
 
 
 class FetchError(Exception):
@@ -146,10 +155,36 @@ def parse_results_table(html: str, target_date: str) -> dict:
     if not before:
         return {"status": NO_PREV, "reason": f"対象日より前の行が無い（行{len(parsed)}件）",
                 "headers": header_cells, "row": None, "values": None}
-    d, tds = max(before, key=lambda x: x[0])
-    if sum(1 for x, _ in before if x == d) > 1:
-        return _failed(f"同じ日付の行が複数ある（{d}）", headers=header_cells)
+    skipped = []
+    chosen = None
+    for d, tds in sorted(before, key=lambda x: x[0], reverse=True):
+        if sum(1 for x, _ in before if x == d) > 1:
+            return _with_skipped(_failed(f"同じ日付の行が複数ある（{d}）", headers=header_cells), skipped)
+        rank_raw = _cell_text(tds[col["rank"]])
+        if rank_raw in SKIP_RANKS:
+            link = tds[col["race_name"]].find("a", href=RACE_LINK_RE)
+            skipped.append({"date": d, "race_id": RACE_LINK_RE.search(link["href"]).group(1) if link else "",
+                            "rank": rank_raw, "meaning": SKIP_RANKS[rank_raw]})
+            continue
+        chosen = (d, tds)
+        break
+    if chosen is None:
+        return _with_skipped(_failed(f"発走していない行（{'・'.join(sorted({x['rank'] for x in skipped}))}）を"
+                                     f"{len(skipped)}行飛ばした後に行が無い（前走なしとは確かめられない）",
+                                     headers=header_cells), skipped)
+    d, tds = chosen
+    return _with_skipped(_read_row(d, tds, col, header_cells), skipped)
 
+
+def _with_skipped(e: dict, skipped: list) -> dict:
+    """飛ばした行と選んだ理由を記録に足す"""
+    e["skipped_rows"] = skipped
+    e["selected_reason"] = (f"発走していない行を{len(skipped)}行飛ばした次の行" if skipped else "対象日より前の最新の行")
+    return e
+
+
+def _read_row(d, tds, col, header_cells) -> dict:
+    """前走に選んだ1行を読む（2026-11-05 からの規則。2026-11-06 に parse_results_table から分けた）"""
     raw = {k: _cell_text(tds[i]) for k, i in col.items()}
     link = tds[col["race_name"]].find("a", href=RACE_LINK_RE)
     raw["race_id"] = RACE_LINK_RE.search(link["href"]).group(1) if link else ""
