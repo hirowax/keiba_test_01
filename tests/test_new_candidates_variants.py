@@ -107,6 +107,9 @@ class VariantsTest(unittest.TestCase):
         rule = json.loads(json.dumps(self.pickup))
         rule["races"][LABEL]["quality"]["candidate_rule"] = "古い版"
         cases.append(("候補の版", rule))
+        pf = json.loads(json.dumps(self.pickup))   # 2026-11-06: 前走データの取り方の版も固定（11/7 の採点は前の版）
+        pf["races"][LABEL]["quality"]["prev_fetch"] = "見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_20261105"
+        cases.append(("前走データの取り方の版", pf))
         err = json.loads(json.dumps(self.pickup))
         err["races"][LABEL] = {"error": "x"}
         cases.append(("採点の記録", err))
