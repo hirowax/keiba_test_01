@@ -12,6 +12,16 @@
   git show 6f2ed8d:scraper.py > /tmp/old_scraper_6f2ed8d.py
   python3 compare_index_top3_202611.py --old-module /tmp/old_scraper_6f2ed8d.py --counts-only   # 件数だけ（成績は出さない）
   python3 compare_index_top3_202611.py --old-module /tmp/old_scraper_6f2ed8d.py --out result.json
+
+参考集計（2026-11-07 追加。docs/task3_refetch_reference_plan_202611.md）:
+  python3 compare_index_top3_202611.py --old-module ... --days 20251102,20260110 \
+      --index-dir research/task3_index_refetch_20261106/tables [--index-name "{date}_index_refetch.xlsx"] --counts-only
+  - 指定した日の、指定したフォルダの xlsx だけを読む。ファイルが無ければ止まる（output/{日}.xlsx には戻らない）。
+  - 結果のファイルが無い・取り直しが未完了の日も、外さずに止まる。
+  - 前半・後半は作らない（全期間だけ）。当時の候補ファイルとは比べない。
+  - 払戻の不足を単勝・複勝で別々に数える（payout_coverage_by_kind・races_missing_payout_by_kind）。
+  - 実行の記録に、実際に読んだ xlsx のパスと sha256 を残す。
+  --days・--index-dir を省略したときの動作と出力は、追加前と同じ。
 """
 import argparse
 import importlib.util
@@ -62,19 +72,24 @@ def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def run_record(args, days):
-    """実行の記録: コードの版・旧方式のファイル・入力ファイルの sha256（入力を Git の版とハッシュから確かめられるように）"""
+def run_record(args, days, index_files=None):
+    """実行の記録: コードの版・旧方式のファイル・入力ファイルの sha256（入力を Git の版とハッシュから確かめられるように）。
+    参考集計（index_files あり）では、output/{日}.xlsx の代わりに実際に読んだ xlsx を index_files に記録する"""
     import subprocess
     import sys
     repo = Path(__file__).parent
     inputs = {}
+    names = ("race_results_all.json", "payouts_jra.json", "invalidated.json") if index_files is not None else \
+        ("race_results_all.json", "payouts_jra.json", "invalidated.json", "全場_3指数重複馬.csv")
     for d in days:
-        for name in (f"{d}.xlsx", f"{d}/race_results_all.json", f"{d}/payouts_jra.json", f"{d}/invalidated.json",
-                     f"{d}/全場_3指数重複馬.csv"):
+        for name in ([] if index_files is not None else [f"{d}.xlsx"]) + [f"{d}/{n}" for n in names]:
             f = OUTPUT_DIR / name
             if f.exists():
                 inputs[name] = sha256(f)
-    return {"command": " ".join(sys.argv), "counts_only": args.counts_only,
+    rec = {}
+    if index_files is not None:
+        rec["index_files"] = {d: {"path": str(f), "sha256": sha256(f)} for d, f in index_files.items()}
+    return {**rec, "command": " ".join(sys.argv), "counts_only": args.counts_only,
             "head": subprocess.run(["git", "-C", str(repo), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip(),
             "dirty": subprocess.run(["git", "-C", str(repo), "status", "--porcelain", "--", "compare_index_top3_202611.py",
                                      "scraper.py", "index_table_check.py"], capture_output=True, text=True).stdout.strip(),
@@ -82,34 +97,57 @@ def run_record(args, days):
             "pandas": pd.__version__, "inputs_sha256": inputs}
 
 
-def main():
+def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--old-module", required=True)
     ap.add_argument("--counts-only", action="store_true", help="件数だけを出し、成績は出さない")
     ap.add_argument("--out")
-    args = ap.parse_args()
+    ap.add_argument("--days", help="参考集計: 対象の日（カンマ区切り）。--index-dir と一緒に使う")
+    ap.add_argument("--index-dir", help="参考集計: 指数の xlsx を読むフォルダ（output/ の代わり）")
+    ap.add_argument("--index-name", default="{date}_index_refetch.xlsx", help="参考集計: --index-dir の中のファイル名")
+    args = ap.parse_args(argv)
+    if bool(args.days) != bool(args.index_dir):
+        raise SystemExit("--days と --index-dir は一緒に指定する")
+    reference = bool(args.days)
     old = load_module(args.old_module)
 
-    days_all = sorted(f.stem for f in OUTPUT_DIR.glob("*.xlsx") if re.fullmatch(r"\d{8}", f.stem) and START <= f.stem <= END)
     files, days, day_skip = {}, [], {}
-    for d in days_all:
-        ra = load_json(OUTPUT_DIR / d / "race_results_all.json")
-        files[d] = {"xlsx": True, "race_results_all": bool(ra), "complete": bool(ra and ra.get("complete")),
-                    "payouts_jra": (OUTPUT_DIR / d / "payouts_jra.json").exists(),
-                    "invalidated": (OUTPUT_DIR / d / "invalidated.json").exists(),
-                    "当時の候補CSV": (OUTPUT_DIR / d / "全場_3指数重複馬.csv").exists()}
-        if not (ra and ra.get("complete")):
-            day_skip[d] = "全レースの結果の取り直しが未完了"
-            continue
-        days.append(d)
-    half = set(days[: len(days) // 2])
+    index_files = None
+    if reference:
+        days = sorted(set(args.days.split(",")))
+        if not all(re.fullmatch(r"\d{8}", d) for d in days):
+            raise SystemExit(f"--days の形が違う: {args.days}")
+        index_files = {d: Path(args.index_dir) / args.index_name.format(date=d) for d in days}
+        for d in days:
+            ra = load_json(OUTPUT_DIR / d / "race_results_all.json")
+            if not index_files[d].exists():
+                raise SystemExit(f"指数の xlsx が無い: {index_files[d]}（output/{d}.xlsx には戻らない）")
+            if not (ra and ra.get("complete")):
+                raise SystemExit(f"{d}: race_results_all.json が無いか、取り直しが未完了")
+            files[d] = {"xlsx": str(index_files[d]), "race_results_all": True, "complete": True,
+                        "payouts_jra": (OUTPUT_DIR / d / "payouts_jra.json").exists(),
+                        "invalidated": (OUTPUT_DIR / d / "invalidated.json").exists()}
+        half = set()
+    else:
+        days_all = sorted(f.stem for f in OUTPUT_DIR.glob("*.xlsx") if re.fullmatch(r"\d{8}", f.stem) and START <= f.stem <= END)
+        for d in days_all:
+            ra = load_json(OUTPUT_DIR / d / "race_results_all.json")
+            files[d] = {"xlsx": True, "race_results_all": bool(ra), "complete": bool(ra and ra.get("complete")),
+                        "payouts_jra": (OUTPUT_DIR / d / "payouts_jra.json").exists(),
+                        "invalidated": (OUTPUT_DIR / d / "invalidated.json").exists(),
+                        "当時の候補CSV": (OUTPUT_DIR / d / "全場_3指数重複馬.csv").exists()}
+            if not (ra and ra.get("complete")):
+                day_skip[d] = "全レースの結果の取り直しが未完了"
+                continue
+            days.append(d)
+        half = set(days[: len(days) // 2])
 
     race_excl = Counter()
     horses = []              # 候補の馬ごとの記録
     unmatched = Counter()
     repro = []               # 当時の候補CSVと、固定した旧コードで再計算した候補の違い
     for d in days:
-        races = load_day(OUTPUT_DIR / f"{d}.xlsx")
+        races = load_day(index_files[d] if reference else OUTPUT_DIR / f"{d}.xlsx")
         res = load_json(OUTPUT_DIR / d / "race_results_all.json")["races"]
         pay = load_json(OUTPUT_DIR / d / "payouts_jra.json") or {}
         inv = (load_json(OUTPUT_DIR / d / "invalidated.json") or {}).get("races", {})
@@ -150,7 +188,7 @@ def main():
                             ("候補から外れる", oldc.keys() - new.keys())):
                 for n in nums:
                     cand = (new.get(n) or oldc.get(n))
-                    rec = {"date": d, "half": "前半" if d in half else "後半", "label": label, "num": n,
+                    rec = {"date": d, "half": None if reference else ("前半" if d in half else "後半"), "label": label, "num": n,
                            "group": g, "name": cand["馬名"]}
                     x = fin.get(n) or oth.get(n)
                     if x is None:
@@ -170,7 +208,7 @@ def main():
                         unmatched[(g, rec["match"])] += 1
                     horses.append(rec)
         csv = OUTPUT_DIR / d / "全場_3指数重複馬.csv"
-        if csv.exists():
+        if not reference and csv.exists():
             t = pd.read_csv(csv, encoding="utf-8-sig", dtype=str)
             then = {(r["開催場"] + r["レース番号"], str(r["馬番"]).strip()) for _, r in t.iterrows()}
             if then != old_all:
@@ -195,10 +233,19 @@ def main():
     out["races_without_payout"] = sorted({(h["date"], h["label"]) for h in horses
                                           if h["match"] == "一致" and "tansho" not in h})
     print("候補がいて払戻の記録が無いレース:", len(out["races_without_payout"]))
-    out["run"] = run_record(args, days)
+    if reference:
+        # 単勝・複勝を別々に（2026-11-07 外部レビュー指摘。上の2つは単勝の有無だけで見ている）
+        cov_k = Counter((h["group"], kind, "払戻あり" if kind in h else "払戻なし")
+                        for h in horses if h["match"] == "一致" for kind in ("tansho", "fukusho"))
+        out["payout_coverage_by_kind"] = {f"{g}・{k}・{c}": v for (g, k, c), v in sorted(cov_k.items())}
+        out["races_missing_payout_by_kind"] = {
+            kind: sorted({(h["date"], h["label"]) for h in horses if h["match"] == "一致" and kind not in h})
+            for kind in ("tansho", "fukusho")}
+        print("払戻の不足（券種ごと・レース数）:", {k: len(v) for k, v in out["races_missing_payout_by_kind"].items()})
+    out["run"] = run_record(args, days, index_files)
 
     if not args.counts_only:
-        out["results"] = summarize(horses)
+        out["results"] = summarize(horses, ("全期間",) if reference else ("全期間", "前半", "後半"))
         for key, v in out["results"].items():
             print(key, v)
     if args.out:
@@ -206,10 +253,10 @@ def main():
             json.dump(out, f, ensure_ascii=False, indent=1)
 
 
-def summarize(horses):
+def summarize(horses, periods=("全期間", "前半", "後半")):
     """計画どおりの集計。3着内率の分母は着順のある馬と中止・失格。取消・除外は外す。不明は外して件数を出す"""
     out = {}
-    for period in ("全期間", "前半", "後半"):
+    for period in periods:
         for g in GROUPS:
             hs = [h for h in horses if h["group"] == g and (period == "全期間" or h["half"] == period)]
             ran = [h for h in hs if h.get("status") in ("着順あり", "中止", "失格")]
