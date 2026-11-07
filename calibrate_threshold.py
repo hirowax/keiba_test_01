@@ -13,6 +13,7 @@ from collections import Counter
 from pathlib import Path
 
 from data_quality import load_invalidated, race_quality_issues
+from race_pickup import FIRE_RULE_SCORING_VERSIONS, SCORING_VERSION
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger(__name__)
@@ -168,6 +169,11 @@ def pick_threshold(stats):
 
 
 def main():
+    if SCORING_VERSION not in FIRE_RULE_SCORING_VERSIONS:
+        # v5.2〜 の🔥の基準は、タスク10の手順（docs/fire_threshold_plan_202611.md）で決める。この選び方では計算しない
+        log.warning(f"点数の版 {SCORING_VERSION} の🔥の基準はまだ決めていないため、閾値は計算・更新しない"
+                    f"（docs/data_top_reader_fix_plan_202611.md 3.5）")
+        return
     pairs = load_pairs()
     if not pairs:
         log.warning("照合できる過去データがありません")

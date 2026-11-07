@@ -515,6 +515,13 @@ function resultBadge(raceLabel, num) {
 }
 
 function renderThresholdBadge(cfg) {
+  if (currentPickup && !fireVersionOk()) {
+    const v = String(currentPickup.scoring_version || '').replace(/[<>&]/g, '');
+    return `
+    <div style="background:#f0f4f8;border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:0.78rem;color:#555">
+      この日の点数（${v}）には🔥の基準がまだ無いため、🔥・最注目馬は出していません（点数は参考）。
+    </div>`;
+  }
   if (!cfg?.ev_threshold) return '';
   const stats = cfg.stats || {};
   const t = String(cfg.ev_threshold);
@@ -541,6 +548,13 @@ function render(date, cfg) {
 // ── 最注目馬 + 次点 ──────────────────────────────────────────
 // 品質に問題があるレース（採点時に data_quality.race_quality_issues で判定し quality_issues に記録したもの）。
 // 2026-11-05 決定: 理由を表示し、最注目馬・🔥から外す。quality_issues が無い（それより前の）データは今までどおり表示する。
+// 今の🔥の基準（ev_threshold）を決めた点数の版。これ以外（v5.2〜）の点数には🔥・最注目馬・次点を出さない
+// （2026-11-07 決定。race_pickup.FIRE_RULE_SCORING_VERSIONS と同じ一覧。docs/data_top_reader_fix_plan_202611.md 3.5）
+const FIRE_SCORING_VERSIONS = ['v5', 'v5.1'];
+function fireVersionOk() {
+  return FIRE_SCORING_VERSIONS.includes(currentPickup?.scoring_version);
+}
+
 function raceIssues(rdata) {
   const q = rdata?.quality_issues;
   return Array.isArray(q) && q.length ? q : null;
@@ -548,6 +562,7 @@ function raceIssues(rdata) {
 
 function renderTopPickup() {
   if (!currentPickup?.races) return '';
+  if (!fireVersionOk()) return '';  // 🔥の基準が無い点数の版
 
   const sortFn = (a, b) => {
     const vd = venueRank(a.venue||'') - venueRank(b.venue||'');
@@ -678,7 +693,7 @@ function renderRaceCard(label, venue, scored, singles, rdata) {
   const paceBadge = pace ? `<span class="pace-badge pace-${pace}">${pace}</span>` : '';
 
   const issues = raceIssues(rdata);
-  const fireOk = !issues;  // 品質に問題があるレースは🔥を付けない
+  const fireOk = !issues && fireVersionOk();  // 品質に問題があるレース・🔥の基準が無い点数の版には🔥を付けない
   const issueBox = issues
     ? `<div style="background:#fff3cd;color:#7a5b00;font-size:0.72rem;padding:6px 14px;border-bottom:1px solid #f0e0a0">⚠️ データに問題があるため、おすすめ・🔥の対象外: ${issues.map(x => String(x).replace(/[<>&]/g, '')).join(' / ')}</div>`
     : '';

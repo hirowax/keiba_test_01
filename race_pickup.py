@@ -26,7 +26,34 @@ COOKIES_FILE = Path("cookies.json")
 # v5.1: v5 の点数はそのまま。前走指数レース内1位は、比較に必要な値が分からない馬（取得失敗（指数の「**」を含む）・
 #       期限後の取得・馬ID無し）がいれば保留（加点しない）。前走なしの馬は比較の対象外。比較相手も対象日ごとに取得
 #       (2026-11-05, docs/prev_cache_fix_plan_202611.md。判定は prev_inputs.race_top1)
-SCORING_VERSION = "v5.1"
+# v5.2: 点数の式は v5.1 と同じ。出走馬分析・データ分析ピックアップ・各データ上位3頭の読み取りを直した（DATA_TOP_READER_VERSION）。
+#       出走馬分析は、v5.1 まで見出しを1つ前の表のものと取り違え、1つの表から最初の1頭しか数えていなかったので、
+#       点数の分布が変わる。v5.1 の🔥（9点）・買い目の軸（8点）の基準は v5.2 に使わない
+#       (2026-11-07, docs/data_top_reader_fix_plan_202611.md)
+SCORING_VERSION = "v5.2"
+
+# 今の🔥の基準（threshold_config.json の ev_threshold）と、ペーパートレードの買い目の軸の基準（8点）を決めた点数の版。
+# これ以外の版（v5.2〜）の点数には、🔥を付けず、買い目も作らない（新しい基準はタスク10の手順で決める。
+# docs/data_top_reader_fix_plan_202611.md 3.5）。index.html にも同じ一覧がある（FIRE_SCORING_VERSIONS）。
+FIRE_RULE_SCORING_VERSIONS = ("v5", "v5.1")
+
+# 3項目（各データ上位3頭・データ分析ピックアップ・出走馬分析）の読み方の版。quality.data_top_reader に記録する。
+# 読み方を変えたら値を変える。
+DATA_TOP_READER_VERSION = "表の中の見出しと馬番の要素で読み出馬表と照合_20261107"
+
+# 出走馬分析で数える表（表の中の見出し。2026-11-07 に保存した5レースで見た6種類）
+ANALYSIS_HORSE_TITLES = (
+    "このコースが得意な馬", "この距離が得意な馬", "この競馬場が得意な馬", "今回の馬場状態が得意な馬",
+    "今回のレース間隔で実績がある馬", "今回の調教評価で実績がある馬",
+)
+# 出走馬分析の欄にある、馬ではないと分かっている表（数えない）
+ANALYSIS_OTHER_TITLES = (
+    "このコースで有利な枠順", "このコースで有利な脚質", "このコースが得意な騎手", "このコースが得意な調教師",
+    "このコースに実績がある種牡馬", "このコースに実績がある母父", "今回のオッズで期待できる騎手",
+    "今回の調教師と相性の良い騎手", "今回の馬主と相性の良い騎手",
+)
+# 各データ上位3頭で、項目が騎手の表（数字は騎手が乗る馬の馬番。騎手名は出馬表で略されているので名前では照らさない）
+TOP3_JOCKEY_TITLES = ("騎手",)
 
 
 # ─── スコアリング定義 ────────────────────────────────────────────
@@ -101,6 +128,7 @@ def parse_shutuba_rows(soup: BeautifulSoup, field_size=None, expected_nums: set 
     """
     horse_map: Dict[str, str] = {}
     horse_id_map: Dict[str, str] = {}
+    waku_map: Dict[str, str] = {}   # 馬番 → 枠番（td.Waku*。3項目の照合に使う。2026-11-07〜）
     odds_map: Dict[str, float] = {}
     pop_map: Dict[str, str] = {}
     odds_status: Dict[str, str] = {}  # 馬番 → ok / unsold（未発売）/ scratched（取消・除外）/ no_cell / unparsable
@@ -124,6 +152,9 @@ def parse_shutuba_rows(soup: BeautifulSoup, field_size=None, expected_nums: set 
         a = info.find("a", href=re.compile(r"/horse/\d+"))
         name = _norm_name(a.get_text(strip=True) if a else info.get_text(strip=True))
         horse_map[num] = name
+        waku_td = tr.find("td", class_=re.compile(r"^Waku\d"))
+        if waku_td and waku_td.get_text(strip=True).isdigit():
+            waku_map[num] = waku_td.get_text(strip=True)
         m_id = re.search(r"/horse/(\d+)", a.get("href", "")) if a else None
         hid = m_id.group(1) if m_id else ""
         if not hid:
@@ -179,12 +210,205 @@ def parse_shutuba_rows(soup: BeautifulSoup, field_size=None, expected_nums: set 
     return {
         "horse_map": horse_map,
         "horse_id_map": horse_id_map,
+        "waku_map": waku_map,
         "odds_map": odds_map,
         "pop_map": pop_map,
         "odds_status": odds_status,
         "scratched_nums": scratched_nums,
         "map_issues": issues,
     }
+
+
+
+# ─── 3項目（各データ上位3頭・データ分析ピックアップ・出走馬分析）の読み取り（2026-11-07〜。DATA_TOP_READER_VERSION）───
+# 要素をクラス名で明示して読み、数字（馬番）は出馬表の行（馬番・枠番・正式名・馬ID）と照らす。照らせない項目は数えず、
+# 理由を issues に入れる（issues があるレースは data_quality で品質の問題になる）。
+# 状態: 馬あり / 推奨なし / 欄がない（ページにその欄・表が無い）/ 取得異常（issues に理由）。
+# 根拠: docs/data_top_reader_fix_plan_202611.md、research/reading_check_3items_20261107/
+
+def _cls_num(tag, prefix: str):
+    """class の中の「prefix + 数字」（例 WakuBan3・Waku5）の数字"""
+    for c in tag.get("class") or []:
+        m = re.fullmatch(prefix + r"(\d+)", c)
+        if m:
+            return m.group(1)
+    return None
+
+
+def _check_against_rows(ref: dict, num: str, waku, short: str, kind: str, horse_id: str = None):
+    """
+    ページの1項目が出馬表の行と合うか。合えば None、合わなければ理由。
+    ref: horse_name_full（馬番→正式名）・waku_map・horse_id_map（scrape_shutuba の戻り値）
+    kind: "horse"（名前を照らす）/ "jockey"（騎手の表。騎手名は出馬表で略されているので、馬番と枠だけ照らす）
+    名前は、ページの短い名前が正式名の先頭と同じで、同じ先頭の名前の別の馬がいないこと（馬IDがあれば馬IDで照らす）。
+    """
+    names = ref.get("horse_name_full") or {}
+    if not num or num not in names:
+        return f"馬番{num}の行が出馬表に無い"
+    wk = (ref.get("waku_map") or {}).get(num)
+    if waku is None or wk is None or waku != wk:
+        return f"馬番{num}の枠が出馬表と違う（ページ {waku}・出馬表 {wk}）"
+    if kind == "jockey":
+        return None
+    if horse_id is not None:
+        if horse_id != (ref.get("horse_id_map") or {}).get(num):
+            return f"馬番{num}の馬IDが出馬表と違う（ページ {horse_id}）"
+        return None
+    sn = _norm_name(short or "")
+    if not sn or not names[num].startswith(sn):
+        return f"馬番{num}の名前が出馬表と合わない（ページ {short}・出馬表 {names[num]}）"
+    others = [n for n, nm in names.items() if n != num and nm.startswith(sn)]
+    if others:
+        return f"馬番{num}の名前「{sn}」で始まる別の馬がいる（馬番 {','.join(others)}）"
+    return None
+
+
+def parse_top3data(soup: BeautifulSoup, ref: dict) -> dict:
+    """
+    出馬表の「各データ上位3頭」（section.top3data）。表（table.AnaBestTable）ごとに、表の中の見出しと、
+    div.Kyaku_Type_box の span.Kyaku_Type_Num（馬番）・WakuBanN（枠）・span.UmaName（短い名前）を読む。
+    戻り値: hits {馬番: 登場した表の数}、tables [{title, state, nums}]、state（欄がない / あり）、issues
+    騎手の表も、今の定義（v5 から）どおり数える（数字は騎手が乗る馬の馬番）。
+    """
+    sec = soup.find("section", class_="top3data") or soup.find(class_="top3data")
+    if sec is None:
+        return {"hits": {}, "tables": [], "state": "欄がない", "issues": []}
+    hits: Dict[str, int] = {}
+    tables, issues = [], []
+    for tb in sec.find_all("table", class_="AnaBestTable"):
+        t = tb.find(class_="PickupHorseTableTitle")
+        title = t.get_text(strip=True) if t else None
+        if not title:
+            issues.append("上位3頭: 見出しの無い表がある")
+            continue
+        kind = "jockey" if title in TOP3_JOCKEY_TITLES else "horse"
+        nums, bad = [], False
+        boxes = tb.find_all("div", class_="Kyaku_Type_box")
+        for box in boxes:
+            sp = box.find("span", class_="Kyaku_Type_Num")
+            un = box.find("span", class_="UmaName")
+            if sp is None or un is None:
+                issues.append(f"上位3頭（{title}）: 読めない形の項目がある")
+                bad = True
+                continue
+            num = sp.get_text(strip=True)
+            why = _check_against_rows(ref, num, _cls_num(sp, "WakuBan"), un.get_text(strip=True), kind)
+            if why:
+                issues.append(f"上位3頭（{title}）: {why}")
+                bad = True
+                continue
+            if num in nums:
+                issues.append(f"上位3頭（{title}）: 馬番{num}が2回ある")
+                bad = True
+                continue
+            nums.append(num)
+        for num in nums:
+            hits[num] = hits.get(num, 0) + 1
+        state = "取得異常" if bad else ("馬あり" if nums else "空")
+        if not boxes:
+            issues.append(f"上位3頭（{title}）: 項目が無い")
+        tables.append({"title": title, "state": state, "nums": nums})
+    if not tables and not issues:
+        issues.append("上位3頭: 欄はあるが表が無い")
+    return {"hits": hits, "tables": tables, "state": "あり", "issues": issues}
+
+
+def parse_data_top(soup: BeautifulSoup, ref: dict) -> dict:
+    """
+    データ分析（data_top.html）。
+    - ピックアップ: .DataPickupHorseWrap の dl ごとに span.Umaban_Num（馬番）・WakuN（枠）・
+      a.data_top_horse_link（馬ID）を読み、出馬表の馬番・枠・馬IDと照らす。
+    - 出走馬分析: table.PickupHorseTable* ごとに、表の中の見出しで種類を決める（ANALYSIS_HORSE_TITLES だけ数える。
+      ANALYSIS_OTHER_TITLES は数えない。どちらでもない見出しは取得異常）。馬の表は div.Umaban_InBox ごとに
+      span.Umaban_Num（馬番）・WakuN（枠）・短い名前を読み、出馬表と照らす。「推奨なし」は span.Txt の文字。
+    戻り値: pickup_nums、pickup_state、analysis_hits {馬番: 登場した表の数}、analysis_tables [{title, state, nums}]、
+            analysis_state、issues
+    """
+    issues = []
+    # ピックアップ
+    pickup_nums: set = set()
+    wrap = soup.find(class_="DataPickupHorseWrap")
+    if wrap is None:
+        pickup_state = "欄がない"
+    else:
+        dls = wrap.find_all("dl")
+        for dl in dls:
+            sp = dl.find("span", class_="Umaban_Num")
+            a = dl.find("a", class_="data_top_horse_link")
+            m = re.search(r"/horse/(\d+)", a.get("href", "")) if a else None
+            if sp is None or m is None:
+                issues.append("ピックアップ: 読めない形の項目がある")
+                continue
+            num = sp.get_text(strip=True)
+            why = _check_against_rows(ref, num, _cls_num(sp, "Waku"), a.get_text(strip=True), "horse", m.group(1))
+            if why:
+                issues.append(f"ピックアップ: {why}")
+                continue
+            if num in pickup_nums:
+                issues.append(f"ピックアップ: 馬番{num}が2回ある")
+                continue
+            pickup_nums.add(num)
+        if not dls:
+            issues.append("ピックアップ: 欄はあるが項目が無い")
+        pickup_state = "馬あり" if pickup_nums else "空"
+    # 出走馬分析
+    analysis_hits: Dict[str, int] = {}
+    tables = []
+    all_tables = soup.find_all("table", class_=lambda c: c and "PickupHorseTable" in str(c))
+    for tb in all_tables:
+        t = tb.find(class_="PickupHorseTableTitle")
+        title = t.get_text(strip=True) if t else None
+        if title in ANALYSIS_OTHER_TITLES:
+            continue
+        if title not in ANALYSIS_HORSE_TITLES:
+            issues.append(f"出走馬分析: 知らない見出しの表がある（{title}）")
+            continue
+        nums, bad = [], False
+        boxes = tb.find_all("div", class_="Umaban_InBox")
+        for box in boxes:
+            sp = box.find("span", class_="Umaban_Num")
+            if sp is None or sp.find(class_="WakuTxt"):
+                issues.append(f"出走馬分析（{title}）: 読めない形の項目がある")
+                bad = True
+                continue
+            num = sp.get_text(strip=True)
+            short = box.get_text(strip=True)[len(num):] if box.get_text(strip=True).startswith(num) else ""
+            why = _check_against_rows(ref, num, _cls_num(sp, "Waku"), short, "horse")
+            if why:
+                issues.append(f"出走馬分析（{title}）: {why}")
+                bad = True
+                continue
+            if num in nums:
+                issues.append(f"出走馬分析（{title}）: 馬番{num}が2回ある")
+                bad = True
+                continue
+            nums.append(num)
+        txt = [x.get_text(strip=True) for x in tb.select("span.Txt")]
+        if bad:
+            state = "取得異常"
+        elif nums:
+            state = "馬あり"
+        elif not boxes and txt == ["推奨なし"]:
+            state = "推奨なし"
+        else:
+            state = "取得異常"
+            issues.append(f"出走馬分析（{title}）: 馬も「推奨なし」も無い")
+        for num in nums:
+            analysis_hits[num] = analysis_hits.get(num, 0) + 1
+        tables.append({"title": title, "state": state, "nums": nums})
+    seen = [x["title"] for x in tables]
+    dup = sorted({x for x in seen if seen.count(x) > 1})
+    if dup:
+        issues.append(f"出走馬分析: 同じ見出しの表が2つある（{dup}）")
+    if not all_tables:
+        analysis_state = "欄がない"
+    else:
+        analysis_state = "あり"
+        for title in ANALYSIS_HORSE_TITLES:
+            if title not in seen:
+                tables.append({"title": title, "state": "欄がない", "nums": []})
+    return {"pickup_nums": pickup_nums, "pickup_state": pickup_state, "analysis_hits": analysis_hits,
+            "analysis_tables": tables, "analysis_state": analysis_state, "issues": issues}
 
 
 def active_horse_ids(shutuba_data: dict) -> Dict[str, str]:
@@ -251,27 +475,10 @@ def scrape_shutuba(page, race_id: str) -> dict:
                 if name in hname or hname in name:
                     position_nums.add(num)
 
-    # ── 各データ上位3頭 ──
-    top3_hits: Dict[str, int] = {}  # 馬番 → カテゴリー登場数
-    top3_section = soup.find(class_="top3data")
-    if top3_section:
-        # 構造: [カテゴリー名 | 馬番 | 馬名 | 馬番 | 馬名 | 馬番 | 馬名 | link] × n
-        # テキストノードをフラットに取得してパース
-        items = [t.strip() for t in top3_section.get_text(separator="|").split("|") if t.strip()]
-        i = 0
-        while i < len(items):
-            tok = items[i]
-            # カテゴリーと思われる行の次に 馬番(数字) が続くパターンを探す
-            if not tok.isdigit() and i + 1 < len(items) and items[i + 1].isdigit():
-                # カテゴリー開始: 次の3組を馬番・馬名として取得
-                j = i + 1
-                while j < len(items) and items[j].isdigit():
-                    num = items[j]
-                    top3_hits[num] = top3_hits.get(num, 0) + 1
-                    j += 2  # 馬番・馬名をスキップ
-                i = j
-                continue
-            i += 1
+    # ── 各データ上位3頭（出馬表と照らして読む。2026-11-07〜） ──
+    ref = {"horse_name_full": rows["horse_map"], "waku_map": rows["waku_map"], "horse_id_map": horse_id_map}
+    top3 = parse_top3data(soup, ref)
+    top3_hits: Dict[str, int] = top3["hits"]  # 馬番 → 登場した表の数
 
     # ── 人気フォールバック: shutuba.html に Ninki がなければ speed page から取得 ──
     if not pop_map:
@@ -326,6 +533,11 @@ def scrape_shutuba(page, race_id: str) -> dict:
         "map_issues": rows["map_issues"],
         "position_nums": position_nums,
         "top3_hits": top3_hits,
+        "top3_tables": top3["tables"],
+        "top3_state": top3["state"],
+        "top3_issues": top3["issues"],
+        "waku_map": rows["waku_map"],
+        "html": html,   # 採点に使ったページ（run_pickup_all が output/{日}/pages/ に保存する。pickup_scores には入れない）
         "predicted_pace": predicted_pace,
         "race_dist": race_dist,
         "race_surface": race_surface,
@@ -333,11 +545,11 @@ def scrape_shutuba(page, race_id: str) -> dict:
 
 
 # ─── data_top ページのスクレイプ ─────────────────────────────────
-def scrape_data_top(page, race_id: str, horse_map: Dict[str, str]) -> dict:
+def scrape_data_top(page, race_id: str, shutuba_data: dict) -> dict:
     """
-    Returns:
-        pickup_nums:   set of 馬番 (データ分析ピックアップ3頭)
-        analysis_hits: {馬番: カテゴリー数} (出走馬分析テーブル)
+    データ分析のページを取り、parse_data_top で読む（出馬表と照らす。2026-11-07〜）。
+    shutuba_data: scrape_shutuba の戻り値（horse_name_full・waku_map・horse_id_map を使う）
+    Returns: pickup_nums、analysis_hits、pickup_state、analysis_tables、analysis_state、issues、html
     """
     url = f"https://race.netkeiba.com/race/data_top.html?race_id={race_id}&rf=race_submenu"
     # shutuba ページを経由してから data_top へ（自然な閲覧順）
@@ -352,71 +564,9 @@ def scrape_data_top(page, race_id: str, horse_map: Dict[str, str]) -> dict:
     time.sleep(random.uniform(2.5, 6.0))
     html = page.content()
     soup = BeautifulSoup(html, "html.parser")
-
-    # 名前→馬番の逆引きマップ（短縮名でも照合できるように）
-    name_to_num: Dict[str, str] = {}
-    for num, name in horse_map.items():
-        name_to_num[name] = num
-        # 前方4文字の短縮名でも登録
-        if len(name) >= 4:
-            name_to_num[name[:4]] = num
-
-    def name_to_num_fuzzy(short_name: str) -> str:
-        sn = _norm_name(short_name)
-        if sn in name_to_num:
-            return name_to_num[sn]
-        for full, num in name_to_num.items():
-            if sn in full or full in sn:
-                return num
-        return ""
-
-    # ── データ分析ピックアップ3頭 ──
-    pickup_nums: set = set()
-    pickup_wrap = soup.find(class_="DataPickupHorseWrap")
-    if pickup_wrap:
-        for a in pickup_wrap.find_all("a", class_="data_top_horse_link"):
-            name = _norm_name(a.get_text(strip=True))
-            num = name_to_num_fuzzy(name)
-            if num:
-                pickup_nums.add(num)
-
-    # ── 出走馬分析テーブル ──
-    analysis_hits: Dict[str, int] = {}
-    # 各テーブルリスト内の「このコースが得意な馬」「この距離が得意な馬」等を取得
-    for table in soup.find_all("table", class_=lambda c: c and "PickupHorseTable" in str(c)):
-        # テーブルタイトルが「出走馬分析」系か確認
-        title_div = table.find_previous(class_="PickupHorseTableTitle")
-        if not title_div:
-            continue
-        title_txt = title_div.get_text(strip=True)
-        # コース・距離・競馬場・馬場状態・調教評価等の出走馬系のみ対象
-        is_horse_category = any(kw in title_txt for kw in [
-            "得意な馬", "実績がある馬", "調教評価", "クッション", "レース間隔"
-        ])
-        if not is_horse_category:
-            continue
-        for tr in table.find_all("tr"):
-            for td in tr.find_all("td"):
-                txt = td.get_text(strip=True)
-                # 「9コッツ」のように馬番+短縮名が連結されているパターン
-                m = re.match(r"^(\d+)(.+)$", txt)
-                if m:
-                    num, name_part = m.group(1), m.group(2)
-                    if num.isdigit() and int(num) <= 18:
-                        analysis_hits[num] = analysis_hits.get(num, 0) + 1
-                        continue
-                # 数字のみ
-                if txt.isdigit() and int(txt) <= 18:
-                    analysis_hits[txt] = analysis_hits.get(txt, 0) + 1
-                elif len(_norm_name(txt)) >= 2:
-                    num = name_to_num_fuzzy(_norm_name(txt))
-                    if num:
-                        analysis_hits[num] = analysis_hits.get(num, 0) + 1
-
-    return {
-        "pickup_nums": pickup_nums,
-        "analysis_hits": analysis_hits,
-    }
+    res = parse_data_top(soup, shutuba_data)
+    res["html"] = html
+    return res
 
 
 # ─── スコアリング ─────────────────────────────────────────────────
@@ -617,7 +767,7 @@ def analyze_race(shutuba_url: str, triple_horses: List[dict], prev_db: dict = No
 
         shutuba_data = scrape_shutuba(page, race_id)
         time.sleep(random.uniform(3.0, 8.0))
-        data_top_data = scrape_data_top(page, race_id, shutuba_data["horse_map"])
+        data_top_data = scrape_data_top(page, race_id, shutuba_data)
 
         browser.close()
 

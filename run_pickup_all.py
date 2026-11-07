@@ -4,6 +4,7 @@
 usage: python3 run_pickup_all.py [YYYYMMDD]
 """
 
+import gzip
 import sys
 import json
 import time
@@ -22,7 +23,7 @@ from scraper import (
 from data_quality import build_quality, load_index_sources, race_quality_issues
 from index_table_check import check_index_tables, load_index_tables
 from race_pickup import (scrape_shutuba, scrape_data_top, score_horses, active_horse_ids,
-                         SCORING_VERSION, COLLECTOR_VERSION)
+                         SCORING_VERSION, COLLECTOR_VERSION, DATA_TOP_READER_VERSION)
 from prev_inputs import (FAILED, DateLock, RunRecord, fetch_entry, load_runs, prev_db_entry, prev_status_summary,
                          race_top1, reusable_entries, write_json_atomic, PREV_FETCH_VERSION)
 
@@ -107,6 +108,22 @@ def write_prev_data_snapshot(out_dir: Path, races: dict) -> int:
     return len(snapshot)
 
 
+def save_page(out_dir: Path, race_id: str, kind: str, html: str) -> None:
+    """採点に使ったページを output/{日}/pages/{レースID}_{kind}.html.gz に保存する（2026-11-07〜。git には入れない。
+    docs/data_top_reader_fix_plan_202611.md 3.4）。同じレースを取り直したら、新しいページで置き換える。
+    保存に失敗しても採点は続ける（ログに出す）。"""
+    try:
+        d = out_dir / "pages"
+        d.mkdir(parents=True, exist_ok=True)
+        path = d / f"{race_id}_{kind}.html.gz"
+        tmp = d / f".{race_id}_{kind}.html.gz.tmp"
+        with gzip.open(tmp, "wt", encoding="utf-8") as f:
+            f.write(html or "")
+        tmp.replace(path)
+    except Exception as e:
+        logger.error(f"  ページの保存に失敗（{race_id} {kind}）: {e}")
+
+
 def score_race(page, context, date: str, race_label: str, race_id: str, venue: str, race_num: str,
                triple_horses: list, index_sources: dict, reusable: dict, record, horse_style_db: dict,
                index_tables: dict) -> tuple:
@@ -151,8 +168,14 @@ def score_race(page, context, date: str, race_label: str, race_id: str, venue: s
         if not table_check.get("ok"):
             logger.warning(f"  {race_label}: 指数の表が出馬表とそろわない {table_check.get('problems')}")
 
+        out_dir = BASE_DIR / "output" / date
+        save_page(out_dir, race_id, "shutuba", shutuba_data.get("html"))
         human_sleep(4.0, 10.0)
-        data_top_data = scrape_data_top(page, race_id, shutuba_data["horse_map"])
+        data_top_data = scrape_data_top(page, race_id, shutuba_data)
+        save_page(out_dir, race_id, "data_top", data_top_data.get("html"))
+        data_top_issues = shutuba_data.get("top3_issues", []) + data_top_data.get("issues", [])
+        if data_top_issues:
+            logger.warning(f"  {race_label}: 3項目の読み取りに異常 {data_top_issues}")
         human_sleep(4.0, 10.0)
 
         # 前走データ: 取消・除外を除く全馬（比較相手を含む）。同じ対象日の値だけ再利用する
@@ -228,13 +251,20 @@ def score_race(page, context, date: str, race_label: str, race_id: str, venue: s
             "quality": build_quality(COLLECTOR_VERSION, index_sources, race_label,
                                      prev=dict(prev_fetch=PREV_FETCH_VERSION, prev_inputs_run=record.run_id,
                                                prev_status=prev_status),
-                                     table_check=table_check),
+                                     table_check=table_check,
+                                     data_top_reader=DATA_TOP_READER_VERSION, data_top_issues=data_top_issues),
             "prev_inputs_run": record.run_id,
             "horse_id_map": horse_id_map,
-            "position_nums": shutuba_data["position_nums"],
+            # 集合のままだと保存で集合の文字列になる（json の default=str。2026-11-07 に見つけた問題）ので、並べたリストで保存する
+            "position_nums": sorted(shutuba_data["position_nums"], key=int),
             "top3_hits": shutuba_data["top3_hits"],
-            "pickup_nums": data_top_data["pickup_nums"],
+            "pickup_nums": sorted(data_top_data["pickup_nums"], key=int),
             "analysis_hits": data_top_data["analysis_hits"],
+            "top3_tables": shutuba_data.get("top3_tables"),
+            "top3_state": shutuba_data.get("top3_state"),
+            "pickup_state": data_top_data.get("pickup_state"),
+            "analysis_tables": data_top_data.get("analysis_tables"),
+            "analysis_state": data_top_data.get("analysis_state"),
             "predicted_pace": shutuba_data.get("predicted_pace"),
             "race_dist": shutuba_data.get("race_dist"),
             "race_surface": shutuba_data.get("race_surface"),

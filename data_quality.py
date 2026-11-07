@@ -17,7 +17,8 @@ pickup_scores.json の各レースに "quality" を保存し、研究・閾値�
                  前走データの取り方が修正後のデータで、記録が無い・照合で問題があれば、問題あり
 - data_top_reader: 出走馬分析・データ分析ピックアップ・各データ上位3頭の読み方（2026-11-07〜）。無ければ問題あり
                  （出走馬分析の見出しを1つ前の表のものと取り違え、1つの表から最初の1頭しか数えていなかった。
-                 docs/data_top_reader_fix_plan_202611.md。直した読み取りができるまで、全レースが当たる）
+                 docs/data_top_reader_fix_plan_202611.md）
+- data_top_issues: 3項目の読み取りの異常（出馬表と照らせない・読めない形・重複・知らない見出し）。あれば問題あり
 - 無効化:        output/{date}/invalidated.json に載ったレース（買い目・採点ファイルは書き換えない）
 """
 import json
@@ -49,7 +50,7 @@ def load_index_sources(date: str, output_dir: Path = None) -> dict:
 
 
 def build_quality(collector_version: str, index_sources: dict, label: str, prev: dict = None,
-                  table_check: dict = None, data_top_reader: str = None) -> dict:
+                  table_check: dict = None, data_top_reader: str = None, data_top_issues: list = None) -> dict:
     """採点時に pickup_scores.json の各レースへ保存する quality。prev は前走データの版・記録・状態、
     table_check は指数の表と出馬表の照合（index_table_check.check_index_tables の戻り値）"""
     race = index_sources.get("races", {}).get(label, {})
@@ -66,6 +67,7 @@ def build_quality(collector_version: str, index_sources: dict, label: str, prev:
         "candidate_rule": index_sources.get("candidate_rule_version") if race else None,
         "rank_notes": race.get("rank_notes", {}),
         "data_top_reader": data_top_reader,
+        "data_top_issues": list(data_top_issues or []),
     }
 
 
@@ -102,4 +104,6 @@ def race_quality_issues(rdata: dict, invalid_reason: str = None) -> list:
             issues.append(f"指数の表が出馬表とそろわない: {tc.get('problems')}")
     if not q.get("data_top_reader"):
         issues.append(DATA_TOP_READER_OLD)
+    elif q.get("data_top_issues"):
+        issues.append(f"3項目（上位3頭・ピックアップ・出走馬分析）の読み取りに異常がある: {q['data_top_issues']}")
     return issues
