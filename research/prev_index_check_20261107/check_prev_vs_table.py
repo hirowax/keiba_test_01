@@ -11,7 +11,9 @@
   表が11列で、7列目の見出しが「近5走の指数」、2段目の見出し行の先頭5つが「5走前」〜「前走」のときだけ読む
   （research/prev_data_check_20261104 と同じ確かめ方に、見出しの確認を足した）。
 照合: 馬番と馬名（空白を除いて同じ）の両方が合う行だけを同じ馬とする。
-分け方（馬ごと）: 一致／不一致／表の「前走」が値なし（「-」など）で記録は数字／記録が数字でない（状態ごと）／照合できない。
+分け方（馬ごと）: 一致／不一致／表の「前走」が値なし（「-」など）で記録は数字／表の「前走」が読めない値／記録が数字でない（状態ごと）／照合できない。
+表の値は scraper.classify_index_text で ok・none（値なし）・error（200以上・読めない）に分け、none と error を別に数える
+（2026-11-07 外部レビュー指摘。それまでは error も値なしに入れていた。11/7 の結果は変わらない）。
 
 実行: python3 research/prev_index_check_20261107/check_prev_vs_table.py 20261107
 出力: このフォルダの result_{D}.json・result_{D}.txt
@@ -95,8 +97,11 @@ def main():
                 row.update(status=h["status"], prev=h.get("values", {}), table_prev=t[1])
                 tk, _ = scraper.classify_index_text(t[1])
                 idx = (h.get("values") or {}).get("idx")
-                if h["status"] != "取れた" or not isinstance(idx, int):
-                    k = f"記録が数字でない（{h['status']}）・表は{'数字' if tk == 'ok' else '値なし'}"
+                tname = {"ok": "数字", "none": "値なし"}.get(tk, "読めない値")
+                if tk not in ("ok", "none"):
+                    k = f"表の「前走」が読めない値（{t[1]}）"
+                elif h["status"] != "取れた" or not isinstance(idx, int):
+                    k = f"記録が数字でない（{h['status']}）・表は{tname}"
                 elif tk != "ok":
                     k = f"記録は数字・表は値なし（{t[1]}）"
                 elif int(t[1].rstrip("*")) == idx:
