@@ -163,12 +163,23 @@ class AnalysisTest(unittest.TestCase):
         self.assertEqual(st["この距離が得意な馬"], "取得異常")
         self.assertEqual(res["analysis_hits"]["10"], 4)   # 合わない項目は足さない
 
-    def test_ambiguous_short_name_is_an_issue(self):
-        """短い名前が2頭の正式名の先頭と同じ（アスク: 1番と12番）なら照らせない"""
-        tabs = horse_tables(**{"この距離が得意な馬": [("1", "1", "アスク")]})
+    def test_same_short_name_is_decided_by_umaban(self):
+        """短い名前が2頭の正式名の先頭と同じ（アスク: 1番と12番）でも、馬番でその行の正式名の馬に決まる
+        （2026-11-08 ユーザー決定。11/8 京都4R の「アメリ」7番・13番と同じ形）"""
+        tabs = horse_tables(**{"この距離が得意な馬": [("1", "1", "アスク"), ("12", "7", "アスク")]})
         res = rp.parse_data_top(data_top_page(GOOD_PICKUP, *tabs), ref(), RID)
-        self.assertTrue(any("別の馬がいる" in x for x in res["issues"]))
-        self.assertNotIn("1", res["analysis_hits"])
+        self.assertEqual([x for x in res["issues"] if "この距離が得意な馬" in x], [])
+        self.assertEqual(res["analysis_hits"]["1"], 1)
+        self.assertEqual(res["analysis_hits"]["12"], 1)
+        t = [x for x in res["analysis_tables"] if x["title"] == "この距離が得意な馬"][0]
+        self.assertEqual(t["names"], ["アスクビクター", "アスクワンダー"])
+
+    def test_same_short_name_with_wrong_waku_is_an_issue(self):
+        """馬番で決めるので、枠が出馬表のその馬番と違えば取得異常（12番の枠は7。8と書かれていれば合わない）"""
+        tabs = horse_tables(**{"この距離が得意な馬": [("12", "8", "アスク")]})
+        res = rp.parse_data_top(data_top_page(GOOD_PICKUP, *tabs), ref(), RID)
+        self.assertTrue(any("馬番12の枠" in x for x in res["issues"]))
+        self.assertNotIn("12", res["analysis_hits"])
 
     def test_duplicate_in_table(self):
         tabs = horse_tables(**{"この距離が得意な馬": [("10", "6", "リバー"), ("10", "6", "リバー")]})

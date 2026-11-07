@@ -39,7 +39,7 @@ FIRE_RULE_SCORING_VERSIONS = ("v5", "v5.1")
 
 # 3項目（各データ上位3頭・データ分析ピックアップ・出走馬分析）の読み方の版。quality.data_top_reader に記録する。
 # 読み方を変えたら値を変える。
-DATA_TOP_READER_VERSION = "表の中の見出しと馬番の要素で読み出馬表と照合_20261107"
+DATA_TOP_READER_VERSION = "表の中の見出しと馬番の要素で読み出馬表の馬番の行の正式名と照合_20261108"
 
 # 出走馬分析で数える表（表の中の見出し。2026-11-07 に保存した5レースで見た6種類）。
 # 公開されているページでこのどれかが無ければ取得異常にする（無いことが正常かは確かめていないため）。
@@ -250,7 +250,9 @@ def _check_against_rows(ref: dict, num: str, waku, short: str, kind: str, horse_
     ページの1項目が出馬表の行と合うか。合えば None、合わなければ理由。
     ref: horse_name_full（馬番→正式名）・waku_map・horse_id_map（scrape_shutuba の戻り値）
     kind: "horse"（名前を照らす）/ "jockey"（騎手の表。騎手名は出馬表で略されているので、馬番と枠だけ照らす）
-    名前は、ページの短い名前が正式名の先頭と同じで、同じ先頭の名前の別の馬がいないこと（馬IDがあれば馬IDで照らす）。
+    馬は、ページに書かれた馬番で出馬表の行を決め、その行の正式名の馬とする（同じレースの出馬表。2026-11-08 ユーザー決定）。
+    短い名前は、その正式名の先頭と同じかを確かめるだけに使う。同じ先頭の名前の別の馬がいても、馬番で決まるので異常にしない。
+    馬IDがあれば馬IDで照らす。
     """
     names = ref.get("horse_name_full") or {}
     if not num or num not in names:
@@ -267,9 +269,6 @@ def _check_against_rows(ref: dict, num: str, waku, short: str, kind: str, horse_
     sn = _norm_name(short or "")
     if not sn or not names[num].startswith(sn):
         return f"馬番{num}の名前が出馬表と合わない（ページ {short}・出馬表 {names[num]}）"
-    others = [n for n, nm in names.items() if n != num and nm.startswith(sn)]
-    if others:
-        return f"馬番{num}の名前「{sn}」で始まる別の馬がいる（馬番 {','.join(others)}）"
     return None
 
 
@@ -335,13 +334,14 @@ def parse_top3data(soup: BeautifulSoup, ref: dict) -> dict:
         state = "取得異常" if bad else ("馬あり" if nums else "空")
         if not boxes:
             issues.append(f"上位3頭（{title}）: 項目が無い")
-        tables.append({"title": title, "state": state, "nums": nums})
+        tables.append({"title": title, "state": state, "nums": nums,
+                       "names": [(ref.get("horse_name_full") or {}).get(n) for n in nums]})
     seen = [x["title"] for x in tables]
     if not tables and not issues:
         issues.append("上位3頭: 欄はあるが表が無い")
     for title in TOP3_TITLES:
         if title not in seen:
-            tables.append({"title": title, "state": "欄がない", "nums": []})
+            tables.append({"title": title, "state": "欄がない", "nums": [], "names": []})
     return {"hits": hits, "tables": tables, "state": "取得異常" if issues else "あり", "issues": issues}
 
 
@@ -460,11 +460,12 @@ def parse_data_top(soup: BeautifulSoup, ref: dict, race_id: str) -> dict:
             issues.append(f"出走馬分析（{title}）: 馬も「推奨なし」も無い")
         for num in nums:
             analysis_hits[num] = analysis_hits.get(num, 0) + 1
-        tables.append({"title": title, "state": state, "nums": nums})
+        tables.append({"title": title, "state": state, "nums": nums,
+                       "names": [(ref.get("horse_name_full") or {}).get(n) for n in nums]})
     seen = [x["title"] for x in tables]
     missing = [t for t in ANALYSIS_HORSE_TITLES if t not in seen]
     for title in missing:
-        tables.append({"title": title, "state": "欄がない", "nums": []})
+        tables.append({"title": title, "state": "欄がない", "nums": [], "names": []})
     if missing:
         issues.append(f"出走馬分析: 数える表が無い（{missing}）")
     analysis_state = "取得異常" if any(x.startswith("出走馬分析") for x in issues) else "あり"
