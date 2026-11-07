@@ -1,0 +1,367 @@
+{
+ "date": "20261108",
+ "index_reader_version": "画面の値_0とマイナスと*は正常_200以上は異常_順位の形と馬番の重複も検査_20261102",
+ "candidate_rule_version": "ページの順位で3位以内_同じ順位は全員_20261102",
+ "races": {
+  "東京1R": {
+   "race_id": "202605050201",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "東京2R": {
+   "race_id": "202605050202",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "東京3R": {
+   "race_id": "202605050203",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "東京4R": {
+   "race_id": "202605050204",
+   "modes": {
+    "近走平均": "なし",
+    "当該距離": "なし",
+    "当該コース": "なし"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "東京5R": {
+   "race_id": "202605050205",
+   "modes": {
+    "近走平均": "なし",
+    "当該距離": "なし",
+    "当該コース": "なし"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "東京6R": {
+   "race_id": "202605050206",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "東京7R": {
+   "race_id": "202605050207",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "東京8R": {
+   "race_id": "202605050208",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "東京9R": {
+   "race_id": "202605050209",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "東京10R": {
+   "race_id": "202605050210",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "東京11R": {
+   "race_id": "202605050211",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "東京12R": {
+   "race_id": "202605050212",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "京都1R": {
+   "race_id": "202608050201",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "京都2R": {
+   "race_id": "202608050202",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "京都3R": {
+   "race_id": "202608050203",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "京都4R": {
+   "race_id": "202608050204",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "京都5R": {
+   "race_id": "202608050205",
+   "modes": {
+    "近走平均": "なし",
+    "当該距離": "なし",
+    "当該コース": "なし"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "京都6R": {
+   "race_id": "202608050206",
+   "modes": {
+    "近走平均": "なし",
+    "当該距離": "なし",
+    "当該コース": "なし"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "京都7R": {
+   "race_id": "202608050207",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "京都8R": {
+   "race_id": "202608050208",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "京都9R": {
+   "race_id": "202608050209",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "京都10R": {
+   "race_id": "202608050210",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "京都11R": {
+   "race_id": "202608050211",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "京都12R": {
+   "race_id": "202608050212",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "福島1R": {
+   "race_id": "202603030201",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "福島2R": {
+   "race_id": "202603030202",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "福島3R": {
+   "race_id": "202603030203",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "福島4R": {
+   "race_id": "202603030204",
+   "modes": {
+    "近走平均": "なし",
+    "当該距離": "なし",
+    "当該コース": "なし"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "福島5R": {
+   "race_id": "202603030205",
+   "modes": {
+    "近走平均": "なし",
+    "当該距離": "なし",
+    "当該コース": "なし"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "福島6R": {
+   "race_id": "202603030206",
+   "modes": {
+    "近走平均": "なし",
+    "当該距離": "なし",
+    "当該コース": "なし"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "福島7R": {
+   "race_id": "202603030207",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "福島8R": {
+   "race_id": "202603030208",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "福島9R": {
+   "race_id": "202603030209",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "福島10R": {
+   "race_id": "202603030210",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "福島11R": {
+   "race_id": "202603030211",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  },
+  "福島12R": {
+   "race_id": "202603030212",
+   "modes": {
+    "近走平均": "type=rank",
+    "当該距離": "type=rank",
+    "当該コース": "type=rank"
+   },
+   "read_errors": {},
+   "rank_notes": {}
+  }
+ }
+}
