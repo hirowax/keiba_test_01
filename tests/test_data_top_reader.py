@@ -108,7 +108,6 @@ def horse_tables(**override):
         "今回の馬場状態が得意な馬": [("2", "1", "ダイシ"), ("10", "6", "リバー"), ("13", "7", "タニセ")],
         "今回のレース間隔で実績がある馬": [("13", "7", "タニセ")],
         "今回の調教評価で実績がある馬": [("13", "7", "タニセ"), ("10", "6", "リバー")],
-        "今回の厩舎コメント評価で実績がある馬": [("6", "3", "ロード")],
     }
     base.update(override)
     out = []
@@ -116,6 +115,8 @@ def horse_tables(**override):
         out.append(analysis_table(t, items) if items else analysis_table(t, txt="推奨なし"))
         if t == "今回の調教評価で実績がある馬":
             out.append(analysis_table("今回のオッズで期待できる騎手", txt="丹内祐次"))
+            # 馬の表だが数えない（2026-11-07 ユーザー決定）
+            out.append(analysis_table("今回の厩舎コメント評価で実績がある馬", [("6", "3", "ロード"), ("2", "1", "ダイシ")]))
     return out
 
 
@@ -124,7 +125,7 @@ class AnalysisTest(unittest.TestCase):
         """見出しは表の中のものを使い、表の全頭を数える（v5.1 までは1つ前の表の見出し・最初の1頭だけ）"""
         res = rp.parse_data_top(data_top_page(GOOD_PICKUP, *OTHER_TABLES, *horse_tables()), ref(), RID)
         self.assertEqual(res["issues"], [])
-        self.assertEqual(res["analysis_hits"], {"10": 4, "11": 1, "7": 1, "6": 2, "2": 1, "13": 3})
+        self.assertEqual(res["analysis_hits"], {"10": 4, "11": 1, "7": 1, "6": 1, "2": 1, "13": 3})
         self.assertEqual(res["page_state"], "公開")
         states = {t["title"]: t["state"] for t in res["analysis_tables"]}
         self.assertEqual(states["このコースが得意な馬"], "馬あり")   # v5.1 は数えていなかった表
@@ -136,6 +137,16 @@ class AnalysisTest(unittest.TestCase):
         tabs = horse_tables()
         res = rp.parse_data_top(data_top_page(GOOD_PICKUP, *tabs), ref(), RID)
         self.assertNotIn("今回のオッズで期待できる騎手", [t["title"] for t in res["analysis_tables"]])
+
+    def test_stable_comment_table_is_not_counted(self):
+        """「今回の厩舎コメント評価で実績がある馬」は馬の表だが数えない。無くても異常にしない（2026-11-07 ユーザー決定）"""
+        tabs = horse_tables()
+        res = rp.parse_data_top(data_top_page(GOOD_PICKUP, *tabs), ref(), RID)
+        self.assertNotIn("今回の厩舎コメント評価で実績がある馬", [t["title"] for t in res["analysis_tables"]])
+        no_comment = [t for t in tabs if "厩舎コメント" not in t]
+        res2 = rp.parse_data_top(data_top_page(GOOD_PICKUP, *no_comment), ref(), RID)
+        self.assertEqual((res["analysis_hits"], res["issues"]), (res2["analysis_hits"], []))
+        self.assertEqual(res2["issues"], [])
 
     def test_unknown_title_is_an_issue(self):
         res = rp.parse_data_top(data_top_page(GOOD_PICKUP, analysis_table("このコースのクッション値が得意な馬",
@@ -179,7 +190,7 @@ class AnalysisTest(unittest.TestCase):
         """同じ見出しの表が2つあれば、2つ目は数えずに取得異常（同じ馬を2回数えない）"""
         tabs = horse_tables() + [analysis_table("この競馬場が得意な馬", [("6", "3", "ロード")])]
         res = rp.parse_data_top(data_top_page(GOOD_PICKUP, *tabs), ref(), RID)
-        self.assertEqual(res["analysis_hits"]["6"], 2)
+        self.assertEqual(res["analysis_hits"]["6"], 1)   # 2つ目の「この競馬場が得意な馬」は数えない
         self.assertTrue(any("同じ見出しの表が2つある" in x for x in res["issues"]))
 
 
@@ -326,11 +337,11 @@ class SavedPagesTest(unittest.TestCase):
                 self.assertEqual(sh["top3_hits"], e["top3_this_reading"])
                 self.assertEqual(sorted(dt["pickup_nums"], key=int), e["pickup_this_reading"])
                 self.assertEqual(dt["analysis_hits"], e["analysis_this_reading"])
-                # 保存した6レースのページには7種類目（厩舎コメント）の表が無い。9/12 中山3R は公開されていない
+                # 9/12 中山3R は公開されていない
                 if rid == "202606040303":
                     want = [f"データ分析: 公開されていない（ページの案内「{rp.DATA_TOP_NOT_PUBLISHED}」）"]
                 else:
-                    want = ["出走馬分析: 数える表が無い（['今回の厩舎コメント評価で実績がある馬']）"]
+                    want = []
                 self.assertEqual(sh["top3_issues"] + dt["issues"], want)
                 self.assertEqual(sh["map_issues"], [])
 
@@ -470,10 +481,10 @@ class ScoreRaceFlowTest(unittest.TestCase):
                 self.assertIn(res["prev_inputs_run"], v["path"])
             self.assertEqual(res["data_top_page_state"], "公開")
             self.assertEqual(res["pickup_nums"], sorted(res["pickup_nums"], key=int))
-            # 7種類目の表が無いページなので、読み取りの異常で品質の問題になる
-            self.assertTrue(any("厩舎コメント" in x for x in q["data_top_issues"]))
-            self.assertTrue(any(x.startswith("3項目") for x in issues))
-            self.assertFalse(any("ページ" in x for x in issues if not x.startswith("3項目")))
+            self.assertEqual(q["data_top_issues"], [])
+            self.assertFalse(any(x.startswith("3項目") or "ページ" in x for x in issues))
+            # 指数の表を渡していないので、その理由だけが出る
+            self.assertTrue(issues and all(x.startswith("指数の表が出馬表とそろわない") for x in issues))
 
     def test_save_failure_makes_race_bad(self):
         import tempfile
