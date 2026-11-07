@@ -18,13 +18,14 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fixture_pages import read_fixture  # noqa: E402
 from export_json import index_number  # noqa: E402
 from scraper import (  # noqa: E402
     build_summary, find_triple_top5_rows, index_read_errors, parse_rank_html,
     parse_speed_shutuba_html, rank_notes, ranked_horses, top_rank_horses,
 )
 
-FIX = Path(__file__).resolve().parent / "fixtures"
 COLS = ["順位", "枠", "馬番", "印", "馬名", "テスト最高指数"]
 
 
@@ -42,7 +43,7 @@ def nums(horses):
 class TopRankTest(unittest.TestCase):
     def test_real_page_starred_horse_is_first(self):
         """10/31 東京7R 近走平均: 96* の馬が1位で入り、同じ83の2位2頭も入る"""
-        df = parse_rank_html((FIX / "rank_202605041007_average.html").read_text(encoding="utf-8"))
+        df = parse_rank_html(read_fixture("rank_202605041007_average.html"))
         top = top_rank_horses(df, 3)
         self.assertEqual([(h["順位"], h["馬番"], h["指数"]) for h in top],
                          [(1, "3", "96*"), (2, "2", "83"), (2, "4", "83")])
@@ -109,8 +110,8 @@ class TopRankTest(unittest.TestCase):
 
     def test_submenu_matches_rank_page_average(self):
         """代わりの取り方（shutuba_submenu）の順位が、ランキングページ（近走平均）と同じ"""
-        rank = ranked_horses(parse_rank_html((FIX / "rank_202605041007_average.html").read_text(encoding="utf-8")))[0]
-        sub = parse_speed_shutuba_html((FIX / "submenu_202605041007.html").read_text(encoding="utf-8"),
+        rank = ranked_horses(parse_rank_html(read_fixture("rank_202605041007_average.html")))[0]
+        sub = parse_speed_shutuba_html(read_fixture("submenu_202605041007.html"),
                                        "202605041007")["average"]
         key = lambda hs: [(h["順位"], h["馬番"], h["指数"]) for h in hs]
         self.assertEqual(key(ranked_horses(sub)[0]), key(rank))

@@ -11,6 +11,8 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fixture_pages import read_fixture  # noqa: E402
 from data_quality import DATA_TOP_READER_OLD, build_quality, race_quality_issues  # noqa: E402
 from prev_inputs import PREV_FETCH_VERSION  # noqa: E402
 from scraper import CANDIDATE_RULE_VERSION, INDEX_READER_VERSION, parse_speed_shutuba_html  # noqa: E402
@@ -120,7 +122,7 @@ class QualityTest(unittest.TestCase):
 
 class IndexErrorRecordTest(unittest.TestCase):
     def test_fallback_read_error_is_recorded(self):
-        html = (Path(__file__).resolve().parent / "fixtures" / "submenu_202605041007.html").read_text(encoding="utf-8")
+        html = read_fixture("submenu_202605041007.html")
         soup = BeautifulSoup(html, "html.parser")
         c = soup.find(class_="sk__max_course_index")
         for hidden in c.find_all(class_="Sort_Function_Data_Hidden"):

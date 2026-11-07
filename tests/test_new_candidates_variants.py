@@ -15,18 +15,19 @@ from pathlib import Path
 from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fixture_pages import read_fixture  # noqa: E402
 import new_candidates_variants as ncv  # noqa: E402
 import scraper  # noqa: E402
 from data_quality import build_quality  # noqa: E402
 from prev_inputs import PREV_FETCH_VERSION  # noqa: E402
 
-FIX = Path(__file__).resolve().parent / "fixtures"
 DATE = "20261107"
 LABEL = "東京7R"
 
 
 def tables():
-    df = scraper.parse_rank_html((FIX / "rank_202605041007_average.html").read_text(encoding="utf-8"))
+    df = scraper.parse_rank_html(read_fixture("rank_202605041007_average.html"))
     return {LABEL: {"average": df, "distance": df.copy(), "course": df.copy()}}
 
 

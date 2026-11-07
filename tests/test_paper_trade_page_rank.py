@@ -14,10 +14,11 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fixture_pages import read_fixture  # noqa: E402
 import paper_trade  # noqa: E402
 from scrape_results import parse_result_html  # noqa: E402
 
-FIX = Path(__file__).resolve().parent / "fixtures"
 
 
 def h(num, rank, val):
@@ -60,14 +61,14 @@ class PageRankMenuTest(unittest.TestCase):
 
 class ResultNonFinisherTest(unittest.TestCase):
     def test_torikeshi_is_kept(self):
-        r = parse_result_html((FIX / "result_202605041106_torikeshi.html").read_text(encoding="utf-8"), "東京6R")
+        r = parse_result_html(read_fixture("result_202605041106_torikeshi.html"), "東京6R")
         self.assertEqual(len(r["horses"]), 14)
         self.assertEqual([(o["num"], o["status"], o["name"]) for o in r["others"]],
                          [("13", "取消", "ソリッドベーシス")])
         self.assertEqual([x["num"] for x in r["horses"] if x["rank"] == 1], ["12"])
 
     def test_unknown_status_is_not_dropped(self):
-        html = (FIX / "result_202605041106_torikeshi.html").read_text(encoding="utf-8")
+        html = read_fixture("result_202605041106_torikeshi.html")
         html = html.replace(">取消<", ">再審<", 1)
         r = parse_result_html(html, "東京6R")
         self.assertEqual([(o["num"], o["status"], o["rank_text"]) for o in r["others"]], [("13", "不明", "再審")])

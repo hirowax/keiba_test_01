@@ -11,14 +11,15 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fixture_pages import read_fixture  # noqa: E402
 from index_table_check import check_index_tables  # noqa: E402
 from scraper import parse_rank_html, ranked_horses  # noqa: E402
 
-FIX = Path(__file__).resolve().parent / "fixtures"
 
 
 def real_table():
-    return parse_rank_html((FIX / "rank_202605041007_average.html").read_text(encoding="utf-8"))
+    return parse_rank_html(read_fixture("rank_202605041007_average.html"))
 
 
 def shutuba_of(df, scratched=None, drop=(), names_override=None):

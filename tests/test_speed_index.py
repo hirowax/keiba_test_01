@@ -26,16 +26,17 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fixture_pages import read_fixture  # noqa: E402
 from scraper import (  # noqa: E402
     classify_index_text, index_read_errors, parse_rank_html,
     parse_speed_shutuba_html, speed_cell_value, _is_valid_speed_df,
 )
 
-FIX = Path(__file__).resolve().parent / "fixtures"
 
 
 def fixture(name):
-    return (FIX / name).read_text(encoding="utf-8")
+    return read_fixture(name)
 
 
 def cell(hidden, visible):

@@ -15,3 +15,8 @@ output/*/prev_inputs/.lock
 # 取得したページはリポジトリ（公開）に入れず手元だけに置く（2026-11-07 ユーザー決定）
 research/*/pages/
 output/*/pages/
+
+# netkeiba・JRA のページを丸ごと保存したものは、公開のリポジトリに入れない（2026-11-07 ユーザー決定。履歴からも消した）
+tests/fixtures/*.html
+research/**/*.html
+research/**/*.html.gz

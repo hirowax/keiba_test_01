@@ -16,14 +16,15 @@ from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fixture_pages import read_fixture  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 import prev_inputs as pi  # noqa: E402
 from test_prev_inputs import FAKE_HEADERS, table  # noqa: E402
 
-FIX = Path(__file__).resolve().parent / "fixtures"
 
 
 def real(hid):
-    return pi.parse_results_table((FIX / f"horse_{hid}_20261106.html").read_text(encoding="utf-8"), "20261107")
+    return pi.parse_results_table(read_fixture(f"horse_{hid}_20261106.html"), "20261107")
 
 
 class RealPageTest(unittest.TestCase):
@@ -45,7 +46,7 @@ class RealPageTest(unittest.TestCase):
 
     def test_target_before_excluded_race_uses_that_day_latest(self):
         """対象日が除外のレースより前なら、除外の行は対象日より後なので見ない（飛ばした行なし）"""
-        html = (FIX / "horse_2021104929_20261106.html").read_text(encoding="utf-8")
+        html = read_fixture("horse_2021104929_20261106.html")
         e = pi.parse_results_table(html, "20261001")
         self.assertEqual((e["status"], e["values"]["date"], e["skipped_rows"]), (pi.OK, "20260726", []))
         self.assertEqual(e["selected_reason"], "対象日より前の最新の行")
