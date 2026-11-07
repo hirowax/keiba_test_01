@@ -1,0 +1,2896 @@
+{
+ "20261107 福島4R": {
+  "date": "20261107",
+  "label": "福島4R",
+  "race_id": "202603030104",
+  "states": {
+   "照合済み": 24,
+   "騎手名は未照合": 3
+  },
+  "top3": [
+   {
+    "title": "能力",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "2",
+      "waku": "1",
+      "short": "ダイシ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "5",
+      "waku": "3",
+      "short": "ステイ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "13",
+      "waku": "7",
+      "short": "アスク",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "上昇度",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "7",
+      "waku": "4",
+      "short": "ハイド",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "8",
+      "waku": "4",
+      "short": "マーズ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "15",
+      "waku": "8",
+      "short": "レディ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "騎手",
+    "kind": "jockey",
+    "entries": [
+     {
+      "num": "1",
+      "waku": "1",
+      "short": "小沢大",
+      "state": "騎手名は未照合",
+      "why": [
+       "馬番・枠は合う。騎手名 ページ 小沢大・行 小沢（騎手ID 01185）"
+      ]
+     },
+     {
+      "num": "2",
+      "waku": "1",
+      "short": "丹内祐",
+      "state": "騎手名は未照合",
+      "why": [
+       "馬番・枠は合う。騎手名 ページ 丹内祐・行 丹内（騎手ID 01091）"
+      ]
+     },
+     {
+      "num": "4",
+      "waku": "2",
+      "short": "吉田隼",
+      "state": "騎手名は未照合",
+      "why": [
+       "馬番・枠は合う。騎手名 ページ 吉田隼・行 吉田隼（騎手ID 01095）"
+      ]
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "距離",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "1",
+      "waku": "1",
+      "short": "エクス",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "2",
+      "waku": "1",
+      "short": "ダイシ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "5",
+      "waku": "3",
+      "short": "ステイ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   }
+  ],
+  "pickup": [
+   {
+    "num": "10",
+    "waku": "5",
+    "name": "リバーソニック",
+    "horse_id": "2023101484",
+    "state": "照合済み",
+    "why": []
+   },
+   {
+    "num": "2",
+    "waku": "1",
+    "name": "ダイシンレアレア",
+    "horse_id": "2022106566",
+    "state": "照合済み",
+    "why": []
+   },
+   {
+    "num": "6",
+    "waku": "3",
+    "name": "ロードヴェリタス",
+    "horse_id": "2023105821",
+    "state": "照合済み",
+    "why": []
+   }
+  ],
+  "analysis": [
+   {
+    "own_title": "このコースで有利な枠順",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": null,
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "8/枠/3/枠/1/枠"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースで有利な脚質",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースで有利な枠順",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "先行"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースで有利な脚質",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "吉田隼人"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な調教師",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースが得意な騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "寺島良"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースに実績がある種牡馬",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースが得意な調教師",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "ルヴァンスレーヴ"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースに実績がある母父",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースに実績がある種牡馬",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "ディープインパクト"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な馬",
+    "kind": "馬の表",
+    "content": "推奨なし",
+    "title_code_uses": "このコースに実績がある母父",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "推奨なし"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "この距離が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "このコースが得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "10/リバー/1/エクス/7/ハイド"
+    ],
+    "entries": [
+     {
+      "num": "10",
+      "waku": "5",
+      "short": "リバー",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "1",
+      "waku": "1",
+      "short": "エクス",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "7",
+      "waku": "4",
+      "short": "ハイド",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "この競馬場が得意な馬",
+    "kind": "馬の表",
+    "content": "推奨なし",
+    "title_code_uses": "この距離が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "推奨なし"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の馬場状態が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "この競馬場が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "6/ロード/10/リバー/7/ハイド"
+    ],
+    "entries": [
+     {
+      "num": "6",
+      "waku": "3",
+      "short": "ロード",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "10",
+      "waku": "5",
+      "short": "リバー",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "7",
+      "waku": "4",
+      "short": "ハイド",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回のレース間隔で実績がある馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "今回の馬場状態が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "2/ダイシ/10/リバー/13/アスク"
+    ],
+    "entries": [
+     {
+      "num": "2",
+      "waku": "1",
+      "short": "ダイシ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "10",
+      "waku": "5",
+      "short": "リバー",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "13",
+      "waku": "7",
+      "short": "アスク",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の調教評価で実績がある馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "今回のレース間隔で実績がある馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "13/アスク/14/タニセ/10/リバー"
+    ],
+    "entries": [
+     {
+      "num": "13",
+      "waku": "7",
+      "short": "アスク",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "14",
+      "waku": "7",
+      "short": "タニセ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "10",
+      "waku": "5",
+      "short": "リバー",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回のオッズで期待できる騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回の調教評価で実績がある馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": {
+     "丹内祐次": null
+    },
+    "texts": [
+     "丹内祐次"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の調教師と相性の良い騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回のオッズで期待できる騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "河原田菜々"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の馬主と相性の良い騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回の調教師と相性の良い騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "丹内祐次"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   }
+  ],
+  "top3_this_reading": {
+   "1": 2,
+   "2": 3,
+   "4": 1,
+   "5": 2,
+   "7": 1,
+   "8": 1,
+   "13": 1,
+   "15": 1
+  },
+  "top3_this_reading_strict": {
+   "1": 1,
+   "2": 2,
+   "5": 2,
+   "7": 1,
+   "8": 1,
+   "13": 1,
+   "15": 1
+  },
+  "top3_code": {
+   "2": 3,
+   "5": 2,
+   "13": 1,
+   "7": 1,
+   "8": 1,
+   "15": 1,
+   "1": 2,
+   "4": 1
+  },
+  "top3_saved": {
+   "2": 3,
+   "5": 2,
+   "13": 1,
+   "7": 1,
+   "8": 1,
+   "15": 1,
+   "1": 2,
+   "4": 1
+  },
+  "pickup_this_reading": [
+   "2",
+   "6",
+   "10"
+  ],
+  "pickup_code": [
+   "2",
+   "6",
+   "10"
+  ],
+  "pickup_saved": [
+   "2",
+   "6",
+   "10"
+  ],
+  "analysis_this_reading": {
+   "1": 1,
+   "2": 1,
+   "6": 1,
+   "7": 2,
+   "10": 4,
+   "13": 2,
+   "14": 1
+  },
+  "analysis_code": {
+   "10": 1,
+   "6": 1,
+   "2": 1,
+   "13": 1
+  },
+  "analysis_saved": {
+   "10": 1,
+   "6": 1,
+   "2": 1,
+   "13": 1
+  },
+  "analysis_tables": 15,
+  "analysis_tables_title_differs": 15,
+  "code_counts_non_horse_tables": [
+   "今回のオッズで期待できる騎手"
+  ],
+  "code_non_horse_text_matched_horse": {},
+  "horse_table_content": {
+   "推奨なし": 2,
+   "馬あり": 4
+  },
+  "unknown_titles": [],
+  "dup_in_table": {
+   "top3": [],
+   "analysis": []
+  }
+ },
+ "20261107 福島7R": {
+  "date": "20261107",
+  "label": "福島7R",
+  "race_id": "202603030107",
+  "states": {
+   "照合済み": 28,
+   "騎手名は未照合": 3
+  },
+  "top3": [
+   {
+    "title": "能力",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "3",
+      "waku": "2",
+      "short": "セゾン",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "5",
+      "short": "フロム",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "13",
+      "waku": "7",
+      "short": "フィラ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "上昇度",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "1",
+      "waku": "1",
+      "short": "プリュ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "12",
+      "waku": "6",
+      "short": "ラスベ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "14",
+      "waku": "7",
+      "short": "シュー",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "騎手",
+    "kind": "jockey",
+    "entries": [
+     {
+      "num": "6",
+      "waku": "3",
+      "short": "田山旺",
+      "state": "騎手名は未照合",
+      "why": [
+       "馬番・枠は合う。騎手名 ページ 田山旺・行 ☆田山（騎手ID 01220）"
+      ]
+     },
+     {
+      "num": "9",
+      "waku": "5",
+      "short": "丹内祐",
+      "state": "騎手名は未照合",
+      "why": [
+       "馬番・枠は合う。騎手名 ページ 丹内祐・行 丹内（騎手ID 01091）"
+      ]
+     },
+     {
+      "num": "15",
+      "waku": "8",
+      "short": "高杉吏",
+      "state": "騎手名は未照合",
+      "why": [
+       "馬番・枠は合う。騎手名 ページ 高杉吏・行 高杉（騎手ID 01213）"
+      ]
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "距離",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "3",
+      "waku": "2",
+      "short": "セゾン",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "4",
+      "waku": "2",
+      "short": "グレイ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "5",
+      "short": "フロム",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   }
+  ],
+  "pickup": [
+   {
+    "num": "4",
+    "waku": "2",
+    "name": "グレイシエーション",
+    "horse_id": "2023106991",
+    "state": "照合済み",
+    "why": []
+   },
+   {
+    "num": "6",
+    "waku": "3",
+    "name": "カイショー",
+    "horse_id": "2023104998",
+    "state": "照合済み",
+    "why": []
+   },
+   {
+    "num": "3",
+    "waku": "2",
+    "name": "セゾンデフィーユ",
+    "horse_id": "2022105398",
+    "state": "照合済み",
+    "why": []
+   }
+  ],
+  "analysis": [
+   {
+    "own_title": "このコースで有利な枠順",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": null,
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "1/枠/3/枠/2/枠"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースで有利な脚質",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースで有利な枠順",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "逃げ"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースで有利な脚質",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "田山旺佑"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な調教師",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースが得意な騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "長谷川浩大"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースに実績がある種牡馬",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースが得意な調教師",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "サートゥルナーリア"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースに実績がある母父",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースに実績がある種牡馬",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "シングスピール"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "このコースに実績がある母父",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "16/キタノ/13/フィラ/4/グレイ"
+    ],
+    "entries": [
+     {
+      "num": "16",
+      "waku": "8",
+      "short": "キタノ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "13",
+      "waku": "7",
+      "short": "フィラ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "4",
+      "waku": "2",
+      "short": "グレイ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "この距離が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "このコースが得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "4/グレイ/9/フロム/3/セゾン"
+    ],
+    "entries": [
+     {
+      "num": "4",
+      "waku": "2",
+      "short": "グレイ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "5",
+      "short": "フロム",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "3",
+      "waku": "2",
+      "short": "セゾン",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "この競馬場が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "この距離が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "13/フィラ/4/グレイ/16/キタノ"
+    ],
+    "entries": [
+     {
+      "num": "13",
+      "waku": "7",
+      "short": "フィラ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "4",
+      "waku": "2",
+      "short": "グレイ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "16",
+      "waku": "8",
+      "short": "キタノ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の馬場状態が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "この競馬場が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "9/フロム/3/セゾン/6/カイシ"
+    ],
+    "entries": [
+     {
+      "num": "9",
+      "waku": "5",
+      "short": "フロム",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "3",
+      "waku": "2",
+      "short": "セゾン",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "6",
+      "waku": "3",
+      "short": "カイシ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回のレース間隔で実績がある馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "今回の馬場状態が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "10/キャナ"
+    ],
+    "entries": [
+     {
+      "num": "10",
+      "waku": "5",
+      "short": "キャナ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の調教評価で実績がある馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "今回のレース間隔で実績がある馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "8/ヴィヴ/4/グレイ/3/セゾン"
+    ],
+    "entries": [
+     {
+      "num": "8",
+      "waku": "4",
+      "short": "ヴィヴ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "4",
+      "waku": "2",
+      "short": "グレイ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "3",
+      "waku": "2",
+      "short": "セゾン",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回のオッズで期待できる騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回の調教評価で実績がある馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": {
+     "荻野極": null
+    },
+    "texts": [
+     "荻野極"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の調教師と相性の良い騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回のオッズで期待できる騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "斎藤新"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の馬主と相性の良い騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回の調教師と相性の良い騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "嶋田純次"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   }
+  ],
+  "top3_this_reading": {
+   "1": 1,
+   "3": 2,
+   "4": 1,
+   "6": 1,
+   "9": 3,
+   "12": 1,
+   "13": 1,
+   "14": 1,
+   "15": 1
+  },
+  "top3_this_reading_strict": {
+   "1": 1,
+   "3": 2,
+   "4": 1,
+   "9": 2,
+   "12": 1,
+   "13": 1,
+   "14": 1
+  },
+  "top3_code": {
+   "3": 2,
+   "9": 3,
+   "13": 1,
+   "1": 1,
+   "12": 1,
+   "14": 1,
+   "6": 1,
+   "15": 1,
+   "4": 1
+  },
+  "top3_saved": {
+   "3": 2,
+   "9": 3,
+   "13": 1,
+   "1": 1,
+   "12": 1,
+   "14": 1,
+   "6": 1,
+   "15": 1,
+   "4": 1
+  },
+  "pickup_this_reading": [
+   "3",
+   "4",
+   "6"
+  ],
+  "pickup_code": [
+   "3",
+   "4",
+   "6"
+  ],
+  "pickup_saved": [
+   "3",
+   "4",
+   "6"
+  ],
+  "analysis_this_reading": {
+   "3": 3,
+   "4": 4,
+   "6": 1,
+   "8": 1,
+   "9": 2,
+   "10": 1,
+   "13": 2,
+   "16": 2
+  },
+  "analysis_code": {
+   "4": 1,
+   "13": 1,
+   "9": 1,
+   "10": 1,
+   "8": 1
+  },
+  "analysis_saved": {
+   "4": 1,
+   "13": 1,
+   "9": 1,
+   "10": 1,
+   "8": 1
+  },
+  "analysis_tables": 15,
+  "analysis_tables_title_differs": 15,
+  "code_counts_non_horse_tables": [
+   "今回のオッズで期待できる騎手"
+  ],
+  "code_non_horse_text_matched_horse": {},
+  "horse_table_content": {
+   "馬あり": 6
+  },
+  "unknown_titles": [],
+  "dup_in_table": {
+   "top3": [],
+   "analysis": []
+  }
+ },
+ "20261031 東京7R": {
+  "date": "20261031",
+  "label": "東京7R",
+  "race_id": "202605041007",
+  "states": {
+   "照合済み": 29,
+   "騎手名は未照合": 3
+  },
+  "top3": [
+   {
+    "title": "能力",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "2",
+      "waku": "2",
+      "short": "キアラ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "3",
+      "waku": "3",
+      "short": "ホール",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "4",
+      "waku": "4",
+      "short": "シェー",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "上昇度",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "3",
+      "waku": "3",
+      "short": "ホール",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "5",
+      "waku": "5",
+      "short": "ランザ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "8",
+      "waku": "7",
+      "short": "ミッキ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "騎手",
+    "kind": "jockey",
+    "entries": [
+     {
+      "num": "2",
+      "waku": "2",
+      "short": "プーシ",
+      "state": "騎手名は未照合",
+      "why": [
+       "馬番・枠は合う。騎手名 ページ プーシ・行 プーシャン（騎手ID 05678）"
+      ]
+     },
+     {
+      "num": "5",
+      "waku": "5",
+      "short": "ルメー",
+      "state": "騎手名は未照合",
+      "why": [
+       "馬番・枠は合う。騎手名 ページ ルメー・行 ルメール（騎手ID 05339）"
+      ]
+     },
+     {
+      "num": "10",
+      "waku": "8",
+      "short": "戸崎圭",
+      "state": "騎手名は未照合",
+      "why": [
+       "馬番・枠は合う。騎手名 ページ 戸崎圭・行 戸崎圭（騎手ID 05386）"
+      ]
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "距離",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "5",
+      "waku": "5",
+      "short": "ランザ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "8",
+      "waku": "7",
+      "short": "ミッキ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "7",
+      "short": "カンテ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   }
+  ],
+  "pickup": [
+   {
+    "num": "3",
+    "waku": "3",
+    "name": "ホールドザデイ",
+    "horse_id": "2023105783",
+    "state": "照合済み",
+    "why": []
+   },
+   {
+    "num": "5",
+    "waku": "5",
+    "name": "ランザワールド",
+    "horse_id": "2023107164",
+    "state": "照合済み",
+    "why": []
+   },
+   {
+    "num": "8",
+    "waku": "7",
+    "name": "ミッキーマーメイド",
+    "horse_id": "2023105002",
+    "state": "照合済み",
+    "why": []
+   }
+  ],
+  "analysis": [
+   {
+    "own_title": "このコースで有利な枠順",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": null,
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "4/枠/1/枠/5/枠"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースで有利な脚質",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースで有利な枠順",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "先行"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースで有利な脚質",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "Ｃ．ルメール"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な調教師",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースが得意な騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "福永祐一"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースに実績がある種牡馬",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースが得意な調教師",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "ダノンスマッシュ"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースに実績がある母父",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースに実績がある種牡馬",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "アドマイヤベガ"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "このコースに実績がある母父",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "8/ミッキ/9/カンテ/4/シェー"
+    ],
+    "entries": [
+     {
+      "num": "8",
+      "waku": "7",
+      "short": "ミッキ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "7",
+      "short": "カンテ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "4",
+      "waku": "4",
+      "short": "シェー",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "この距離が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "このコースが得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "8/ミッキ/5/ランザ/9/カンテ"
+    ],
+    "entries": [
+     {
+      "num": "8",
+      "waku": "7",
+      "short": "ミッキ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "5",
+      "waku": "5",
+      "short": "ランザ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "7",
+      "short": "カンテ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "この競馬場が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "この距離が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "3/ホール/8/ミッキ/9/カンテ"
+    ],
+    "entries": [
+     {
+      "num": "3",
+      "waku": "3",
+      "short": "ホール",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "8",
+      "waku": "7",
+      "short": "ミッキ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "7",
+      "short": "カンテ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の馬場状態が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "この競馬場が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "5/ランザ/3/ホール/2/キアラ"
+    ],
+    "entries": [
+     {
+      "num": "5",
+      "waku": "5",
+      "short": "ランザ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "3",
+      "waku": "3",
+      "short": "ホール",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "2",
+      "waku": "2",
+      "short": "キアラ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回のレース間隔で実績がある馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "今回の馬場状態が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "10/ディヒ/1/デイズ"
+    ],
+    "entries": [
+     {
+      "num": "10",
+      "waku": "8",
+      "short": "ディヒ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "1",
+      "waku": "1",
+      "short": "デイズ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の調教評価で実績がある馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "今回のレース間隔で実績がある馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "5/ランザ/6/ジーテ/2/キアラ"
+    ],
+    "entries": [
+     {
+      "num": "5",
+      "waku": "5",
+      "short": "ランザ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "6",
+      "waku": "6",
+      "short": "ジーテ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "2",
+      "waku": "2",
+      "short": "キアラ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回のオッズで期待できる騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回の調教評価で実績がある馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": {
+     "Ｃ．ルメール": null
+    },
+    "texts": [
+     "Ｃ．ルメール"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の調教師と相性の良い騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回のオッズで期待できる騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "横山武史"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の馬主と相性の良い騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回の調教師と相性の良い騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "Ｃ．ルメール"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   }
+  ],
+  "top3_this_reading": {
+   "2": 2,
+   "3": 2,
+   "4": 1,
+   "5": 3,
+   "8": 2,
+   "9": 1,
+   "10": 1
+  },
+  "top3_this_reading_strict": {
+   "2": 1,
+   "3": 2,
+   "4": 1,
+   "5": 2,
+   "8": 2,
+   "9": 1
+  },
+  "top3_code": {
+   "2": 2,
+   "3": 2,
+   "4": 1,
+   "5": 3,
+   "8": 2,
+   "10": 1,
+   "9": 1
+  },
+  "top3_saved": {
+   "2": 2,
+   "3": 2,
+   "4": 1,
+   "5": 3,
+   "8": 2,
+   "10": 1,
+   "9": 1
+  },
+  "pickup_this_reading": [
+   "3",
+   "5",
+   "8"
+  ],
+  "pickup_code": [
+   "3",
+   "5",
+   "8"
+  ],
+  "pickup_saved": [
+   "3",
+   "5",
+   "8"
+  ],
+  "analysis_this_reading": {
+   "1": 1,
+   "2": 2,
+   "3": 2,
+   "4": 1,
+   "5": 3,
+   "6": 1,
+   "8": 3,
+   "9": 3,
+   "10": 1
+  },
+  "analysis_code": {
+   "8": 1,
+   "3": 1,
+   "5": 2,
+   "10": 1
+  },
+  "analysis_saved": {
+   "8": 1,
+   "3": 1,
+   "5": 2,
+   "10": 1
+  },
+  "analysis_tables": 15,
+  "analysis_tables_title_differs": 15,
+  "code_counts_non_horse_tables": [
+   "今回のオッズで期待できる騎手"
+  ],
+  "code_non_horse_text_matched_horse": {},
+  "horse_table_content": {
+   "馬あり": 6
+  },
+  "unknown_titles": [],
+  "dup_in_table": {
+   "top3": [],
+   "analysis": []
+  }
+ },
+ "20261101 東京6R": {
+  "date": "20261101",
+  "label": "東京6R",
+  "race_id": "202605041106",
+  "states": {
+   "照合済み": 30,
+   "騎手名は未照合": 3
+  },
+  "top3": [
+   {
+    "title": "能力",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "4",
+      "waku": "3",
+      "short": "スーパ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "5",
+      "short": "ガラク",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "12",
+      "waku": "7",
+      "short": "ゴーゴ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "上昇度",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "4",
+      "waku": "3",
+      "short": "スーパ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "8",
+      "waku": "5",
+      "short": "ケイツ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "15",
+      "waku": "8",
+      "short": "トワイ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "騎手",
+    "kind": "jockey",
+    "entries": [
+     {
+      "num": "3",
+      "waku": "2",
+      "short": "松山弘",
+      "state": "騎手名は未照合",
+      "why": [
+       "馬番・枠は合う。騎手名 ページ 松山弘・行 松山（騎手ID 01126）"
+      ]
+     },
+     {
+      "num": "8",
+      "waku": "5",
+      "short": "岩田望",
+      "state": "騎手名は未照合",
+      "why": [
+       "馬番・枠は合う。騎手名 ページ 岩田望・行 岩田望（騎手ID 01174）"
+      ]
+     },
+     {
+      "num": "12",
+      "waku": "7",
+      "short": "横山典",
+      "state": "騎手名は未照合",
+      "why": [
+       "馬番・枠は合う。騎手名 ページ 横山典・行 横山典（騎手ID 00660）"
+      ]
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "距離",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "1",
+      "waku": "1",
+      "short": "スピニ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "6",
+      "waku": "4",
+      "short": "トキメ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "5",
+      "short": "ガラク",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   }
+  ],
+  "pickup": [
+   {
+    "num": "11",
+    "waku": "6",
+    "name": "イヌボウノアサヒ",
+    "horse_id": "2023106895",
+    "state": "照合済み",
+    "why": []
+   },
+   {
+    "num": "8",
+    "waku": "5",
+    "name": "ケイツープラ",
+    "horse_id": "2023103925",
+    "state": "照合済み",
+    "why": []
+   },
+   {
+    "num": "9",
+    "waku": "5",
+    "name": "ガラク",
+    "horse_id": "2022104093",
+    "state": "照合済み",
+    "why": []
+   }
+  ],
+  "analysis": [
+   {
+    "own_title": "このコースで有利な枠順",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": null,
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "4/枠/7/枠/2/枠"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースで有利な脚質",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースで有利な枠順",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "逃げ"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースで有利な脚質",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "横山典弘"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な調教師",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースが得意な騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "中舘英二"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースに実績がある種牡馬",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースが得意な調教師",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "ディーマジェスティ"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースに実績がある母父",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースに実績がある種牡馬",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "アルデバランII"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "このコースに実績がある母父",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "15/トワイ/11/イヌボ/8/ケイツ"
+    ],
+    "entries": [
+     {
+      "num": "15",
+      "waku": "8",
+      "short": "トワイ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "11",
+      "waku": "6",
+      "short": "イヌボ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "8",
+      "waku": "5",
+      "short": "ケイツ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "この距離が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "このコースが得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "6/トキメ/11/イヌボ/8/ケイツ"
+    ],
+    "entries": [
+     {
+      "num": "6",
+      "waku": "4",
+      "short": "トキメ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "11",
+      "waku": "6",
+      "short": "イヌボ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "8",
+      "waku": "5",
+      "short": "ケイツ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "この競馬場が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "この距離が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "11/イヌボ/8/ケイツ/9/ガラク"
+    ],
+    "entries": [
+     {
+      "num": "11",
+      "waku": "6",
+      "short": "イヌボ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "8",
+      "waku": "5",
+      "short": "ケイツ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "5",
+      "short": "ガラク",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の馬場状態が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "この競馬場が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "11/イヌボ/9/ガラク/13/ソリッ"
+    ],
+    "entries": [
+     {
+      "num": "11",
+      "waku": "6",
+      "short": "イヌボ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "5",
+      "short": "ガラク",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "13",
+      "waku": "7",
+      "short": "ソリッ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回のレース間隔で実績がある馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "今回の馬場状態が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "8/ケイツ/14/ヘルヴ/5/エスシ"
+    ],
+    "entries": [
+     {
+      "num": "8",
+      "waku": "5",
+      "short": "ケイツ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "14",
+      "waku": "8",
+      "short": "ヘルヴ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "5",
+      "waku": "3",
+      "short": "エスシ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の調教評価で実績がある馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "今回のレース間隔で実績がある馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "11/イヌボ/9/ガラク/10/コウユ"
+    ],
+    "entries": [
+     {
+      "num": "11",
+      "waku": "6",
+      "short": "イヌボ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "5",
+      "short": "ガラク",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "10",
+      "waku": "6",
+      "short": "コウユ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回のオッズで期待できる騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回の調教評価で実績がある馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": {
+     "佐藤翔馬": null
+    },
+    "texts": [
+     "佐藤翔馬"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の調教師と相性の良い騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回のオッズで期待できる騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "原優介"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の馬主と相性の良い騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回の調教師と相性の良い騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "菅原明良"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   }
+  ],
+  "top3_this_reading": {
+   "1": 1,
+   "3": 1,
+   "4": 2,
+   "6": 1,
+   "8": 2,
+   "9": 2,
+   "12": 2,
+   "15": 1
+  },
+  "top3_this_reading_strict": {
+   "1": 1,
+   "4": 2,
+   "6": 1,
+   "8": 1,
+   "9": 2,
+   "12": 1,
+   "15": 1
+  },
+  "top3_code": {
+   "4": 2,
+   "9": 2,
+   "12": 2,
+   "8": 2,
+   "15": 1,
+   "3": 1,
+   "1": 1,
+   "6": 1
+  },
+  "top3_saved": {
+   "4": 2,
+   "9": 2,
+   "12": 2,
+   "8": 2,
+   "15": 1,
+   "3": 1,
+   "1": 1,
+   "6": 1
+  },
+  "pickup_this_reading": [
+   "8",
+   "9",
+   "11"
+  ],
+  "pickup_code": [
+   "8",
+   "9",
+   "11"
+  ],
+  "pickup_saved": [
+   "8",
+   "9",
+   "11"
+  ],
+  "analysis_this_reading": {
+   "5": 1,
+   "6": 1,
+   "8": 4,
+   "9": 3,
+   "10": 1,
+   "11": 5,
+   "13": 1,
+   "14": 1,
+   "15": 1
+  },
+  "analysis_code": {
+   "6": 1,
+   "11": 3,
+   "8": 1
+  },
+  "analysis_saved": {
+   "6": 1,
+   "11": 3,
+   "8": 1
+  },
+  "analysis_tables": 15,
+  "analysis_tables_title_differs": 15,
+  "code_counts_non_horse_tables": [
+   "今回のオッズで期待できる騎手"
+  ],
+  "code_non_horse_text_matched_horse": {},
+  "horse_table_content": {
+   "馬あり": 6
+  },
+  "unknown_titles": [],
+  "dup_in_table": {
+   "top3": [],
+   "analysis": []
+  }
+ },
+ "20260912 中山3R": {
+  "date": "20260912",
+  "label": "中山3R",
+  "race_id": "202606040303",
+  "states": {
+   "照合済み": 6
+  },
+  "top3": [
+   {
+    "title": "能力",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "2",
+      "waku": "1",
+      "short": "セイウ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "4",
+      "waku": "2",
+      "short": "フレン",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "8",
+      "waku": "4",
+      "short": "ハング",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "上昇度",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "5",
+      "waku": "3",
+      "short": "ツクバ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "11",
+      "waku": "6",
+      "short": "トリエ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "16",
+      "waku": "8",
+      "short": "ポンテ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   }
+  ],
+  "pickup": null,
+  "analysis": [],
+  "top3_this_reading": {
+   "2": 1,
+   "4": 1,
+   "5": 1,
+   "8": 1,
+   "11": 1,
+   "16": 1
+  },
+  "top3_this_reading_strict": {
+   "2": 1,
+   "4": 1,
+   "5": 1,
+   "8": 1,
+   "11": 1,
+   "16": 1
+  },
+  "top3_code": {
+   "2": 1,
+   "4": 1,
+   "8": 1,
+   "5": 1,
+   "11": 1,
+   "16": 1
+  },
+  "top3_saved": {
+   "2": 1,
+   "4": 1,
+   "8": 2,
+   "5": 2,
+   "11": 1,
+   "16": 1,
+   "13": 1,
+   "15": 2,
+   "9": 1
+  },
+  "pickup_this_reading": [],
+  "pickup_code": [],
+  "pickup_saved": [
+   "2",
+   "5",
+   "15"
+  ],
+  "analysis_this_reading": {},
+  "analysis_code": {},
+  "analysis_saved": {
+   "5": 2,
+   "15": 1,
+   "9": 1,
+   "3": 1
+  },
+  "analysis_tables": 0,
+  "analysis_tables_title_differs": 0,
+  "code_counts_non_horse_tables": [],
+  "code_non_horse_text_matched_horse": {},
+  "horse_table_content": {},
+  "unknown_titles": [],
+  "dup_in_table": {
+   "top3": [],
+   "analysis": []
+  }
+ },
+ "20261025 新潟4R": {
+  "date": "20261025",
+  "label": "新潟4R",
+  "race_id": "202604040404",
+  "states": {
+   "照合済み": 29
+  },
+  "top3": [
+   {
+    "title": "能力",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "4",
+      "waku": "4",
+      "short": "アーガ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "7",
+      "waku": "5",
+      "short": "ペンテ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "13",
+      "waku": "8",
+      "short": "クアロ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "上昇度",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "6",
+      "waku": "5",
+      "short": "ミエス",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "6",
+      "short": "ヨルヴ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "13",
+      "waku": "8",
+      "short": "クアロ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "title": "距離",
+    "kind": "horse",
+    "entries": [
+     {
+      "num": "4",
+      "waku": "4",
+      "short": "アーガ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "6",
+      "waku": "5",
+      "short": "ミエス",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "13",
+      "waku": "8",
+      "short": "クアロ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   }
+  ],
+  "pickup": [
+   {
+    "num": "9",
+    "waku": "6",
+    "name": "ヨルヴィック",
+    "horse_id": "2023107242",
+    "state": "照合済み",
+    "why": []
+   },
+   {
+    "num": "4",
+    "waku": "4",
+    "name": "アーガイルショア",
+    "horse_id": "2023103718",
+    "state": "照合済み",
+    "why": []
+   },
+   {
+    "num": "6",
+    "waku": "5",
+    "name": "ミエスタ",
+    "horse_id": "2023101394",
+    "state": "照合済み",
+    "why": []
+   }
+  ],
+  "analysis": [
+   {
+    "own_title": "このコースで有利な枠順",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": null,
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "6/枠/3/枠/7/枠"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースで有利な脚質",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースで有利な枠順",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "逃げ"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースで有利な脚質",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "吉村誠之助"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な調教師",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースが得意な騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "渡辺薫彦"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースに実績がある種牡馬",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースが得意な調教師",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "ナダル"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースに実績がある母父",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "このコースに実績がある種牡馬",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "ベーカバド"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "このコースが得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "このコースに実績がある母父",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "4/アーガ/9/ヨルヴ/3/セイウ"
+    ],
+    "entries": [
+     {
+      "num": "4",
+      "waku": "4",
+      "short": "アーガ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "6",
+      "short": "ヨルヴ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "3",
+      "waku": "3",
+      "short": "セイウ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "この距離が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "このコースが得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "13/クアロ/4/アーガ/6/ミエス"
+    ],
+    "entries": [
+     {
+      "num": "13",
+      "waku": "8",
+      "short": "クアロ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "4",
+      "waku": "4",
+      "short": "アーガ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "6",
+      "waku": "5",
+      "short": "ミエス",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "この競馬場が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "この距離が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "4/アーガ/9/ヨルヴ/2/オテン"
+    ],
+    "entries": [
+     {
+      "num": "4",
+      "waku": "4",
+      "short": "アーガ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "6",
+      "short": "ヨルヴ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "2",
+      "waku": "2",
+      "short": "オテン",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の馬場状態が得意な馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "この競馬場が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "11/リカー/8/ハヌル"
+    ],
+    "entries": [
+     {
+      "num": "11",
+      "waku": "7",
+      "short": "リカー",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "8",
+      "waku": "6",
+      "short": "ハヌル",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回のレース間隔で実績がある馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "今回の馬場状態が得意な馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "9/ヨルヴ/2/オテン/8/ハヌル"
+    ],
+    "entries": [
+     {
+      "num": "9",
+      "waku": "6",
+      "short": "ヨルヴ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "2",
+      "waku": "2",
+      "short": "オテン",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "8",
+      "waku": "6",
+      "short": "ハヌル",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の調教評価で実績がある馬",
+    "kind": "馬の表",
+    "content": "馬あり",
+    "title_code_uses": "今回のレース間隔で実績がある馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": null,
+    "texts": [
+     "13/クアロ/10/モズオ/9/ヨルヴ"
+    ],
+    "entries": [
+     {
+      "num": "13",
+      "waku": "8",
+      "short": "クアロ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "10",
+      "waku": "7",
+      "short": "モズオ",
+      "state": "照合済み",
+      "why": []
+     },
+     {
+      "num": "9",
+      "waku": "6",
+      "short": "ヨルヴ",
+      "state": "照合済み",
+      "why": []
+     }
+    ],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回のオッズで期待できる騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回の調教評価で実績がある馬",
+    "code_counts_this_table": true,
+    "code_text_to_num": {
+     "杉原誠人": null
+    },
+    "texts": [
+     "杉原誠人"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の調教師と相性の良い騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回のオッズで期待できる騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "石神深道"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   },
+   {
+    "own_title": "今回の馬主と相性の良い騎手",
+    "kind": "馬ではない表",
+    "content": "対象外",
+    "title_code_uses": "今回の調教師と相性の良い騎手",
+    "code_counts_this_table": false,
+    "code_text_to_num": null,
+    "texts": [
+     "吉村誠之助"
+    ],
+    "entries": [],
+    "dup_in_table": []
+   }
+  ],
+  "top3_this_reading": {
+   "4": 2,
+   "6": 2,
+   "7": 1,
+   "9": 1,
+   "13": 3
+  },
+  "top3_this_reading_strict": {
+   "4": 2,
+   "6": 2,
+   "7": 1,
+   "9": 1,
+   "13": 3
+  },
+  "top3_code": {
+   "4": 2,
+   "7": 1,
+   "13": 3,
+   "6": 2,
+   "9": 1
+  },
+  "top3_saved": {
+   "4": 2,
+   "7": 1,
+   "13": 3,
+   "6": 3,
+   "9": 1,
+   "3": 1,
+   "10": 1
+  },
+  "pickup_this_reading": [
+   "4",
+   "6",
+   "9"
+  ],
+  "pickup_code": [
+   "4",
+   "6",
+   "9"
+  ],
+  "pickup_saved": [
+   "4",
+   "6",
+   "9"
+  ],
+  "analysis_this_reading": {
+   "2": 2,
+   "3": 1,
+   "4": 3,
+   "6": 1,
+   "8": 2,
+   "9": 4,
+   "10": 1,
+   "11": 1,
+   "13": 2
+  },
+  "analysis_code": {
+   "13": 2,
+   "4": 1,
+   "11": 1,
+   "9": 1
+  },
+  "analysis_saved": {
+   "13": 2,
+   "4": 1,
+   "6": 1,
+   "9": 1
+  },
+  "analysis_tables": 15,
+  "analysis_tables_title_differs": 15,
+  "code_counts_non_horse_tables": [
+   "今回のオッズで期待できる騎手"
+  ],
+  "code_non_horse_text_matched_horse": {},
+  "horse_table_content": {
+   "馬あり": 6
+  },
+  "unknown_titles": [],
+  "dup_in_table": {
+   "top3": [],
+   "analysis": []
+  }
+ }
+}
