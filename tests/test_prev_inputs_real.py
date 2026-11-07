@@ -18,14 +18,14 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fixture_pages import read_fixture  # noqa: E402
 import prev_inputs as pi  # noqa: E402
 
-FIX = Path(__file__).resolve().parent / "fixtures"
 
 
 def parse(hid, target, suffix=""):
-    path = FIX / f"horse_{hid}_results_20261105{suffix}.html"
-    return pi.parse_results_table(path.read_text(encoding="utf-8"), target)
+    return pi.parse_results_table(read_fixture(f"horse_{hid}_results_20261105{suffix}.html"), target)
 
 
 class RealPageTest(unittest.TestCase):

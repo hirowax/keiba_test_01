@@ -15,32 +15,33 @@ from contextlib import redirect_stdout
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fixture_pages import read_fixture  # noqa: E402
 import paper_trade  # noqa: E402
 from scrape_jra_payouts import parse_payouts  # noqa: E402
 
-FIX = Path(__file__).resolve().parent / "fixtures"
 DATE = "20261107"
 
 
 class ParseRefundTest(unittest.TestCase):
     def test_torikeshi(self):
-        p = parse_payouts((FIX / "jra_payout_202605041106_torikeshi.html").read_text(encoding="utf-8"))
+        p = parse_payouts(read_fixture("jra_payout_202605041106_torikeshi.html"))
         self.assertEqual(p["refund"], {"umaban": [13], "waku": [7], "wakuban": [], "text": "返還馬番 13番 返還同枠 7枠"})
         self.assertEqual(p["tansho"], {"12": 260})
 
     def test_chushi_has_no_refund(self):
-        p = parse_payouts((FIX / "jra_payout_202608041104_chushi.html").read_text(encoding="utf-8"))
+        p = parse_payouts(read_fixture("jra_payout_202608041104_chushi.html"))
         self.assertEqual(p["refund"], {"umaban": [], "waku": [], "wakuban": [], "text": ""})
 
     def test_jogai_three_with_wakuban(self):
         """「返還枠番」の枠の番号を馬番に足さない（2026-11-06 まで 5・6・7・5・6 と読んでいた）"""
-        p = parse_payouts((FIX / "jra_payout_202608010712_jogai3_wakuban.html").read_text(encoding="utf-8"))
+        p = parse_payouts(read_fixture("jra_payout_202608010712_jogai3_wakuban.html"))
         self.assertEqual(p["refund"], {"umaban": [5, 6, 7], "waku": [], "wakuban": [5, 6],
                                        "text": "返還馬番 5番, 6番, 7番 返還枠番 5枠, 6枠"})
         self.assertEqual(p["tansho"], {"3": 1320})
 
     def test_jogai_one(self):
-        p = parse_payouts((FIX / "jra_payout_202608040709_jogai1.html").read_text(encoding="utf-8"))
+        p = parse_payouts(read_fixture("jra_payout_202608040709_jogai1.html"))
         self.assertEqual(p["refund"], {"umaban": [7], "waku": [], "wakuban": [], "text": "返還馬番 7番"})
 
 
