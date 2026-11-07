@@ -1,0 +1,3645 @@
+{
+ "races": {
+  "20261107 福島4R": {
+   "race": {
+    "date": "20261107",
+    "label": "福島4R",
+    "race_id": "202603030104",
+    "why": "対照（本番の入力の記録がある）",
+    "candidates_in_day": 19
+   },
+   "saved_inputs": {
+    "top3": {
+     "2": 3,
+     "5": 2,
+     "13": 1,
+     "7": 1,
+     "8": 1,
+     "15": 1,
+     "1": 2,
+     "4": 1
+    },
+    "pickup": [
+     "10",
+     "2",
+     "6"
+    ],
+    "analysis": {
+     "10": 1,
+     "6": 1,
+     "2": 1,
+     "13": 1
+    },
+    "pace": "S",
+    "dist": 2400,
+    "position": [
+     "9"
+    ]
+   },
+   "refetched_inputs": {
+    "top3": {
+     "2": 3,
+     "5": 2,
+     "13": 1,
+     "7": 1,
+     "8": 1,
+     "15": 1,
+     "1": 2,
+     "4": 1
+    },
+    "pickup": [
+     "10",
+     "2",
+     "6"
+    ],
+    "analysis": {
+     "10": 1,
+     "6": 1,
+     "2": 1,
+     "13": 1
+    },
+    "pace": "S",
+    "dist": 2400,
+    "map_issues": [],
+    "scratched_nums": {}
+   },
+   "saved_scored": [
+    [
+     2,
+     7
+    ]
+   ],
+   "horse_id_source": "pickup_scores の horse_id_map と scratched_nums（当時の出馬表）",
+   "not_reproducible": null,
+   "candidates_now": [
+    2
+   ],
+   "candidates_saved_scored": [
+    2
+   ],
+   "prev_saved": {
+    "1": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261012",
+      "race_id": "202608040507",
+      "rank": 13,
+      "pop": 9,
+      "dist": 1900,
+      "surface_dist": "ダ1900",
+      "idx": 66
+     },
+     "skipped": 0
+    },
+    "2": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261012",
+      "race_id": "202608040507",
+      "rank": 5,
+      "pop": 3,
+      "dist": 1900,
+      "surface_dist": "ダ1900",
+      "idx": 87
+     },
+     "skipped": 0
+    },
+    "3": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260926",
+      "race_id": "202606040807",
+      "rank": 8,
+      "pop": 12,
+      "dist": 2000,
+      "surface_dist": "芝2000",
+      "idx": 49
+     },
+     "skipped": 0
+    },
+    "4": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202601020605",
+      "rank": 4,
+      "pop": 7,
+      "dist": 2000,
+      "surface_dist": "芝2000",
+      "idx": 78
+     },
+     "skipped": 0
+    },
+    "5": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260919",
+      "race_id": "202606040507",
+      "rank": 5,
+      "pop": 4,
+      "dist": 2400,
+      "surface_dist": "ダ2400",
+      "idx": 77
+     },
+     "skipped": 0
+    },
+    "6": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202609040209",
+      "rank": 9,
+      "pop": 7,
+      "dist": 1800,
+      "surface_dist": "ダ1800",
+      "idx": 69
+     },
+     "skipped": 0
+    },
+    "7": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260712",
+      "race_id": "202602011008",
+      "rank": 11,
+      "pop": 3,
+      "dist": 2400,
+      "surface_dist": "ダ2400",
+      "idx": 68
+     },
+     "skipped": 0
+    },
+    "8": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260117",
+      "race_id": "202608010601",
+      "rank": 4,
+      "pop": 6,
+      "dist": 1800,
+      "surface_dist": "ダ1800",
+      "idx": 51
+     },
+     "skipped": 0
+    },
+    "9": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261025",
+      "race_id": "202604040408",
+      "rank": 2,
+      "pop": 6,
+      "dist": 2500,
+      "surface_dist": "ダ2500",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "10": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261025",
+      "race_id": "202604040408",
+      "rank": 3,
+      "pop": 3,
+      "dist": 2500,
+      "surface_dist": "ダ2500",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "11": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260913",
+      "race_id": "202606040406",
+      "rank": 5,
+      "pop": 4,
+      "dist": 1800,
+      "surface_dist": "ダ1800",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "12": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260823",
+      "race_id": "202601020208",
+      "rank": 7,
+      "pop": 9,
+      "dist": 1800,
+      "surface_dist": "芝1800",
+      "idx": 89
+     },
+     "skipped": 0
+    },
+    "13": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261025",
+      "race_id": "202604040408",
+      "rank": 4,
+      "pop": 1,
+      "dist": 2500,
+      "surface_dist": "ダ2500",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "14": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261012",
+      "race_id": "202608040507",
+      "rank": 6,
+      "pop": 6,
+      "dist": 1900,
+      "surface_dist": "ダ1900",
+      "idx": 87
+     },
+     "skipped": 0
+    },
+    "15": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260823",
+      "race_id": "202607030204",
+      "rank": 6,
+      "pop": 7,
+      "dist": 1900,
+      "surface_dist": "ダ1900",
+      "idx": 71
+     },
+     "skipped": 0
+    },
+    "16": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260921",
+      "race_id": "202609040706",
+      "rank": 14,
+      "pop": 4,
+      "dist": 2000,
+      "surface_dist": "ダ2000",
+      "idx": 28
+     },
+     "skipped": 0
+    }
+   },
+   "prev_refetched_old_version": {
+    "1": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261012",
+      "race_id": "202608040507",
+      "rank": 13,
+      "pop": 9,
+      "dist": 1900,
+      "surface_dist": "ダ1900",
+      "idx": 66
+     },
+     "skipped": 0
+    },
+    "2": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261012",
+      "race_id": "202608040507",
+      "rank": 5,
+      "pop": 3,
+      "dist": 1900,
+      "surface_dist": "ダ1900",
+      "idx": 87
+     },
+     "skipped": 0
+    },
+    "3": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260926",
+      "race_id": "202606040807",
+      "rank": 8,
+      "pop": 12,
+      "dist": 2000,
+      "surface_dist": "芝2000",
+      "idx": 49
+     },
+     "skipped": 0
+    },
+    "4": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202601020605",
+      "rank": 4,
+      "pop": 7,
+      "dist": 2000,
+      "surface_dist": "芝2000",
+      "idx": 78
+     },
+     "skipped": 0
+    },
+    "5": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260919",
+      "race_id": "202606040507",
+      "rank": 5,
+      "pop": 4,
+      "dist": 2400,
+      "surface_dist": "ダ2400",
+      "idx": 77
+     },
+     "skipped": 0
+    },
+    "6": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202609040209",
+      "rank": 9,
+      "pop": 7,
+      "dist": 1800,
+      "surface_dist": "ダ1800",
+      "idx": 69
+     },
+     "skipped": 0
+    },
+    "7": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260712",
+      "race_id": "202602011008",
+      "rank": 11,
+      "pop": 3,
+      "dist": 2400,
+      "surface_dist": "ダ2400",
+      "idx": 68
+     },
+     "skipped": 0
+    },
+    "8": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260117",
+      "race_id": "202608010601",
+      "rank": 4,
+      "pop": 6,
+      "dist": 1800,
+      "surface_dist": "ダ1800",
+      "idx": 51
+     },
+     "skipped": 0
+    },
+    "9": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261025",
+      "race_id": "202604040408",
+      "rank": 2,
+      "pop": 6,
+      "dist": 2500,
+      "surface_dist": "ダ2500",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "10": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261025",
+      "race_id": "202604040408",
+      "rank": 3,
+      "pop": 3,
+      "dist": 2500,
+      "surface_dist": "ダ2500",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "11": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260913",
+      "race_id": "202606040406",
+      "rank": 5,
+      "pop": 4,
+      "dist": 1800,
+      "surface_dist": "ダ1800",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "12": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260823",
+      "race_id": "202601020208",
+      "rank": 7,
+      "pop": 9,
+      "dist": 1800,
+      "surface_dist": "芝1800",
+      "idx": 89
+     },
+     "skipped": 0
+    },
+    "13": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261025",
+      "race_id": "202604040408",
+      "rank": 4,
+      "pop": 1,
+      "dist": 2500,
+      "surface_dist": "ダ2500",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "14": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261012",
+      "race_id": "202608040507",
+      "rank": 6,
+      "pop": 6,
+      "dist": 1900,
+      "surface_dist": "ダ1900",
+      "idx": 87
+     },
+     "skipped": 0
+    },
+    "15": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260823",
+      "race_id": "202607030204",
+      "rank": 6,
+      "pop": 7,
+      "dist": 1900,
+      "surface_dist": "ダ1900",
+      "idx": 71
+     },
+     "skipped": 0
+    },
+    "16": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260921",
+      "race_id": "202609040706",
+      "rank": 14,
+      "pop": 4,
+      "dist": 2000,
+      "surface_dist": "ダ2000",
+      "idx": 28
+     },
+     "skipped": 0
+    }
+   },
+   "prev_saved_vs_refetched_diff": {},
+   "prev_now_version": {
+    "1": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261012",
+      "race_id": "202608040507",
+      "rank": 13,
+      "pop": 9,
+      "dist": 1900,
+      "surface_dist": "ダ1900",
+      "idx": 66
+     },
+     "skipped": 0
+    },
+    "2": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261012",
+      "race_id": "202608040507",
+      "rank": 5,
+      "pop": 3,
+      "dist": 1900,
+      "surface_dist": "ダ1900",
+      "idx": 87
+     },
+     "skipped": 0
+    },
+    "3": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260926",
+      "race_id": "202606040807",
+      "rank": 8,
+      "pop": 12,
+      "dist": 2000,
+      "surface_dist": "芝2000",
+      "idx": 49
+     },
+     "skipped": 0
+    },
+    "4": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202601020605",
+      "rank": 4,
+      "pop": 7,
+      "dist": 2000,
+      "surface_dist": "芝2000",
+      "idx": 78
+     },
+     "skipped": 0
+    },
+    "5": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260919",
+      "race_id": "202606040507",
+      "rank": 5,
+      "pop": 4,
+      "dist": 2400,
+      "surface_dist": "ダ2400",
+      "idx": 77
+     },
+     "skipped": 0
+    },
+    "6": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202609040209",
+      "rank": 9,
+      "pop": 7,
+      "dist": 1800,
+      "surface_dist": "ダ1800",
+      "idx": 69
+     },
+     "skipped": 0
+    },
+    "7": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260712",
+      "race_id": "202602011008",
+      "rank": 11,
+      "pop": 3,
+      "dist": 2400,
+      "surface_dist": "ダ2400",
+      "idx": 68
+     },
+     "skipped": 0
+    },
+    "8": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260117",
+      "race_id": "202608010601",
+      "rank": 4,
+      "pop": 6,
+      "dist": 1800,
+      "surface_dist": "ダ1800",
+      "idx": 51
+     },
+     "skipped": 0
+    },
+    "9": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261025",
+      "race_id": "202604040408",
+      "rank": 2,
+      "pop": 6,
+      "dist": 2500,
+      "surface_dist": "ダ2500",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "10": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261025",
+      "race_id": "202604040408",
+      "rank": 3,
+      "pop": 3,
+      "dist": 2500,
+      "surface_dist": "ダ2500",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "11": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260913",
+      "race_id": "202606040406",
+      "rank": 5,
+      "pop": 4,
+      "dist": 1800,
+      "surface_dist": "ダ1800",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "12": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260823",
+      "race_id": "202601020208",
+      "rank": 7,
+      "pop": 9,
+      "dist": 1800,
+      "surface_dist": "芝1800",
+      "idx": 89
+     },
+     "skipped": 0
+    },
+    "13": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261025",
+      "race_id": "202604040408",
+      "rank": 4,
+      "pop": 1,
+      "dist": 2500,
+      "surface_dist": "ダ2500",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "14": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261012",
+      "race_id": "202608040507",
+      "rank": 6,
+      "pop": 6,
+      "dist": 1900,
+      "surface_dist": "ダ1900",
+      "idx": 87
+     },
+     "skipped": 0
+    },
+    "15": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260823",
+      "race_id": "202607030204",
+      "rank": 6,
+      "pop": 7,
+      "dist": 1900,
+      "surface_dist": "ダ1900",
+      "idx": 71
+     },
+     "skipped": 0
+    },
+    "16": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260921",
+      "race_id": "202609040706",
+      "rank": 14,
+      "pop": 4,
+      "dist": 2000,
+      "surface_dist": "ダ2000",
+      "idx": 28
+     },
+     "skipped": 0
+    }
+   },
+   "variants": {
+    "S1 保存した入力・本番の版": {
+     "scored": [
+      {
+       "num": 2,
+       "score": 7,
+       "breakdown": [
+        "各データ上位3頭 3カテゴリー(2)",
+        "データ分析ピックアップ3頭(1)",
+        "出走馬分析 1条件該当(1)",
+        "前走指数87(70以上)(1)",
+        "中4週以内(26日)(2)"
+       ]
+      }
+     ],
+     "top1_race_max": 89,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 66,
+       "2": 87,
+       "3": 49,
+       "4": 78,
+       "5": 77,
+       "6": 69,
+       "7": 68,
+       "8": 51,
+       "9": 80,
+       "10": 80,
+       "11": 80,
+       "12": 89,
+       "13": 80,
+       "14": 87,
+       "15": 71,
+       "16": 28
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(a) 前走を取り直し・本番の版で読む": {
+     "scored": [
+      {
+       "num": 2,
+       "score": 7,
+       "breakdown": [
+        "各データ上位3頭 3カテゴリー(2)",
+        "データ分析ピックアップ3頭(1)",
+        "出走馬分析 1条件該当(1)",
+        "前走指数87(70以上)(1)",
+        "中4週以内(26日)(2)"
+       ]
+      }
+     ],
+     "top1_race_max": 89,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 66,
+       "2": 87,
+       "3": 49,
+       "4": 78,
+       "5": 77,
+       "6": 69,
+       "7": 68,
+       "8": 51,
+       "9": 80,
+       "10": 80,
+       "11": 80,
+       "12": 89,
+       "13": 80,
+       "14": 87,
+       "15": 71,
+       "16": 28
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(b) 前走の読み取りを今の版に": {
+     "scored": [
+      {
+       "num": 2,
+       "score": 7,
+       "breakdown": [
+        "各データ上位3頭 3カテゴリー(2)",
+        "データ分析ピックアップ3頭(1)",
+        "出走馬分析 1条件該当(1)",
+        "前走指数87(70以上)(1)",
+        "中4週以内(26日)(2)"
+       ]
+      }
+     ],
+     "top1_race_max": 89,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 66,
+       "2": 87,
+       "3": 49,
+       "4": 78,
+       "5": 77,
+       "6": 69,
+       "7": 68,
+       "8": 51,
+       "9": 80,
+       "10": 80,
+       "11": 80,
+       "12": 89,
+       "13": 80,
+       "14": 87,
+       "15": 71,
+       "16": 28
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(c) 脚質を対象日より前の結果で作り直し": {
+     "scored": [
+      {
+       "num": 2,
+       "score": 7,
+       "breakdown": [
+        "各データ上位3頭 3カテゴリー(2)",
+        "データ分析ピックアップ3頭(1)",
+        "出走馬分析 1条件該当(1)",
+        "前走指数87(70以上)(1)",
+        "中4週以内(26日)(2)"
+       ]
+      }
+     ],
+     "top1_race_max": 89,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 66,
+       "2": 87,
+       "3": 49,
+       "4": 78,
+       "5": 77,
+       "6": 69,
+       "7": 68,
+       "8": 51,
+       "9": 80,
+       "10": 80,
+       "11": 80,
+       "12": 89,
+       "13": 80,
+       "14": 87,
+       "15": 71,
+       "16": 28
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(d) 3項目を取り直した値に": {
+     "scored": [
+      {
+       "num": 2,
+       "score": 7,
+       "breakdown": [
+        "各データ上位3頭 3カテゴリー(2)",
+        "データ分析ピックアップ3頭(1)",
+        "出走馬分析 1条件該当(1)",
+        "前走指数87(70以上)(1)",
+        "中4週以内(26日)(2)"
+       ]
+      }
+     ],
+     "top1_race_max": 89,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 66,
+       "2": 87,
+       "3": 49,
+       "4": 78,
+       "5": 77,
+       "6": 69,
+       "7": 68,
+       "8": 51,
+       "9": 80,
+       "10": 80,
+       "11": 80,
+       "12": 89,
+       "13": 80,
+       "14": 87,
+       "15": 71,
+       "16": 28
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    }
+   }
+  },
+  "20261107 福島7R": {
+   "race": {
+    "date": "20261107",
+    "label": "福島7R",
+    "race_id": "202603030107",
+    "why": "対照（本番の入力の記録がある）",
+    "candidates_in_day": 19
+   },
+   "saved_inputs": {
+    "top3": {
+     "3": 2,
+     "9": 3,
+     "13": 1,
+     "1": 1,
+     "12": 1,
+     "14": 1,
+     "6": 1,
+     "15": 1,
+     "4": 1
+    },
+    "pickup": [
+     "3",
+     "4",
+     "6"
+    ],
+    "analysis": {
+     "4": 1,
+     "13": 1,
+     "9": 1,
+     "10": 1,
+     "8": 1
+    },
+    "pace": "M",
+    "dist": 1200,
+    "position": [
+     "7"
+    ]
+   },
+   "refetched_inputs": {
+    "top3": {
+     "3": 2,
+     "9": 3,
+     "13": 1,
+     "1": 1,
+     "12": 1,
+     "14": 1,
+     "6": 1,
+     "15": 1,
+     "4": 1
+    },
+    "pickup": [
+     "3",
+     "4",
+     "6"
+    ],
+    "analysis": {
+     "4": 1,
+     "13": 1,
+     "9": 1,
+     "10": 1,
+     "8": 1
+    },
+    "pace": "M",
+    "dist": 1200,
+    "map_issues": [],
+    "scratched_nums": {}
+   },
+   "saved_scored": [
+    [
+     3,
+     6
+    ]
+   ],
+   "horse_id_source": "pickup_scores の horse_id_map と scratched_nums（当時の出馬表）",
+   "not_reproducible": null,
+   "candidates_now": [
+    3
+   ],
+   "candidates_saved_scored": [
+    3
+   ],
+   "prev_saved": {
+    "1": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260829",
+      "race_id": "202601020307",
+      "rank": 12,
+      "pop": 10,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 68
+     },
+     "skipped": 0
+    },
+    "2": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261024",
+      "race_id": "202604040309",
+      "rank": 5,
+      "pop": 12,
+      "dist": 1000,
+      "surface_dist": "芝1000",
+      "idx": 63
+     },
+     "skipped": 0
+    },
+    "3": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260419",
+      "race_id": "202603010409",
+      "rank": 5,
+      "pop": 1,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 95
+     },
+     "skipped": 0
+    },
+    "4": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260704",
+      "race_id": "202603020304",
+      "rank": 1,
+      "pop": 1,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 88
+     },
+     "skipped": 0
+    },
+    "5": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260801",
+      "race_id": "202601010310",
+      "rank": 10,
+      "pop": 12,
+      "dist": 1500,
+      "surface_dist": "芝1500",
+      "idx": 74
+     },
+     "skipped": 0
+    },
+    "6": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260808",
+      "race_id": "202604020511",
+      "rank": 15,
+      "pop": 3,
+      "dist": 1000,
+      "surface_dist": "芝1000",
+      "idx": 61
+     },
+     "skipped": 0
+    },
+    "7": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260829",
+      "race_id": "202604030310",
+      "rank": 11,
+      "pop": 4,
+      "dist": 1400,
+      "surface_dist": "芝1400",
+      "idx": 72
+     },
+     "skipped": 0
+    },
+    "8": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202606040212",
+      "rank": 15,
+      "pop": 16,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 70
+     },
+     "skipped": 0
+    },
+    "9": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260905",
+      "race_id": "202609040107",
+      "rank": 2,
+      "pop": 1,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 97
+     },
+     "skipped": 0
+    },
+    "10": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261018",
+      "race_id": "202604040207",
+      "rank": 2,
+      "pop": 9,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 76
+     },
+     "skipped": 0
+    },
+    "11": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260719",
+      "race_id": "202610020802",
+      "rank": 1,
+      "pop": 3,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 90
+     },
+     "skipped": 0
+    },
+    "12": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260830",
+      "race_id": "202601020407",
+      "rank": 11,
+      "pop": 8,
+      "dist": 1000,
+      "surface_dist": "ダ1000",
+      "idx": 45
+     },
+     "skipped": 0
+    },
+    "13": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260816",
+      "race_id": "202607020811",
+      "rank": 14,
+      "pop": 14,
+      "dist": 1400,
+      "surface_dist": "芝1400",
+      "idx": 85
+     },
+     "skipped": 0
+    },
+    "14": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260816",
+      "race_id": "202601010809",
+      "rank": 16,
+      "pop": 9,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 58
+     },
+     "skipped": 0
+    },
+    "15": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202606040212",
+      "rank": 4,
+      "pop": 9,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 86
+     },
+     "skipped": 0
+    },
+    "16": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260816",
+      "race_id": "202601010809",
+      "rank": 12,
+      "pop": 16,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 78
+     },
+     "skipped": 0
+    }
+   },
+   "prev_refetched_old_version": {
+    "1": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260829",
+      "race_id": "202601020307",
+      "rank": 12,
+      "pop": 10,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 68
+     },
+     "skipped": 0
+    },
+    "2": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261024",
+      "race_id": "202604040309",
+      "rank": 5,
+      "pop": 12,
+      "dist": 1000,
+      "surface_dist": "芝1000",
+      "idx": 63
+     },
+     "skipped": 0
+    },
+    "3": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260419",
+      "race_id": "202603010409",
+      "rank": 5,
+      "pop": 1,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 95
+     },
+     "skipped": 0
+    },
+    "4": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260704",
+      "race_id": "202603020304",
+      "rank": 1,
+      "pop": 1,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 88
+     },
+     "skipped": 0
+    },
+    "5": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260801",
+      "race_id": "202601010310",
+      "rank": 10,
+      "pop": 12,
+      "dist": 1500,
+      "surface_dist": "芝1500",
+      "idx": 74
+     },
+     "skipped": 0
+    },
+    "6": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260808",
+      "race_id": "202604020511",
+      "rank": 15,
+      "pop": 3,
+      "dist": 1000,
+      "surface_dist": "芝1000",
+      "idx": 61
+     },
+     "skipped": 0
+    },
+    "7": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260829",
+      "race_id": "202604030310",
+      "rank": 11,
+      "pop": 4,
+      "dist": 1400,
+      "surface_dist": "芝1400",
+      "idx": 72
+     },
+     "skipped": 0
+    },
+    "8": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202606040212",
+      "rank": 15,
+      "pop": 16,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 70
+     },
+     "skipped": 0
+    },
+    "9": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260905",
+      "race_id": "202609040107",
+      "rank": 2,
+      "pop": 1,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 97
+     },
+     "skipped": 0
+    },
+    "10": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261018",
+      "race_id": "202604040207",
+      "rank": 2,
+      "pop": 9,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 76
+     },
+     "skipped": 0
+    },
+    "11": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260719",
+      "race_id": "202610020802",
+      "rank": 1,
+      "pop": 3,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 90
+     },
+     "skipped": 0
+    },
+    "12": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260830",
+      "race_id": "202601020407",
+      "rank": 11,
+      "pop": 8,
+      "dist": 1000,
+      "surface_dist": "ダ1000",
+      "idx": 45
+     },
+     "skipped": 0
+    },
+    "13": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260816",
+      "race_id": "202607020811",
+      "rank": 14,
+      "pop": 14,
+      "dist": 1400,
+      "surface_dist": "芝1400",
+      "idx": 85
+     },
+     "skipped": 0
+    },
+    "14": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260816",
+      "race_id": "202601010809",
+      "rank": 16,
+      "pop": 9,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 58
+     },
+     "skipped": 0
+    },
+    "15": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202606040212",
+      "rank": 4,
+      "pop": 9,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 86
+     },
+     "skipped": 0
+    },
+    "16": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260816",
+      "race_id": "202601010809",
+      "rank": 12,
+      "pop": 16,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 78
+     },
+     "skipped": 0
+    }
+   },
+   "prev_saved_vs_refetched_diff": {},
+   "prev_now_version": {
+    "1": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260829",
+      "race_id": "202601020307",
+      "rank": 12,
+      "pop": 10,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 68
+     },
+     "skipped": 0
+    },
+    "2": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261024",
+      "race_id": "202604040309",
+      "rank": 5,
+      "pop": 12,
+      "dist": 1000,
+      "surface_dist": "芝1000",
+      "idx": 63
+     },
+     "skipped": 0
+    },
+    "3": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260419",
+      "race_id": "202603010409",
+      "rank": 5,
+      "pop": 1,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 95
+     },
+     "skipped": 0
+    },
+    "4": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260704",
+      "race_id": "202603020304",
+      "rank": 1,
+      "pop": 1,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 88
+     },
+     "skipped": 0
+    },
+    "5": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260801",
+      "race_id": "202601010310",
+      "rank": 10,
+      "pop": 12,
+      "dist": 1500,
+      "surface_dist": "芝1500",
+      "idx": 74
+     },
+     "skipped": 0
+    },
+    "6": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260808",
+      "race_id": "202604020511",
+      "rank": 15,
+      "pop": 3,
+      "dist": 1000,
+      "surface_dist": "芝1000",
+      "idx": 61
+     },
+     "skipped": 0
+    },
+    "7": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260829",
+      "race_id": "202604030310",
+      "rank": 11,
+      "pop": 4,
+      "dist": 1400,
+      "surface_dist": "芝1400",
+      "idx": 72
+     },
+     "skipped": 0
+    },
+    "8": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202606040212",
+      "rank": 15,
+      "pop": 16,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 70
+     },
+     "skipped": 0
+    },
+    "9": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260905",
+      "race_id": "202609040107",
+      "rank": 2,
+      "pop": 1,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 97
+     },
+     "skipped": 0
+    },
+    "10": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261018",
+      "race_id": "202604040207",
+      "rank": 2,
+      "pop": 9,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 76
+     },
+     "skipped": 0
+    },
+    "11": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260719",
+      "race_id": "202610020802",
+      "rank": 1,
+      "pop": 3,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 90
+     },
+     "skipped": 0
+    },
+    "12": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260830",
+      "race_id": "202601020407",
+      "rank": 11,
+      "pop": 8,
+      "dist": 1000,
+      "surface_dist": "ダ1000",
+      "idx": 45
+     },
+     "skipped": 0
+    },
+    "13": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260816",
+      "race_id": "202607020811",
+      "rank": 14,
+      "pop": 14,
+      "dist": 1400,
+      "surface_dist": "芝1400",
+      "idx": 85
+     },
+     "skipped": 0
+    },
+    "14": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260816",
+      "race_id": "202601010809",
+      "rank": 16,
+      "pop": 9,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 58
+     },
+     "skipped": 0
+    },
+    "15": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202606040212",
+      "rank": 4,
+      "pop": 9,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 86
+     },
+     "skipped": 0
+    },
+    "16": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260816",
+      "race_id": "202601010809",
+      "rank": 12,
+      "pop": 16,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 78
+     },
+     "skipped": 0
+    }
+   },
+   "variants": {
+    "S1 保存した入力・本番の版": {
+     "scored": [
+      {
+       "num": 3,
+       "score": 6,
+       "breakdown": [
+        "各データ上位3頭 2カテゴリー(2)",
+        "データ分析ピックアップ3頭(1)",
+        "前走指数95(90以上)(2)",
+        "同距離前走(1200m→1200m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": 97,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 68,
+       "2": 63,
+       "3": 95,
+       "4": 88,
+       "5": 74,
+       "6": 61,
+       "7": 72,
+       "8": 70,
+       "9": 97,
+       "10": 76,
+       "11": 90,
+       "12": 45,
+       "13": 85,
+       "14": 58,
+       "15": 86,
+       "16": 78
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(a) 前走を取り直し・本番の版で読む": {
+     "scored": [
+      {
+       "num": 3,
+       "score": 6,
+       "breakdown": [
+        "各データ上位3頭 2カテゴリー(2)",
+        "データ分析ピックアップ3頭(1)",
+        "前走指数95(90以上)(2)",
+        "同距離前走(1200m→1200m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": 97,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 68,
+       "2": 63,
+       "3": 95,
+       "4": 88,
+       "5": 74,
+       "6": 61,
+       "7": 72,
+       "8": 70,
+       "9": 97,
+       "10": 76,
+       "11": 90,
+       "12": 45,
+       "13": 85,
+       "14": 58,
+       "15": 86,
+       "16": 78
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(b) 前走の読み取りを今の版に": {
+     "scored": [
+      {
+       "num": 3,
+       "score": 6,
+       "breakdown": [
+        "各データ上位3頭 2カテゴリー(2)",
+        "データ分析ピックアップ3頭(1)",
+        "前走指数95(90以上)(2)",
+        "同距離前走(1200m→1200m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": 97,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 68,
+       "2": 63,
+       "3": 95,
+       "4": 88,
+       "5": 74,
+       "6": 61,
+       "7": 72,
+       "8": 70,
+       "9": 97,
+       "10": 76,
+       "11": 90,
+       "12": 45,
+       "13": 85,
+       "14": 58,
+       "15": 86,
+       "16": 78
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(c) 脚質を対象日より前の結果で作り直し": {
+     "scored": [
+      {
+       "num": 3,
+       "score": 6,
+       "breakdown": [
+        "各データ上位3頭 2カテゴリー(2)",
+        "データ分析ピックアップ3頭(1)",
+        "前走指数95(90以上)(2)",
+        "同距離前走(1200m→1200m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": 97,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 68,
+       "2": 63,
+       "3": 95,
+       "4": 88,
+       "5": 74,
+       "6": 61,
+       "7": 72,
+       "8": 70,
+       "9": 97,
+       "10": 76,
+       "11": 90,
+       "12": 45,
+       "13": 85,
+       "14": 58,
+       "15": 86,
+       "16": 78
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(d) 3項目を取り直した値に": {
+     "scored": [
+      {
+       "num": 3,
+       "score": 6,
+       "breakdown": [
+        "各データ上位3頭 2カテゴリー(2)",
+        "データ分析ピックアップ3頭(1)",
+        "前走指数95(90以上)(2)",
+        "同距離前走(1200m→1200m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": 97,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 68,
+       "2": 63,
+       "3": 95,
+       "4": 88,
+       "5": 74,
+       "6": 61,
+       "7": 72,
+       "8": 70,
+       "9": 97,
+       "10": 76,
+       "11": 90,
+       "12": 45,
+       "13": 85,
+       "14": 58,
+       "15": 86,
+       "16": 78
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    }
+   }
+  },
+  "20261031 東京7R": {
+   "race": {
+    "date": "20261031",
+    "label": "東京7R",
+    "race_id": "202605041007",
+    "why": "馬番を直した後",
+    "candidates_in_day": 4
+   },
+   "saved_inputs": {
+    "top3": {
+     "2": 2,
+     "3": 2,
+     "4": 1,
+     "5": 3,
+     "8": 2,
+     "10": 1,
+     "9": 1
+    },
+    "pickup": [
+     "3",
+     "5",
+     "8"
+    ],
+    "analysis": {
+     "8": 1,
+     "3": 1,
+     "5": 2,
+     "10": 1
+    },
+    "pace": "S",
+    "dist": 2000,
+    "position": [
+     "2"
+    ]
+   },
+   "refetched_inputs": {
+    "top3": {
+     "2": 2,
+     "3": 2,
+     "4": 1,
+     "5": 3,
+     "8": 2,
+     "10": 1,
+     "9": 1
+    },
+    "pickup": [
+     "3",
+     "5",
+     "8"
+    ],
+    "analysis": {
+     "8": 1,
+     "3": 1,
+     "5": 2,
+     "10": 1
+    },
+    "pace": "S",
+    "dist": 2000,
+    "map_issues": [],
+    "scratched_nums": {}
+   },
+   "saved_scored": [
+    [
+     4,
+     4
+    ]
+   ],
+   "horse_id_source": "pickup_scores の horse_id_map と scratched_nums（当時の出馬表）",
+   "not_reproducible": null,
+   "candidates_now": [
+    4
+   ],
+   "candidates_saved_scored": [
+    4
+   ],
+   "prev_now_version": {
+    "1": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261018",
+      "race_id": "202604040209",
+      "rank": 11,
+      "pop": 9,
+      "dist": 2000,
+      "surface_dist": "芝2000",
+      "idx": 85
+     },
+     "skipped": 0
+    },
+    "2": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261017",
+      "race_id": "202604040104",
+      "rank": 2,
+      "pop": 1,
+      "dist": 1800,
+      "surface_dist": "芝1800",
+      "idx": 81
+     },
+     "skipped": 0
+    },
+    "3": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260509",
+      "race_id": "202605020506",
+      "rank": 2,
+      "pop": 8,
+      "dist": 1800,
+      "surface_dist": "芝1800",
+      "idx": 96
+     },
+     "skipped": 0
+    },
+    "4": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261024",
+      "race_id": "202604040304",
+      "rank": 12,
+      "pop": 4,
+      "dist": 2000,
+      "surface_dist": "芝2000",
+      "idx": 73
+     },
+     "skipped": 0
+    },
+    "5": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260329",
+      "race_id": "202606030209",
+      "rank": 3,
+      "pop": 2,
+      "dist": 2000,
+      "surface_dist": "芝2000",
+      "idx": 83
+     },
+     "skipped": 0
+    },
+    "6": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261017",
+      "race_id": "202604040104",
+      "rank": 1,
+      "pop": 3,
+      "dist": 1800,
+      "surface_dist": "芝1800",
+      "idx": 81
+     },
+     "skipped": 0
+    },
+    "7": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260523",
+      "race_id": "202605020909",
+      "rank": 9,
+      "pop": 10,
+      "dist": 1800,
+      "surface_dist": "芝1800",
+      "idx": 85
+     },
+     "skipped": 0
+    },
+    "8": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260712",
+      "race_id": "202610020608",
+      "rank": 5,
+      "pop": 3,
+      "dist": 1800,
+      "surface_dist": "芝1800",
+      "idx": 74
+     },
+     "skipped": 0
+    },
+    "9": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260830",
+      "race_id": "202604030411",
+      "rank": 13,
+      "pop": 6,
+      "dist": 1800,
+      "surface_dist": "芝1800",
+      "idx": 46
+     },
+     "skipped": 0
+    },
+    "10": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261004",
+      "race_id": "202605040208",
+      "rank": 10,
+      "pop": 6,
+      "dist": 1800,
+      "surface_dist": "芝1800",
+      "idx": 83
+     },
+     "skipped": 0
+    },
+    "11": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260829",
+      "race_id": "202604030309",
+      "rank": 11,
+      "pop": 6,
+      "dist": 2200,
+      "surface_dist": "芝2200",
+      "idx": 59
+     },
+     "skipped": 0
+    }
+   },
+   "variants": {
+    "(i) 3項目は保存値": {
+     "scored": [
+      {
+       "num": "4",
+       "score": 5,
+       "breakdown": [
+        "各データ上位3頭 1カテゴリー(1)",
+        "前走指数73(70以上)(1)",
+        "中4週以内(7日)(2)",
+        "同距離前走(2000m→2000m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": 96,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 85,
+       "2": 81,
+       "3": 96,
+       "4": 73,
+       "5": 83,
+       "6": 81,
+       "7": 85,
+       "8": 74,
+       "9": 46,
+       "10": 83,
+       "11": 59
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(ii) 3項目は取り直した値": {
+     "scored": [
+      {
+       "num": "4",
+       "score": 5,
+       "breakdown": [
+        "各データ上位3頭 1カテゴリー(1)",
+        "前走指数73(70以上)(1)",
+        "中4週以内(7日)(2)",
+        "同距離前走(2000m→2000m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": 96,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 85,
+       "2": 81,
+       "3": 96,
+       "4": 73,
+       "5": 83,
+       "6": 81,
+       "7": 85,
+       "8": 74,
+       "9": 46,
+       "10": 83,
+       "11": 59
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(iii) 3項目を入れない（v5.1 の再現ではない）": {
+     "scored": [
+      {
+       "num": "4",
+       "score": 4,
+       "breakdown": [
+        "前走指数73(70以上)(1)",
+        "中4週以内(7日)(2)",
+        "同距離前走(2000m→2000m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": 96,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 85,
+       "2": 81,
+       "3": 96,
+       "4": 73,
+       "5": 83,
+       "6": 81,
+       "7": 85,
+       "8": 74,
+       "9": 46,
+       "10": 83,
+       "11": 59
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    }
+   }
+  },
+  "20261101 東京6R": {
+   "race": {
+    "date": "20261101",
+    "label": "東京6R",
+    "race_id": "202605041106",
+    "why": "馬番を直した後",
+    "candidates_in_day": 7
+   },
+   "saved_inputs": {
+    "top3": {
+     "4": 2,
+     "9": 2,
+     "12": 2,
+     "8": 2,
+     "15": 1,
+     "3": 1,
+     "1": 1,
+     "6": 1
+    },
+    "pickup": [
+     "11",
+     "8",
+     "9"
+    ],
+    "analysis": {
+     "6": 1,
+     "11": 3,
+     "8": 1
+    },
+    "pace": "H",
+    "dist": 1400,
+    "position": [
+     "1"
+    ]
+   },
+   "refetched_inputs": {
+    "top3": {
+     "4": 2,
+     "9": 2,
+     "12": 2,
+     "8": 2,
+     "15": 1,
+     "3": 1,
+     "1": 1,
+     "6": 1
+    },
+    "pickup": [
+     "11",
+     "8",
+     "9"
+    ],
+    "analysis": {
+     "6": 1,
+     "11": 3,
+     "8": 1
+    },
+    "pace": "H",
+    "dist": 1400,
+    "map_issues": [],
+    "scratched_nums": {
+     "13": "取消"
+    }
+   },
+   "saved_scored": [
+    [
+     12,
+     10
+    ],
+    [
+     4,
+     6
+    ]
+   ],
+   "horse_id_source": "pickup_scores の horse_id_map と scratched_nums（当時の出馬表）",
+   "not_reproducible": null,
+   "candidates_now": [
+    4,
+    9,
+    12
+   ],
+   "candidates_saved_scored": [
+    4,
+    12
+   ],
+   "prev_now_version": {
+    "1": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261017",
+      "race_id": "202604040103",
+      "rank": 9,
+      "pop": 5,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 66
+     },
+     "skipped": 0
+    },
+    "2": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261012",
+      "race_id": "202605040512",
+      "rank": 4,
+      "pop": 3,
+      "dist": 1300,
+      "surface_dist": "ダ1300",
+      "idx": 83
+     },
+     "skipped": 0
+    },
+    "3": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261011",
+      "race_id": "202605040406",
+      "rank": 4,
+      "pop": 5,
+      "dist": 1400,
+      "surface_dist": "ダ1400",
+      "idx": 76
+     },
+     "skipped": 0
+    },
+    "4": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261010",
+      "race_id": "202605040312",
+      "rank": 4,
+      "pop": 3,
+      "dist": 1400,
+      "surface_dist": "ダ1400",
+      "idx": 81
+     },
+     "skipped": 0
+    },
+    "5": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261011",
+      "race_id": "202605040406",
+      "rank": 8,
+      "pop": 14,
+      "dist": 1400,
+      "surface_dist": "ダ1400",
+      "idx": 75
+     },
+     "skipped": 0
+    },
+    "6": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260905",
+      "race_id": "202606040108",
+      "rank": 15,
+      "pop": 16,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 78
+     },
+     "skipped": 0
+    },
+    "7": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260822",
+      "race_id": "202604030110",
+      "rank": 13,
+      "pop": 5,
+      "dist": 1600,
+      "surface_dist": "芝1600",
+      "idx": 83
+     },
+     "skipped": 0
+    },
+    "8": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261003",
+      "race_id": "202605040106",
+      "rank": 7,
+      "pop": 3,
+      "dist": 1400,
+      "surface_dist": "ダ1400",
+      "idx": 69
+     },
+     "skipped": 0
+    },
+    "9": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261018",
+      "race_id": "202605040708",
+      "rank": 2,
+      "pop": 3,
+      "dist": 1400,
+      "surface_dist": "ダ1400",
+      "idx": 91
+     },
+     "skipped": 0
+    },
+    "10": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261003",
+      "race_id": "202605040106",
+      "rank": 4,
+      "pop": 10,
+      "dist": 1400,
+      "surface_dist": "ダ1400",
+      "idx": 71
+     },
+     "skipped": 0
+    },
+    "11": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20251109",
+      "race_id": "202505050209",
+      "rank": 7,
+      "pop": 3,
+      "dist": 1400,
+      "surface_dist": "ダ1400",
+      "idx": 79
+     },
+     "skipped": 0
+    },
+    "12": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261010",
+      "race_id": "202605040312",
+      "rank": 3,
+      "pop": 1,
+      "dist": 1400,
+      "surface_dist": "ダ1400",
+      "idx": 82
+     },
+     "skipped": 0
+    },
+    "13": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261018",
+      "race_id": "202604040204",
+      "rank": 4,
+      "pop": 15,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "14": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261004",
+      "race_id": "202605040207",
+      "rank": 3,
+      "pop": 3,
+      "dist": 1400,
+      "surface_dist": "ダ1400",
+      "idx": 80
+     },
+     "skipped": 0
+    },
+    "15": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261018",
+      "race_id": "202605040708",
+      "rank": 7,
+      "pop": 11,
+      "dist": 1400,
+      "surface_dist": "ダ1400",
+      "idx": 82
+     },
+     "skipped": 0
+    }
+   },
+   "variants": {
+    "(i) 3項目は保存値": {
+     "scored": [
+      {
+       "num": "9",
+       "score": 11,
+       "breakdown": [
+        "各データ上位3頭 2カテゴリー(2)",
+        "データ分析ピックアップ3頭(1)",
+        "前走指数91(90以上) + 前走指数レース内1位(91) + (合算上限3pt)(3)",
+        "中4週以内(14日)(2)",
+        "前走好走(前走3人気2着)(2)",
+        "同距離前走(1400m→1400m)(1)"
+       ]
+      },
+      {
+       "num": "12",
+       "score": 8,
+       "breakdown": [
+        "各データ上位3頭 2カテゴリー(2)",
+        "前走指数82(70以上)(1)",
+        "中4週以内(22日)(2)",
+        "前走好走(前走1人気3着)(2)",
+        "同距離前走(1400m→1400m)(1)"
+       ]
+      },
+      {
+       "num": "4",
+       "score": 6,
+       "breakdown": [
+        "各データ上位3頭 2カテゴリー(2)",
+        "前走指数81(70以上)(1)",
+        "中4週以内(22日)(2)",
+        "同距離前走(1400m→1400m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": 91,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 66,
+       "2": 83,
+       "3": 76,
+       "4": 81,
+       "5": 75,
+       "6": 78,
+       "7": 83,
+       "8": 69,
+       "9": 91,
+       "10": 71,
+       "11": 79,
+       "12": 82,
+       "13": 80,
+       "14": 80,
+       "15": 82
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(ii) 3項目は取り直した値": {
+     "scored": [
+      {
+       "num": "9",
+       "score": 11,
+       "breakdown": [
+        "各データ上位3頭 2カテゴリー(2)",
+        "データ分析ピックアップ3頭(1)",
+        "前走指数91(90以上) + 前走指数レース内1位(91) + (合算上限3pt)(3)",
+        "中4週以内(14日)(2)",
+        "前走好走(前走3人気2着)(2)",
+        "同距離前走(1400m→1400m)(1)"
+       ]
+      },
+      {
+       "num": "12",
+       "score": 8,
+       "breakdown": [
+        "各データ上位3頭 2カテゴリー(2)",
+        "前走指数82(70以上)(1)",
+        "中4週以内(22日)(2)",
+        "前走好走(前走1人気3着)(2)",
+        "同距離前走(1400m→1400m)(1)"
+       ]
+      },
+      {
+       "num": "4",
+       "score": 6,
+       "breakdown": [
+        "各データ上位3頭 2カテゴリー(2)",
+        "前走指数81(70以上)(1)",
+        "中4週以内(22日)(2)",
+        "同距離前走(1400m→1400m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": 91,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 66,
+       "2": 83,
+       "3": 76,
+       "4": 81,
+       "5": 75,
+       "6": 78,
+       "7": 83,
+       "8": 69,
+       "9": 91,
+       "10": 71,
+       "11": 79,
+       "12": 82,
+       "13": 80,
+       "14": 80,
+       "15": 82
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(iii) 3項目を入れない（v5.1 の再現ではない）": {
+     "scored": [
+      {
+       "num": "9",
+       "score": 8,
+       "breakdown": [
+        "前走指数91(90以上) + 前走指数レース内1位(91) + (合算上限3pt)(3)",
+        "中4週以内(14日)(2)",
+        "前走好走(前走3人気2着)(2)",
+        "同距離前走(1400m→1400m)(1)"
+       ]
+      },
+      {
+       "num": "12",
+       "score": 6,
+       "breakdown": [
+        "前走指数82(70以上)(1)",
+        "中4週以内(22日)(2)",
+        "前走好走(前走1人気3着)(2)",
+        "同距離前走(1400m→1400m)(1)"
+       ]
+      },
+      {
+       "num": "4",
+       "score": 4,
+       "breakdown": [
+        "前走指数81(70以上)(1)",
+        "中4週以内(22日)(2)",
+        "同距離前走(1400m→1400m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": 91,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "1": 66,
+       "2": 83,
+       "3": 76,
+       "4": 81,
+       "5": 75,
+       "6": 78,
+       "7": 83,
+       "8": 69,
+       "9": 91,
+       "10": 71,
+       "11": 79,
+       "12": 82,
+       "13": 80,
+       "14": 80,
+       "15": 82
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    }
+   }
+  },
+  "20260912 中山3R": {
+   "race": {
+    "date": "20260912",
+    "label": "中山3R",
+    "race_id": "202606040303",
+    "why": "直す前（範囲の最初の開催日）",
+    "candidates_in_day": 6
+   },
+   "saved_inputs": {
+    "top3": {
+     "2": 1,
+     "4": 1,
+     "8": 2,
+     "5": 2,
+     "11": 1,
+     "16": 1,
+     "13": 1,
+     "15": 2,
+     "9": 1
+    },
+    "pickup": [
+     "15",
+     "2",
+     "5"
+    ],
+    "analysis": {
+     "5": 2,
+     "15": 1,
+     "9": 1,
+     "3": 1
+    },
+    "pace": "H",
+    "dist": 1200,
+    "position": [
+     "2"
+    ]
+   },
+   "refetched_inputs": {
+    "top3": {
+     "2": 1,
+     "4": 1,
+     "8": 1,
+     "5": 1,
+     "11": 1,
+     "16": 1
+    },
+    "pickup": [],
+    "analysis": {},
+    "pace": "H",
+    "dist": 1200,
+    "map_issues": [],
+    "scratched_nums": {}
+   },
+   "saved_scored": [
+    [
+     8,
+     7
+    ]
+   ],
+   "horse_id_source": "race_results_all（結果）。当時の出馬表の取消の印は保存していない",
+   "not_reproducible": null,
+   "candidates_now": [
+    2,
+    8
+   ],
+   "candidates_saved_scored": [
+    8
+   ],
+   "prev_now_version": {
+    "1": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260830",
+      "race_id": "202604030405",
+      "rank": 4,
+      "pop": 8,
+      "dist": 1400,
+      "surface_dist": "芝1400",
+      "idx": 75
+     },
+     "skipped": 0
+    },
+    "2": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202606040204",
+      "rank": 3,
+      "pop": 6,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 91
+     },
+     "skipped": 0
+    },
+    "3": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260822",
+      "race_id": "202604030112",
+      "rank": 2,
+      "pop": 4,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 68
+     },
+     "skipped": 0
+    },
+    "4": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260829",
+      "race_id": "202601020306",
+      "rank": 5,
+      "pop": 10,
+      "dist": 1500,
+      "surface_dist": "芝1500",
+      "idx": 68
+     },
+     "skipped": 0
+    },
+    "5": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202601020603",
+      "rank": 4,
+      "pop": 7,
+      "dist": 1700,
+      "surface_dist": "ダ1700",
+      "idx": 87
+     },
+     "skipped": 0
+    },
+    "6": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202606040204",
+      "rank": 5,
+      "pop": 1,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 86
+     },
+     "skipped": 0
+    },
+    "7": {
+     "status": "取得失敗",
+     "reason": "着順が数字でなく、確かめた表記でもない（'取'）",
+     "values": null,
+     "skipped": 0
+    },
+    "8": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202606040204",
+      "rank": 4,
+      "pop": 4,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 91
+     },
+     "skipped": 0
+    },
+    "9": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260829",
+      "race_id": "202604030312",
+      "rank": 2,
+      "pop": 2,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 65
+     },
+     "skipped": 0
+    },
+    "10": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260823",
+      "race_id": "202604030204",
+      "rank": 4,
+      "pop": 1,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 66
+     },
+     "skipped": 0
+    },
+    "11": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260829",
+      "race_id": "202604030312",
+      "rank": 5,
+      "pop": 3,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 52
+     },
+     "skipped": 0
+    },
+    "12": {
+     "status": "前走なし",
+     "reason": "対象日より前の行が無い（行2件）",
+     "values": null,
+     "skipped": 0
+    },
+    "13": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260906",
+      "race_id": "202601020604",
+      "rank": 4,
+      "pop": 8,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 84
+     },
+     "skipped": 0
+    },
+    "14": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260823",
+      "race_id": "202604030204",
+      "rank": 5,
+      "pop": 7,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 64
+     },
+     "skipped": 0
+    },
+    "15": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260823",
+      "race_id": "202604030204",
+      "rank": 3,
+      "pop": 2,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 67
+     },
+     "skipped": 0
+    },
+    "16": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260426",
+      "race_id": "202603010603",
+      "rank": 9,
+      "pop": 13,
+      "dist": 1700,
+      "surface_dist": "ダ1700",
+      "idx": 63
+     },
+     "skipped": 0
+    }
+   },
+   "variants": {
+    "(i) 3項目は保存値": {
+     "scored": [
+      {
+       "num": "2",
+       "score": 9,
+       "breakdown": [
+        "各データ上位3頭 1カテゴリー(1)",
+        "データ分析ピックアップ3頭(1)",
+        "前走指数91(90以上)(2)",
+        "中4週以内(6日)(2)",
+        "前走好走(前走6人気3着)(2)",
+        "同距離前走(1200m→1200m)(1)"
+       ]
+      },
+      {
+       "num": "8",
+       "score": 7,
+       "breakdown": [
+        "各データ上位3頭 2カテゴリー(2)",
+        "前走指数91(90以上)(2)",
+        "中4週以内(6日)(2)",
+        "同距離前走(1200m→1200m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": null,
+     "top1": {
+      "decision": "保留",
+      "compared": {
+       "15": 67,
+       "13": 84,
+       "8": 91,
+       "3": 68,
+       "5": 87,
+       "10": 66,
+       "9": 65,
+       "11": 52,
+       "2": 91,
+       "4": 68,
+       "6": 86,
+       "1": 75,
+       "14": 64,
+       "16": 63
+      },
+      "excluded": {
+       "12": "前走なし"
+      },
+      "unknown": {
+       "7": "取得失敗"
+      },
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(ii) 3項目は取り直した値": {
+     "scored": [
+      {
+       "num": "2",
+       "score": 8,
+       "breakdown": [
+        "各データ上位3頭 1カテゴリー(1)",
+        "前走指数91(90以上)(2)",
+        "中4週以内(6日)(2)",
+        "前走好走(前走6人気3着)(2)",
+        "同距離前走(1200m→1200m)(1)"
+       ]
+      },
+      {
+       "num": "8",
+       "score": 6,
+       "breakdown": [
+        "各データ上位3頭 1カテゴリー(1)",
+        "前走指数91(90以上)(2)",
+        "中4週以内(6日)(2)",
+        "同距離前走(1200m→1200m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": null,
+     "top1": {
+      "decision": "保留",
+      "compared": {
+       "15": 67,
+       "13": 84,
+       "8": 91,
+       "3": 68,
+       "5": 87,
+       "10": 66,
+       "9": 65,
+       "11": 52,
+       "2": 91,
+       "4": 68,
+       "6": 86,
+       "1": 75,
+       "14": 64,
+       "16": 63
+      },
+      "excluded": {
+       "12": "前走なし"
+      },
+      "unknown": {
+       "7": "取得失敗"
+      },
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(iii) 3項目を入れない（v5.1 の再現ではない）": {
+     "scored": [
+      {
+       "num": "2",
+       "score": 7,
+       "breakdown": [
+        "前走指数91(90以上)(2)",
+        "中4週以内(6日)(2)",
+        "前走好走(前走6人気3着)(2)",
+        "同距離前走(1200m→1200m)(1)"
+       ]
+      },
+      {
+       "num": "8",
+       "score": 5,
+       "breakdown": [
+        "前走指数91(90以上)(2)",
+        "中4週以内(6日)(2)",
+        "同距離前走(1200m→1200m)(1)"
+       ]
+      }
+     ],
+     "top1_race_max": null,
+     "top1": {
+      "decision": "保留",
+      "compared": {
+       "15": 67,
+       "13": 84,
+       "8": 91,
+       "3": 68,
+       "5": 87,
+       "10": 66,
+       "9": 65,
+       "11": 52,
+       "2": 91,
+       "4": 68,
+       "6": 86,
+       "1": 75,
+       "14": 64,
+       "16": 63
+      },
+      "excluded": {
+       "12": "前走なし"
+      },
+      "unknown": {
+       "7": "取得失敗"
+      },
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    }
+   }
+  },
+  "20261025 新潟4R": {
+   "race": {
+    "date": "20261025",
+    "label": "新潟4R",
+    "race_id": "202604040404",
+    "why": "直す前（範囲の最後の開催日）",
+    "candidates_in_day": 15
+   },
+   "saved_inputs": {
+    "top3": {
+     "4": 2,
+     "7": 1,
+     "13": 3,
+     "6": 3,
+     "9": 1,
+     "3": 1,
+     "10": 1
+    },
+    "pickup": [
+     "4",
+     "6",
+     "9"
+    ],
+    "analysis": {
+     "13": 2,
+     "4": 1,
+     "6": 1,
+     "9": 1
+    },
+    "pace": "H",
+    "dist": 1200,
+    "position": [
+     "6"
+    ]
+   },
+   "refetched_inputs": {
+    "top3": {
+     "4": 2,
+     "7": 1,
+     "13": 3,
+     "6": 2,
+     "9": 1
+    },
+    "pickup": [
+     "4",
+     "6",
+     "9"
+    ],
+    "analysis": {
+     "13": 2,
+     "4": 1,
+     "11": 1,
+     "9": 1
+    },
+    "pace": "H",
+    "dist": 1200,
+    "map_issues": [],
+    "scratched_nums": {}
+   },
+   "saved_scored": [
+    [
+     8,
+     3
+    ]
+   ],
+   "horse_id_source": "race_results_all（結果）。当時の出馬表の取消の印は保存していない",
+   "not_reproducible": null,
+   "candidates_now": [
+    7
+   ],
+   "candidates_saved_scored": [
+    8
+   ],
+   "prev_now_version": {
+    "1": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260718",
+      "race_id": "202602011112",
+      "rank": 11,
+      "pop": 11,
+      "dist": 1200,
+      "surface_dist": "芝1200",
+      "idx": 62
+     },
+     "skipped": 0
+    },
+    "2": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260602",
+      "race_id": "202648060211",
+      "rank": 12,
+      "pop": 3,
+      "dist": 920,
+      "surface_dist": "ダ920",
+      "idx": 32
+     },
+     "skipped": 0
+    },
+    "3": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260802",
+      "race_id": "202604020410",
+      "rank": 10,
+      "pop": 12,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 61
+     },
+     "skipped": 0
+    },
+    "4": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260830",
+      "race_id": "202607030412",
+      "rank": 4,
+      "pop": 3,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 90
+     },
+     "skipped": 0
+    },
+    "5": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260719",
+      "race_id": "202610020808",
+      "rank": 3,
+      "pop": 4,
+      "dist": 1000,
+      "surface_dist": "ダ1000",
+      "idx": 82
+     },
+     "skipped": 0
+    },
+    "6": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260823",
+      "race_id": "202604030204",
+      "rank": 1,
+      "pop": 3,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 78
+     },
+     "skipped": 0
+    },
+    "7": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20261011",
+      "race_id": "202605040406",
+      "rank": 3,
+      "pop": 8,
+      "dist": 1400,
+      "surface_dist": "ダ1400",
+      "idx": 78
+     },
+     "skipped": 0
+    },
+    "8": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260823",
+      "race_id": "202604030209",
+      "rank": 8,
+      "pop": 8,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 73
+     },
+     "skipped": 0
+    },
+    "9": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260809",
+      "race_id": "202604020603",
+      "rank": 1,
+      "pop": 3,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 70
+     },
+     "skipped": 0
+    },
+    "10": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260808",
+      "race_id": "202607020510",
+      "rank": 1,
+      "pop": 5,
+      "dist": 1200,
+      "surface_dist": "ダ1200",
+      "idx": 76
+     },
+     "skipped": 0
+    },
+    "11": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260725",
+      "race_id": "202607020109",
+      "rank": 14,
+      "pop": 7,
+      "dist": 1400,
+      "surface_dist": "ダ1400",
+      "idx": 66
+     },
+     "skipped": 0
+    },
+    "12": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260829",
+      "race_id": "202607030310",
+      "rank": 6,
+      "pop": 13,
+      "dist": 1400,
+      "surface_dist": "ダ1400",
+      "idx": 89
+     },
+     "skipped": 0
+    },
+    "13": {
+     "status": "取れた",
+     "reason": "",
+     "values": {
+      "date": "20260628",
+      "race_id": "202603020212",
+      "rank": 4,
+      "pop": 7,
+      "dist": 1150,
+      "surface_dist": "ダ1150",
+      "idx": 80
+     },
+     "skipped": 0
+    }
+   },
+   "variants": {
+    "(i) 3項目は保存値": {
+     "scored": [
+      {
+       "num": "7",
+       "score": 4,
+       "breakdown": [
+        "各データ上位3頭 1カテゴリー(1)",
+        "前走指数78(70以上)(1)",
+        "中4週以内(14日)(2)"
+       ]
+      }
+     ],
+     "top1_race_max": 90,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "5": 82,
+       "13": 80,
+       "4": 90,
+       "6": 78,
+       "11": 66,
+       "7": 78,
+       "10": 76,
+       "8": 73,
+       "9": 70,
+       "12": 89,
+       "2": 32,
+       "1": 62,
+       "3": 61
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(ii) 3項目は取り直した値": {
+     "scored": [
+      {
+       "num": "7",
+       "score": 4,
+       "breakdown": [
+        "各データ上位3頭 1カテゴリー(1)",
+        "前走指数78(70以上)(1)",
+        "中4週以内(14日)(2)"
+       ]
+      }
+     ],
+     "top1_race_max": 90,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "5": 82,
+       "13": 80,
+       "4": 90,
+       "6": 78,
+       "11": 66,
+       "7": 78,
+       "10": 76,
+       "8": 73,
+       "9": 70,
+       "12": 89,
+       "2": 32,
+       "1": 62,
+       "3": 61
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    },
+    "(iii) 3項目を入れない（v5.1 の再現ではない）": {
+     "scored": [
+      {
+       "num": "7",
+       "score": 3,
+       "breakdown": [
+        "前走指数78(70以上)(1)",
+        "中4週以内(14日)(2)"
+       ]
+      }
+     ],
+     "top1_race_max": 90,
+     "top1": {
+      "decision": "判定",
+      "compared": {
+       "5": 82,
+       "13": 80,
+       "4": 90,
+       "6": 78,
+       "11": 66,
+       "7": 78,
+       "10": 76,
+       "8": 73,
+       "9": 70,
+       "12": 89,
+       "2": 32,
+       "1": 62,
+       "3": 61
+      },
+      "excluded": {},
+      "unknown": {},
+      "rule": "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+     }
+    }
+   }
+  }
+ },
+ "meta": {
+  "pages_sha256": {
+   "research/rebuild_trial_202611/pages/horse/2020103727.html.gz": "34d0ea9467a21011a55c452e918aee7e66edc844bcad645f476301c8e5ef212f",
+   "research/rebuild_trial_202611/pages/horse/2021103343.html.gz": "c6eac053c355568691f6d8cb65058549397c5f589f3faa524d267467f867cf9f",
+   "research/rebuild_trial_202611/pages/horse/2021103504.html.gz": "fdad67c5545952e0ac5197ca3a1d3d5186b81975fe0280f3cf2cb40302d73ec4",
+   "research/rebuild_trial_202611/pages/horse/2021103867.html.gz": "31ed517a4da02c87458b2c928442df2e257443bd9473e4539a5853fde0ee80e6",
+   "research/rebuild_trial_202611/pages/horse/2021104404.html.gz": "8d95aa727a17ebb66905c4a497bea5d8dac42dbf56564452d9bcbbcfff2076b6",
+   "research/rebuild_trial_202611/pages/horse/2021105057.html.gz": "dcc73f646e04bc79d41d5e2831e9c44d2a56f5bcc429dc8d40669a747c3be31c",
+   "research/rebuild_trial_202611/pages/horse/2021105715.html.gz": "8337d006c30e9da90936ee3f7408700f315cc4fef0424b75b8f3aed6b48d567d",
+   "research/rebuild_trial_202611/pages/horse/2021105747.html.gz": "ac7d121f778e5b08005797b1c48a465067154a435fadc5a49202559d53aa1d39",
+   "research/rebuild_trial_202611/pages/horse/2022100323.html.gz": "d6c2263c6fc615e8b808445a769c50d6c7e8861132c10ea15fbb5f267cce452e",
+   "research/rebuild_trial_202611/pages/horse/2022101255.html.gz": "b813a7c5647b7f26d19f63887483009469f8a6880997b86ac6d5ed3870a2c7cd",
+   "research/rebuild_trial_202611/pages/horse/2022101402.html.gz": "1568f0bed847a4c1a74b96d9b3fcafebecff90956cd61e6792ec37e1112714c5",
+   "research/rebuild_trial_202611/pages/horse/2022102749.html.gz": "dd08b171566a63d31129a99af95e1461c2a735f72435697dddfb2f121113cbc2",
+   "research/rebuild_trial_202611/pages/horse/2022103316.html.gz": "3eaaf7e9d72e85faf60fe0a8fd17216b0f62242a98b6fd900d20ae4e5585b6d4",
+   "research/rebuild_trial_202611/pages/horse/2022104093.html.gz": "b104ee549129c352cda56176ba4f9e184ca9a6cdfc8640f23f48c3a0e141a1f5",
+   "research/rebuild_trial_202611/pages/horse/2022104619.html.gz": "82d2e83509e96516ced725cc120b100a58873f2763eb2791f73b83a96f275c68",
+   "research/rebuild_trial_202611/pages/horse/2022104644.html.gz": "c3001e4587785b5b78a19ba751c8f63b5494de80e90c7e0ccd54cc2ca6eb98c1",
+   "research/rebuild_trial_202611/pages/horse/2022104716.html.gz": "a3e3a4586204af370806a57c921060c5967f044ae823951e554701515cfb738e",
+   "research/rebuild_trial_202611/pages/horse/2022105153.html.gz": "bb542d45d74f7be673f0fb7d9d4a8c94c04479feab58518ff63a75e903c29f81",
+   "research/rebuild_trial_202611/pages/horse/2022105365.html.gz": "ae62783a8a22088883d6b6b4c324d78adc7f05737f09aecfa6247e75ef22e258",
+   "research/rebuild_trial_202611/pages/horse/2022105398.html.gz": "fe04568702586b9f1ee172994d83530cc82141fc18613a5d47337aade5bbc6c3",
+   "research/rebuild_trial_202611/pages/horse/2022105400.html.gz": "e81ba26793da722e7fa774dfb8e3bae4f82aca1f661e9daa5a79ae3d5d320bd5",
+   "research/rebuild_trial_202611/pages/horse/2022105697.html.gz": "3a8294a97df66dae14a4f199f6025ca20de328def7ccf27215534e1d49f5818f",
+   "research/rebuild_trial_202611/pages/horse/2022105864.html.gz": "4c7a4f62bbed984fc49cef7225c05f32c90bf1b4ebbb85de2b4f49a303de6051",
+   "research/rebuild_trial_202611/pages/horse/2022106566.html.gz": "223806dcd0cc4a30dff2042120d3ffcc1d0fddd7081b843c612dc2ff486ae622",
+   "research/rebuild_trial_202611/pages/horse/2022107258.html.gz": "4ca08594f7c18431a6c91945bacfcd70614f9c2bd9cdc645abf36d0121f54ead",
+   "research/rebuild_trial_202611/pages/horse/2022107387.html.gz": "bc7eaaa6d33fb550f344f225da02fe18bc0049f17792d2a61c95ef2279d43110",
+   "research/rebuild_trial_202611/pages/horse/2023100006.html.gz": "b6e4130ffb05fdda986979ae9097449bbfea15a6236a7c031c00441f2e1329d0",
+   "research/rebuild_trial_202611/pages/horse/2023100230.html.gz": "baa066ee84dd28c2d2f01b55c3942ff58873e4d112bca223b274a2cba1e9b97d",
+   "research/rebuild_trial_202611/pages/horse/2023100240.html.gz": "4c2cd08b459e6c20351a822b566ea9ac6fb618246cf942ea45987f4d2c6e4e74",
+   "research/rebuild_trial_202611/pages/horse/2023100349.html.gz": "4ac8f12206ac6a789a17fd6a2129d381cf78b3b70c58cd0a4538e3e3bc2b93f1",
+   "research/rebuild_trial_202611/pages/horse/2023100467.html.gz": "307c85c83173d45e111c522775e487140cbdb01aa77818a0560d68be987c7c38",
+   "research/rebuild_trial_202611/pages/horse/2023100757.html.gz": "c3b0e81b374baf31ffa985ed3d734d21d055a569d63131f14a5f6e3ce85639fd",
+   "research/rebuild_trial_202611/pages/horse/2023100770.html.gz": "cfc978173d01ebd4b7bcd239f6917bef4e50f393f9457f4f64e63374ff7b711d",
+   "research/rebuild_trial_202611/pages/horse/2023101004.html.gz": "ae47fdc4f57c74d98e4d94ad35b80a8d8ee86367c75ba10026d968ef1e475c5e",
+   "research/rebuild_trial_202611/pages/horse/2023101037.html.gz": "b3221cb3a749ffb84a48dab25808e30a8e6d3d0d1b9945938df9c0a20fe02f70",
+   "research/rebuild_trial_202611/pages/horse/2023101146.html.gz": "2f6087e5fd3e9f40c69c7604c59ce7fcac4e4952df2efe547268f249a55e69e4",
+   "research/rebuild_trial_202611/pages/horse/2023101394.html.gz": "f396dcddf73ecf755cb9b87cd653ef15e3a900bf723fd3d05e2cc1689050f46d",
+   "research/rebuild_trial_202611/pages/horse/2023101484.html.gz": "d1834a89f99ff6b245b024c5de2812d6ca61c26dc93f1b4f612c44d604eedd90",
+   "research/rebuild_trial_202611/pages/horse/2023101523.html.gz": "03cb2978dedff1bafe2ffff5c11669d3a116526dc94f0adfd73019c604acc346",
+   "research/rebuild_trial_202611/pages/horse/2023101812.html.gz": "fdcd6f3c51f9ba757c6bd7ae3dcd0ed1f16f0709340b1654e3610dffb648b2c2",
+   "research/rebuild_trial_202611/pages/horse/2023102025.html.gz": "3da70c81af12c4fe961daa66c5efeef00676bce66e7951f1d7a7060716423156",
+   "research/rebuild_trial_202611/pages/horse/2023102122.html.gz": "533ba46eabc647aee657ebe1773510b5bd0be3a277ea1294441c3b1280a27563",
+   "research/rebuild_trial_202611/pages/horse/2023102149.html.gz": "e89c8f43300bcedad68f8927ff840ee560f7bfab42ca8d081a0e48eae985448d",
+   "research/rebuild_trial_202611/pages/horse/2023102401.html.gz": "d27d199f39c3832795e0885080fac36e68c4634291589b231599a1feae32c3f5",
+   "research/rebuild_trial_202611/pages/horse/2023102602.html.gz": "9e6e1b299231ade4276cf1714182d369b640b3bbab85686253f02061710b5837",
+   "research/rebuild_trial_202611/pages/horse/2023102931.html.gz": "ac36434b6cba650b9e1f4a159e662de51467ceca47c1d43e6f3445c4113f4f0f",
+   "research/rebuild_trial_202611/pages/horse/2023103226.html.gz": "2e4099510579a5cae2faa16eb58ad736229ca28b0c47a911f0ed172e06bdb956",
+   "research/rebuild_trial_202611/pages/horse/2023103522.html.gz": "c02bbab3b1c34d96de15e90d8a0c6ea212d5fa090b365fdae1fe9341aef75d2d",
+   "research/rebuild_trial_202611/pages/horse/2023103718.html.gz": "5bab3e7b97804db86efed4e6546ec789a67742b4605a6bde1f5e3ae67a3ef665",
+   "research/rebuild_trial_202611/pages/horse/2023103734.html.gz": "0a10b039e0120b9c3ef7b0101433c57278e87b816e2d7b7dc1e05fe86bcb49ce",
+   "research/rebuild_trial_202611/pages/horse/2023103779.html.gz": "f4ed35de09c26fdac2a7372db71825dda51cbd1a80961766ea658771780bfcaf",
+   "research/rebuild_trial_202611/pages/horse/2023103836.html.gz": "87db7272fd3fd237879c6098280d927e77cc36cd26c59a266e794983a9f726a3",
+   "research/rebuild_trial_202611/pages/horse/2023103925.html.gz": "d26d3ab79b5302ffe1a8aaf47a76397198a9ece9fcd56f373c40822479915002",
+   "research/rebuild_trial_202611/pages/horse/2023103931.html.gz": "42ca1d96927c06c3807bebe28eddb7b68587aaa5a39dce3ad37b22ec644e6d6b",
+   "research/rebuild_trial_202611/pages/horse/2023104057.html.gz": "1c659b6ae5117d5e5e07d034c4a6f10e98e88e4b63bb5c1df99d078b35b3eb67",
+   "research/rebuild_trial_202611/pages/horse/2023104100.html.gz": "bc49ae73cc44c604b17920cc67367dfd48497caf85e09e4f54339fe5507e64b3",
+   "research/rebuild_trial_202611/pages/horse/2023104156.html.gz": "ef2274f53d969fd53b47e8f0bca1c755190ae64e7ddbcdc46dc5ed92e05a1eb9",
+   "research/rebuild_trial_202611/pages/horse/2023104309.html.gz": "8dc3f15326e0b488b4f734bd12d4a6e4396de55aebd1be0747ab80caf697c37b",
+   "research/rebuild_trial_202611/pages/horse/2023104484.html.gz": "66ee361f16bc50865b3d09888d97d7cec6ca244280ab359b0a750f75e0b36f8a",
+   "research/rebuild_trial_202611/pages/horse/2023104576.html.gz": "db907e535b06d4093ec04ec6a3795a585e16c22fdf910ece764d16cfb96a73df",
+   "research/rebuild_trial_202611/pages/horse/2023104596.html.gz": "120dee52f5e944f7e6f600345359ce20efd013d0ec24d0cceaf97442fc93478f",
+   "research/rebuild_trial_202611/pages/horse/2023104628.html.gz": "89461d5cf33a8ecf0d023be2bc208c32d504b9332314eb020dc20142c1729a9c",
+   "research/rebuild_trial_202611/pages/horse/2023104998.html.gz": "25c58c41e9fa482d783ef466e60c241dabec7aa89801283e43328393969ff35d",
+   "research/rebuild_trial_202611/pages/horse/2023105002.html.gz": "d806033c11c64ee0238f362f94e6706182f8f4bf14a85276fdfe332aa02bf82c",
+   "research/rebuild_trial_202611/pages/horse/2023105062.html.gz": "5f31108ed0443f201000696015c9cba0b9f4206f9bd2915068d347ec8e95b46a",
+   "research/rebuild_trial_202611/pages/horse/2023105102.html.gz": "5d7ca19cde57fd28181f661bac703b1691b7bf4f9750308461b96b3d685791e0",
+   "research/rebuild_trial_202611/pages/horse/2023105242.html.gz": "9261a338dbc9bdb71034e59349dbc906ca612ebdb68b631c985fefd1941bb7ad",
+   "research/rebuild_trial_202611/pages/horse/2023105329.html.gz": "1e71af0cac507404c606100663d79a5f1da5a3547a097d2adb08bf38c91e09e6",
+   "research/rebuild_trial_202611/pages/horse/2023105375.html.gz": "75d0d8690489efb492fda9eeff9705bf6c433b18f7f3fadd0b8edaad26684474",
+   "research/rebuild_trial_202611/pages/horse/2023105474.html.gz": "5effaa22ad7a80d738f1c6415c084da91dfdf8d9bdaa40db85dc0303f9d7904d",
+   "research/rebuild_trial_202611/pages/horse/2023105692.html.gz": "c546b60380766c8caedec08695b6e1e14df15768dfebb2f6a465198b2d7550a1",
+   "research/rebuild_trial_202611/pages/horse/2023105783.html.gz": "ed62694928076d49960506184261fe11e6fedb5edb693cbb4f0a5da6b030bb98",
+   "research/rebuild_trial_202611/pages/horse/2023105812.html.gz": "dcba927caf72658a42ac45255490ff3cb74cf7c7fe1d30a5f43bde0de1a9e944",
+   "research/rebuild_trial_202611/pages/horse/2023105821.html.gz": "bd16b7ede86ea4877df3519b0e8b3b104cddf7d016f0075daaf099c2e2ed16cd",
+   "research/rebuild_trial_202611/pages/horse/2023106000.html.gz": "6bda8847fdad76ce74a47117bbd7374fb22b9bd2a8a8057c0382f2da23cba77b",
+   "research/rebuild_trial_202611/pages/horse/2023106256.html.gz": "9fdc9744017252d603a4650b55b933bc540a9600b51102c9258942955dfe1ac8",
+   "research/rebuild_trial_202611/pages/horse/2023106331.html.gz": "f8fd7318d43e8502d41d89817ce97bbdbe5c31741b268c68d2f413790835b6c0",
+   "research/rebuild_trial_202611/pages/horse/2023106477.html.gz": "6c2c7873d2e91b5a151bf180bb7f151f6ceb9173d30e4e9919d418ed4631a015",
+   "research/rebuild_trial_202611/pages/horse/2023106845.html.gz": "0ae691432b90e10ee7f60b6061facd1dfff40ba0ee04b6efd7fdb6291b708951",
+   "research/rebuild_trial_202611/pages/horse/2023106895.html.gz": "f84fd01b7a3a1e78380be842ad4b372b5efbe1bfd48e29fa920278db26cdfda5",
+   "research/rebuild_trial_202611/pages/horse/2023106991.html.gz": "be1298d71dee6e8971118cba6a864f98e0231fa05dc24c949df375791f8b6c4d",
+   "research/rebuild_trial_202611/pages/horse/2023107000.html.gz": "97116c5ebe3dd9b354314f3d52a5cc03461585ca4847b203df4680eb13a00ba9",
+   "research/rebuild_trial_202611/pages/horse/2023107061.html.gz": "33fee44930cbe03ad2408113351cfcf519f466883880260861a21f7a8be998aa",
+   "research/rebuild_trial_202611/pages/horse/2023107095.html.gz": "9232b0c91d46beea7f7f7f2208d2bed287ca8ca617fd5b73feec3f1b6307cdb9",
+   "research/rebuild_trial_202611/pages/horse/2023107164.html.gz": "06f721c11525f04f37a46cde4cd318805dc86bf7676a6ca47ddba0fc6b20982e",
+   "research/rebuild_trial_202611/pages/horse/2023107242.html.gz": "f02098b8f8c90153be3d30e090486067383a52a91a4de75729a254b4e2631c1d",
+   "research/rebuild_trial_202611/pages/horse/2023107260.html.gz": "603095d0a5ec96a57c172828808149f3e1d50d4fc1ec83692dd29d8bb7801c02",
+   "research/rebuild_trial_202611/pages/race/202603030104_data_top.html.gz": "137622e028f6aec688ea63f0f5a7620fcd69e2cfa03fc388bd36ba2c3d7b2538",
+   "research/rebuild_trial_202611/pages/race/202603030104_shutuba.html.gz": "5aecc57f20cdce9124aefb3d14acf2d650975f59efe851868932022aaf190353",
+   "research/rebuild_trial_202611/pages/race/202603030107_data_top.html.gz": "346e0d306f72946da8ff30a20e23cdd2b5998cfc31a3c8dd85e17928145f8965",
+   "research/rebuild_trial_202611/pages/race/202603030107_shutuba.html.gz": "862e3ca3ab41afb23c6ffa3b9dcad9813f5ef24fcde359339ff6d0eeee49f5e2",
+   "research/rebuild_trial_202611/pages/race/202604040404_data_top.html.gz": "b225caef39d90b0fa83286826da0e1cbe834b43581070bf123d34958deae5ea9",
+   "research/rebuild_trial_202611/pages/race/202604040404_shutuba.html.gz": "75da7fb62511486300996015e5263d17f48a2337e87ebda65acad96076a3d4f3",
+   "research/rebuild_trial_202611/pages/race/202605041007_data_top.html.gz": "d5a3ae7bad6c4282f2b041b5b57f9d5fec532701a4228bed98df6af928b0b028",
+   "research/rebuild_trial_202611/pages/race/202605041007_shutuba.html.gz": "7fb604d63c8f464df9990e1225faeb24039f3ea6d2cf9b0e8fe6741defe5e505",
+   "research/rebuild_trial_202611/pages/race/202605041106_data_top.html.gz": "7430ff6699c834ad7558daf40b1443988d2f68db0a0aef16404828853817e2c5",
+   "research/rebuild_trial_202611/pages/race/202605041106_shutuba.html.gz": "41b1d995442c182d4d5828afc59551f4cbf88af9ac77d90ffd68a438d77cfdec",
+   "research/rebuild_trial_202611/pages/race/202606040303_data_top.html.gz": "03b389231c71a7c766f551f9c558c03c7e774eb3be44b17242c6e4927ed35fd0",
+   "research/rebuild_trial_202611/pages/race/202606040303_shutuba.html.gz": "323f2fc19bb8cce86fd3abc521159b6285dd90e1852eb21c17ad0deeb039ac86"
+  },
+  "code_sha256": {
+   "/Users/hirowax/Desktop/netkeiba/research/rebuild_trial_202611/rebuild_trial.py": "db3b89f64afc7c219b351a8df1285f80780cf6abf6453a116834f9c7c359a83e",
+   "/Users/hirowax/Desktop/netkeiba/race_pickup.py": "48837eb2ae098883077e2b1c76d71601507d71fd90e99651544b65bf8ae25ef3",
+   "/Users/hirowax/Desktop/netkeiba/prev_inputs.py": "8c69b2dbc903ddf8ede5ed72907b6c9b12fc72b50a4eaad9693850d365ed6c87",
+   "/private/tmp/claude-501/-Users-hirowax-Desktop-netkeiba/159d560e-6b16-4cc4-98a2-c959155fe22d/scratchpad/wt_7b65ee7/prev_inputs.py": "a92b80aab02090ee18cc5444caed07798fa41a55716395a231a2a694da8cdf64",
+   "/Users/hirowax/Desktop/netkeiba/build_horse_style.py": "28e0c42050e86789a365868258529f709e9784699cc0a30fef6a7c7ff7837f26",
+   "/Users/hirowax/Desktop/netkeiba/scraper.py": "bc7be7819ed8e9ca3daa307fd13d272aa76a243f21f1be9f9975567b5bf15e07"
+  }
+ }
+}
