@@ -11,3 +11,7 @@ rescrape_full.log
 # 前走データの実行のロック・一時ファイル（強制終了で残っても run.sh の git add output/ に入れない。2026-11-05）
 output/*/prev_inputs/.lock
 *.tmp
+
+# 取得したページはリポジトリ（公開）に入れず手元だけに置く（2026-11-07 ユーザー決定）
+research/*/pages/
+output/*/pages/
