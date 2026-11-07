@@ -18,7 +18,10 @@ pickup_scores.json の各レースに "quality" を保存し、研究・閾値�
 - data_top_reader: 出走馬分析・データ分析ピックアップ・各データ上位3頭の読み方（2026-11-07〜）。無ければ問題あり
                  （出走馬分析の見出しを1つ前の表のものと取り違え、1つの表から最初の1頭しか数えていなかった。
                  docs/data_top_reader_fix_plan_202611.md）
-- data_top_issues: 3項目の読み取りの異常（出馬表と照らせない・読めない形・重複・知らない見出し）。あれば問題あり
+- data_top_issues: 3項目の読み取りの異常（出馬表と照らせない・読めない形・重複・知らない見出し・ページを取れない・
+                 データ分析が公開されていない）。あれば問題あり。読み方が修正前の理由とは別に出す（調べやすさのため）
+- pages:         採点に使ったページの保存先とハッシュ（{種類: {path, sha256}} または {種類: {error}}。2026-11-07〜）。
+                 読み方が修正後のデータで、記録が無い・保存に失敗した種類があれば問題あり（採点の根拠を確かめられない）
 - 無効化:        output/{date}/invalidated.json に載ったレース（買い目・採点ファイルは書き換えない）
 """
 import json
@@ -50,7 +53,8 @@ def load_index_sources(date: str, output_dir: Path = None) -> dict:
 
 
 def build_quality(collector_version: str, index_sources: dict, label: str, prev: dict = None,
-                  table_check: dict = None, data_top_reader: str = None, data_top_issues: list = None) -> dict:
+                  table_check: dict = None, data_top_reader: str = None, data_top_issues: list = None,
+                  pages: dict = None) -> dict:
     """採点時に pickup_scores.json の各レースへ保存する quality。prev は前走データの版・記録・状態、
     table_check は指数の表と出馬表の照合（index_table_check.check_index_tables の戻り値）"""
     race = index_sources.get("races", {}).get(label, {})
@@ -68,6 +72,7 @@ def build_quality(collector_version: str, index_sources: dict, label: str, prev:
         "rank_notes": race.get("rank_notes", {}),
         "data_top_reader": data_top_reader,
         "data_top_issues": list(data_top_issues or []),
+        "pages": pages,
     }
 
 
@@ -104,6 +109,14 @@ def race_quality_issues(rdata: dict, invalid_reason: str = None) -> list:
             issues.append(f"指数の表が出馬表とそろわない: {tc.get('problems')}")
     if not q.get("data_top_reader"):
         issues.append(DATA_TOP_READER_OLD)
-    elif q.get("data_top_issues"):
+    if q.get("data_top_issues"):
         issues.append(f"3項目（上位3頭・ピックアップ・出走馬分析）の読み取りに異常がある: {q['data_top_issues']}")
+    if q.get("data_top_reader"):
+        pages = q.get("pages")
+        if not pages:
+            issues.append("採点に使ったページの保存の記録が無い")
+        else:
+            bad = {k: v.get("error", "記録の形が違う") for k, v in pages.items() if not (v or {}).get("sha256")}
+            if bad:
+                issues.append(f"採点に使ったページを保存できなかった: {bad}")
     return issues

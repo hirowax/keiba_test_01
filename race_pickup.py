@@ -41,10 +41,12 @@ FIRE_RULE_SCORING_VERSIONS = ("v5", "v5.1")
 # 読み方を変えたら値を変える。
 DATA_TOP_READER_VERSION = "表の中の見出しと馬番の要素で読み出馬表と照合_20261107"
 
-# 出走馬分析で数える表（表の中の見出し。2026-11-07 に保存した5レースで見た6種類）
+# 出走馬分析で数える表（表の中の見出し）。2026-11-07 に保存した5レースで見た6種類と、
+# 同日に前日のページ（11/8 福島11R）で見た7種類目「今回の厩舎コメント評価で実績がある馬」（同日の外部レビューで追加に賛成）。
+# 公開されているページでこのどれかが無ければ取得異常にする（無いことが正常かは確かめていないため）。
 ANALYSIS_HORSE_TITLES = (
     "このコースが得意な馬", "この距離が得意な馬", "この競馬場が得意な馬", "今回の馬場状態が得意な馬",
-    "今回のレース間隔で実績がある馬", "今回の調教評価で実績がある馬",
+    "今回のレース間隔で実績がある馬", "今回の調教評価で実績がある馬", "今回の厩舎コメント評価で実績がある馬",
 )
 # 出走馬分析の欄にある、馬ではないと分かっている表（数えない）
 ANALYSIS_OTHER_TITLES = (
@@ -52,8 +54,14 @@ ANALYSIS_OTHER_TITLES = (
     "このコースに実績がある種牡馬", "このコースに実績がある母父", "今回のオッズで期待できる騎手",
     "今回の調教師と相性の良い騎手", "今回の馬主と相性の良い騎手",
 )
-# 各データ上位3頭で、項目が騎手の表（数字は騎手が乗る馬の馬番。騎手名は出馬表で略されているので名前では照らさない）
+# 各データ上位3頭の表の見出し（2026-11-07 に保存した7レースの出馬表で見た4種類）。これ以外の見出しは取得異常。
+# 表が無いこと（例: 10/25 新潟4R に「騎手」が無い）はページで見たので、「欄がない」として記録し、異常にしない。
+TOP3_TITLES = ("能力", "上昇度", "騎手", "距離")
+# 各データ上位3頭で、項目が騎手の表（数字は騎手が乗る馬の馬番）。騎手名は出馬表で略されているので名前では照らさず、
+# 馬番と枠だけ照らす（2026-11-07 にユーザーが加点に残すと決め、外部レビューで限定的な検査として承認）。
 TOP3_JOCKEY_TITLES = ("騎手",)
+# データ分析のページで、データ分析が公開されていないときの案内（2026-11-07 に 9/12 中山3R のページで見た文字）
+DATA_TOP_NOT_PUBLISHED = "データ分析はレース当週およびレース前週のみの公開です。"
 
 
 # ─── スコアリング定義 ────────────────────────────────────────────
@@ -263,6 +271,16 @@ def _check_against_rows(ref: dict, num: str, waku, short: str, kind: str, horse_
     return None
 
 
+def page_race_id(soup: BeautifulSoup):
+    """ページの link rel=canonical の race_id（無ければ None）。2026-11-07 に保存した出馬表・データ分析の14ページで、
+    すべて取ったレースのレースIDだった"""
+    for ln in soup.find_all("link", rel="canonical"):
+        m = re.search(r"race_id=(\d{12})", ln.get("href", ""))
+        if m:
+            return m.group(1)
+    return None
+
+
 def parse_top3data(soup: BeautifulSoup, ref: dict) -> dict:
     """
     出馬表の「各データ上位3頭」（section.top3data）。表（table.AnaBestTable）ごとに、表の中の見出しと、
@@ -272,7 +290,8 @@ def parse_top3data(soup: BeautifulSoup, ref: dict) -> dict:
     """
     sec = soup.find("section", class_="top3data") or soup.find(class_="top3data")
     if sec is None:
-        return {"hits": {}, "tables": [], "state": "欄がない", "issues": []}
+        # 保存した7レースの出馬表にはすべてあった。無いことが正常かは確かめていないので取得異常にする
+        return {"hits": {}, "tables": [], "state": "取得異常", "issues": ["上位3頭: 出馬表に欄が無い"]}
     hits: Dict[str, int] = {}
     tables, issues = [], []
     for tb in sec.find_all("table", class_="AnaBestTable"):
@@ -280,6 +299,13 @@ def parse_top3data(soup: BeautifulSoup, ref: dict) -> dict:
         title = t.get_text(strip=True) if t else None
         if not title:
             issues.append("上位3頭: 見出しの無い表がある")
+            continue
+        if title not in TOP3_TITLES:
+            issues.append(f"上位3頭: 知らない見出しの表がある（{title}）")
+            continue
+        if any(x["title"] == title for x in tables):
+            # 同じ見出しの表が2つあれば、2つ目は数えない（同じ馬を2回数えない）。レースは取得異常
+            issues.append(f"上位3頭: 同じ見出しの表が2つある（{title}）")
             continue
         kind = "jockey" if title in TOP3_JOCKEY_TITLES else "horse"
         nums, bad = [], False
@@ -308,28 +334,58 @@ def parse_top3data(soup: BeautifulSoup, ref: dict) -> dict:
         if not boxes:
             issues.append(f"上位3頭（{title}）: 項目が無い")
         tables.append({"title": title, "state": state, "nums": nums})
+    seen = [x["title"] for x in tables]
     if not tables and not issues:
         issues.append("上位3頭: 欄はあるが表が無い")
-    return {"hits": hits, "tables": tables, "state": "あり", "issues": issues}
+    for title in TOP3_TITLES:
+        if title not in seen:
+            tables.append({"title": title, "state": "欄がない", "nums": []})
+    return {"hits": hits, "tables": tables, "state": "取得異常" if issues else "あり", "issues": issues}
 
 
-def parse_data_top(soup: BeautifulSoup, ref: dict) -> dict:
+def parse_data_top(soup: BeautifulSoup, ref: dict, race_id: str) -> dict:
     """
     データ分析（data_top.html）。
+    - ページの検査（2026-11-07 外部レビュー）: link rel=canonical のレースIDが race_id と同じで、データ分析の見出し
+      （h3.TitleHeadingDataTop）があること。違えば「取得失敗」（ログインの案内・エラー・別のレースのページを
+      「欄がない」と読まないため）。欄（.RaceDataPickupList・.DataPickupHorseWrap）が両方無いときは、
+      公開されていない案内（DATA_TOP_NOT_PUBLISHED）があれば「公開されていない」、無ければ「取得失敗」。
+      どちらも issues に入れる（採点に使った3項目がそろっていないので、評価には使わない）。
     - ピックアップ: .DataPickupHorseWrap の dl ごとに span.Umaban_Num（馬番）・WakuN（枠）・
       a.data_top_horse_link（馬ID）を読み、出馬表の馬番・枠・馬IDと照らす。
-    - 出走馬分析: table.PickupHorseTable* ごとに、表の中の見出しで種類を決める（ANALYSIS_HORSE_TITLES だけ数える。
-      ANALYSIS_OTHER_TITLES は数えない。どちらでもない見出しは取得異常）。馬の表は div.Umaban_InBox ごとに
-      span.Umaban_Num（馬番）・WakuN（枠）・短い名前を読み、出馬表と照らす。「推奨なし」は span.Txt の文字。
-    戻り値: pickup_nums、pickup_state、analysis_hits {馬番: 登場した表の数}、analysis_tables [{title, state, nums}]、
-            analysis_state、issues
+    - 出走馬分析: .RaceDataPickupList の table.PickupHorseTable* ごとに、表の中の見出しで種類を決める
+      （ANALYSIS_HORSE_TITLES だけ数える。ANALYSIS_OTHER_TITLES は数えない。どちらでもない見出しは取得異常）。
+      馬の表は div.Umaban_InBox ごとに span.Umaban_Num（馬番）・WakuN（枠）・短い名前を読み、出馬表と照らす。
+      「推奨なし」は span.Txt の文字。同じ見出しの2つ目の表は数えない（取得異常）。
+      ANALYSIS_HORSE_TITLES の表が無ければ、状態を「欄がない」にして取得異常にする（無いことが正常かは確かめていない）。
+    戻り値: page_state（公開 / 公開されていない / 取得失敗）、pickup_nums、pickup_state、
+            analysis_hits {馬番: 登場した表の数}、analysis_tables [{title, state, nums}]、analysis_state、issues
     """
+    def _empty(page_state, state, issue):
+        return {"page_state": page_state, "pickup_nums": set(), "pickup_state": state, "analysis_hits": {},
+                "analysis_tables": [], "analysis_state": state, "issues": [issue]}
+
+    rid = page_race_id(soup)
+    if rid != race_id:
+        return _empty("取得失敗", "取得失敗", f"データ分析: ページのレースIDが違う（ページ {rid}・取ったレース {race_id}）")
+    if soup.find("h3", class_="TitleHeadingDataTop") is None:
+        return _empty("取得失敗", "取得失敗",
+                      "データ分析: ページの形が違う（データ分析の見出しが無い。ログインの案内やエラーのページの可能性）")
+    area = soup.find(class_="RaceDataPickupList")
+    wrap = soup.find(class_="DataPickupHorseWrap")
+    if area is None and wrap is None:
+        notes = [x.get_text(strip=True) for x in soup.find_all(class_="Race_Infomation_Box")]
+        if DATA_TOP_NOT_PUBLISHED in notes:
+            return _empty("公開されていない", "公開されていない",
+                          f"データ分析: 公開されていない（ページの案内「{DATA_TOP_NOT_PUBLISHED}」）")
+        return _empty("取得失敗", "取得失敗", "データ分析: 欄が無く、公開されていない案内も無い")
+
     issues = []
     # ピックアップ
     pickup_nums: set = set()
-    wrap = soup.find(class_="DataPickupHorseWrap")
     if wrap is None:
-        pickup_state = "欄がない"
+        pickup_state = "取得異常"
+        issues.append("ピックアップ: 出走馬分析はあるがピックアップの欄が無い")
     else:
         dls = wrap.find_all("dl")
         for dl in dls:
@@ -350,18 +406,25 @@ def parse_data_top(soup: BeautifulSoup, ref: dict) -> dict:
             pickup_nums.add(num)
         if not dls:
             issues.append("ピックアップ: 欄はあるが項目が無い")
-        pickup_state = "馬あり" if pickup_nums else "空"
+        pickup_state = "取得異常" if any(x.startswith("ピックアップ") for x in issues) else (
+            "馬あり" if pickup_nums else "空")
     # 出走馬分析
     analysis_hits: Dict[str, int] = {}
     tables = []
-    all_tables = soup.find_all("table", class_=lambda c: c and "PickupHorseTable" in str(c))
-    for tb in all_tables:
+    if area is None:
+        issues.append("出走馬分析: ピックアップはあるが出走馬分析の欄が無い")
+        return {"page_state": "公開", "pickup_nums": pickup_nums, "pickup_state": pickup_state,
+                "analysis_hits": {}, "analysis_tables": [], "analysis_state": "取得異常", "issues": issues}
+    for tb in area.find_all("table", class_=lambda c: c and "PickupHorseTable" in str(c)):
         t = tb.find(class_="PickupHorseTableTitle")
         title = t.get_text(strip=True) if t else None
         if title in ANALYSIS_OTHER_TITLES:
             continue
         if title not in ANALYSIS_HORSE_TITLES:
             issues.append(f"出走馬分析: 知らない見出しの表がある（{title}）")
+            continue
+        if any(x["title"] == title for x in tables):
+            issues.append(f"出走馬分析: 同じ見出しの表が2つある（{title}）")
             continue
         nums, bad = [], False
         boxes = tb.find_all("div", class_="Umaban_InBox")
@@ -397,18 +460,15 @@ def parse_data_top(soup: BeautifulSoup, ref: dict) -> dict:
             analysis_hits[num] = analysis_hits.get(num, 0) + 1
         tables.append({"title": title, "state": state, "nums": nums})
     seen = [x["title"] for x in tables]
-    dup = sorted({x for x in seen if seen.count(x) > 1})
-    if dup:
-        issues.append(f"出走馬分析: 同じ見出しの表が2つある（{dup}）")
-    if not all_tables:
-        analysis_state = "欄がない"
-    else:
-        analysis_state = "あり"
-        for title in ANALYSIS_HORSE_TITLES:
-            if title not in seen:
-                tables.append({"title": title, "state": "欄がない", "nums": []})
-    return {"pickup_nums": pickup_nums, "pickup_state": pickup_state, "analysis_hits": analysis_hits,
-            "analysis_tables": tables, "analysis_state": analysis_state, "issues": issues}
+    missing = [t for t in ANALYSIS_HORSE_TITLES if t not in seen]
+    for title in missing:
+        tables.append({"title": title, "state": "欄がない", "nums": []})
+    if missing:
+        issues.append(f"出走馬分析: 数える表が無い（{missing}）")
+    analysis_state = "取得異常" if any(x.startswith("出走馬分析") for x in issues) else "あり"
+    return {"page_state": "公開", "pickup_nums": pickup_nums, "pickup_state": pickup_state,
+            "analysis_hits": analysis_hits, "analysis_tables": tables, "analysis_state": analysis_state,
+            "issues": issues}
 
 
 def active_horse_ids(shutuba_data: dict) -> Dict[str, str]:
@@ -452,6 +512,10 @@ def scrape_shutuba(page, race_id: str) -> dict:
 
     # AI展開図に出ない馬はHorseInfoテーブルから補完 + horse_id取得 + 人気・オッズ取得
     rows = parse_shutuba_rows(soup, field_size=parse_field_size(soup), expected_nums=set(horse_map))
+    # 別のレース・別の種類のページを読んでいないか（2026-11-07 外部レビュー）。違えば採点しない（map_issues）
+    rid = page_race_id(soup)
+    if rid != race_id:
+        rows["map_issues"] = list(rows["map_issues"]) + [f"出馬表のページのレースIDが違う（ページ {rid}・取ったレース {race_id}）"]
     # horse_map は表示・名前照合用（AI展開図の短縮名を優先、無い馬は正式名で補完）。正式名は horse_name_full
     for num, name in rows["horse_map"].items():
         horse_map.setdefault(num, name)
@@ -564,7 +628,7 @@ def scrape_data_top(page, race_id: str, shutuba_data: dict) -> dict:
     time.sleep(random.uniform(2.5, 6.0))
     html = page.content()
     soup = BeautifulSoup(html, "html.parser")
-    res = parse_data_top(soup, shutuba_data)
+    res = parse_data_top(soup, shutuba_data, race_id)
     res["html"] = html
     return res
 

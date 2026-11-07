@@ -37,7 +37,8 @@ def good_quality(cands):
     prev = {"prev_fetch": PREV_FETCH_VERSION, "prev_inputs_run": "r",
             "prev_status": {"candidates": {n: "取れた" for n in cands}, "others": {}, "top1": "判定"}}
     return build_quality("v", src, LABEL, prev=prev, table_check={"version": "t", "ok": True, "modes": {}, "problems": []},
-                         data_top_reader="test")
+                         data_top_reader="test",
+                         pages={"shutuba": {"path": "p", "sha256": "h"}, "data_top": {"path": "p", "sha256": "h"}})
 
 
 class VariantsTest(unittest.TestCase):

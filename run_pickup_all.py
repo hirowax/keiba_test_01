@@ -5,6 +5,7 @@ usage: python3 run_pickup_all.py [YYYYMMDD]
 """
 
 import gzip
+import hashlib
 import sys
 import json
 import time
@@ -108,20 +109,27 @@ def write_prev_data_snapshot(out_dir: Path, races: dict) -> int:
     return len(snapshot)
 
 
-def save_page(out_dir: Path, race_id: str, kind: str, html: str) -> None:
-    """採点に使ったページを output/{日}/pages/{レースID}_{kind}.html.gz に保存する（2026-11-07〜。git には入れない。
-    docs/data_top_reader_fix_plan_202611.md 3.4）。同じレースを取り直したら、新しいページで置き換える。
-    保存に失敗しても採点は続ける（ログに出す）。"""
+def save_page(out_dir: Path, run_id: str, race_id: str, kind: str, html: str) -> dict:
+    """採点に使ったページを output/{日}/pages/{実行ID}/{レースID}_{kind}.html.gz に保存する（git には入れない。
+    docs/data_top_reader_fix_plan_202611.md 3.4）。実行ごとに分けるので、取り直しても前の実行のページは置き換えない
+    （2026-11-07 外部レビュー）。
+    戻り値は quality.pages の1項目: 保存できたら {path（output/{日} からの相対）, sha256（ページの文字の UTF-8）}、
+    できなければ {error}。保存に失敗しても採点は続ける（品質の判定で問題ありになり、評価には使わない）。"""
     try:
-        d = out_dir / "pages"
-        d.mkdir(parents=True, exist_ok=True)
-        path = d / f"{race_id}_{kind}.html.gz"
-        tmp = d / f".{race_id}_{kind}.html.gz.tmp"
-        with gzip.open(tmp, "wt", encoding="utf-8") as f:
-            f.write(html or "")
+        if not html:
+            return {"error": "ページの中身が無い"}
+        rel = Path("pages") / run_id / f"{race_id}_{kind}.html.gz"
+        path = out_dir / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        data = html.encode("utf-8")
+        tmp = path.parent / f".{path.name}.tmp"
+        with gzip.open(tmp, "wb") as f:
+            f.write(data)
         tmp.replace(path)
+        return {"path": str(rel), "sha256": hashlib.sha256(data).hexdigest()}
     except Exception as e:
         logger.error(f"  ページの保存に失敗（{race_id} {kind}）: {e}")
+        return {"error": f"{type(e).__name__}: {e}"}
 
 
 def score_race(page, context, date: str, race_label: str, race_id: str, venue: str, race_num: str,
@@ -169,10 +177,10 @@ def score_race(page, context, date: str, race_label: str, race_id: str, venue: s
             logger.warning(f"  {race_label}: 指数の表が出馬表とそろわない {table_check.get('problems')}")
 
         out_dir = BASE_DIR / "output" / date
-        save_page(out_dir, race_id, "shutuba", shutuba_data.get("html"))
+        pages = {"shutuba": save_page(out_dir, record.run_id, race_id, "shutuba", shutuba_data.get("html"))}
         human_sleep(4.0, 10.0)
         data_top_data = scrape_data_top(page, race_id, shutuba_data)
-        save_page(out_dir, race_id, "data_top", data_top_data.get("html"))
+        pages["data_top"] = save_page(out_dir, record.run_id, race_id, "data_top", data_top_data.get("html"))
         data_top_issues = shutuba_data.get("top3_issues", []) + data_top_data.get("issues", [])
         if data_top_issues:
             logger.warning(f"  {race_label}: 3項目の読み取りに異常 {data_top_issues}")
@@ -252,7 +260,8 @@ def score_race(page, context, date: str, race_label: str, race_id: str, venue: s
                                      prev=dict(prev_fetch=PREV_FETCH_VERSION, prev_inputs_run=record.run_id,
                                                prev_status=prev_status),
                                      table_check=table_check,
-                                     data_top_reader=DATA_TOP_READER_VERSION, data_top_issues=data_top_issues),
+                                     data_top_reader=DATA_TOP_READER_VERSION, data_top_issues=data_top_issues,
+                                     pages=pages),
             "prev_inputs_run": record.run_id,
             "horse_id_map": horse_id_map,
             # 集合のままだと保存で集合の文字列になる（json の default=str。2026-11-07 に見つけた問題）ので、並べたリストで保存する
@@ -262,6 +271,7 @@ def score_race(page, context, date: str, race_label: str, race_id: str, venue: s
             "analysis_hits": data_top_data["analysis_hits"],
             "top3_tables": shutuba_data.get("top3_tables"),
             "top3_state": shutuba_data.get("top3_state"),
+            "data_top_page_state": data_top_data.get("page_state"),
             "pickup_state": data_top_data.get("pickup_state"),
             "analysis_tables": data_top_data.get("analysis_tables"),
             "analysis_state": data_top_data.get("analysis_state"),
