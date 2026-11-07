@@ -36,7 +36,8 @@ def good_quality(cands):
            "races": {LABEL: {"modes": {"近走平均": "type=rank", "当該距離": "type=rank", "当該コース": "type=rank"}}}}
     prev = {"prev_fetch": PREV_FETCH_VERSION, "prev_inputs_run": "r",
             "prev_status": {"candidates": {n: "取れた" for n in cands}, "others": {}, "top1": "判定"}}
-    return build_quality("v", src, LABEL, prev=prev, table_check={"version": "t", "ok": True, "modes": {}, "problems": []})
+    return build_quality("v", src, LABEL, prev=prev, table_check={"version": "t", "ok": True, "modes": {}, "problems": []},
+                         data_top_reader="test")
 
 
 class VariantsTest(unittest.TestCase):

@@ -15,6 +15,9 @@ pickup_scores.json の各レースに "quality" を保存し、研究・閾値�
 - prev_status:   候補ごとの前走データの状態・比較相手の状態ごとの頭数・前走指数レース内1位の判定（判定／保留）
 - index_table_check: 指数の表ごとの、出馬表との照合（index_table_check.check_index_tables。2026-11-06〜）。
                  前走データの取り方が修正後のデータで、記録が無い・照合で問題があれば、問題あり
+- data_top_reader: 出走馬分析・データ分析ピックアップ・各データ上位3頭の読み方（2026-11-07〜）。無ければ問題あり
+                 （出走馬分析の見出しを1つ前の表のものと取り違え、1つの表から最初の1頭しか数えていなかった。
+                 docs/data_top_reader_fix_plan_202611.md。直した読み取りができるまで、全レースが当たる）
 - 無効化:        output/{date}/invalidated.json に載ったレース（買い目・採点ファイルは書き換えない）
 """
 import json
@@ -24,6 +27,7 @@ from prev_inputs import QUALITY_OK_STATUSES as USABLE_PREV_STATUSES
 
 OUTPUT_DIR = Path(__file__).parent / "output"
 INDEX_SOURCES_FILE = "index_sources.json"
+DATA_TOP_READER_OLD = "出走馬分析の読み方が修正前（2026-11-07 に誤りを確認。🔥・買い目の対象外）"
 
 
 def _load(path: Path):
@@ -45,7 +49,7 @@ def load_index_sources(date: str, output_dir: Path = None) -> dict:
 
 
 def build_quality(collector_version: str, index_sources: dict, label: str, prev: dict = None,
-                  table_check: dict = None) -> dict:
+                  table_check: dict = None, data_top_reader: str = None) -> dict:
     """採点時に pickup_scores.json の各レースへ保存する quality。prev は前走データの版・記録・状態、
     table_check は指数の表と出馬表の照合（index_table_check.check_index_tables の戻り値）"""
     race = index_sources.get("races", {}).get(label, {})
@@ -61,6 +65,7 @@ def build_quality(collector_version: str, index_sources: dict, label: str, prev:
         "index_read_errors": race.get("read_errors", {}),
         "candidate_rule": index_sources.get("candidate_rule_version") if race else None,
         "rank_notes": race.get("rank_notes", {}),
+        "data_top_reader": data_top_reader,
     }
 
 
@@ -95,4 +100,6 @@ def race_quality_issues(rdata: dict, invalid_reason: str = None) -> list:
             issues.append("指数の表と出馬表の照合の記録が無い")
         elif not tc.get("ok"):
             issues.append(f"指数の表が出馬表とそろわない: {tc.get('problems')}")
+    if not q.get("data_top_reader"):
+        issues.append(DATA_TOP_READER_OLD)
     return issues
