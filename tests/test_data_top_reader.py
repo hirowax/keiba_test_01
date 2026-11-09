@@ -222,13 +222,13 @@ class AnalysisTest(unittest.TestCase):
 
 
 class AnalysisSectionTest(unittest.TestCase):
-    """出走馬分析は id RaceDataPickup01 の欄だけを読む（2026-11-09。重賞のページのレース分析の表を読んでいた）"""
+    """出走馬分析は id RaceDataPickup01 の欄だけを読む（2026-11-09。11/8 東京11R のページで、レース分析の欄の表を読んでいた）"""
     RACE_TABLES = [analysis_table("このレースで有利な枠順", [("8", "8", ""), ("3", "3", "")], waku_txt=True),
                    analysis_table("このレースが得意な騎手", txt="戸崎圭太"),
                    analysis_table("このレースで狙いの人気", txt="1番人気")]
 
     def test_race_analysis_section_is_not_read(self):
-        """重賞のページ: レース分析の欄（RaceDataPickup03）の表は読まない。数は普通のページと同じ"""
+        """レース分析の欄（11/8 東京11R のページにあった）がある場合: レース分析の欄（RaceDataPickup03）の表は読まない。数は普通のページと同じ"""
         plain = rp.parse_data_top(data_top_page(GOOD_PICKUP, *horse_tables()), ref(), RID)
         g = rp.parse_data_top(data_top_page(GOOD_PICKUP, sections=[
             ("RaceDataPickup03", "アルゼンチン共和国杯のレース分析", self.RACE_TABLES),
@@ -262,6 +262,50 @@ class AnalysisSectionTest(unittest.TestCase):
             ("RaceDataPickup02", "東京芝1400mのコース分析", tabs[:1]),
             ("RaceDataPickup01", "出走馬分析", tabs[1:])]), ref(), RID)
         self.assertTrue(any("数える表が無い" in x and "このコースが得意な馬" in x for x in res["issues"]))
+
+
+class ExactlyOneTest(unittest.TestCase):
+    """欄を決める要素は、ちょうど1つのときだけ読む（2026-11-09 外部レビュー。最初の1つを黙って使わない）"""
+    def test_duplicate_analysis_section(self):
+        res = rp.parse_data_top(data_top_page(GOOD_PICKUP, sections=[
+            ("RaceDataPickup01", "出走馬分析", horse_tables()), ("RaceDataPickup01", "出走馬分析", horse_tables())]),
+            ref(), RID)
+        self.assertEqual((res["analysis_state"], res["analysis_hits"]), ("取得異常", {}))
+        self.assertTrue(any("欄が2つある" in x for x in res["issues"]))
+
+    def test_two_headings_in_section(self):
+        tabs = "".join(horse_tables())
+        html = (page_head() + GOOD_PICKUP + '<h3 class="TitleHeading TitleHeadingDataTop">データ分析</h3>'
+                '<div class="RaceDataPickupList"><div class="RaceDataPickup" id="RaceDataPickup01">'
+                '<h3 class="Title_3rd">出走馬分析</h3><h3 class="Title_3rd">騎乗騎手分析</h3>' + tabs + '</div></div>')
+        res = rp.parse_data_top(BeautifulSoup(html, "html.parser"), ref(), RID)
+        self.assertEqual((res["analysis_state"], res["analysis_hits"]), ("取得異常", {}))
+        self.assertTrue(any("見出しが2つ" in x for x in res["issues"]))
+
+    def test_section_outside_list(self):
+        html = (page_head() + GOOD_PICKUP + '<h3 class="TitleHeading TitleHeadingDataTop">データ分析</h3>'
+                '<div class="RaceDataPickupList">' + section("RaceDataPickup02", "東京芝1400mのコース分析", OTHER_TABLES)
+                + '</div>' + section("RaceDataPickup01", "出走馬分析", horse_tables()))
+        res = rp.parse_data_top(BeautifulSoup(html, "html.parser"), ref(), RID)
+        self.assertEqual((res["analysis_state"], res["analysis_hits"]), ("取得異常", {}))
+        self.assertTrue(any("データ分析の欄の外" in x for x in res["issues"]))
+
+    def test_duplicate_list_or_pickup_or_heading(self):
+        base = data_top_page(GOOD_PICKUP, *horse_tables())
+        for extra, word in (('<div class="RaceDataPickupList"></div>', "データ分析の欄が2つ"),
+                            (GOOD_PICKUP, "ピックアップの欄が2つ"),
+                            ('<h3 class="TitleHeading TitleHeadingDataTop">データ分析</h3>', "データ分析の見出しが2つ")):
+            soup = BeautifulSoup(str(base) + extra, "html.parser")
+            res = rp.parse_data_top(soup, ref(), RID)
+            self.assertEqual(res["page_state"], "取得失敗", word)
+            self.assertEqual((res["pickup_nums"], res["analysis_hits"]), (set(), {}), word)
+            self.assertTrue(any(word in x for x in res["issues"]), (word, res["issues"]))
+
+    def test_duplicate_top3_section(self):
+        one = str(top3_page(top3_table("能力", [("10", "6", "リバー")])))
+        res = rp.parse_top3data(BeautifulSoup(one + one, "html.parser"), ref())
+        self.assertEqual((res["state"], res["hits"]), ("取得異常", {}))
+        self.assertEqual(res["issues"], ["上位3頭: 出馬表に欄が2つある"])
 
 
 G1_PAGES = ROOT / "research" / "data_top_g1_202611" / "pages"

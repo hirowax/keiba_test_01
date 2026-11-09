@@ -39,7 +39,9 @@ FIRE_RULE_SCORING_VERSIONS = ("v5", "v5.1")
 
 # 3項目（各データ上位3頭・データ分析ピックアップ・出走馬分析）の読み方の版。quality.data_top_reader に記録する。
 # 読み方を変えたら値を変える。
-DATA_TOP_READER_VERSION = "出走馬分析の欄のidで読み表の中の見出しと馬番の要素で出馬表の馬番の行の正式名と照合_20261109"
+# 名前: 分析のページには短い名前（先頭3文字）しか無い。馬はページの馬番で出馬表の行に結び付け、その行の正式名の馬とする。
+# 短い名前は、その正式名の先頭と同じかを確かめるだけに使う（分析のページの正式名と完全一致を確かめたのではない）。
+DATA_TOP_READER_VERSION = "出走馬分析の欄をidで決め_馬番で出馬表の行に結び付け短い名前は先頭の一致を確かめる_20261109"
 
 # 出走馬分析で数える表（表の中の見出し。2026-11-07 に保存した5レースで見た6種類）。
 # 公開されているページでこのどれかが無ければ取得異常にする（無いことが正常かは確かめていないため）。
@@ -54,7 +56,7 @@ ANALYSIS_OTHER_TITLES = (
     "今回の厩舎コメント評価で実績がある馬",   # 馬の表だが数えない（上の説明。2026-11-07 ユーザー決定）
 )
 # 出走馬分析の欄（2026-11-09）。データ分析の欄（.RaceDataPickupList）には div.RaceDataPickup が並び、id で種類が分かる:
-# RaceDataPickup01 出走馬分析・02 {コース}のコース分析・03 {レース名}のレース分析（重賞のページだけ）・04 騎乗騎手分析。
+# RaceDataPickup01 出走馬分析・02 {コース}のコース分析・03 {レース名}のレース分析（見たのは 11/8 東京11R の1ページだけ）・04 騎乗騎手分析。
 # 出走馬分析は 01 の中の表だけを読み、01 の h3.Title_3rd が「出走馬分析」であることも確かめる（どちらかが違えば取得異常）。
 # 根拠: 保存した30ページ（11/7・11/8 の採点、research の保存ページ、11/9 に取り直した 11/8 東京11R）で、
 # 01 はすべて「出走馬分析」。03 の表（「このレースで有利な枠順」など10個）を出走馬分析として読んでいた（2026-11-09 に発見）。
@@ -293,10 +295,14 @@ def parse_top3data(soup: BeautifulSoup, ref: dict) -> dict:
     戻り値: hits {馬番: 登場した表の数}、tables [{title, state, nums}]、state（欄がない / あり）、issues
     騎手の表も、今の定義（v5 から）どおり数える（数字は騎手が乗る馬の馬番）。
     """
-    sec = soup.find("section", class_="top3data") or soup.find(class_="top3data")
-    if sec is None:
+    secs = soup.find_all(class_="top3data")
+    if not secs:
         # 保存した7レースの出馬表にはすべてあった。無いことが正常かは確かめていないので取得異常にする
         return {"hits": {}, "tables": [], "state": "取得異常", "issues": ["上位3頭: 出馬表に欄が無い"]}
+    if len(secs) > 1:
+        # 保存した出馬表28ページはすべて1つ（2026-11-09）。どちらを読むか決められないので取得異常にする
+        return {"hits": {}, "tables": [], "state": "取得異常", "issues": [f"上位3頭: 出馬表に欄が{len(secs)}つある"]}
+    sec = secs[0]
     hits: Dict[str, int] = {}
     tables, issues = [], []
     for tb in sec.find_all("table", class_="AnaBestTable"):
@@ -375,11 +381,20 @@ def parse_data_top(soup: BeautifulSoup, ref: dict, race_id: str) -> dict:
     rid = page_race_id(soup)
     if rid != race_id:
         return _empty("取得失敗", "取得失敗", f"データ分析: ページのレースIDが違う（ページ {rid}・取ったレース {race_id}）")
-    if soup.find("h3", class_="TitleHeadingDataTop") is None:
+    n_head = len(soup.find_all("h3", class_="TitleHeadingDataTop"))
+    if n_head == 0:
         return _empty("取得失敗", "取得失敗",
                       "データ分析: ページの形が違う（データ分析の見出しが無い。ログインの案内やエラーのページの可能性）")
-    area = soup.find(class_="RaceDataPickupList")
-    wrap = soup.find(class_="DataPickupHorseWrap")
+    # 欄を決める要素は、保存した data_top 28ページ（公開されているもの）ですべて1つ（2026-11-09）。
+    # 2つ以上あればどれを読むか決められないので取得失敗にする（最初の1つを黙って使わない）
+    areas = soup.find_all(class_="RaceDataPickupList")
+    wraps = soup.find_all(class_="DataPickupHorseWrap")
+    many = [f"{name}が{n}つ" for name, n in (("データ分析の見出し", n_head), ("データ分析の欄", len(areas)),
+                                              ("ピックアップの欄", len(wraps))) if n > 1]
+    if many:
+        return _empty("取得失敗", "取得失敗", f"データ分析: ページの形が違う（{'・'.join(many)}ある）")
+    area = areas[0] if areas else None
+    wrap = wraps[0] if wraps else None
     if area is None and wrap is None:
         notes = [x.get_text(strip=True) for x in soup.find_all(class_="Race_Infomation_Box")]
         if DATA_TOP_NOT_PUBLISHED in notes:
@@ -422,10 +437,23 @@ def parse_data_top(soup: BeautifulSoup, ref: dict, race_id: str) -> dict:
         issues.append("出走馬分析: ピックアップはあるが出走馬分析の欄が無い")
         return {"page_state": "公開", "pickup_nums": pickup_nums, "pickup_state": pickup_state,
                 "analysis_hits": {}, "analysis_tables": [], "analysis_state": "取得異常", "issues": issues}
-    box = area.find("div", id=ANALYSIS_SECTION_ID, class_="RaceDataPickup")
-    h3 = box.find("h3", class_="Title_3rd") if box is not None else None
-    if box is None or h3 is None or h3.get_text(strip=True) != ANALYSIS_SECTION_TITLE:
-        got = "欄が無い" if box is None else f"見出しが「{h3.get_text(strip=True) if h3 else None}」"
+    # id の欄はページ全体で数え、ちょうど1つで、データ分析の欄の中にあり、見出し（h3.Title_3rd）がちょうど1つで
+    # 「出走馬分析」のときだけ読む
+    boxes = soup.find_all(id=ANALYSIS_SECTION_ID)
+    box = boxes[0] if len(boxes) == 1 else None
+    h3s = box.find_all("h3", class_="Title_3rd") if box is not None else []
+    got = None
+    if not boxes:
+        got = "欄が無い"
+    elif len(boxes) > 1:
+        got = f"欄が{len(boxes)}つある"
+    elif box.name != "div" or "RaceDataPickup" not in (box.get("class") or []) or not any(x is area for x in box.parents):
+        got = "欄の形が違う（div.RaceDataPickup でない、またはデータ分析の欄の外）"
+    elif len(h3s) != 1:
+        got = f"見出しが{len(h3s)}つ"
+    elif h3s[0].get_text(strip=True) != ANALYSIS_SECTION_TITLE:
+        got = f"見出しが「{h3s[0].get_text(strip=True)}」"
+    if got:
         issues.append(f"出走馬分析: 出走馬分析の欄（div#{ANALYSIS_SECTION_ID}・見出し「{ANALYSIS_SECTION_TITLE}」）が"
                       f"読めない（{got}）")
         return {"page_state": "公開", "pickup_nums": pickup_nums, "pickup_state": pickup_state,
