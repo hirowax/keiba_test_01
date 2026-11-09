@@ -1,0 +1,4045 @@
+{
+ "date": "20261108",
+ "race_skip": {},
+ "kinds": {
+  "一致": 220,
+  "記録が数字でない（取得失敗）・表は値なし": 5,
+  "記録が数字でない（指数が空（着順が数字でない））・表は値なし": 1
+ },
+ "rows": [
+  {
+   "race": "京都10R",
+   "num": "1",
+   "name": "フェアリーライク",
+   "horse_id": "2022106322",
+   "status": "取れた",
+   "prev": {
+    "date": "20261011",
+    "race_id": "202608040410",
+    "rank": 3,
+    "pop": 3,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 103
+   },
+   "table_prev": "103",
+   "kind": "一致"
+  },
+  {
+   "race": "京都10R",
+   "num": "2",
+   "name": "スライビングロード",
+   "horse_id": "2022101432",
+   "status": "取れた",
+   "prev": {
+    "date": "20260405",
+    "race_id": "202609020410",
+    "rank": 2,
+    "pop": 1,
+    "dist": 1400,
+    "surface_dist": "芝1400",
+    "idx": 103
+   },
+   "table_prev": "103",
+   "kind": "一致"
+  },
+  {
+   "race": "京都10R",
+   "num": "3",
+   "name": "ヴォーカライズ",
+   "horse_id": "2023103783",
+   "status": "取れた",
+   "prev": {
+    "date": "20260926",
+    "race_id": "202609040810",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 91
+   },
+   "table_prev": "91",
+   "kind": "一致"
+  },
+  {
+   "race": "京都10R",
+   "num": "4",
+   "name": "メイショウセイロウ",
+   "horse_id": "2022103194",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202604040111",
+    "rank": 13,
+    "pop": 11,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 76
+   },
+   "table_prev": "76",
+   "kind": "一致"
+  },
+  {
+   "race": "京都10R",
+   "num": "5",
+   "name": "ネーヴェフレスカ",
+   "horse_id": "2022105783",
+   "status": "取れた",
+   "prev": {
+    "date": "20260419",
+    "race_id": "202609020811",
+    "rank": 6,
+    "pop": 3,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 100
+   },
+   "table_prev": "100",
+   "kind": "一致"
+  },
+  {
+   "race": "京都10R",
+   "num": "6",
+   "name": "アヴィオン",
+   "horse_id": "2023105847",
+   "status": "取れた",
+   "prev": {
+    "date": "20261011",
+    "race_id": "202608040410",
+    "rank": 2,
+    "pop": 2,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 102
+   },
+   "table_prev": "102",
+   "kind": "一致"
+  },
+  {
+   "race": "京都10R",
+   "num": "7",
+   "name": "エポックヴィーナス",
+   "horse_id": "2021104153",
+   "status": "取れた",
+   "prev": {
+    "date": "20261011",
+    "race_id": "202608040410",
+    "rank": 10,
+    "pop": 7,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 96
+   },
+   "table_prev": "96",
+   "kind": "一致"
+  },
+  {
+   "race": "京都10R",
+   "num": "8",
+   "name": "ブルーマエストロ",
+   "horse_id": "2022105189",
+   "status": "取れた",
+   "prev": {
+    "date": "20260913",
+    "race_id": "202606040409",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 88
+   },
+   "table_prev": "88",
+   "kind": "一致"
+  },
+  {
+   "race": "京都10R",
+   "num": "9",
+   "name": "フライングブレード",
+   "horse_id": "2020100906",
+   "status": "取れた",
+   "prev": {
+    "date": "20261024",
+    "race_id": "202608040810",
+    "rank": 6,
+    "pop": 11,
+    "dist": 1400,
+    "surface_dist": "芝1400",
+    "idx": 84
+   },
+   "table_prev": "84",
+   "kind": "一致"
+  },
+  {
+   "race": "京都10R",
+   "num": "10",
+   "name": "ブリュットミレジメ",
+   "horse_id": "2019102106",
+   "status": "取れた",
+   "prev": {
+    "date": "20260531",
+    "race_id": "202608031212",
+    "rank": 4,
+    "pop": 6,
+    "dist": 1400,
+    "surface_dist": "芝1400",
+    "idx": 89
+   },
+   "table_prev": "89",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "1",
+   "name": "シュライアハフト",
+   "horse_id": "2024105438",
+   "status": "取れた",
+   "prev": {
+    "date": "20260926",
+    "race_id": "202609040801",
+    "rank": 7,
+    "pop": 10,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 52
+   },
+   "table_prev": "52",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "2",
+   "name": "テリオスベラ",
+   "horse_id": "2024106344",
+   "status": "取れた",
+   "prev": {
+    "date": "20261011",
+    "race_id": "202608040401",
+    "rank": 3,
+    "pop": 2,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 65
+   },
+   "table_prev": "65",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "3",
+   "name": "ナムラポピー",
+   "horse_id": "2024102753",
+   "status": "取れた",
+   "prev": {
+    "date": "20261024",
+    "race_id": "202608040805",
+    "rank": 13,
+    "pop": 13,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 30
+   },
+   "table_prev": "30",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "4",
+   "name": "リケアワルツ",
+   "horse_id": "2024104814",
+   "status": "取れた",
+   "prev": {
+    "date": "20260921",
+    "race_id": "202609040704",
+    "rank": 11,
+    "pop": 7,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 35
+   },
+   "table_prev": "35",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "5",
+   "name": "スマートメモリー",
+   "horse_id": "2024104520",
+   "status": "取れた",
+   "prev": {
+    "date": "20260906",
+    "race_id": "202609040201",
+    "rank": 5,
+    "pop": 7,
+    "dist": 1400,
+    "surface_dist": "芝1400",
+    "idx": 81
+   },
+   "table_prev": "81",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "6",
+   "name": "ナンヨーカルチャー",
+   "horse_id": "2024106492",
+   "status": "取れた",
+   "prev": {
+    "date": "20260920",
+    "race_id": "202609040605",
+    "rank": 13,
+    "pop": 7,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 46
+   },
+   "table_prev": "46",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "7",
+   "name": "リワナグ",
+   "horse_id": "2024102478",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202608040904",
+    "rank": 3,
+    "pop": 5,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 48
+   },
+   "table_prev": "48",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "8",
+   "name": "ベイビーブラザー",
+   "horse_id": "2024104861",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202608040701",
+    "rank": 5,
+    "pop": 13,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 59
+   },
+   "table_prev": "59",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "9",
+   "name": "ランスオブナイト",
+   "horse_id": "2024106792",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202608040902",
+    "rank": 4,
+    "pop": 4,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 57
+   },
+   "table_prev": "57",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "10",
+   "name": "ゼイン",
+   "horse_id": "2024103161",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202604040105",
+    "rank": 11,
+    "pop": 13,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 11
+   },
+   "table_prev": "11",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "11",
+   "name": "ワイドウィンザー",
+   "horse_id": "2024104947",
+   "status": "取れた",
+   "prev": {
+    "date": "20261024",
+    "race_id": "202604040303",
+    "rank": 7,
+    "pop": 8,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 51
+   },
+   "table_prev": "51",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "12",
+   "name": "レグルスロウ",
+   "horse_id": "2024103845",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202608040701",
+    "rank": 6,
+    "pop": 2,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 56
+   },
+   "table_prev": "56",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "13",
+   "name": "ツーハーツ",
+   "horse_id": "2024103368",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202605040701",
+    "rank": 3,
+    "pop": 3,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 65
+   },
+   "table_prev": "65",
+   "kind": "一致"
+  },
+  {
+   "race": "京都1R",
+   "num": "14",
+   "name": "キタノゲートウェイ",
+   "horse_id": "2024107272",
+   "status": "取れた",
+   "prev": {
+    "date": "20260920",
+    "race_id": "202609040604",
+    "rank": 15,
+    "pop": 13,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": -66
+   },
+   "table_prev": "-66",
+   "kind": "一致"
+  },
+  {
+   "race": "京都2R",
+   "num": "1",
+   "name": "サルトヴェローチェ",
+   "horse_id": "2024106406",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202608040902",
+    "rank": 2,
+    "pop": 1,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 79
+   },
+   "table_prev": "79",
+   "kind": "一致"
+  },
+  {
+   "race": "京都2R",
+   "num": "2",
+   "name": "スゴイジャン",
+   "horse_id": "2024103373",
+   "status": "取れた",
+   "prev": {
+    "date": "20261024",
+    "race_id": "202604040302",
+    "rank": 12,
+    "pop": 12,
+    "dist": 1400,
+    "surface_dist": "芝1400",
+    "idx": 62
+   },
+   "table_prev": "62",
+   "kind": "一致"
+  },
+  {
+   "race": "京都2R",
+   "num": "3",
+   "name": "フィアローゼン",
+   "horse_id": "2024104045",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202608040904",
+    "rank": 11,
+    "pop": 12,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 34
+   },
+   "table_prev": "34",
+   "kind": "一致"
+  },
+  {
+   "race": "京都2R",
+   "num": "4",
+   "name": "カムトゥルー",
+   "horse_id": "2024103480",
+   "status": "取れた",
+   "prev": {
+    "date": "20261024",
+    "race_id": "202604040303",
+    "rank": 6,
+    "pop": 3,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 56
+   },
+   "table_prev": "56",
+   "kind": "一致"
+  },
+  {
+   "race": "京都2R",
+   "num": "5",
+   "name": "トワイライトローズ",
+   "horse_id": "2024103852",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202608040602",
+    "rank": 5,
+    "pop": 8,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 74
+   },
+   "table_prev": "74",
+   "kind": "一致"
+  },
+  {
+   "race": "京都2R",
+   "num": "6",
+   "name": "オメガダフネ",
+   "horse_id": "2024104092",
+   "status": "取れた",
+   "prev": {
+    "date": "20260905",
+    "race_id": "202609040106",
+    "rank": 7,
+    "pop": 7,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 43
+   },
+   "table_prev": "43",
+   "kind": "一致"
+  },
+  {
+   "race": "京都2R",
+   "num": "7",
+   "name": "エルダークローネ",
+   "horse_id": "2024102930",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202608040602",
+    "rank": 4,
+    "pop": 3,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 73
+   },
+   "table_prev": "73",
+   "kind": "一致"
+  },
+  {
+   "race": "京都2R",
+   "num": "8",
+   "name": "キャンディリヒト",
+   "horse_id": "2024105282",
+   "status": "取れた",
+   "prev": {
+    "date": "20261010",
+    "race_id": "202605040306",
+    "rank": 9,
+    "pop": 2,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 52
+   },
+   "table_prev": "52",
+   "kind": "一致"
+  },
+  {
+   "race": "京都2R",
+   "num": "9",
+   "name": "アランチャ",
+   "horse_id": "2024108008",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202608040904",
+    "rank": 16,
+    "pop": 15,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 17
+   },
+   "table_prev": "17",
+   "kind": "一致"
+  },
+  {
+   "race": "京都2R",
+   "num": "10",
+   "name": "ミライショウグン",
+   "horse_id": "2024105446",
+   "status": "取れた",
+   "prev": {
+    "date": "20260822",
+    "race_id": "202601020101",
+    "rank": 9,
+    "pop": 11,
+    "dist": 1700,
+    "surface_dist": "ダ1700",
+    "idx": 26
+   },
+   "table_prev": "26",
+   "kind": "一致"
+  },
+  {
+   "race": "京都2R",
+   "num": "11",
+   "name": "アスレイ",
+   "horse_id": "2024104625",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202608040904",
+    "rank": 6,
+    "pop": 10,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 41
+   },
+   "table_prev": "41",
+   "kind": "一致"
+  },
+  {
+   "race": "京都2R",
+   "num": "12",
+   "name": "ハイグッドカンフー",
+   "horse_id": "2024104531",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202604040105",
+    "rank": 8,
+    "pop": 3,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 32
+   },
+   "table_prev": "32",
+   "kind": "一致"
+  },
+  {
+   "race": "京都2R",
+   "num": "13",
+   "name": "パロディ",
+   "horse_id": "2024101199",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202604040405",
+    "rank": 8,
+    "pop": 12,
+    "dist": 1400,
+    "surface_dist": "芝1400",
+    "idx": 36
+   },
+   "table_prev": "36",
+   "kind": "一致"
+  },
+  {
+   "race": "京都3R",
+   "num": "1",
+   "name": "トップオブドリーム",
+   "horse_id": "2024106417",
+   "status": "取れた",
+   "prev": {
+    "date": "20260926",
+    "race_id": "202609040805",
+    "rank": 2,
+    "pop": 4,
+    "dist": 2000,
+    "surface_dist": "芝2000",
+    "idx": 59
+   },
+   "table_prev": "59",
+   "kind": "一致"
+  },
+  {
+   "race": "京都3R",
+   "num": "2",
+   "name": "フィソステギア",
+   "horse_id": "2024100835",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202608040605",
+    "rank": 6,
+    "pop": 8,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 59
+   },
+   "table_prev": "59",
+   "kind": "一致"
+  },
+  {
+   "race": "京都3R",
+   "num": "3",
+   "name": "ナポリ",
+   "horse_id": "2024100505",
+   "status": "取れた",
+   "prev": {
+    "date": "20260912",
+    "race_id": "202609040303",
+    "rank": 5,
+    "pop": 6,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 39
+   },
+   "table_prev": "39",
+   "kind": "一致"
+  },
+  {
+   "race": "京都3R",
+   "num": "4",
+   "name": "メールデトワール",
+   "horse_id": "2024102480",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202608040705",
+    "rank": 2,
+    "pop": 3,
+    "dist": 2000,
+    "surface_dist": "芝2000",
+    "idx": 68
+   },
+   "table_prev": "68",
+   "kind": "一致"
+  },
+  {
+   "race": "京都3R",
+   "num": "5",
+   "name": "ベルウッドイタル",
+   "horse_id": "2024105411",
+   "status": "取れた",
+   "prev": {
+    "date": "20261101",
+    "race_id": "202605041105",
+    "rank": 8,
+    "pop": 8,
+    "dist": 2000,
+    "surface_dist": "芝2000",
+    "idx": 46
+   },
+   "table_prev": "46",
+   "kind": "一致"
+  },
+  {
+   "race": "京都3R",
+   "num": "6",
+   "name": "ゴールデンプロミス",
+   "horse_id": "2024107196",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202608040905",
+    "rank": 3,
+    "pop": 3,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 42
+   },
+   "table_prev": "42",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "1",
+   "name": "ペトリコール",
+   "horse_id": "2023107141",
+   "status": "取れた",
+   "prev": {
+    "date": "20261024",
+    "race_id": "202608040807",
+    "rank": 3,
+    "pop": 2,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 92
+   },
+   "table_prev": "92",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "2",
+   "name": "ガイラルディア",
+   "horse_id": "2022103623",
+   "status": "取れた",
+   "prev": {
+    "date": "20260919",
+    "race_id": "202609040509",
+    "rank": 11,
+    "pop": 9,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 64
+   },
+   "table_prev": "64",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "3",
+   "name": "ダノンストラーダ",
+   "horse_id": "2021104763",
+   "status": "取れた",
+   "prev": {
+    "date": "20250712",
+    "race_id": "202503020512",
+    "rank": 13,
+    "pop": 9,
+    "dist": 1700,
+    "surface_dist": "ダ1700",
+    "idx": 73
+   },
+   "table_prev": "73",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "4",
+   "name": "ゴーントゥファー",
+   "horse_id": "2023106531",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202604040408",
+    "rank": 11,
+    "pop": 14,
+    "dist": 2500,
+    "surface_dist": "ダ2500",
+    "idx": 66
+   },
+   "table_prev": "66",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "5",
+   "name": "アルビオン",
+   "horse_id": "2023103150",
+   "status": "取れた",
+   "prev": {
+    "date": "20261011",
+    "race_id": "202608040406",
+    "rank": 12,
+    "pop": 15,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 86
+   },
+   "table_prev": "86",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "6",
+   "name": "サトノグロリア",
+   "horse_id": "2023106888",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202604040212",
+    "rank": 2,
+    "pop": 1,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 80
+   },
+   "table_prev": "80",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "7",
+   "name": "アメリカンスタイル",
+   "horse_id": "2023110079",
+   "status": "取れた",
+   "prev": {
+    "date": "20260718",
+    "race_id": "202610020712",
+    "rank": 6,
+    "pop": 6,
+    "dist": 1700,
+    "surface_dist": "ダ1700",
+    "idx": 82
+   },
+   "table_prev": "82",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "8",
+   "name": "トラッドロア",
+   "horse_id": "2023110010",
+   "status": "取れた",
+   "prev": {
+    "date": "20260829",
+    "race_id": "202607030312",
+    "rank": 1,
+    "pop": 10,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 77
+   },
+   "table_prev": "77",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "9",
+   "name": "クリュギスト",
+   "horse_id": "2023104939",
+   "status": "取れた",
+   "prev": {
+    "date": "20261011",
+    "race_id": "202608040406",
+    "rank": 3,
+    "pop": 2,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 93
+   },
+   "table_prev": "93",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "10",
+   "name": "コルヴァス",
+   "horse_id": "2023104411",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202608040906",
+    "rank": 4,
+    "pop": 7,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 96
+   },
+   "table_prev": "96",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "11",
+   "name": "メイショウサッソウ",
+   "horse_id": "2023101953",
+   "status": "取れた",
+   "prev": {
+    "date": "20260906",
+    "race_id": "202609040209",
+    "rank": 12,
+    "pop": 8,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 60
+   },
+   "table_prev": "60",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "12",
+   "name": "アミラル",
+   "horse_id": "2023104682",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202608040607",
+    "rank": 7,
+    "pop": 4,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 78
+   },
+   "table_prev": "78",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "13",
+   "name": "アメリカンイズム",
+   "horse_id": "2023110081",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202604040212",
+    "rank": 5,
+    "pop": 3,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 72
+   },
+   "table_prev": "72",
+   "kind": "一致"
+  },
+  {
+   "race": "京都4R",
+   "num": "14",
+   "name": "ビナハイバン",
+   "horse_id": "2023104499",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202608040707",
+    "rank": 8,
+    "pop": 9,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 76
+   },
+   "table_prev": "76",
+   "kind": "一致"
+  },
+  {
+   "race": "京都8R",
+   "num": "1",
+   "name": "メディテラニアン",
+   "horse_id": "2022105068",
+   "status": "取れた",
+   "prev": {
+    "date": "20260927",
+    "race_id": "202609040909",
+    "rank": 3,
+    "pop": 4,
+    "dist": 2400,
+    "surface_dist": "芝2400",
+    "idx": 84
+   },
+   "table_prev": "84",
+   "kind": "一致"
+  },
+  {
+   "race": "京都8R",
+   "num": "2",
+   "name": "レッドヴァリアート",
+   "horse_id": "2022105290",
+   "status": "取れた",
+   "prev": {
+    "date": "20260830",
+    "race_id": "202607030410",
+    "rank": 1,
+    "pop": 4,
+    "dist": 2000,
+    "surface_dist": "芝2000",
+    "idx": 98
+   },
+   "table_prev": "98",
+   "kind": "一致"
+  },
+  {
+   "race": "京都8R",
+   "num": "3",
+   "name": "ショウナンハウル",
+   "horse_id": "2021105867",
+   "status": "取れた",
+   "prev": {
+    "date": "20260830",
+    "race_id": "202607030408",
+    "rank": 15,
+    "pop": 15,
+    "dist": 2200,
+    "surface_dist": "芝2200",
+    "idx": 84
+   },
+   "table_prev": "84",
+   "kind": "一致"
+  },
+  {
+   "race": "京都8R",
+   "num": "4",
+   "name": "ウインヘリオドール",
+   "horse_id": "2022107084",
+   "status": "取れた",
+   "prev": {
+    "date": "20260905",
+    "race_id": "202609040108",
+    "rank": 7,
+    "pop": 8,
+    "dist": 2000,
+    "surface_dist": "芝2000",
+    "idx": 81
+   },
+   "table_prev": "81",
+   "kind": "一致"
+  },
+  {
+   "race": "京都8R",
+   "num": "5",
+   "name": "アメジストブラック",
+   "horse_id": "2019105051",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202608040610",
+    "rank": 5,
+    "pop": 8,
+    "dist": 2200,
+    "surface_dist": "芝2200",
+    "idx": 96
+   },
+   "table_prev": "96",
+   "kind": "一致"
+  },
+  {
+   "race": "京都8R",
+   "num": "6",
+   "name": "ナウオアネヴァー",
+   "horse_id": "2023104408",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202608040906",
+    "rank": 8,
+    "pop": 10,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 85
+   },
+   "table_prev": "85",
+   "kind": "一致"
+  },
+  {
+   "race": "京都8R",
+   "num": "7",
+   "name": "アットアブラスト",
+   "horse_id": "2020101323",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202608040610",
+    "rank": 4,
+    "pop": 7,
+    "dist": 2200,
+    "surface_dist": "芝2200",
+    "idx": 96
+   },
+   "table_prev": "96",
+   "kind": "一致"
+  },
+  {
+   "race": "京都8R",
+   "num": "8",
+   "name": "アロマフェリス",
+   "horse_id": "2022104624",
+   "status": "取れた",
+   "prev": {
+    "date": "20260919",
+    "race_id": "202609040507",
+    "rank": 1,
+    "pop": 2,
+    "dist": 2400,
+    "surface_dist": "芝2400",
+    "idx": 93
+   },
+   "table_prev": "93",
+   "kind": "一致"
+  },
+  {
+   "race": "京都8R",
+   "num": "9",
+   "name": "ランツフート",
+   "horse_id": "2022105577",
+   "status": "取れた",
+   "prev": {
+    "date": "20260815",
+    "race_id": "202604020706",
+    "rank": 11,
+    "pop": 8,
+    "dist": 2200,
+    "surface_dist": "芝2200",
+    "idx": 92
+   },
+   "table_prev": "92",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "1",
+   "name": "ハメドスタイル",
+   "horse_id": "2024101490",
+   "status": "取れた",
+   "prev": {
+    "date": "20261024",
+    "race_id": "202608040803",
+    "rank": 1,
+    "pop": 5,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 81
+   },
+   "table_prev": "81",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "2",
+   "name": "ロジアコース",
+   "horse_id": "2024106754",
+   "status": "取れた",
+   "prev": {
+    "date": "20260905",
+    "race_id": "202601020501",
+    "rank": 1,
+    "pop": 2,
+    "dist": 1700,
+    "surface_dist": "ダ1700",
+    "idx": 92
+   },
+   "table_prev": "92",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "3",
+   "name": "エピドゥブレ",
+   "horse_id": "2024106275",
+   "status": "取れた",
+   "prev": {
+    "date": "20260912",
+    "race_id": "202609040306",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 69
+   },
+   "table_prev": "69",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "4",
+   "name": "ホットロッドハート",
+   "horse_id": "2024105800",
+   "status": "取れた",
+   "prev": {
+    "date": "20260912",
+    "race_id": "202609040303",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 51
+   },
+   "table_prev": "51",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "5",
+   "name": "ユーフォナイト",
+   "horse_id": "2024106798",
+   "status": "取れた",
+   "prev": {
+    "date": "20260829",
+    "race_id": "202601020305",
+    "rank": 1,
+    "pop": 3,
+    "dist": 1700,
+    "surface_dist": "ダ1700",
+    "idx": 64
+   },
+   "table_prev": "64",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "6",
+   "name": "テムファイア",
+   "horse_id": "2024100560",
+   "status": "取れた",
+   "prev": {
+    "date": "20260809",
+    "race_id": "202601010601",
+    "rank": 1,
+    "pop": 3,
+    "dist": 1700,
+    "surface_dist": "ダ1700",
+    "idx": 77
+   },
+   "table_prev": "77",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "7",
+   "name": "パルパル",
+   "horse_id": "2024108231",
+   "status": "取れた",
+   "prev": {
+    "date": "20260926",
+    "race_id": "202609040802",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 67
+   },
+   "table_prev": "67",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "8",
+   "name": "デラスゴイガン",
+   "horse_id": "2024103439",
+   "status": "取れた",
+   "prev": {
+    "date": "20261003",
+    "race_id": "202608040104",
+    "rank": 1,
+    "pop": 5,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 73
+   },
+   "table_prev": "73",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "9",
+   "name": "ファブリック",
+   "horse_id": "2024104851",
+   "status": "取れた",
+   "prev": {
+    "date": "20260927",
+    "race_id": "202606040903",
+    "rank": 1,
+    "pop": 4,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 78
+   },
+   "table_prev": "78",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "10",
+   "name": "マーズエクレール",
+   "horse_id": "2024106587",
+   "status": "取れた",
+   "prev": {
+    "date": "20261004",
+    "race_id": "202608040201",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 74
+   },
+   "table_prev": "74",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "11",
+   "name": "トゥザファイナル",
+   "horse_id": "2024106404",
+   "status": "取れた",
+   "prev": {
+    "date": "20260822",
+    "race_id": "202601020101",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1700,
+    "surface_dist": "ダ1700",
+    "idx": 85
+   },
+   "table_prev": "85",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "12",
+   "name": "アンドレバローズ",
+   "horse_id": "2024100442",
+   "status": "取れた",
+   "prev": {
+    "date": "20260919",
+    "race_id": "202609040506",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 69
+   },
+   "table_prev": "69",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "13",
+   "name": "アメリカンソウル",
+   "horse_id": "2024108310",
+   "status": "取れた",
+   "prev": {
+    "date": "20261012",
+    "race_id": "202608040504",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 78
+   },
+   "table_prev": "78",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "14",
+   "name": "エンジャムメント",
+   "horse_id": "2024105733",
+   "status": "取れた",
+   "prev": {
+    "date": "20260906",
+    "race_id": "202606040206",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 86
+   },
+   "table_prev": "86",
+   "kind": "一致"
+  },
+  {
+   "race": "京都9R",
+   "num": "15",
+   "name": "ヤマニンガルブ",
+   "horse_id": "2024103428",
+   "status": "取れた",
+   "prev": {
+    "date": "20260927",
+    "race_id": "202609040906",
+    "rank": 1,
+    "pop": 3,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 66
+   },
+   "table_prev": "66",
+   "kind": "一致"
+  },
+  {
+   "race": "東京10R",
+   "num": "1",
+   "name": "トクシーカイザー",
+   "horse_id": "2020100406",
+   "status": "取れた",
+   "prev": {
+    "date": "20261004",
+    "race_id": "202605040210",
+    "rank": 12,
+    "pop": 3,
+    "dist": 1600,
+    "surface_dist": "ダ1600",
+    "idx": 78
+   },
+   "table_prev": "78",
+   "kind": "一致"
+  },
+  {
+   "race": "東京10R",
+   "num": "2",
+   "name": "エンセリオ",
+   "horse_id": "2021100300",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202608040611",
+    "rank": 5,
+    "pop": 14,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 92
+   },
+   "table_prev": "92",
+   "kind": "一致"
+  },
+  {
+   "race": "東京10R",
+   "num": "3",
+   "name": "セギレエルビエント",
+   "horse_id": "2022105832",
+   "status": "取れた",
+   "prev": {
+    "date": "20261011",
+    "race_id": "202605040410",
+    "rank": 5,
+    "pop": 2,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 86
+   },
+   "table_prev": "86",
+   "kind": "一致"
+  },
+  {
+   "race": "東京10R",
+   "num": "4",
+   "name": "オレデイイノカ",
+   "horse_id": "2018101243",
+   "status": "取れた",
+   "prev": {
+    "date": "20260922",
+    "race_id": "202606040711",
+    "rank": 15,
+    "pop": 16,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 84
+   },
+   "table_prev": "84",
+   "kind": "一致"
+  },
+  {
+   "race": "東京10R",
+   "num": "5",
+   "name": "キョウエイフロイデ",
+   "horse_id": "2021101053",
+   "status": "取れた",
+   "prev": {
+    "date": "20260922",
+    "race_id": "202606040711",
+    "rank": 10,
+    "pop": 4,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 94
+   },
+   "table_prev": "94",
+   "kind": "一致"
+  },
+  {
+   "race": "東京10R",
+   "num": "6",
+   "name": "サトミノエンジェル",
+   "horse_id": "2022101389",
+   "status": "取れた",
+   "prev": {
+    "date": "20261004",
+    "race_id": "202605040210",
+    "rank": 7,
+    "pop": 7,
+    "dist": 1600,
+    "surface_dist": "ダ1600",
+    "idx": 95
+   },
+   "table_prev": "95",
+   "kind": "一致"
+  },
+  {
+   "race": "東京10R",
+   "num": "7",
+   "name": "メイショウタムシバ",
+   "horse_id": "2021103268",
+   "status": "取れた",
+   "prev": {
+    "date": "20261011",
+    "race_id": "202605040410",
+    "rank": 8,
+    "pop": 8,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 84
+   },
+   "table_prev": "84",
+   "kind": "一致"
+  },
+  {
+   "race": "東京10R",
+   "num": "8",
+   "name": "ワイドクリーガー",
+   "horse_id": "2022105611",
+   "status": "取れた",
+   "prev": {
+    "date": "20261024",
+    "race_id": "202605040810",
+    "rank": 14,
+    "pop": 13,
+    "dist": 1600,
+    "surface_dist": "ダ1600",
+    "idx": 81
+   },
+   "table_prev": "81",
+   "kind": "一致"
+  },
+  {
+   "race": "東京10R",
+   "num": "9",
+   "name": "グレイテストソング",
+   "horse_id": "2022106541",
+   "status": "取れた",
+   "prev": {
+    "date": "20260922",
+    "race_id": "202606040711",
+    "rank": 6,
+    "pop": 8,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 100
+   },
+   "table_prev": "100",
+   "kind": "一致"
+  },
+  {
+   "race": "東京10R",
+   "num": "10",
+   "name": "セボンサデッセ",
+   "horse_id": "2022104903",
+   "status": "取れた",
+   "prev": {
+    "date": "20260815",
+    "race_id": "202601010711",
+    "rank": 3,
+    "pop": 2,
+    "dist": 1700,
+    "surface_dist": "ダ1700",
+    "idx": 100
+   },
+   "table_prev": "100",
+   "kind": "一致"
+  },
+  {
+   "race": "東京10R",
+   "num": "11",
+   "name": "シゲルソロソロ",
+   "horse_id": "2020110100",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202608040712",
+    "rank": 4,
+    "pop": 9,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 93
+   },
+   "table_prev": "93",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "1",
+   "name": "ジーティーダーリン",
+   "horse_id": "2022105710",
+   "status": "取れた",
+   "prev": {
+    "date": "20260912",
+    "race_id": "202609040311",
+    "rank": 15,
+    "pop": 8,
+    "dist": 2000,
+    "surface_dist": "芝2000",
+    "idx": 81
+   },
+   "table_prev": "81",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "2",
+   "name": "ビザンチンドリーム",
+   "horse_id": "2021105587",
+   "status": "取れた",
+   "prev": {
+    "date": "20260614",
+    "race_id": "202609030411",
+    "rank": 15,
+    "pop": 7,
+    "dist": 2200,
+    "surface_dist": "芝2200",
+    "idx": 78
+   },
+   "table_prev": "78",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "3",
+   "name": "マイネルエンペラー",
+   "horse_id": "2020105786",
+   "status": "取れた",
+   "prev": {
+    "date": "20261004",
+    "race_id": "202608040211",
+    "rank": 2,
+    "pop": 8,
+    "dist": 2400,
+    "surface_dist": "芝2400",
+    "idx": 100
+   },
+   "table_prev": "100",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "4",
+   "name": "ミラージュナイト",
+   "horse_id": "2022105109",
+   "status": "取れた",
+   "prev": {
+    "date": "20260726",
+    "race_id": "202601010211",
+    "rank": 1,
+    "pop": 1,
+    "dist": 2600,
+    "surface_dist": "芝2600",
+    "idx": 91
+   },
+   "table_prev": "91",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "5",
+   "name": "ドゥラドーレス",
+   "horse_id": "2019105556",
+   "status": "取れた",
+   "prev": {
+    "date": "20260516",
+    "race_id": "202604010511",
+    "rank": 4,
+    "pop": 1,
+    "dist": 2000,
+    "surface_dist": "芝2000",
+    "idx": 94
+   },
+   "table_prev": "94",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "6",
+   "name": "ファミリータイム",
+   "horse_id": "2021100651",
+   "status": "取れた",
+   "prev": {
+    "date": "20261004",
+    "race_id": "202608040211",
+    "rank": 12,
+    "pop": 9,
+    "dist": 2400,
+    "surface_dist": "芝2400",
+    "idx": 94
+   },
+   "table_prev": "94",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "7",
+   "name": "ファイアンクランツ",
+   "horse_id": "2022104720",
+   "status": "取れた",
+   "prev": {
+    "date": "20260531",
+    "race_id": "202605021212",
+    "rank": 1,
+    "pop": 3,
+    "dist": 2500,
+    "surface_dist": "芝2500",
+    "idx": 102
+   },
+   "table_prev": "102",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "8",
+   "name": "ジョイボーイ",
+   "horse_id": "2022103787",
+   "status": "取れた",
+   "prev": {
+    "date": "20260921",
+    "race_id": "202609040710",
+    "rank": 1,
+    "pop": 4,
+    "dist": 2200,
+    "surface_dist": "芝2200",
+    "idx": 105
+   },
+   "table_prev": "105",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "9",
+   "name": "レッドバンデ",
+   "horse_id": "2022105466",
+   "status": "取れた",
+   "prev": {
+    "date": "20261012",
+    "race_id": "202605040510",
+    "rank": 1,
+    "pop": 1,
+    "dist": 2400,
+    "surface_dist": "芝2400",
+    "idx": 102
+   },
+   "table_prev": "102",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "10",
+   "name": "ボーンディスウェイ",
+   "horse_id": "2019104658",
+   "status": "取れた",
+   "prev": {
+    "date": "20261012",
+    "race_id": "202605040511",
+    "rank": 9,
+    "pop": 6,
+    "dist": 2000,
+    "surface_dist": "芝2000",
+    "idx": 100
+   },
+   "table_prev": "100",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "11",
+   "name": "ウエストナウ",
+   "horse_id": "2021106645",
+   "status": "取れた",
+   "prev": {
+    "date": "20261004",
+    "race_id": "202608040211",
+    "rank": 6,
+    "pop": 4,
+    "dist": 2400,
+    "surface_dist": "芝2400",
+    "idx": 98
+   },
+   "table_prev": "98",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "12",
+   "name": "メイショウゲキリン",
+   "horse_id": "2019104092",
+   "status": "取れた",
+   "prev": {
+    "date": "20260920",
+    "race_id": "202606040611",
+    "rank": 1,
+    "pop": 9,
+    "dist": 2200,
+    "surface_dist": "芝2200",
+    "idx": 74
+   },
+   "table_prev": "74",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "13",
+   "name": "マイネルカンパーナ",
+   "horse_id": "2020105798",
+   "status": "取れた",
+   "prev": {
+    "date": "20260906",
+    "race_id": "202601020611",
+    "rank": 6,
+    "pop": 8,
+    "dist": 2600,
+    "surface_dist": "芝2600",
+    "idx": 88
+   },
+   "table_prev": "88",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "14",
+   "name": "ミクニインスパイア",
+   "horse_id": "2022106120",
+   "status": "取れた",
+   "prev": {
+    "date": "20261004",
+    "race_id": "202608040211",
+    "rank": 18,
+    "pop": 6,
+    "dist": 2400,
+    "surface_dist": "芝2400",
+    "idx": 90
+   },
+   "table_prev": "90",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "15",
+   "name": "ホーエリート",
+   "horse_id": "2021104855",
+   "status": "取れた",
+   "prev": {
+    "date": "20260503",
+    "race_id": "202608030411",
+    "rank": 14,
+    "pop": 7,
+    "dist": 3200,
+    "surface_dist": "芝3200",
+    "idx": 103
+   },
+   "table_prev": "103",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "16",
+   "name": "キングズパレス",
+   "horse_id": "2019104828",
+   "status": "取れた",
+   "prev": {
+    "date": "20260531",
+    "race_id": "202605021212",
+    "rank": 7,
+    "pop": 11,
+    "dist": 2500,
+    "surface_dist": "芝2500",
+    "idx": 99
+   },
+   "table_prev": "99",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "17",
+   "name": "キングスコール",
+   "horse_id": "2022104207",
+   "status": "取れた",
+   "prev": {
+    "date": "20261004",
+    "race_id": "202608040211",
+    "rank": 16,
+    "pop": 12,
+    "dist": 2400,
+    "surface_dist": "芝2400",
+    "idx": 92
+   },
+   "table_prev": "92",
+   "kind": "一致"
+  },
+  {
+   "race": "東京11R",
+   "num": "18",
+   "name": "ミステリーウェイ",
+   "horse_id": "2018104638",
+   "status": "取れた",
+   "prev": {
+    "date": "20261004",
+    "race_id": "202608040211",
+    "rank": 11,
+    "pop": 14,
+    "dist": 2400,
+    "surface_dist": "芝2400",
+    "idx": 94
+   },
+   "table_prev": "94",
+   "kind": "一致"
+  },
+  {
+   "race": "東京1R",
+   "num": "1",
+   "name": "パワープレイ",
+   "horse_id": "2024101943",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202605040704",
+    "rank": 4,
+    "pop": 11,
+    "dist": 1600,
+    "surface_dist": "ダ1600",
+    "idx": 66
+   },
+   "table_prev": "66",
+   "kind": "一致"
+  },
+  {
+   "race": "東京1R",
+   "num": "2",
+   "name": "サノノファイター",
+   "horse_id": "2024106814",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202604040101",
+    "rank": 3,
+    "pop": 2,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 67
+   },
+   "table_prev": "67",
+   "kind": "一致"
+  },
+  {
+   "race": "東京1R",
+   "num": "3",
+   "name": "セイウンサイフィー",
+   "horse_id": "2024101690",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202604040203",
+    "rank": 8,
+    "pop": 11,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 68
+   },
+   "table_prev": "68",
+   "kind": "一致"
+  },
+  {
+   "race": "東京1R",
+   "num": "4",
+   "name": "ルボワ",
+   "horse_id": "2024106761",
+   "status": "取れた",
+   "prev": {
+    "date": "20261012",
+    "race_id": "202608040502",
+    "rank": 2,
+    "pop": 4,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 63
+   },
+   "table_prev": "63",
+   "kind": "一致"
+  },
+  {
+   "race": "東京1R",
+   "num": "5",
+   "name": "シャイニーヒーロー",
+   "horse_id": "2024101323",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202605040603",
+    "rank": 6,
+    "pop": 10,
+    "dist": 1600,
+    "surface_dist": "ダ1600",
+    "idx": 56
+   },
+   "table_prev": "56",
+   "kind": "一致"
+  },
+  {
+   "race": "東京1R",
+   "num": "6",
+   "name": "タイセイアドーレ",
+   "horse_id": "2024104822",
+   "status": "取れた",
+   "prev": {
+    "date": "20260711",
+    "race_id": "202603020503",
+    "rank": 9,
+    "pop": 9,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 73
+   },
+   "table_prev": "73",
+   "kind": "一致"
+  },
+  {
+   "race": "東京1R",
+   "num": "7",
+   "name": "ブルーサンタ",
+   "horse_id": "2024102355",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202604040102",
+    "rank": 4,
+    "pop": 4,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 52
+   },
+   "table_prev": "52",
+   "kind": "一致"
+  },
+  {
+   "race": "東京1R",
+   "num": "8",
+   "name": "グラスリズム",
+   "horse_id": "2024104505",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202605040905",
+    "rank": 11,
+    "pop": 9,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 30
+   },
+   "table_prev": "30",
+   "kind": "一致"
+  },
+  {
+   "race": "東京1R",
+   "num": "9",
+   "name": "ナックドリーム",
+   "horse_id": "2024102668",
+   "status": "取れた",
+   "prev": {
+    "date": "20261024",
+    "race_id": "202605040804",
+    "rank": 3,
+    "pop": 7,
+    "dist": 1600,
+    "surface_dist": "ダ1600",
+    "idx": 57
+   },
+   "table_prev": "57",
+   "kind": "一致"
+  },
+  {
+   "race": "東京1R",
+   "num": "10",
+   "name": "ドッカイッチャッテ",
+   "horse_id": "2024100754",
+   "status": "取れた",
+   "prev": {
+    "date": "20260823",
+    "race_id": "202604030201",
+    "rank": 9,
+    "pop": 8,
+    "dist": 1400,
+    "surface_dist": "芝1400",
+    "idx": 58
+   },
+   "table_prev": "58",
+   "kind": "一致"
+  },
+  {
+   "race": "東京1R",
+   "num": "11",
+   "name": "ココビスケット",
+   "horse_id": "2024105732",
+   "status": "取れた",
+   "prev": {
+    "date": "20261024",
+    "race_id": "202605040806",
+    "rank": 8,
+    "pop": 14,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 56
+   },
+   "table_prev": "56",
+   "kind": "一致"
+  },
+  {
+   "race": "東京2R",
+   "num": "1",
+   "name": "イントリー",
+   "horse_id": "2024105539",
+   "status": "取れた",
+   "prev": {
+    "date": "20260829",
+    "race_id": "202604030304",
+    "rank": 6,
+    "pop": 5,
+    "dist": 1400,
+    "surface_dist": "芝1400",
+    "idx": 60
+   },
+   "table_prev": "60",
+   "kind": "一致"
+  },
+  {
+   "race": "東京2R",
+   "num": "2",
+   "name": "スイートアリッサム",
+   "horse_id": "2024104483",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202604040101",
+    "rank": 5,
+    "pop": 1,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 67
+   },
+   "table_prev": "67",
+   "kind": "一致"
+  },
+  {
+   "race": "東京2R",
+   "num": "3",
+   "name": "ダンシングアワー",
+   "horse_id": "2024101107",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202605040702",
+    "rank": 2,
+    "pop": 4,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 65
+   },
+   "table_prev": "65",
+   "kind": "一致"
+  },
+  {
+   "race": "東京2R",
+   "num": "4",
+   "name": "エイシンスパニエル",
+   "horse_id": "2024102376",
+   "status": "取れた",
+   "prev": {
+    "date": "20261012",
+    "race_id": "202605040505",
+    "rank": 4,
+    "pop": 5,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 65
+   },
+   "table_prev": "65",
+   "kind": "一致"
+  },
+  {
+   "race": "東京2R",
+   "num": "5",
+   "name": "トムキャット",
+   "horse_id": "2024101524",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202605040702",
+    "rank": 6,
+    "pop": 6,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 51
+   },
+   "table_prev": "51",
+   "kind": "一致"
+  },
+  {
+   "race": "東京2R",
+   "num": "6",
+   "name": "クリスタルシュガー",
+   "horse_id": "2024106289",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202605040906",
+    "rank": 3,
+    "pop": 2,
+    "dist": 1400,
+    "surface_dist": "芝1400",
+    "idx": 72
+   },
+   "table_prev": "72",
+   "kind": "一致"
+  },
+  {
+   "race": "東京2R",
+   "num": "7",
+   "name": "ソプラノクイーン",
+   "horse_id": "2024106878",
+   "status": "取れた",
+   "prev": {
+    "date": "20261010",
+    "race_id": "202605040302",
+    "rank": 3,
+    "pop": 7,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 80
+   },
+   "table_prev": "80",
+   "kind": "一致"
+  },
+  {
+   "race": "東京2R",
+   "num": "8",
+   "name": "タカチャン",
+   "horse_id": "2024105044",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202605040906",
+    "rank": 7,
+    "pop": 8,
+    "dist": 1400,
+    "surface_dist": "芝1400",
+    "idx": 61
+   },
+   "table_prev": "61",
+   "kind": "一致"
+  },
+  {
+   "race": "東京2R",
+   "num": "9",
+   "name": "ポートマンロード",
+   "horse_id": "2024100256",
+   "status": "取れた",
+   "prev": {
+    "date": "20261010",
+    "race_id": "202605040306",
+    "rank": 3,
+    "pop": 5,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 63
+   },
+   "table_prev": "63",
+   "kind": "一致"
+  },
+  {
+   "race": "東京2R",
+   "num": "10",
+   "name": "タンタトリス",
+   "horse_id": "2024105862",
+   "status": "取れた",
+   "prev": {
+    "date": "20260913",
+    "race_id": "202606040405",
+    "rank": 2,
+    "pop": 6,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 41
+   },
+   "table_prev": "41",
+   "kind": "一致"
+  },
+  {
+   "race": "東京2R",
+   "num": "11",
+   "name": "セレスティナ",
+   "horse_id": "2024100017",
+   "status": "取れた",
+   "prev": {
+    "date": "20260920",
+    "race_id": "202606040602",
+    "rank": 5,
+    "pop": 3,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 42
+   },
+   "table_prev": "42",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "1",
+   "name": "ポッドロルフ",
+   "horse_id": "2022100700",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202605040707",
+    "rank": 6,
+    "pop": 8,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 75
+   },
+   "table_prev": "75",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "2",
+   "name": "インディヴァイン",
+   "horse_id": "2023107090",
+   "status": "取れた",
+   "prev": {
+    "date": "20260815",
+    "race_id": "202604020708",
+    "rank": 6,
+    "pop": 6,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 68
+   },
+   "table_prev": "68",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "3",
+   "name": "アイランド",
+   "horse_id": "2023100944",
+   "status": "取れた",
+   "prev": {
+    "date": "20260816",
+    "race_id": "202607020812",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 71
+   },
+   "table_prev": "71",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "4",
+   "name": "イーサンミラー",
+   "horse_id": "2023106657",
+   "status": "取れた",
+   "prev": {
+    "date": "20260912",
+    "race_id": "202606040307",
+    "rank": 2,
+    "pop": 8,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 81
+   },
+   "table_prev": "81",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "5",
+   "name": "サトノリシャール",
+   "horse_id": "2023103894",
+   "status": "取れた",
+   "prev": {
+    "date": "20260404",
+    "race_id": "202609020309",
+    "rank": 6,
+    "pop": 6,
+    "dist": 2400,
+    "surface_dist": "芝2400",
+    "idx": 81
+   },
+   "table_prev": "81",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "6",
+   "name": "オウケンサクラコ",
+   "horse_id": "2023105601",
+   "status": "取れた",
+   "prev": {
+    "date": "20260913",
+    "race_id": "202606040406",
+    "rank": 7,
+    "pop": 6,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 78
+   },
+   "table_prev": "78",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "7",
+   "name": "ハクシンブライアン",
+   "horse_id": "2022106975",
+   "status": "取れた",
+   "prev": {
+    "date": "20260614",
+    "race_id": "202605030408",
+    "rank": 3,
+    "pop": 2,
+    "dist": 1600,
+    "surface_dist": "ダ1600",
+    "idx": 85
+   },
+   "table_prev": "85",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "8",
+   "name": "アルデキングダム",
+   "horse_id": "2023102160",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202605040912",
+    "rank": 9,
+    "pop": 7,
+    "dist": 1600,
+    "surface_dist": "ダ1600",
+    "idx": 72
+   },
+   "table_prev": "72",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "9",
+   "name": "メイショウルーク",
+   "horse_id": "2023104989",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202604040212",
+    "rank": 7,
+    "pop": 8,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 68
+   },
+   "table_prev": "68",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "10",
+   "name": "レッドアヴィオン",
+   "horse_id": "2023107333",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202605040707",
+    "rank": 12,
+    "pop": 6,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 64
+   },
+   "table_prev": "64",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "11",
+   "name": "ブレスドナイル",
+   "horse_id": "2022110061",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202605040912",
+    "rank": 2,
+    "pop": 6,
+    "dist": 1600,
+    "surface_dist": "ダ1600",
+    "idx": 88
+   },
+   "table_prev": "88",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "12",
+   "name": "ロードヴェルテクス",
+   "horse_id": "2023105813",
+   "status": "取れた",
+   "prev": {
+    "date": "20260913",
+    "race_id": "202609040407",
+    "rank": 9,
+    "pop": 13,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 67
+   },
+   "table_prev": "67",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "13",
+   "name": "イージーブリージー",
+   "horse_id": "2021105035",
+   "status": "取れた",
+   "prev": {
+    "date": "20261024",
+    "race_id": "202605040807",
+    "rank": 5,
+    "pop": 7,
+    "dist": 1600,
+    "surface_dist": "ダ1600",
+    "idx": 74
+   },
+   "table_prev": "74",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "14",
+   "name": "ダノンマスタング",
+   "horse_id": "2023110093",
+   "status": "取れた",
+   "prev": {
+    "date": "20260826",
+    "race_id": "202643082608",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1600,
+    "surface_dist": "ダ1600",
+    "idx": 65
+   },
+   "table_prev": "65",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "15",
+   "name": "パッションディーバ",
+   "horse_id": "2022101312",
+   "status": "取れた",
+   "prev": {
+    "date": "20261011",
+    "race_id": "202605040406",
+    "rank": 13,
+    "pop": 15,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 65
+   },
+   "table_prev": "65",
+   "kind": "一致"
+  },
+  {
+   "race": "東京7R",
+   "num": "16",
+   "name": "スクイーズアウト",
+   "horse_id": "2023102167",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202604040406",
+    "rank": 9,
+    "pop": 8,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 73
+   },
+   "table_prev": "73",
+   "kind": "一致"
+  },
+  {
+   "race": "東京8R",
+   "num": "1",
+   "name": "ヒナノムサシ",
+   "horse_id": "2023101645",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202604040208",
+    "rank": 1,
+    "pop": 11,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 78
+   },
+   "table_prev": "78",
+   "kind": "一致"
+  },
+  {
+   "race": "東京8R",
+   "num": "2",
+   "name": "サトノエスケープ",
+   "horse_id": "2023106932",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202604040204",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 90
+   },
+   "table_prev": "90",
+   "kind": "一致"
+  },
+  {
+   "race": "東京8R",
+   "num": "3",
+   "name": "グラスブランシュ",
+   "horse_id": "2021103588",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202605040612",
+    "rank": 10,
+    "pop": 11,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 76
+   },
+   "table_prev": "76",
+   "kind": "一致"
+  },
+  {
+   "race": "東京8R",
+   "num": "4",
+   "name": "ショウナンカチドキ",
+   "horse_id": "2022101258",
+   "status": "取れた",
+   "prev": {
+    "date": "20260901",
+    "race_id": "202644090111",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 73
+   },
+   "table_prev": "73",
+   "kind": "一致"
+  },
+  {
+   "race": "東京8R",
+   "num": "5",
+   "name": "エアサロメ",
+   "horse_id": "2023103341",
+   "status": "取れた",
+   "prev": {
+    "date": "20260919",
+    "race_id": "202606040512",
+    "rank": 1,
+    "pop": 2,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 93
+   },
+   "table_prev": "93",
+   "kind": "一致"
+  },
+  {
+   "race": "東京8R",
+   "num": "6",
+   "name": "キミハスコール",
+   "horse_id": "2021104313",
+   "status": "取れた",
+   "prev": {
+    "date": "20260822",
+    "race_id": "202604030108",
+    "rank": 8,
+    "pop": 11,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 84
+   },
+   "table_prev": "84",
+   "kind": "一致"
+  },
+  {
+   "race": "東京8R",
+   "num": "7",
+   "name": "ラインジーク",
+   "horse_id": "2023101323",
+   "status": "取れた",
+   "prev": {
+    "date": "20261011",
+    "race_id": "202605040412",
+    "rank": 4,
+    "pop": 4,
+    "dist": 1300,
+    "surface_dist": "ダ1300",
+    "idx": 86
+   },
+   "table_prev": "86",
+   "kind": "一致"
+  },
+  {
+   "race": "東京8R",
+   "num": "8",
+   "name": "フィールマイプラン",
+   "horse_id": "2023103860",
+   "status": "取れた",
+   "prev": {
+    "date": "20260920",
+    "race_id": "202606040610",
+    "rank": 9,
+    "pop": 8,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 88
+   },
+   "table_prev": "88",
+   "kind": "一致"
+  },
+  {
+   "race": "東京8R",
+   "num": "9",
+   "name": "セキテイオー",
+   "horse_id": "2019101351",
+   "status": "取得失敗",
+   "prev": null,
+   "table_prev": "-",
+   "kind": "記録が数字でない（取得失敗）・表は値なし"
+  },
+  {
+   "race": "東京8R",
+   "num": "10",
+   "name": "エコロボルト",
+   "horse_id": "2023110063",
+   "status": "取れた",
+   "prev": {
+    "date": "20261004",
+    "race_id": "202608040208",
+    "rank": 12,
+    "pop": 10,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 74
+   },
+   "table_prev": "74",
+   "kind": "一致"
+  },
+  {
+   "race": "東京8R",
+   "num": "11",
+   "name": "ニシノクードクール",
+   "horse_id": "2022106999",
+   "status": "取得失敗",
+   "prev": null,
+   "table_prev": "-",
+   "kind": "記録が数字でない（取得失敗）・表は値なし"
+  },
+  {
+   "race": "東京8R",
+   "num": "12",
+   "name": "ロイヤルスパイア",
+   "horse_id": "2023101112",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202604040110",
+    "rank": 4,
+    "pop": 4,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 73
+   },
+   "table_prev": "73",
+   "kind": "一致"
+  },
+  {
+   "race": "東京8R",
+   "num": "13",
+   "name": "キングクー",
+   "horse_id": "2019102321",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202605040612",
+    "rank": 11,
+    "pop": 14,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 75
+   },
+   "table_prev": "75",
+   "kind": "一致"
+  },
+  {
+   "race": "東京8R",
+   "num": "14",
+   "name": "ホウショウマリス",
+   "horse_id": "2022103047",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202608040609",
+    "rank": 3,
+    "pop": 5,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 92
+   },
+   "table_prev": "92",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "1",
+   "name": "ブラックブレット",
+   "horse_id": "2024102592",
+   "status": "取れた",
+   "prev": {
+    "date": "20260712",
+    "race_id": "202610020606",
+    "rank": 9,
+    "pop": 6,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 29
+   },
+   "table_prev": "29",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "2",
+   "name": "シースファイア",
+   "horse_id": "2024104721",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202604040105",
+    "rank": 5,
+    "pop": 4,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 42
+   },
+   "table_prev": "42",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "3",
+   "name": "イリスロッソ",
+   "horse_id": "2024101054",
+   "status": "取れた",
+   "prev": {
+    "date": "20260816",
+    "race_id": "202604020803",
+    "rank": 2,
+    "pop": 3,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 78
+   },
+   "table_prev": "78",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "4",
+   "name": "サノノソルジャー",
+   "horse_id": "2024101608",
+   "status": "取れた",
+   "prev": {
+    "date": "20261012",
+    "race_id": "202605040506",
+    "rank": 2,
+    "pop": 1,
+    "dist": 1300,
+    "surface_dist": "ダ1300",
+    "idx": 58
+   },
+   "table_prev": "58",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "5",
+   "name": "ドナビッグベン",
+   "horse_id": "2024101341",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202604040202",
+    "rank": 2,
+    "pop": 1,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 62
+   },
+   "table_prev": "62",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "6",
+   "name": "ルージュロア",
+   "horse_id": "2024103237",
+   "status": "取得失敗",
+   "prev": null,
+   "table_prev": "-",
+   "kind": "記録が数字でない（取得失敗）・表は値なし"
+  },
+  {
+   "race": "福島1R",
+   "num": "7",
+   "name": "アースグリッパー",
+   "horse_id": "2024100733",
+   "status": "取れた",
+   "prev": {
+    "date": "20260920",
+    "race_id": "202609040602",
+    "rank": 11,
+    "pop": 2,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 35
+   },
+   "table_prev": "35",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "8",
+   "name": "シウンハゴロモ",
+   "horse_id": "2024104100",
+   "status": "取れた",
+   "prev": {
+    "date": "20260919",
+    "race_id": "202606040504",
+    "rank": 11,
+    "pop": 7,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 51
+   },
+   "table_prev": "51",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "9",
+   "name": "ベアアミーチ",
+   "horse_id": "2024101604",
+   "status": "取れた",
+   "prev": {
+    "date": "20260922",
+    "race_id": "202606040703",
+    "rank": 4,
+    "pop": 3,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 71
+   },
+   "table_prev": "71",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "10",
+   "name": "ヒガンバナ",
+   "horse_id": "2024102531",
+   "status": "取得失敗",
+   "prev": null,
+   "table_prev": "-",
+   "kind": "記録が数字でない（取得失敗）・表は値なし"
+  },
+  {
+   "race": "福島1R",
+   "num": "11",
+   "name": "オラパ",
+   "horse_id": "2024104110",
+   "status": "取れた",
+   "prev": {
+    "date": "20260912",
+    "race_id": "202606040305",
+    "rank": 5,
+    "pop": 5,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 46
+   },
+   "table_prev": "46",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "12",
+   "name": "アスコットペスカ",
+   "horse_id": "2024104987",
+   "status": "取れた",
+   "prev": {
+    "date": "20260830",
+    "race_id": "202601020402",
+    "rank": 10,
+    "pop": 13,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 62
+   },
+   "table_prev": "62",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "13",
+   "name": "ヴォルールドクール",
+   "horse_id": "2024102642",
+   "status": "取れた",
+   "prev": {
+    "date": "20260801",
+    "race_id": "202604020303",
+    "rank": 11,
+    "pop": 15,
+    "dist": 1400,
+    "surface_dist": "芝1400",
+    "idx": 53
+   },
+   "table_prev": "53",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "14",
+   "name": "タガノカハンカ",
+   "horse_id": "2024103376",
+   "status": "取れた",
+   "prev": {
+    "date": "20260726",
+    "race_id": "202604020201",
+    "rank": 9,
+    "pop": 5,
+    "dist": 1400,
+    "surface_dist": "芝1400",
+    "idx": 62
+   },
+   "table_prev": "62",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "15",
+   "name": "マルモタワー",
+   "horse_id": "2024102979",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202604040202",
+    "rank": 3,
+    "pop": 13,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 58
+   },
+   "table_prev": "58",
+   "kind": "一致"
+  },
+  {
+   "race": "福島1R",
+   "num": "16",
+   "name": "スマイルハープ",
+   "horse_id": "2024105093",
+   "status": "取得失敗",
+   "prev": null,
+   "table_prev": "-",
+   "kind": "記録が数字でない（取得失敗）・表は値なし"
+  },
+  {
+   "race": "福島7R",
+   "num": "1",
+   "name": "カモメガトンダ",
+   "horse_id": "2023103611",
+   "status": "取れた",
+   "prev": {
+    "date": "20260920",
+    "race_id": "202609040608",
+    "rank": 13,
+    "pop": 8,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 84
+   },
+   "table_prev": "84",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "2",
+   "name": "レッドアイスピア",
+   "horse_id": "2023105670",
+   "status": "取れた",
+   "prev": {
+    "date": "20260906",
+    "race_id": "202601020607",
+    "rank": 6,
+    "pop": 13,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 82
+   },
+   "table_prev": "82",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "3",
+   "name": "ドルチェミスト",
+   "horse_id": "2023101174",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202604040207",
+    "rank": 11,
+    "pop": 15,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 71
+   },
+   "table_prev": "71",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "4",
+   "name": "モズイージス",
+   "horse_id": "2021102151",
+   "status": "取れた",
+   "prev": {
+    "date": "20261010",
+    "race_id": "202608040309",
+    "rank": 16,
+    "pop": 15,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 63
+   },
+   "table_prev": "63",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "5",
+   "name": "ジーティーシップ",
+   "horse_id": "2023106054",
+   "status": "取れた",
+   "prev": {
+    "date": "20261003",
+    "race_id": "202608040107",
+    "rank": 14,
+    "pop": 14,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 75
+   },
+   "table_prev": "75",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "6",
+   "name": "ユキノグラス",
+   "horse_id": "2023102646",
+   "status": "取れた",
+   "prev": {
+    "date": "20260906",
+    "race_id": "202606040208",
+    "rank": 14,
+    "pop": 13,
+    "dist": 1800,
+    "surface_dist": "ダ1800",
+    "idx": 79
+   },
+   "table_prev": "79",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "7",
+   "name": "ミエノブラボー",
+   "horse_id": "2021104137",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202604040112",
+    "rank": 3,
+    "pop": 3,
+    "dist": 1000,
+    "surface_dist": "芝1000",
+    "idx": 63
+   },
+   "table_prev": "63",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "8",
+   "name": "ルシェロアズーリ",
+   "horse_id": "2022105996",
+   "status": "取れた",
+   "prev": {
+    "date": "20260906",
+    "race_id": "202606040212",
+    "rank": 7,
+    "pop": 6,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 85
+   },
+   "table_prev": "85",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "9",
+   "name": "ベルファスト",
+   "horse_id": "2021101414",
+   "status": "取れた",
+   "prev": {
+    "date": "20260905",
+    "race_id": "202609040107",
+    "rank": 4,
+    "pop": 3,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 86
+   },
+   "table_prev": "86",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "10",
+   "name": "ベルセクレト",
+   "horse_id": "2023109072",
+   "status": "取れた",
+   "prev": {
+    "date": "20260921",
+    "race_id": "202609040707",
+    "rank": 13,
+    "pop": 9,
+    "dist": 1400,
+    "surface_dist": "芝1400",
+    "idx": 93
+   },
+   "table_prev": "93",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "11",
+   "name": "ルブリアン",
+   "horse_id": "2022106320",
+   "status": "取れた",
+   "prev": {
+    "date": "20261018",
+    "race_id": "202604040207",
+    "rank": 5,
+    "pop": 10,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 74
+   },
+   "table_prev": "74",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "12",
+   "name": "エバーラスト",
+   "horse_id": "2023104764",
+   "status": "取れた",
+   "prev": {
+    "date": "20260920",
+    "race_id": "202606040612",
+    "rank": 7,
+    "pop": 1,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 44
+   },
+   "table_prev": "44",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "13",
+   "name": "フェリスチカ",
+   "horse_id": "2022102602",
+   "status": "取れた",
+   "prev": {
+    "date": "20260808",
+    "race_id": "202604020511",
+    "rank": 17,
+    "pop": 16,
+    "dist": 1000,
+    "surface_dist": "芝1000",
+    "idx": 59
+   },
+   "table_prev": "59",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "14",
+   "name": "ハルヒメ",
+   "horse_id": "2023103400",
+   "status": "取れた",
+   "prev": {
+    "date": "20260829",
+    "race_id": "202601020307",
+    "rank": 11,
+    "pop": 5,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 68
+   },
+   "table_prev": "68",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "15",
+   "name": "ミトノリン",
+   "horse_id": "2023105185",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202604040108",
+    "rank": 12,
+    "pop": 11,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 75
+   },
+   "table_prev": "75",
+   "kind": "一致"
+  },
+  {
+   "race": "福島7R",
+   "num": "16",
+   "name": "ナンナンプー",
+   "horse_id": "2022102878",
+   "status": "取れた",
+   "prev": {
+    "date": "20260919",
+    "race_id": "202606040512",
+    "rank": 9,
+    "pop": 15,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 75
+   },
+   "table_prev": "75",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "1",
+   "name": "アスコットアイ",
+   "horse_id": "2022103485",
+   "status": "取れた",
+   "prev": {
+    "date": "20260830",
+    "race_id": "202601020407",
+    "rank": 8,
+    "pop": 10,
+    "dist": 1000,
+    "surface_dist": "ダ1000",
+    "idx": 62
+   },
+   "table_prev": "62",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "2",
+   "name": "ダイイズキャスト",
+   "horse_id": "2023107539",
+   "status": "取れた",
+   "prev": {
+    "date": "20261004",
+    "race_id": "202608040207",
+    "rank": 11,
+    "pop": 12,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 83
+   },
+   "table_prev": "83",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "3",
+   "name": "ラテラルパーム",
+   "horse_id": "2023103557",
+   "status": "取れた",
+   "prev": {
+    "date": "20260822",
+    "race_id": "202601020107",
+    "rank": 4,
+    "pop": 4,
+    "dist": 1000,
+    "surface_dist": "ダ1000",
+    "idx": 79
+   },
+   "table_prev": "79",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "4",
+   "name": "ミスタートントン",
+   "horse_id": "2023107532",
+   "status": "取れた",
+   "prev": {
+    "date": "20260822",
+    "race_id": "202604030112",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 77
+   },
+   "table_prev": "77",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "5",
+   "name": "シェイプオブユー",
+   "horse_id": "2023100544",
+   "status": "取れた",
+   "prev": {
+    "date": "20260906",
+    "race_id": "202601020606",
+    "rank": 8,
+    "pop": 6,
+    "dist": 1000,
+    "surface_dist": "ダ1000",
+    "idx": 72
+   },
+   "table_prev": "72",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "6",
+   "name": "オプティモ",
+   "horse_id": "2023104805",
+   "status": "取れた",
+   "prev": {
+    "date": "20260912",
+    "race_id": "202609040312",
+    "rank": 4,
+    "pop": 9,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 82
+   },
+   "table_prev": "82",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "7",
+   "name": "レジェンダリーデイ",
+   "horse_id": "2020107018",
+   "status": "取れた",
+   "prev": {
+    "date": "20260919",
+    "race_id": "202609040512",
+    "rank": 15,
+    "pop": 13,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 57
+   },
+   "table_prev": "57",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "8",
+   "name": "タヤスロレンヌ",
+   "horse_id": "2023104232",
+   "status": "取れた",
+   "prev": {
+    "date": "20260920",
+    "race_id": "202606040608",
+    "rank": 8,
+    "pop": 9,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 87
+   },
+   "table_prev": "87",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "9",
+   "name": "ファンシーフリル",
+   "horse_id": "2023101676",
+   "status": "取れた",
+   "prev": {
+    "date": "20260808",
+    "race_id": "202604020511",
+    "rank": 8,
+    "pop": 2,
+    "dist": 1000,
+    "surface_dist": "芝1000",
+    "idx": 68
+   },
+   "table_prev": "68",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "10",
+   "name": "アイスメルティング",
+   "horse_id": "2023103274",
+   "status": "取れた",
+   "prev": {
+    "date": "20260207",
+    "race_id": "202605010307",
+    "rank": 8,
+    "pop": 6,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 74
+   },
+   "table_prev": "74",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "11",
+   "name": "ライトニングロッド",
+   "horse_id": "2023101143",
+   "status": "取れた",
+   "prev": {
+    "date": "20260906",
+    "race_id": "202601020607",
+    "rank": 14,
+    "pop": 5,
+    "dist": 1200,
+    "surface_dist": "芝1200",
+    "idx": 74
+   },
+   "table_prev": "74",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "12",
+   "name": "アイファーモービル",
+   "horse_id": "2022101117",
+   "status": "取れた",
+   "prev": {
+    "date": "20260809",
+    "race_id": "202607020610",
+    "rank": 9,
+    "pop": 8,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 73
+   },
+   "table_prev": "73",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "13",
+   "name": "グランルチャドール",
+   "horse_id": "2021102192",
+   "status": "取れた",
+   "prev": {
+    "date": "20260913",
+    "race_id": "202606040408",
+    "rank": 11,
+    "pop": 1,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 72
+   },
+   "table_prev": "72",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "14",
+   "name": "トゥインクルアップ",
+   "horse_id": "2022100065",
+   "status": "取れた",
+   "prev": {
+    "date": "20261012",
+    "race_id": "202608040512",
+    "rank": 3,
+    "pop": 8,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 89
+   },
+   "table_prev": "89",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "15",
+   "name": "アメリカンビヨンド",
+   "horse_id": "2022110104",
+   "status": "取れた",
+   "prev": {
+    "date": "20261025",
+    "race_id": "202604040412",
+    "rank": 3,
+    "pop": 2,
+    "dist": 1200,
+    "surface_dist": "ダ1200",
+    "idx": 78
+   },
+   "table_prev": "78",
+   "kind": "一致"
+  },
+  {
+   "race": "福島8R",
+   "num": "16",
+   "name": "スペルビア",
+   "horse_id": "2022101781",
+   "status": "取れた",
+   "prev": {
+    "date": "20260823",
+    "race_id": "202604030211",
+    "rank": 17,
+    "pop": 12,
+    "dist": 1000,
+    "surface_dist": "芝1000",
+    "idx": 48
+   },
+   "table_prev": "48",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "1",
+   "name": "サトノカイロス",
+   "horse_id": "2022104665",
+   "status": "取れた",
+   "prev": {
+    "date": "20260507",
+    "race_id": "202650050707",
+    "rank": 1,
+    "pop": 2,
+    "dist": 1400,
+    "surface_dist": "ダ1400",
+    "idx": 43
+   },
+   "table_prev": "43",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "2",
+   "name": "クラシカルカイザー",
+   "horse_id": "2022100860",
+   "status": "取れた",
+   "prev": {
+    "date": "20260816",
+    "race_id": "202601010803",
+    "rank": 6,
+    "pop": 11,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 88
+   },
+   "table_prev": "88",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "3",
+   "name": "ウインポセイドン",
+   "horse_id": "2022101102",
+   "status": "取れた",
+   "prev": {
+    "date": "20260718",
+    "race_id": "202602011109",
+    "rank": 12,
+    "pop": 9,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 76
+   },
+   "table_prev": "76",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "4",
+   "name": "ミエノフェアリー",
+   "horse_id": "2022102064",
+   "status": "取れた",
+   "prev": {
+    "date": "20261017",
+    "race_id": "202604040104",
+    "rank": 5,
+    "pop": 10,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 75
+   },
+   "table_prev": "75",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "5",
+   "name": "アッパーウォーター",
+   "horse_id": "2023106939",
+   "status": "取れた",
+   "prev": {
+    "date": "20260627",
+    "race_id": "202603020107",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 79
+   },
+   "table_prev": "79",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "6",
+   "name": "コンバットペスカ",
+   "horse_id": "2021103236",
+   "status": "取れた",
+   "prev": {
+    "date": "20260712",
+    "race_id": "202610020608",
+    "rank": 3,
+    "pop": 5,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 75
+   },
+   "table_prev": "75",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "7",
+   "name": "ホウオウギンガ",
+   "horse_id": "2023105617",
+   "status": "取れた",
+   "prev": {
+    "date": "20260314",
+    "race_id": "202606020505",
+    "rank": 1,
+    "pop": 6,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 82
+   },
+   "table_prev": "82",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "8",
+   "name": "カージオイド",
+   "horse_id": "2022104062",
+   "status": "取れた",
+   "prev": {
+    "date": "20260905",
+    "race_id": "202601020509",
+    "rank": 2,
+    "pop": 9,
+    "dist": 2000,
+    "surface_dist": "芝2000",
+    "idx": 71
+   },
+   "table_prev": "71",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "9",
+   "name": "バンオンタイム",
+   "horse_id": "2023101120",
+   "status": "取れた",
+   "prev": {
+    "date": "20260905",
+    "race_id": "202606040102",
+    "rank": 1,
+    "pop": 1,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 90
+   },
+   "table_prev": "90",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "10",
+   "name": "ユメシルベ",
+   "horse_id": "2023106412",
+   "status": "取れた",
+   "prev": {
+    "date": "20260905",
+    "race_id": "202601020507",
+    "rank": 8,
+    "pop": 7,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 72
+   },
+   "table_prev": "72",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "11",
+   "name": "ビルバンテ",
+   "horse_id": "2023103552",
+   "status": "取れた",
+   "prev": {
+    "date": "20260816",
+    "race_id": "202604020805",
+    "rank": 8,
+    "pop": 10,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 76
+   },
+   "table_prev": "76",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "12",
+   "name": "ノーブルライナー",
+   "horse_id": "2022104275",
+   "status": "取れた",
+   "prev": {
+    "date": "20260913",
+    "race_id": "202606040407",
+    "rank": 9,
+    "pop": 13,
+    "dist": 1600,
+    "surface_dist": "芝1600",
+    "idx": 78
+   },
+   "table_prev": "78",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "13",
+   "name": "カクウチ",
+   "horse_id": "2023101405",
+   "status": "取れた",
+   "prev": {
+    "date": "20260815",
+    "race_id": "202607020707",
+    "rank": 8,
+    "pop": 8,
+    "dist": 2000,
+    "surface_dist": "芝2000",
+    "idx": 92
+   },
+   "table_prev": "92",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "14",
+   "name": "ロジルーラー",
+   "horse_id": "2021105552",
+   "status": "取れた",
+   "prev": {
+    "date": "20260905",
+    "race_id": "202606040109",
+    "rank": 9,
+    "pop": 14,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": 85
+   },
+   "table_prev": "85",
+   "kind": "一致"
+  },
+  {
+   "race": "福島9R",
+   "num": "15",
+   "name": "レッドシュテルン",
+   "horse_id": "2022104693",
+   "status": "指数が空（着順が数字でない）",
+   "prev": {
+    "date": "20260705",
+    "race_id": "202610020409",
+    "rank": null,
+    "pop": 4,
+    "dist": 1800,
+    "surface_dist": "芝1800",
+    "idx": null
+   },
+   "table_prev": "-",
+   "kind": "記録が数字でない（指数が空（着順が数字でない））・表は値なし"
+  },
+  {
+   "race": "福島9R",
+   "num": "16",
+   "name": "ルージュアストレア",
+   "horse_id": "2023103536",
+   "status": "取れた",
+   "prev": {
+    "date": "20260825",
+    "race_id": "202635082509",
+    "rank": 1,
+    "pop": 2,
+    "dist": 1700,
+    "surface_dist": "芝1700",
+    "idx": 56
+   },
+   "table_prev": "56",
+   "kind": "一致"
+  }
+ ],
+ "inputs_sha256": {
+  "output/20261108/pickup_scores.json": "c0454b65daef44a26102b061d4a0685406da5a738e890c2c8dbef7d29ee9741d",
+  "output/20261108.xlsx": "229d137e19607f6a8c799f4d929a1a876b6ad7876694de92c942cb0676e0aaf2",
+  "output/20261108/prev_inputs/20261107T172905586909_c356249c.json": "8b70f3f829ba5aa1b009fd47ff0b2f7a9c7db91b2b51e01a123eafc25a663273"
+ },
+ "code_sha256": "b27b0efe3d486308d08df5e2d2a54992af57f92f3fbb8337ae915be99ea48ea2"
+}
