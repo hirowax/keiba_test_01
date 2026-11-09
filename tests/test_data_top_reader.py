@@ -7,7 +7,7 @@
 - 上位3頭: section.top3data > table.AnaBestTable > .PickupHorseTableTitle（見出し）・div.Kyaku_Type_box >
   span.WakuBan{枠}.Kyaku_Type_Num（馬番）・span.UmaName（短い名前）
 - ピックアップ: .DataPickupHorseWrap > dl > dt > span.Waku{枠}.Umaban_Num（馬番）・a.data_top_horse_link（馬ID）
-- 出走馬分析: .RaceDataPickupList > table.PickupHorseTable01 > th > .PickupHorseTableTitle（見出しは表の中）・td >
+- 出走馬分析: .RaceDataPickupList > div.RaceDataPickup#RaceDataPickup01（h3.Title_3rd「出走馬分析」）> table.PickupHorseTable01 > th > .PickupHorseTableTitle（見出しは表の中）・td >
   div.Umaban_InBox > span.Waku{枠}.Umaban_Num（馬番）＋短い名前。推奨なしは span.Txt。枠順の表は Umaban_Num の中に
   span.WakuTxt「枠」
 - データ分析のページ: link rel=canonical に race_id、h3.TitleHeadingDataTop（見出し「データ分析」）。公開されていないときは
@@ -87,14 +87,26 @@ def page_head(rid=RID, kind="data_top"):
     return f'<link rel="canonical" href="https://race.netkeiba.com/race/{kind}.html?race_id={rid}"/>'
 
 
-def data_top_page(pickup, *tables, rid=RID):
+def section(sid, title, tables):
+    """データ分析の欄の1つ（実ページ: div.RaceDataPickup#RaceDataPickup0N > h3.Title_3rd ＋ ul.RaceDataTableList > li > table）"""
+    return (f'<div class="RaceDataPickup " id="{sid}"><h3 class="Title_3rd"><span class="Icon_RaceData"></span>{title}</h3>'
+            '<ul class="RaceDataTableList">' + "".join(f"<li>{t}</li>" for t in tables) + '</ul></div>')
+
+
+def data_top_page(pickup, *tables, rid=RID, sections=None):
+    """tables は出走馬分析の欄（RaceDataPickup01）に入れる。sections を渡すと、その欄を並べる"""
+    if sections is None:
+        sections = [("RaceDataPickup01", "出走馬分析", tables)]
     return BeautifulSoup(page_head(rid) + '<div class="RaceColumn02">' + pickup
                          + '<h3 class="TitleHeading TitleHeadingDataTop">データ分析</h3>'
-                         + '<div class="RaceDataPickupList clearfix">' + "".join(tables) + '</div></div>', "html.parser")
+                         + '<div class="RaceDataPickupList clearfix">' + "".join(section(*x) for x in sections)
+                         + '</div></div>', "html.parser")
 
 
 GOOD_PICKUP = pickup_block([("10", "6", "リバーソニック", "2023100010"), ("2", "1", "ダイシンレアレア", "2023100002"),
                             ("6", "3", "ロードヴェリタス", "2023100006")])
+# コース分析の欄（RaceDataPickup02）・騎乗騎手分析の欄（RaceDataPickup04）の表
+JOCKEY_TABLES = [analysis_table("今回のオッズで期待できる騎手", txt="丹内祐次")]
 OTHER_TABLES = [analysis_table("このコースで有利な枠順", [("8", "8", ""), ("3", "3", "")], waku_txt=True),
                 analysis_table("このコースが得意な騎手", txt="吉田隼人"),
                 analysis_table("このコースに実績がある母父", txt="ディープインパクト")]
@@ -114,7 +126,6 @@ def horse_tables(**override):
     for t, items in base.items():
         out.append(analysis_table(t, items) if items else analysis_table(t, txt="推奨なし"))
         if t == "今回の調教評価で実績がある馬":
-            out.append(analysis_table("今回のオッズで期待できる騎手", txt="丹内祐次"))
             # 馬の表だが数えない（2026-11-07 ユーザー決定）
             out.append(analysis_table("今回の厩舎コメント評価で実績がある馬", [("6", "3", "ロード"), ("2", "1", "ダイシ")]))
     return out
@@ -123,7 +134,10 @@ def horse_tables(**override):
 class AnalysisTest(unittest.TestCase):
     def test_counts_every_horse_by_own_title(self):
         """見出しは表の中のものを使い、表の全頭を数える（v5.1 までは1つ前の表の見出し・最初の1頭だけ）"""
-        res = rp.parse_data_top(data_top_page(GOOD_PICKUP, *OTHER_TABLES, *horse_tables()), ref(), RID)
+        res = rp.parse_data_top(data_top_page(GOOD_PICKUP, sections=[
+            ("RaceDataPickup02", "東京芝1400mのコース分析", OTHER_TABLES),
+            ("RaceDataPickup01", "出走馬分析", horse_tables()),
+            ("RaceDataPickup04", "騎乗騎手分析", JOCKEY_TABLES)]), ref(), RID)
         self.assertEqual(res["issues"], [])
         self.assertEqual(res["analysis_hits"], {"10": 4, "11": 1, "7": 1, "6": 1, "2": 1, "13": 3})
         self.assertEqual(res["page_state"], "公開")
@@ -133,9 +147,11 @@ class AnalysisTest(unittest.TestCase):
         self.assertEqual(res["analysis_state"], "あり")
 
     def test_jockey_table_is_not_counted(self):
-        """騎手名だけの表（今回のオッズで期待できる騎手）は数えない。騎手名が馬名の一部に似ていても数えない"""
-        tabs = horse_tables()
-        res = rp.parse_data_top(data_top_page(GOOD_PICKUP, *tabs), ref(), RID)
+        """騎乗騎手分析の欄の表（今回のオッズで期待できる騎手）は読まない"""
+        res = rp.parse_data_top(data_top_page(GOOD_PICKUP, sections=[
+            ("RaceDataPickup01", "出走馬分析", horse_tables()), ("RaceDataPickup04", "騎乗騎手分析", JOCKEY_TABLES)]),
+            ref(), RID)
+        self.assertEqual(res["issues"], [])
         self.assertNotIn("今回のオッズで期待できる騎手", [t["title"] for t in res["analysis_tables"]])
 
     def test_stable_comment_table_is_not_counted(self):
@@ -205,6 +221,85 @@ class AnalysisTest(unittest.TestCase):
         self.assertTrue(any("同じ見出しの表が2つある" in x for x in res["issues"]))
 
 
+class AnalysisSectionTest(unittest.TestCase):
+    """出走馬分析は id RaceDataPickup01 の欄だけを読む（2026-11-09。重賞のページのレース分析の表を読んでいた）"""
+    RACE_TABLES = [analysis_table("このレースで有利な枠順", [("8", "8", ""), ("3", "3", "")], waku_txt=True),
+                   analysis_table("このレースが得意な騎手", txt="戸崎圭太"),
+                   analysis_table("このレースで狙いの人気", txt="1番人気")]
+
+    def test_race_analysis_section_is_not_read(self):
+        """重賞のページ: レース分析の欄（RaceDataPickup03）の表は読まない。数は普通のページと同じ"""
+        plain = rp.parse_data_top(data_top_page(GOOD_PICKUP, *horse_tables()), ref(), RID)
+        g = rp.parse_data_top(data_top_page(GOOD_PICKUP, sections=[
+            ("RaceDataPickup03", "アルゼンチン共和国杯のレース分析", self.RACE_TABLES),
+            ("RaceDataPickup02", "東京芝2500mのコース分析", OTHER_TABLES),
+            ("RaceDataPickup01", "出走馬分析", horse_tables()),
+            ("RaceDataPickup04", "騎乗騎手分析", JOCKEY_TABLES)]), ref(), RID)
+        self.assertEqual(g["issues"], [])
+        self.assertEqual(g["analysis_hits"], plain["analysis_hits"])
+        self.assertEqual(g["analysis_state"], "あり")
+
+    def test_missing_section_is_an_issue(self):
+        """出走馬分析の欄が無い（11/8 に取った東京11R のページは、レース分析の欄だけだった）"""
+        res = rp.parse_data_top(data_top_page(GOOD_PICKUP, sections=[
+            ("RaceDataPickup03", "アルゼンチン共和国杯のレース分析", self.RACE_TABLES)]), ref(), RID)
+        self.assertEqual(res["analysis_state"], "取得異常")
+        self.assertEqual(res["analysis_hits"], {})
+        self.assertTrue(any("出走馬分析の欄" in x and "欄が無い" in x for x in res["issues"]))
+
+    def test_wrong_heading_is_an_issue(self):
+        """id が 01 でも見出しが「出走馬分析」でなければ読まない"""
+        res = rp.parse_data_top(data_top_page(GOOD_PICKUP, sections=[
+            ("RaceDataPickup01", "騎乗騎手分析", horse_tables())]), ref(), RID)
+        self.assertEqual(res["analysis_state"], "取得異常")
+        self.assertEqual(res["analysis_hits"], {})
+        self.assertTrue(any("見出しが「騎乗騎手分析」" in x for x in res["issues"]))
+
+    def test_horse_table_outside_section_is_not_read(self):
+        """出走馬分析の見出しの表でも、01 の外にあれば読まない（01 の中に無ければ「数える表が無い」）"""
+        tabs = horse_tables()
+        res = rp.parse_data_top(data_top_page(GOOD_PICKUP, sections=[
+            ("RaceDataPickup02", "東京芝1400mのコース分析", tabs[:1]),
+            ("RaceDataPickup01", "出走馬分析", tabs[1:])]), ref(), RID)
+        self.assertTrue(any("数える表が無い" in x and "このコースが得意な馬" in x for x in res["issues"]))
+
+
+G1_PAGES = ROOT / "research" / "data_top_g1_202611" / "pages"
+
+
+@unittest.skipUnless(G1_PAGES.exists(), "手元に保存ページが無い")
+class SavedG1PageTest(unittest.TestCase):
+    """2026-11-08 東京11R（アルゼンチン共和国杯）の実ページ。出馬表は 11/8 10:5x に取ったもの"""
+    RID = "202605050211"
+
+    def test_pages(self):
+        class SP:
+            def __init__(self, h):
+                self.h = h
+            def goto(self, *a, **k):
+                pass
+            def content(self):
+                return self.h
+        import time as _t
+        sleep, _t.sleep = _t.sleep, (lambda *a, **k: None)
+        try:
+            sh = rp.scrape_shutuba(SP(gzip.open(G1_PAGES / f"{self.RID}_shutuba_20261108.html.gz", "rt",
+                                                encoding="utf-8").read()), self.RID)
+            now = rp.scrape_data_top(SP(gzip.open(G1_PAGES / f"{self.RID}_data_top_20261109.html.gz", "rt",
+                                                  encoding="utf-8").read()), self.RID, sh)
+            old = rp.scrape_data_top(SP(gzip.open(G1_PAGES / f"{self.RID}_data_top_20261108.html.gz", "rt",
+                                                  encoding="utf-8").read()), self.RID, sh)
+        finally:
+            _t.sleep = sleep
+        # 11/9 に取ったページ: 出走馬分析の6表を読み、レース分析の10表は読まない
+        self.assertEqual(now["issues"], [])
+        self.assertEqual(now["analysis_hits"], {"18": 2, "7": 2, "15": 1, "14": 2, "3": 1, "9": 3, "5": 1, "8": 2,
+                                                "4": 1, "11": 1, "1": 1, "13": 1})
+        # 11/8 に取ったページ: データ分析の見出しも出走馬分析の欄も無い → 取得失敗
+        self.assertEqual(old["page_state"], "取得失敗")
+        self.assertEqual(old["analysis_hits"], {})
+
+
 class DataTopPageTest(unittest.TestCase):
     """ページを取れなかった場合と、正常なページに欄が無い場合を分ける（2026-11-07 外部レビュー）"""
 
@@ -244,7 +339,8 @@ class DataTopPageTest(unittest.TestCase):
 
     def test_analysis_without_pickup(self):
         soup = BeautifulSoup(page_head() + '<h3 class="TitleHeading TitleHeadingDataTop">データ分析</h3>'
-                             '<div class="RaceDataPickupList">' + "".join(horse_tables()) + '</div>', "html.parser")
+                             '<div class="RaceDataPickupList">' + section("RaceDataPickup01", "出走馬分析", horse_tables())
+                             + '</div>', "html.parser")
         res = rp.parse_data_top(soup, ref(), RID)
         self.assertEqual(res["pickup_state"], "取得異常")
         self.assertEqual(res["issues"], ["ピックアップ: 出走馬分析はあるがピックアップの欄が無い"])

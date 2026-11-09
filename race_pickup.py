@@ -39,7 +39,7 @@ FIRE_RULE_SCORING_VERSIONS = ("v5", "v5.1")
 
 # 3項目（各データ上位3頭・データ分析ピックアップ・出走馬分析）の読み方の版。quality.data_top_reader に記録する。
 # 読み方を変えたら値を変える。
-DATA_TOP_READER_VERSION = "表の中の見出しと馬番の要素で読み出馬表の馬番の行の正式名と照合_20261108"
+DATA_TOP_READER_VERSION = "出走馬分析の欄のidで読み表の中の見出しと馬番の要素で出馬表の馬番の行の正式名と照合_20261109"
 
 # 出走馬分析で数える表（表の中の見出し。2026-11-07 に保存した5レースで見た6種類）。
 # 公開されているページでこのどれかが無ければ取得異常にする（無いことが正常かは確かめていないため）。
@@ -49,13 +49,17 @@ ANALYSIS_HORSE_TITLES = (
     "このコースが得意な馬", "この距離が得意な馬", "この競馬場が得意な馬", "今回の馬場状態が得意な馬",
     "今回のレース間隔で実績がある馬", "今回の調教評価で実績がある馬",
 )
-# 出走馬分析の欄にある、馬ではないと分かっている表（数えない）
+# 出走馬分析の欄にあるが数えない表
 ANALYSIS_OTHER_TITLES = (
-    "このコースで有利な枠順", "このコースで有利な脚質", "このコースが得意な騎手", "このコースが得意な調教師",
-    "このコースに実績がある種牡馬", "このコースに実績がある母父", "今回のオッズで期待できる騎手",
-    "今回の調教師と相性の良い騎手", "今回の馬主と相性の良い騎手",
     "今回の厩舎コメント評価で実績がある馬",   # 馬の表だが数えない（上の説明。2026-11-07 ユーザー決定）
 )
+# 出走馬分析の欄（2026-11-09）。データ分析の欄（.RaceDataPickupList）には div.RaceDataPickup が並び、id で種類が分かる:
+# RaceDataPickup01 出走馬分析・02 {コース}のコース分析・03 {レース名}のレース分析（重賞のページだけ）・04 騎乗騎手分析。
+# 出走馬分析は 01 の中の表だけを読み、01 の h3.Title_3rd が「出走馬分析」であることも確かめる（どちらかが違えば取得異常）。
+# 根拠: 保存した30ページ（11/7・11/8 の採点、research の保存ページ、11/9 に取り直した 11/8 東京11R）で、
+# 01 はすべて「出走馬分析」。03 の表（「このレースで有利な枠順」など10個）を出走馬分析として読んでいた（2026-11-09 に発見）。
+ANALYSIS_SECTION_ID = "RaceDataPickup01"
+ANALYSIS_SECTION_TITLE = "出走馬分析"
 # 各データ上位3頭の表の見出し（2026-11-07 に保存した7レースの出馬表で見た4種類）。これ以外の見出しは取得異常。
 # 表が無いこと（例: 10/25 新潟4R に「騎手」が無い）はページで見たので、「欄がない」として記録し、異常にしない。
 TOP3_TITLES = ("能力", "上昇度", "騎手", "距離")
@@ -355,7 +359,8 @@ def parse_data_top(soup: BeautifulSoup, ref: dict, race_id: str) -> dict:
       どちらも issues に入れる（採点に使った3項目がそろっていないので、評価には使わない）。
     - ピックアップ: .DataPickupHorseWrap の dl ごとに span.Umaban_Num（馬番）・WakuN（枠）・
       a.data_top_horse_link（馬ID）を読み、出馬表の馬番・枠・馬IDと照らす。
-    - 出走馬分析: .RaceDataPickupList の table.PickupHorseTable* ごとに、表の中の見出しで種類を決める
+    - 出走馬分析: .RaceDataPickupList の中の div.RaceDataPickup#RaceDataPickup01（h3.Title_3rd が「出走馬分析」）
+      だけを読む。無い・見出しが違うときは取得異常。その中の table.PickupHorseTable* ごとに、表の中の見出しで種類を決める
       （ANALYSIS_HORSE_TITLES だけ数える。ANALYSIS_OTHER_TITLES は数えない。どちらでもない見出しは取得異常）。
       馬の表は div.Umaban_InBox ごとに span.Umaban_Num（馬番）・WakuN（枠）・短い名前を読み、出馬表と照らす。
       「推奨なし」は span.Txt の文字。同じ見出しの2つ目の表は数えない（取得異常）。
@@ -417,7 +422,15 @@ def parse_data_top(soup: BeautifulSoup, ref: dict, race_id: str) -> dict:
         issues.append("出走馬分析: ピックアップはあるが出走馬分析の欄が無い")
         return {"page_state": "公開", "pickup_nums": pickup_nums, "pickup_state": pickup_state,
                 "analysis_hits": {}, "analysis_tables": [], "analysis_state": "取得異常", "issues": issues}
-    for tb in area.find_all("table", class_=lambda c: c and "PickupHorseTable" in str(c)):
+    box = area.find("div", id=ANALYSIS_SECTION_ID, class_="RaceDataPickup")
+    h3 = box.find("h3", class_="Title_3rd") if box is not None else None
+    if box is None or h3 is None or h3.get_text(strip=True) != ANALYSIS_SECTION_TITLE:
+        got = "欄が無い" if box is None else f"見出しが「{h3.get_text(strip=True) if h3 else None}」"
+        issues.append(f"出走馬分析: 出走馬分析の欄（div#{ANALYSIS_SECTION_ID}・見出し「{ANALYSIS_SECTION_TITLE}」）が"
+                      f"読めない（{got}）")
+        return {"page_state": "公開", "pickup_nums": pickup_nums, "pickup_state": pickup_state,
+                "analysis_hits": {}, "analysis_tables": [], "analysis_state": "取得異常", "issues": issues}
+    for tb in box.find_all("table", class_=lambda c: c and "PickupHorseTable" in str(c)):
         t = tb.find(class_="PickupHorseTableTitle")
         title = t.get_text(strip=True) if t else None
         if title in ANALYSIS_OTHER_TITLES:
