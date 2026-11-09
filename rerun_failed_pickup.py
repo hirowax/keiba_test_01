@@ -10,6 +10,10 @@ usage: python3 rerun_failed_pickup.py 20260412
   出馬表で取消・除外の候補（「取消・除外（出馬表）」）は対象にしない。
   指数の「**」（ログインしていない状態の表示）は取得失敗として扱うので、対象になる（2026-11-05 決定）。
 1レース分の処理は run_pickup_all.score_race と同じ（同じ処理を1か所にまとめる）。
+既にある pickup_scores.json の点数の版（scoring_version）・馬番の取り方の版（collector_version）が今のコードと違えば、
+何もせずに止まる（2026-11-07 外部レビュー。新旧の点数が1つのファイルに混ざり、サイト・買い目がファイルの版で旧方式として
+扱うのを防ぐ。ファイルの版だけ書き換えると、残った旧点数を新方式として表示するので、それもしない）。
+違う版で採点し直すなら、別の実行の記録として保存する（このスクリプトではしない）。
 前走データは、同じ対象日のために取った値のうち、馬ごとの最新の取得が成功しているもの（prev_inputs.reusable_entries）を
 再利用し、それ以外を取り直す。
 ロック（prev_inputs.DateLock）は pickup_scores.json の読み取りから、保存・派生ファイルの保存が終わるまで持つ。
@@ -26,7 +30,7 @@ from playwright.sync_api import sync_playwright
 
 from scraper import load_env, load_cookies, get_race_ids
 from data_quality import load_index_sources, race_quality_issues
-from race_pickup import SCORING_VERSION
+from race_pickup import SCORING_VERSION, COLLECTOR_VERSION
 from prev_inputs import FAILED, DateLock, RunRecord, reusable_entries, write_json_atomic
 from run_pickup_all import load_horse_style, read_index_tables, score_race, write_prev_data_snapshot
 
@@ -55,6 +59,15 @@ def needs_rerun(rdata: dict) -> list:
     return reasons
 
 
+def version_mismatch(existing: dict) -> list:
+    """既にある pickup_scores.json の版が今のコードと違う理由のリスト（空なら部分再実行してよい）"""
+    out = []
+    for key, now in (("scoring_version", SCORING_VERSION), ("collector_version", COLLECTOR_VERSION)):
+        if existing.get(key) != now:
+            out.append(f"{key}: ファイル {existing.get(key)}・今のコード {now}")
+    return out
+
+
 def main():
     date = sys.argv[1] if len(sys.argv) >= 2 else datetime.now().strftime("%Y%m%d")
     out_dir = BASE_DIR / "output" / date
@@ -67,6 +80,12 @@ def main():
     lock = DateLock(out_dir)   # 読み取りから保存までの間に、同じ日の別の実行が書かないようにする
     with open(pickup_path, encoding="utf-8") as f:
         existing = json.load(f)
+
+    mismatch = version_mismatch(existing)
+    if mismatch:
+        logger.error(f"版が違うので部分再実行しません（新旧の点数が混ざるため）: {mismatch}")
+        lock.release()
+        sys.exit(1)
 
     failed = {label: r for label, rdata in existing.get("races", {}).items() if (r := needs_rerun(rdata))}
     if not failed:

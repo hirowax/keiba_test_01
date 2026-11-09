@@ -45,6 +45,7 @@ from itertools import combinations
 from pathlib import Path
 
 from data_quality import load_invalidated, race_quality_issues
+from race_pickup import FIRE_RULE_SCORING_VERSIONS
 from validate_trifecta_202608 import himo_set, maru_num, combo_key, MIN_SCORE, BET_UNIT
 
 BASE_DIR = Path(__file__).parent
@@ -210,7 +211,15 @@ def generate_for_date(date: str) -> bool:
     races = {}
     skipped = {}
     invalid = load_invalidated(date, OUTPUT_DIR)
+    sv = pickup.get("scoring_version")
+    if sv not in FIRE_RULE_SCORING_VERSIONS:
+        # 買い目の軸の基準（MIN_SCORE=8点）は v5.1 までの点数で決めたもの。v5.2〜 の点数には使わない
+        # （2026-11-07 ユーザー決定。docs/data_top_reader_fix_plan_202611.md 3.5）。ファイルは作り、全レースに理由を残す
+        print(f"  {date}: 点数の版 {sv} には買い目の基準が無い → 買い目を作らない")
     for label, rdata in pickup.get("races", {}).items():
+        if sv not in FIRE_RULE_SCORING_VERSIONS:
+            skipped[label] = f"scoring_version: 点数の版 {sv} には買い目の基準が無い"
+            continue
         # 品質に問題があるレース（前走データの取得失敗など）は買い目を作らない（2026-11-05 決定。
         # docs/prev_cache_fix_plan_202611.md）。判定は data_quality.race_quality_issues だけで行う
         issues = race_quality_issues(rdata, invalid.get(label))

@@ -462,7 +462,8 @@ class CollectFlowTest(unittest.TestCase):
             "v", {"index_reader_version": "r", "candidate_rule_version": "c",
                   "races": {"東京1R": {"modes": {"average": "type=rank"}}}}, "東京1R",
             prev=dict(prev_fetch=pi.PREV_FETCH_VERSION, prev_inputs_run="x", prev_status=st),
-            table_check={"version": "t", "ok": True, "modes": {}, "problems": []}, data_top_reader="test")}
+            table_check={"version": "t", "ok": True, "modes": {}, "problems": []}, data_top_reader="test",
+                         pages={"shutuba": {"path": "p", "sha256": "h"}, "data_top": {"path": "p", "sha256": "h"}})}
         self.assertEqual(race_quality_issues(rd), [])
 
 
