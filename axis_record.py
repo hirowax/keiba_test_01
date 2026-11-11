@@ -59,6 +59,7 @@ CSV_COLUMNS = ["開催場", "レース番号", "馬番", "馬名", "近走平均
 RANK_COLUMNS = ("近走平均順位", "当該距離順位", "当該コース順位")
 RANK_RE = re.compile(r"([1-9][0-9]*)位")   # 保存済みの CSV の表記は「1位」「2位」「3位」だけ（2026-11-12 確認）
 REPO_SLUG = "hirowax/keiba_test_01"
+HORSE_ID_RE = re.compile(r"[0-9A-Za-z]+")   # netkeiba の馬ID（英字を含む ID もあるので英数字）
 
 
 class RecordError(Exception):
@@ -247,7 +248,10 @@ def decide_race(rdata: dict, csv_rows: list, invalid_reason=None):
         return {c: _none("品質の問題") for c in CANDIDATES}, issues
 
     def axis(num, **extra):
-        return {"state": "軸あり", "num": num, "name": names[num], "horse_id": ids.get(num), **extra}
+        hid = ids.get(num)
+        if not isinstance(hid, str) or not HORSE_ID_RE.fullmatch(hid):
+            raise RecordError(f"軸の馬（馬番 {num}）の馬IDが無い・形が違う: {hid!r}")
+        return {"state": "軸あり", "num": num, "name": names[num], "horse_id": hid, **extra}
 
     out = {}
     # 候補1・2: 最上位の同点だけ軸なし（下位の同点は関係しない）
@@ -609,7 +613,10 @@ def purchase_gap(date_dir: Path, label: str, num: str, name: str, cache: dict):
     nonfin = get("race_nonfinishers.json") or {}
     for o in nonfin.get(label, []):
         if str(o.get("num")) == num and o.get("status") in ("中止", "失格") and norm_name(o.get("name")) == norm_name(name):
-            return None   # 競走中止・失格（不的中で確定）
+            # 中止・失格は不的中だが、評価する購入が成立したか（複勝が発売され、払戻を取れているか）は別に確かめる
+            if not rp or not rp.get("fukusho"):
+                return "中止・失格だが、複勝の払戻が無い（取れていないか、発売されなかったかを区別できない）"
+            return None
     if not rp:
         return "払戻が無く、返還かどうか確かめられない"
     return "結果に無く、返還・中止・失格の記録も無い"
@@ -637,8 +644,10 @@ def race_record_problems(r) -> list:
         if not isinstance(a, dict) or a.get("state") not in AXIS_STATES:
             out.append(f"{c}: 状態が無い・知らない状態（{(a or {}).get('state') if isinstance(a, dict) else a!r}）")
         elif a["state"] == "軸あり":
-            if not str(a.get("num") or "").isdigit() or not str(a.get("name") or "").strip() or "horse_id" not in a:
-                out.append(f"{c}: 軸ありなのに馬番・馬名・馬IDの項目が無い")
+            hid = a.get("horse_id")
+            if not str(a.get("num") or "").isdigit() or not str(a.get("name") or "").strip() \
+                    or not isinstance(hid, str) or not HORSE_ID_RE.fullmatch(hid):
+                out.append(f"{c}: 軸ありなのに馬番・馬名・馬IDが無い・形が違う")
         elif not str(a.get("reason") or "").strip():
             out.append(f"{c}: 軸なしなのに理由が無い")
     return out

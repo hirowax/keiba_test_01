@@ -128,6 +128,16 @@ class DecideTest(unittest.TestCase):
         self.assertTrue(all(v == {"state": "軸なし", "reason": "品質の問題"} for v in c.values()))
         self.assertEqual(set(c), set(A.CANDIDATES))
 
+    def test_axis_horse_without_horse_id_is_record_error(self):
+        """軸の馬の馬IDが無い・空・形が違う → 壊れた記録を作らず、記録できないにする"""
+        for bad in (None, "", "12/3"):
+            r = race([("1", 10), ("2", 5)])
+            r["horse_id_map"]["1"] = bad
+            if bad is None:
+                del r["horse_id_map"]["1"]
+            with NO_ISSUES, self.assertRaises(A.RecordError):
+                A.decide_race(r, rows_of(["1", "2"]))
+
     def test_broken_input_is_record_error_not_no_axis(self):
         """入力の破損・必須の項目の欠けは、品質の問題（軸なし）にしない"""
         with NO_ISSUES:
@@ -446,6 +456,9 @@ class CheckTest(unittest.TestCase):
             lambda c: c.pop("候補2"),
             lambda c: c["候補1"].update(state="たぶん軸"),
             lambda c: c["候補1"].pop("name"),
+            lambda c: c["候補1"].update(horse_id=None),
+            lambda c: c["候補1"].update(horse_id=""),
+            lambda c: c["候補1"].update(horse_id="20/19"),
             lambda c: c["候補3"].update(state="軸なし", reason=""),
         ]
         for brk in breaks:
@@ -471,7 +484,17 @@ class CheckTest(unittest.TestCase):
         self.assertIn("返還・中止・失格の記録も無い", A.purchase_gap(self.out / D, "東京11R", "1", "ウマ1", {}))
         (self.out / D / "race_nonfinishers.json").write_text(json.dumps(
             {"東京11R": [{"status": "中止", "num": "1", "name": "ウマ1"}]}, ensure_ascii=False), encoding="utf-8")
-        self.assertIsNone(A.purchase_gap(self.out / D, "東京11R", "1", "ウマ1", {}))
+        self.assertIsNone(A.purchase_gap(self.out / D, "東京11R", "1", "ウマ1", {}))   # 中止で、複勝の払戻はある
+
+    def test_nonfinisher_without_fukusho_payout_is_a_gap(self):
+        """中止・失格（不的中）でも、複勝の払戻を確かめられなければ欠けとして残す（購入が成立したかは別）"""
+        (self.out / D / "race_results.json").write_text(json.dumps({"東京11R": [{"num": "2", "name": "ウマ2"}]}),
+                                                        encoding="utf-8")
+        (self.out / D / "race_nonfinishers.json").write_text(json.dumps(
+            {"東京11R": [{"status": "失格", "num": "1", "name": "ウマ1"}]}, ensure_ascii=False), encoding="utf-8")
+        for payouts in ({}, {"東京11R": {"tansho": {"2": 300}}}, {"東京11R": {"tansho": {"2": 300}, "fukusho": {}}}):
+            (self.out / D / "payouts_jra.json").write_text(json.dumps(payouts), encoding="utf-8")
+            self.assertIn("中止・失格だが、複勝の払戻が無い", A.purchase_gap(self.out / D, "東京11R", "1", "ウマ1", {}))
 
     def test_check_failure_raises_and_keeps_last_success(self):
         """検査そのものが失敗したら例外（通知の対象）。最後の成功の日時は更新しない"""
