@@ -58,6 +58,11 @@ python3 export_json.py "$DATE"
 echo "▶ ペーパートレード買い目生成..."
 python3 paper_trade.py generate "$DATE" || echo "⚠️  paper_trade 失敗（本体データには影響なし・続行）"
 
+# 買い目の軸の再検証の記録（docs/axis_recheck_plan_202611.md）。失敗しても採点・公開は止めない。
+# 失敗の印（AXIS_RECORD_FAILED）は run_cron.sh が見つけて LINE で知らせる
+echo "▶ 買い目の軸の再検証の記録..."
+python3 axis_record.py record "$DATE" || echo "AXIS_RECORD_FAILED: 軸の記録が失敗（本体データには影響なし・続行）"
+
 echo "▶ GitHubにデータをpush中..."
 git add output/ summary/ --ignore-errors
 git commit -m "data: $DATE"

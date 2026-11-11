@@ -29,6 +29,17 @@ notify_line() {
     fi
 }
 
+# ── 買い目の軸の再検証: 記録と結果・払戻の欠けの検査（毎日。成績は出さない。docs/axis_record_design_202611.md）──
+AXIS_CHECK_OUT=$(python3 axis_record.py check 2>&1)
+AXIS_CHECK_STATUS=$?
+echo "$AXIS_CHECK_OUT"
+if [ $AXIS_CHECK_STATUS -eq 2 ]; then
+    AXIS_MSG=$(echo "$AXIS_CHECK_OUT" | grep "^AXIS_NOTIFY: " | head -1 | sed "s/^AXIS_NOTIFY: //")
+    notify_line "[netkeiba] ⚠️ 軸の記録の欠け: $AXIS_MSG"
+elif [ $AXIS_CHECK_STATUS -ne 0 ]; then
+    notify_line "[netkeiba] ❌ 軸の記録の欠けの検査が失敗しました。cron.log を確認してください"
+fi
+
 # 翌日の日付 (macOS date)
 TOMORROW=$(date -v+1d +%Y%m%d)
 YEAR=$(date -v+1d +%Y)
@@ -66,6 +77,13 @@ sys.exit(0 if '$TOMORROW' in dates else 1)
         else
             notify_line "[netkeiba] $TOMORROW の処理が失敗しました ✗ cron.logを確認してください"
         fi
+    fi
+    # 軸の記録の失敗・欠けの検査の停止は、run.sh の出力の印で知らせる（採点・公開の成否とは別）
+    if grep -q "AXIS_RECORD_FAILED" /tmp/netkeiba_run.log; then
+        notify_line "[netkeiba] ⚠️ $TOMORROW の軸の記録が失敗しました（採点・公開は続行）。cron.log を確認してください"
+    fi
+    if grep -q "AXIS_CHECK_STALE" /tmp/netkeiba_run.log; then
+        notify_line "[netkeiba] ⚠️ 軸の記録の欠けの検査が止まっているかもしれません。cron.log を確認してください"
     fi
 else
     echo "  - $TOMORROW は非開催日 → スキップ"
