@@ -41,7 +41,7 @@ def write_csv(date_dir: Path, rows, header=True):
 
 def race(scored, names=None, pop=None, scratched=None, **extra):
     names = names if names is not None else {str(i): f"ウマ{i}" for i in range(1, 9)}
-    return {"scored": [{"馬番": n, "score": s} for n, s in scored],
+    return {"scored": [{"馬番": n, "馬名": names.get(n, f"ウマ{n}"), "score": s} for n, s in scored],
             "horse_name_full": names, "horse_id_map": {n: f"id{n}" for n in names},
             "pop_map": pop if pop is not None else {n: n for n in names},
             "scratched_nums": scratched or {}, "quality": {}, **extra}
@@ -174,6 +174,23 @@ class ScheduleTest(unittest.TestCase):
         self.assertEqual([r["馬番"] for r in by["東京11R"]], ["3", "5"])
 
 
+RUN = "20261113T170000000000_abcdef12"
+
+
+def with_prev(rdata: dict, race_id: str = "202605050411") -> dict:
+    """前走データの記録を指す採点結果にする"""
+    return {**rdata, "race_id": race_id, "quality": {**rdata.get("quality", {}), "prev_inputs_run": RUN}}
+
+
+def write_prev(out: Path, races: dict, run: str = RUN, target: str = D):
+    """prev_inputs/{実行ID}.json。races は {label: (race_id, [馬ID...])}"""
+    d = out / target / "prev_inputs"
+    d.mkdir(parents=True, exist_ok=True)
+    data = {"run_id": run, "target_date": target,
+            "races": {l: {"race_id": rid, "horses": {h: {"status": "取れた"} for h in hs}} for l, (rid, hs) in races.items()}}
+    (d / f"{run}.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+
+
 def make_day(out: Path, races_rows: dict, pickup_races: dict):
     rows = [r for rs in races_rows.values() for r in rs]
     write_csv(out / D, rows)
@@ -202,21 +219,24 @@ class RecordTest(unittest.TestCase):
         with mock.patch("builtins.print"):
             return A.cmd_record(D, now=now, output_dir=self.out, meta={"versions": {}, "code_commit": "x"})
 
-    def test_record_and_pending(self):
+    def test_record_and_scoring_error(self):
+        """採点エラーのレースは、保留にせず、全候補を「軸なし（採点エラー）」として明示的に記録する"""
         self.assertEqual(self.record(), 0)
         r = self.rec()
         self.assertEqual(r["schedule"]["races"], ["東京11R", "京都1R"])
         self.assertEqual(r["races"]["東京11R"]["candidates"]["候補2"]["num"], "1")
         self.assertEqual(r["races"]["東京11R"]["mode"], "期限内")
-        self.assertNotIn("京都1R", r["races"])
-        self.assertIn("採点エラー", r["pending"]["京都1R"]["reason"])
+        c = r["races"]["京都1R"]["candidates"]
+        self.assertEqual(set(c), set(A.CANDIDATES))
+        self.assertTrue(all(v["state"] == "軸なし" and v["reason"] == "採点エラー" for v in c.values()))
+        self.assertNotIn("pending", r)
 
     def test_same_input_does_nothing_and_changed_input_stops(self):
         self.record()
         first = self.rec()["races"]["東京11R"]
         self.assertEqual(self.record(), 0)
         self.assertEqual(self.rec()["races"]["東京11R"], first)
-        self.assertEqual(self.rec()["runs"][-1]["unchanged"], ["東京11R"])
+        self.assertEqual(self.rec()["runs"][-1]["unchanged"], ["東京11R", "京都1R"])   # 採点エラーのレースも記録がある
         # 東京11R の採点が変わった → 書き換えず、問題として返す
         p = json.loads((self.out / D / "pickup_scores.json").read_text(encoding="utf-8"))
         p["races"]["東京11R"]["scored"][0]["score"] = 3
@@ -237,15 +257,59 @@ class RecordTest(unittest.TestCase):
         with mock.patch.object(A, "AXIS_PLAN_VERSION", "2099-01-01"):
             self.assertEqual(self.record(), 1)
 
-    def test_pending_race_can_be_added_before_deadline(self):
+    def test_rescored_or_broken_after_scoring_error_is_a_problem(self):
+        """採点エラーで記録した後に、採点し直された・壊れた → 記録は書き換えず、問題として返す"""
         self.record()
+        first = self.rec()["races"]["京都1R"]
+        for new in (race([("3", 6)]), {"scored": "壊れた"}):
+            p = json.loads((self.out / D / "pickup_scores.json").read_text(encoding="utf-8"))
+            p["races"]["京都1R"] = new
+            (self.out / D / "pickup_scores.json").write_text(json.dumps(p, ensure_ascii=False), encoding="utf-8")
+            self.assertEqual(self.record(), 1)
+            self.assertEqual(self.rec()["races"]["京都1R"], first)
+
+    def test_existing_empty_or_null_record_is_not_overwritten(self):
+        """既存のファイルが {} や null → 新しい記録として扱わず、上書きしない"""
+        for text in ("{}", "null", "[]"):
+            (self.out / D / A.RECORD_NAME).write_text(text, encoding="utf-8")
+            with self.assertRaises(A.RecordFailure):
+                self.record()
+            self.assertEqual((self.out / D / A.RECORD_NAME).read_text(encoding="utf-8"), text)
+
+    def test_pickup_date_must_match(self):
         p = json.loads((self.out / D / "pickup_scores.json").read_text(encoding="utf-8"))
-        p["races"]["京都1R"] = race([("3", 6)])
+        p["date"] = "20261108"
         (self.out / D / "pickup_scores.json").write_text(json.dumps(p, ensure_ascii=False), encoding="utf-8")
-        self.assertEqual(self.record(), 0)   # 東京11R の入力（そのレースと上位の情報）は変わっていない
-        r = self.rec()
-        self.assertEqual(r["races"]["京都1R"]["candidates"]["候補1"]["num"], "3")
-        self.assertIn("resolved_at", r["pending"]["京都1R"])
+        self.assertEqual(self.record(), 1)
+        self.assertEqual(self.rec()["races"], {})
+        self.assertTrue(any("対象日" in x for x in self.rec()["runs"][-1]["problems"]))
+
+    def test_csv_name_must_match(self):
+        """CSV の馬名が別の馬なら、馬番の集合が同じでも記録しない"""
+        write_csv(self.out / D, [csv_row("東京", "11R", "1", "ウマ1"), csv_row("東京", "11R", "2", "ベツノウマ"),
+                                 csv_row("京都", "1R", "3", "ウマ3")])
+        self.assertEqual(self.record(), 1)
+        self.assertNotIn("東京11R", self.rec()["races"])
+
+    def test_prev_inputs_required_and_included(self):
+        """前走データの記録を指すレースは、記録が無い・合わなければ記録しない。記録の中身も同じかどうかの判定に入る"""
+        p = json.loads((self.out / D / "pickup_scores.json").read_text(encoding="utf-8"))
+        p["races"]["東京11R"] = with_prev(p["races"]["東京11R"])
+        (self.out / D / "pickup_scores.json").write_text(json.dumps(p, ensure_ascii=False), encoding="utf-8")
+        self.assertEqual(self.record(), 1)                       # ファイルが無い
+        self.assertNotIn("東京11R", self.rec()["races"])
+        write_prev(self.out, {"東京11R": ("202605050411", ["id1"])})   # 候補の2番（id2）が無い
+        self.assertEqual(self.record(), 1)
+        write_prev(self.out, {"東京11R": ("202605050411", ["id1", "id2"])}, target="20261108")  # 別の日のもの
+        self.assertEqual(self.record(), 1)
+        write_prev(self.out, {"東京11R": ("999", ["id1", "id2"])})     # race_id が違う
+        self.assertEqual(self.record(), 1)
+        self.assertNotIn("東京11R", self.rec()["races"])
+        write_prev(self.out, {"東京11R": ("202605050411", ["id1", "id2"])})
+        self.assertEqual(self.record(), 0)
+        self.assertIn("東京11R", self.rec()["races"])
+        write_prev(self.out, {"東京11R": ("202605050411", ["id1", "id2", "id3"])})   # 前走データの中身が変わった
+        self.assertEqual(self.record(), 1)
 
     def test_after_deadline_writes_nothing(self):
         self.assertEqual(self.record(now=AFTER), 0)
@@ -353,7 +417,7 @@ class CheckTest(unittest.TestCase):
     def test_payout_gap_notified_only_after_wednesday(self):
         write_csv(self.out / "20261115", [])     # 11/15 は候補0件（正常）
         (self.out / "20261115" / A.RECORD_NAME).write_text(json.dumps(
-            {"schedule": {"status": "確定", "races": []}, "races": {}, "pending": {}}), encoding="utf-8")
+            {"schedule": {"status": "確定", "races": []}, "races": {}, "runs": []}), encoding="utf-8")
         rc, out = self.check(datetime(2026, 11, 18, 17, 0, tzinfo=A.JST))   # 水曜の期限前
         self.assertEqual(rc, 0)
         self.assertEqual(self.status()["payout_gaps_waiting"], 4)          # 候補1・2・3・基準の4つ（同じ馬）
@@ -368,6 +432,33 @@ class CheckTest(unittest.TestCase):
         rc, out = self.check(datetime(2026, 11, 19, 0, 0, tzinfo=A.JST))
         self.assertEqual(rc, 0)
         self.assertNotIn("当たり", out)
+
+    def test_broken_candidate_record_is_notified(self):
+        """候補の記録の欠け・知らない状態・必須の項目の欠けは「記録不正」として知らせる"""
+        path = self.out / D / A.RECORD_NAME
+        good = json.loads(path.read_text(encoding="utf-8"))
+        now = datetime(2026, 11, 14, 12, 0, tzinfo=A.JST)
+        write_csv(self.out / "20261115", [])
+        (self.out / "20261115" / A.RECORD_NAME).write_text(json.dumps(
+            {"schedule": {"status": "確定", "races": []}, "races": {}, "runs": []}), encoding="utf-8")
+        self.assertEqual(self.check(now)[0], 0)
+        breaks = [
+            lambda c: c.pop("候補2"),
+            lambda c: c["候補1"].update(state="たぶん軸"),
+            lambda c: c["候補1"].pop("name"),
+            lambda c: c["候補3"].update(state="軸なし", reason=""),
+        ]
+        for brk in breaks:
+            r = json.loads(json.dumps(good))
+            brk(r["races"]["東京11R"]["candidates"])
+            path.write_text(json.dumps(r, ensure_ascii=False), encoding="utf-8")
+            rc, out = self.check(now)
+            self.assertEqual(rc, 2, out)
+            self.assertIn("記録不正", out)
+        path.write_text("{}", encoding="utf-8")
+        rc, out = self.check(now)
+        self.assertEqual(rc, 2)
+        self.assertIn("記録ファイルの形が違う", out)
 
     def test_refund_and_nonfinisher_are_confirmed(self):
         (self.out / D / "race_results.json").write_text(json.dumps({"東京11R": [{"num": "2", "name": "ウマ2"}]}),
@@ -386,7 +477,7 @@ class CheckTest(unittest.TestCase):
         """検査そのものが失敗したら例外（通知の対象）。最後の成功の日時は更新しない"""
         write_csv(self.out / "20261115", [])
         (self.out / "20261115" / A.RECORD_NAME).write_text(json.dumps(
-            {"schedule": {"status": "確定", "races": []}, "races": {}, "pending": {}}), encoding="utf-8")
+            {"schedule": {"status": "確定", "races": []}, "races": {}, "runs": []}), encoding="utf-8")
         self.check(datetime(2026, 11, 15, 12, 0, tzinfo=A.JST))
         last = self.status()["last_completed_at"]
         (self.tmp / "jra_calendar_2026.json").unlink()
@@ -468,6 +559,19 @@ class RestoreTest(unittest.TestCase):
         self.assertIn("確かめられない", str(cm.exception))
         self.assertFalse((self.out / D / A.RECORD_NAME).exists())
 
+    def test_any_kind_of_main_update_is_used(self):
+        """pr_merge なども main の更新として扱う。期限前の最後の更新が pr_merge なら、その commit を使う"""
+        acts = [{"timestamp": "2026-11-13T05:00:00Z", "after": self.plan, "activity_type": "push"},
+                {"timestamp": "2026-11-13T09:00:00Z", "after": self.data, "activity_type": "pr_merge"}]
+        self.assertEqual(self.restore(acts), 0)
+
+    def test_last_update_deleting_main_is_refused(self):
+        acts = [{"timestamp": "2026-11-13T05:00:00Z", "after": self.data, "activity_type": "push"},
+                {"timestamp": "2026-11-13T09:00:00Z", "after": "0" * 40, "activity_type": "branch_deletion"}]
+        with self.assertRaises(A.RecordFailure) as cm:
+            self.restore(acts)
+        self.assertIn("main が無い", str(cm.exception))
+
     def test_commit_without_inputs_is_refused(self):
         acts = [{"timestamp": "2026-11-13T09:00:00Z", "after": self.plan}]   # 入力の無い commit
         with self.assertRaises(A.RecordFailure) as cm:
@@ -519,7 +623,7 @@ class RestoreTest(unittest.TestCase):
         acts = [{"timestamp": "2026-11-13T09:00:00Z", "after": self.data}]
         existing = {"date": D, "schedule": {"status": "確定", "races": ["東京11R"],
                                             "csv_sha256": A.sha256_file(self.repo / "output" / D / A.CSV_NAME)},
-                    "races": {"東京11R": {"input_key": "別の入力", "candidates": {}}}, "pending": {}, "runs": []}
+                    "races": {"東京11R": {"input_key": "別の入力", "candidates": {}}}, "runs": []}
         (self.out / D / A.RECORD_NAME).write_text(json.dumps(existing, ensure_ascii=False), encoding="utf-8")
         self.assertEqual(self.restore(acts), 1)   # 入力が違う → 書き換えず、問題として返す
         r = json.loads((self.out / D / A.RECORD_NAME).read_text(encoding="utf-8"))

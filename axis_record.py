@@ -38,9 +38,10 @@ BASE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = BASE_DIR / "output"
 
 # 計画の版。数字・軸の決め方・除外の条件などを変えたら上げる（計画書の改訂の記録にも書く）
-AXIS_PLAN_VERSION = "2026-11-12"
-# 承認した計画の commit（計画書の本文の確かめ用）
-AXIS_PLAN_COMMIT = "c43a7cc87f2f186d8fb19302ef554b92545c576f"
+# 2026-11-12-2: 採点エラーのレースを全候補「軸なし（採点エラー）」として記録する（保留にしない）
+AXIS_PLAN_VERSION = "2026-11-12-2"
+# 計画の commit（2026-11-12 承認の c43a7cc に、同じ日の追記を足したもの。計画書の本文の確かめ用）
+AXIS_PLAN_COMMIT = "b0eeb46788f25578782c04c4f5ef98dffbccaefa"
 # 開始日（計画 4.3）。決めたら、成績を見る前に計画書の「開始日の記録」にも書く。None のあいだは検査をしない
 AXIS_START_DATE = None
 
@@ -151,6 +152,17 @@ def load_json_file(path: Path):
         raise RecordFailure(f"ファイルが壊れている: {path}（{e}）")
 
 
+def load_record(path: Path):
+    """記録ファイル。無ければ None。読めない・形が違う（{} や null を含む）ときは RecordFailure（上書きしない）"""
+    rec = load_json_file(path)
+    if rec is None and not path.exists():
+        return None
+    if not isinstance(rec, dict) or not isinstance(rec.get("races"), dict) or not isinstance(rec.get("runs"), list) \
+            or not (rec.get("schedule") is None or isinstance(rec.get("schedule"), dict)):
+        raise RecordFailure(f"記録ファイルの形が違う（上書きしない）: {path}")
+    return rec
+
+
 # ── 予定のレース（計画 4.2）─────────────────────────────────────
 
 def load_schedule(date_dir: Path):
@@ -215,7 +227,15 @@ def decide_race(rdata: dict, csv_rows: list, invalid_reason=None):
             raise RecordError(f"採点の候補の馬番・点数が読めない、または重複している（馬番 {num!r}）")
         if num not in names:
             raise RecordError(f"採点の候補の馬番 {num} が出馬表の馬の一覧に無い")
+        if norm_name((h or {}).get("馬名")) != norm_name(names[num]):
+            raise RecordError(f"採点の候補の馬番 {num} の馬名が出馬表と違う（{h.get('馬名')!r} / {names[num]!r}）")
         scores[num] = s
+    # CSV の馬は、馬番で出馬表の馬に結び付け、馬名も一致することを確かめる（許す違いは空白だけ）
+    for r in csv_rows:
+        if r["馬番"] not in names:
+            raise RecordError(f"CSV の馬番 {r['馬番']} が出馬表の馬の一覧に無い")
+        if norm_name(r["馬名"]) != norm_name(names[r["馬番"]]):
+            raise RecordError(f"CSV の馬番 {r['馬番']} の馬名が出馬表と違う（{r['馬名']!r} / {names[r['馬番']]!r}）")
     csv_nums = {r["馬番"] for r in csv_rows}
     if set(scores) != csv_nums - set(scratched):
         raise RecordError(f"3指数の候補が CSV（取消を除く {sorted(csv_nums - set(scratched), key=int)}）と"
@@ -337,13 +357,51 @@ def rules_identity() -> dict:
     }
 
 
+def load_prev_entry(date_dir: Path, date: str, label: str, rdata: dict, cache: dict):
+    """そのレースの採点に使った前走データの記録（prev_inputs/{実行ID}.json のそのレースの部分）。
+    採点結果が前走データの記録を指していなければ None（品質の判定で問題になる）。
+    指しているのに、ファイルが無い・形が違う・実行ID・対象日・レース・race_id・候補の馬が合わなければ RecordError"""
+    q = rdata.get("quality") or {}
+    run = q.get("prev_inputs_run")
+    if not run:
+        if q.get("prev_fetch"):
+            raise RecordError("前走データの取り方の版があるのに、前走データの記録（prev_inputs_run）を指していない")
+        return None
+    if not re.fullmatch(r"[0-9A-Za-z_]+", str(run)):
+        raise RecordError(f"前走データの記録の実行IDの形が違う: {run!r}")
+    if run not in cache:
+        path = date_dir / "prev_inputs" / f"{run}.json"
+        if not path.exists():
+            raise RecordError(f"前走データの記録が無い: prev_inputs/{run}.json")
+        try:
+            cache[run] = load_json_file(path)
+        except RecordFailure as e:
+            raise RecordError(str(e))
+    data = cache[run]
+    if not isinstance(data, dict) or not isinstance(data.get("races"), dict):
+        raise RecordError(f"前走データの記録の形が違う: prev_inputs/{run}.json")
+    if data.get("run_id") != run or data.get("target_date") != date:
+        raise RecordError(f"前走データの記録の実行ID・対象日が合わない: prev_inputs/{run}.json")
+    entry = data["races"].get(label)
+    if not isinstance(entry, dict) or not isinstance(entry.get("horses"), dict):
+        raise RecordError(f"前走データの記録にこのレースが無い: prev_inputs/{run}.json")
+    if rdata.get("race_id") and entry.get("race_id") != rdata.get("race_id"):
+        raise RecordError(f"前走データの記録の race_id が採点結果と違う: {entry.get('race_id')} / {rdata.get('race_id')}")
+    ids = rdata.get("horse_id_map") or {}
+    missing = [str(h.get("馬番")) for h in (rdata.get("scored") or [])
+               if ids.get(str(h.get("馬番"))) not in entry["horses"]]
+    if missing:
+        raise RecordError(f"前走データの記録に候補の馬が無い（馬番 {missing}）")
+    return entry
+
+
 def compute_day(date: str, output_dir: Path = OUTPUT_DIR) -> dict:
-    """ファイルを読んで1日分を計算する。戻り値の races は記録、pending は採点エラーのレース、
-    cannot_record は記録できないレース（理由つき）"""
+    """ファイルを読んで1日分を計算する。戻り値の races は記録（採点エラーのレースは全候補「軸なし（採点エラー）」）、
+    cannot_record は記録できないレース（理由と入力のハッシュ）"""
     date_dir = output_dir / date
     schedule, rows_by = load_schedule(date_dir)
     result = {"date": date, "plan_version": AXIS_PLAN_VERSION, "plan_commit": AXIS_PLAN_COMMIT,
-              "schedule": schedule, "races": {}, "pending": {}, "cannot_record": {}, "files": {}}
+              "schedule": schedule, "races": {}, "cannot_record": {}, "files": {}}
     if schedule["status"] != "確定":
         return result
     pickup_path = date_dir / "pickup_scores.json"
@@ -351,6 +409,8 @@ def compute_day(date: str, output_dir: Path = OUTPUT_DIR) -> dict:
         pickup = load_json_file(pickup_path)
         if not isinstance(pickup, dict) or not isinstance(pickup.get("races"), dict):
             raise RecordFailure("採点結果（pickup_scores.json）が無い、または形が違う")
+        if pickup.get("date") != date:
+            raise RecordFailure(f"採点結果の対象日（{pickup.get('date')}）が {date} と違う")
         invalid = load_invalidated(date, output_dir)
     except (RecordFailure, json.JSONDecodeError) as e:
         for label in schedule["races"]:
@@ -369,25 +429,41 @@ def compute_day(date: str, output_dir: Path = OUTPUT_DIR) -> dict:
         "data_quality.py": rules["data_quality_sha256"],
         "axis_record.py": rules["axis_record_sha256"],
     }
+    prev_cache = {}
     for label in schedule["races"]:
         rdata = races.get(label)
-        key = sha256_bytes(canonical({**common, "race": rdata, "csv_rows": rows_by[label],
-                                      "invalid_reason": invalid.get(label)}))
+        prev_part = None
         try:
             if rdata is None:
                 raise RecordError("採点結果にこのレースが無い")
             if not isinstance(rdata, dict):
                 raise RecordError("採点結果のこのレースの形が違う")
+            if "error" not in rdata:
+                prev_part = load_prev_entry(date_dir, date, label, rdata, prev_cache)
+        except RecordError as e:
+            prev_part = {"読めない": str(e)}
+            key = race_key(common, rdata, rows_by[label], invalid.get(label), prev_part)
+            result["cannot_record"][label] = {"reason": str(e), "input_key": key}
+            continue
+        # 同じ入力かどうかには、そのレースで使った前走データの記録も入れる
+        key = race_key(common, rdata, rows_by[label], invalid.get(label), prev_part)
+        try:
             if "error" in rdata:
-                # 採点エラーは保留にする。期限内に採点し直されれば記録を足せる。期限を過ぎても保留なら、
-                # 品質の問題（採点エラー）による軸なしとして扱う（設計 2.3）
-                result["pending"][label] = {"reason": f"採点エラー: {rdata['error']}", "input_key": key}
+                # 採点エラー: 記録の時点の入力で、全候補を「軸なし（採点エラー）」として明示的に記録する（計画 4.2 追記）
+                result["races"][label] = {
+                    "input_key": key, "quality_issues": race_quality_issues(rdata, invalid.get(label)),
+                    "candidates": {c: _none("採点エラー", detail=str(rdata["error"])) for c in CANDIDATES}}
                 continue
             cands, issues = decide_race(rdata, rows_by[label], invalid.get(label))
             result["races"][label] = {"input_key": key, "quality_issues": issues, "candidates": cands}
         except RecordError as e:
             result["cannot_record"][label] = {"reason": str(e), "input_key": key}
     return result
+
+
+def race_key(common, rdata, csv_rows, invalid_reason, prev_part) -> str:
+    return sha256_bytes(canonical({**common, "race": rdata, "csv_rows": csv_rows,
+                                   "invalid_reason": invalid_reason, "prev_inputs_race": prev_part}))
 
 
 def run_meta() -> dict:
@@ -398,7 +474,7 @@ def run_meta() -> dict:
 
 def new_record(date: str) -> dict:
     return {"date": date, "plan_version": AXIS_PLAN_VERSION, "plan_commit": AXIS_PLAN_COMMIT,
-            "schedule": None, "races": {}, "pending": {}, "runs": []}
+            "schedule": None, "races": {}, "runs": []}
 
 
 def merge_schedule(rec: dict, schedule: dict, at: str):
@@ -426,14 +502,7 @@ def merge_computed(rec: dict, computed: dict, mode: str, meta: dict, at: str) ->
                 problems.append(f"{label}: すでにある記録と入力・規則が違う → 書き換えない")
             continue
         rec["races"][label] = {**r, "mode": mode, "recorded_at": at, **meta}
-        if label in rec["pending"]:
-            rec["pending"][label]["resolved_at"] = at
         added.append(label)
-    for label, p in computed["pending"].items():
-        if label in rec["races"]:
-            problems.append(f"{label}: すでに記録があるのに、今は採点エラー → 書き換えない")
-            continue
-        rec["pending"][label] = {**p, "mode": mode, "at": at}
     for label, c in computed["cannot_record"].items():
         old = rec["races"].get(label)
         if old is None:
@@ -443,8 +512,7 @@ def merge_computed(rec: dict, computed: dict, mode: str, meta: dict, at: str) ->
             problems.append(f"{label}: すでにある記録と入力・規則が違う（今は記録できない: {c['reason']}）→ 書き換えない")
         else:
             unchanged.append(label)
-    rec["runs"].append({"at": at, "mode": mode, "added": added, "unchanged": unchanged,
-                        "pending": sorted(computed["pending"]), "problems": problems,
+    rec["runs"].append({"at": at, "mode": mode, "added": added, "unchanged": unchanged, "problems": problems,
                         "files": computed.get("files"), **meta})
     return problems
 
@@ -479,7 +547,7 @@ def cmd_record(date: str, now: datetime = None, output_dir: Path = OUTPUT_DIR, m
     at = iso(now)
     with file_lock(date_dir / LOCK_NAME):
         path = date_dir / RECORD_NAME
-        rec = load_json_file(path) or new_record(date)
+        rec = load_record(path) or new_record(date)
         # 1. 予定のレースを、軸の計算より先に保存する
         schedule, _ = load_schedule(date_dir)
         sched_problem = merge_schedule(rec, schedule, at)
@@ -496,8 +564,7 @@ def cmd_record(date: str, now: datetime = None, output_dir: Path = OUTPUT_DIR, m
         problems = merge_computed(rec, computed, "期限内", meta, at)
         atomic_write_json(path, rec)
     n = len(rec["schedule"]["races"])
-    print(f"{date}: 予定 {n}レース・記録 {len(rec['races'])}・採点エラーで保留 "
-          f"{len([p for l, p in rec['pending'].items() if l not in rec['races']])}")
+    print(f"{date}: 予定 {n}レース・記録 {len(rec['races'])}")
     for p in problems:
         print(f"  ⚠️ {p}")
     return 1 if problems else 0
@@ -535,7 +602,7 @@ def purchase_gap(date_dir: Path, label: str, num: str, name: str, cache: dict):
         if norm_name(runner.get("name")) != norm_name(name):
             return "結果の馬名が記録と違う（照合できない）"
         if not rp or not rp.get("fukusho"):
-            return "複勝の払戻が無い"
+            return "複勝の払戻が無い（取れていないか、発売されなかったかを区別できない）"
         return None
     if rp and num in {str(n) for n in ((rp.get("refund") or {}).get("umaban") or [])}:
         return None   # 返還（取消・除外）
@@ -546,6 +613,35 @@ def purchase_gap(date_dir: Path, label: str, num: str, name: str, cache: dict):
     if not rp:
         return "払戻が無く、返還かどうか確かめられない"
     return "結果に無く、返還・中止・失格の記録も無い"
+
+
+AXIS_STATES = ("軸あり", "軸なし")
+
+
+def race_record_problems(r) -> list:
+    """1レースの記録の形の検査。候補1〜3・比べる基準がそろい、状態が正しく、必須の項目があること"""
+    if not isinstance(r, dict):
+        return ["レースの記録の形が違う"]
+    out = []
+    if not re.fullmatch(r"[0-9a-f]{64}", str(r.get("input_key") or "")):
+        out.append("入力のハッシュ（input_key）が無い・形が違う")
+    if r.get("mode") not in ("期限内", "復元"):
+        out.append(f"記録のモードが違う: {r.get('mode')!r}")
+    cands = r.get("candidates")
+    if not isinstance(cands, dict):
+        return out + ["候補の記録が無い"]
+    if set(cands) != set(CANDIDATES):
+        out.append(f"候補がそろっていない（あるもの: {sorted(cands)}）")
+    for c in CANDIDATES:
+        a = cands.get(c)
+        if not isinstance(a, dict) or a.get("state") not in AXIS_STATES:
+            out.append(f"{c}: 状態が無い・知らない状態（{(a or {}).get('state') if isinstance(a, dict) else a!r}）")
+        elif a["state"] == "軸あり":
+            if not str(a.get("num") or "").isdigit() or not str(a.get("name") or "").strip() or "horse_id" not in a:
+                out.append(f"{c}: 軸ありなのに馬番・馬名・馬IDの項目が無い")
+        elif not str(a.get("reason") or "").strip():
+            out.append(f"{c}: 軸なしなのに理由が無い")
+    return out
 
 
 def run_check(now: datetime, output_dir: Path = OUTPUT_DIR, start: str = None, base_dir: Path = BASE_DIR) -> dict:
@@ -559,7 +655,7 @@ def run_check(now: datetime, output_dir: Path = OUTPUT_DIR, start: str = None, b
         date_dir = output_dir / d
         schedule, _ = load_schedule(date_dir)   # 予定は CSV から決める（記録の出力からは決めない）
         try:
-            rec = load_json_file(date_dir / RECORD_NAME)
+            rec = load_record(date_dir / RECORD_NAME)
         except RecordFailure as e:
             gaps.append({"date": d, "race": None, "kind": "記録なし", "reason": str(e), "notify": True})
             continue
@@ -576,18 +672,22 @@ def run_check(now: datetime, output_dir: Path = OUTPUT_DIR, start: str = None, b
                          "reason": "記録の予定のレースが CSV と違う", "notify": True})
         cache = {}
         over = now >= payout_deadline(d)
+        for label in sorted(set(rec["races"]) - set(schedule["races"])):
+            gaps.append({"date": d, "race": label, "kind": "記録不正", "reason": "予定に無いレースの記録がある", "notify": True})
         for label in schedule["races"]:
-            r = rec.get("races", {}).get(label)
+            r = rec["races"].get(label)
             if r is None:
-                if label in rec.get("pending", {}):
-                    continue   # 期限を過ぎた採点エラーの保留 = 品質の問題による軸なし
                 gaps.append({"date": d, "race": label, "kind": "記録なし", "reason": "このレースの記録が無い", "notify": True})
+                continue
+            bad = race_record_problems(r)
+            if bad:
+                gaps.append({"date": d, "race": label, "kind": "記録不正", "reason": " / ".join(bad), "notify": True})
                 continue
             if d >= today:
                 continue   # 結果はまだ出ていない
             for c in CANDIDATES:
-                a = r["candidates"].get(c) or {}
-                if a.get("state") != "軸あり":
+                a = r["candidates"][c]
+                if a["state"] != "軸あり":
                     continue
                 reason = purchase_gap(date_dir, label, a["num"], a["name"], cache)
                 if reason:
@@ -608,25 +708,26 @@ def cmd_check(now: datetime = None, output_dir: Path = OUTPUT_DIR, start: str = 
         return 0
     res = run_check(now, output_dir, start, base_dir)   # 失敗したら例外。状態のファイルは書き換えない
     gaps = res["gaps"]
-    rec_gaps = [g for g in gaps if g["kind"] == "記録なし"]
+    rec_gaps = [g for g in gaps if g["kind"] in ("記録なし", "記録不正")]
     over = [g for g in gaps if g["kind"] == "結果・払戻の欠け" and g["overdue"]]
     waiting = [g for g in gaps if g["kind"] == "結果・払戻の欠け" and not g["overdue"]]
     atomic_write_json(status_path, {
         "last_completed_at": iso(now), "start_date": start, "has_gaps": bool(gaps),
         "record_gaps": len(rec_gaps), "payout_gaps_overdue": len(over), "payout_gaps_waiting": len(waiting),
+        "payout_note": "複勝の払戻が無い欠けには、払戻を取れていない場合と、複勝が発売されなかった場合が混ざる（区別できない）",
         "gaps": gaps,
     })
     for g in gaps:
         print(f"  {g['date']} {g.get('race') or ''} {g.get('candidate') or ''} {g['kind']}: {g['reason']}"
               + ("（期限切れ）" if g.get("overdue") else ""))
-    print(f"軸の記録の検査: 記録なし {len(rec_gaps)}・払戻などの欠け 期限切れ {len(over)}・期限前 {len(waiting)}")
+    print(f"軸の記録の検査: 記録なし・記録不正 {len(rec_gaps)}・払戻などの欠け 期限切れ {len(over)}・期限前 {len(waiting)}")
     notify = [g for g in gaps if g.get("notify")]
     if notify:
         def where(gs):
             return " ".join(sorted({f"{g['date']}{g.get('race') or ''}" for g in gs})[:8])
         parts = []
         if rec_gaps:
-            parts.append(f"記録なし {len(rec_gaps)}件 {where(rec_gaps)}")
+            parts.append(f"記録なし・記録不正 {len(rec_gaps)}件 {where(rec_gaps)}")
         if over:
             parts.append(f"払戻などの欠け（水曜の期限切れ） {len(over)}件 {where(over)}")
         # LINE の通知の本文に使うので、引用符・改行を入れない
@@ -638,15 +739,16 @@ def cmd_check(now: datetime = None, output_dir: Path = OUTPUT_DIR, start: str = 
 # ── 記録の復元（計画 4.2）────────────────────────────────────────
 
 def fetch_push_activity() -> list:
-    """GitHub 側で記録された main への push（時刻はサーバーの時刻）。[{"timestamp", "after"}]"""
+    """GitHub 側で記録された main の更新（時刻はサーバーの時刻）。種類は絞らない
+    （push・force_push・pr_merge・merge_queue_merge・branch_creation・branch_deletion。
+    https://docs.github.com/en/rest/repos/repos#list-repository-activities）。[{"timestamp", "after", "activity_type"}]"""
     r = subprocess.run(["gh", "api", "--paginate",
                         f"repos/{REPO_SLUG}/activity?per_page=100&ref=refs/heads/main",
                         "--jq", ".[] | {timestamp, after, activity_type}"],
                        capture_output=True, text=True)
     if r.returncode != 0:
         raise RecordFailure(f"GitHub の push の記録を取れない: {r.stderr.strip()}")
-    acts = [json.loads(line) for line in r.stdout.splitlines() if line.strip()]
-    return [a for a in acts if a.get("activity_type") in ("push", "force_push")]
+    return [json.loads(line) for line in r.stdout.splitlines() if line.strip()]
 
 
 def parse_utc(s: str) -> datetime:
@@ -682,10 +784,11 @@ def cmd_restore(date: str, reason: str, now: datetime = None, output_dir: Path =
     before = [a for a in acts if parse_utc(a["timestamp"]) < limit]
     if not before:
         raise RecordFailure(f"{date} 00:00 より前の main への push を、GitHub の記録で確かめられない（記録が残る範囲より古い、など）→ 復元しない")
+    # 種類を問わず、期限より前の最後の main の更新を使う（main を消した更新なら、そのときの main は無い）
     last = max(before, key=lambda a: parse_utc(a["timestamp"]))
-    commit = last["after"]
-    if not re.fullmatch(r"[0-9a-f]{40}", commit or ""):
-        raise RecordFailure(f"push の記録の commit の ID の形が違う: {commit!r}")
+    commit = last.get("after")
+    if not re.fullmatch(r"[0-9a-f]{40}", commit or "") or set(commit) == {"0"}:
+        raise RecordFailure(f"期限前の最後の main の更新（{last.get('activity_type')}）の commit の ID の形が違う・main が無い: {commit!r}")
     if git_out(["cat-file", "-e", f"{commit}^{{commit}}"], repo)[0] != 0:
         raise RecordFailure(f"commit {commit} が手元に無い（git fetch origin をしてからやり直す）")
     for p in (f"output/{date}/{CSV_NAME}", f"output/{date}/pickup_scores.json", "axis_record.py"):
@@ -702,7 +805,7 @@ def cmd_restore(date: str, reason: str, now: datetime = None, output_dir: Path =
     date_dir.mkdir(parents=True, exist_ok=True)
     with file_lock(date_dir / LOCK_NAME):
         path = date_dir / RECORD_NAME
-        rec = load_json_file(path) or new_record(date)
+        rec = load_record(path) or new_record(date)
         sched_problem = merge_schedule(rec, computed["schedule"], at)
         if sched_problem:
             raise RecordFailure(f"復元: {sched_problem}")
@@ -710,7 +813,8 @@ def cmd_restore(date: str, reason: str, now: datetime = None, output_dir: Path =
             atomic_write_json(path, rec)
             raise RecordFailure(f"期限前の commit でも予定のレースを確定できない: {computed['schedule']['reason']}")
         meta = {**inner_meta, "restore": {"restored_at": at, "reason": reason.strip(), "input_commit": commit,
-                                          "push_timestamp": last["timestamp"]}}
+                                          "push_timestamp": last["timestamp"],
+                                          "activity_type": last.get("activity_type")}}
         problems = merge_computed(rec, computed, "復元", meta, at)
         atomic_write_json(path, rec)
     print(f"{date}: 復元（期限前の push {last['timestamp']}・commit {commit[:7]}）。"
