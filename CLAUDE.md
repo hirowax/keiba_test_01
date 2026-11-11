@@ -119,6 +119,7 @@ netkeiba/
 │   ├── verify_results.py     # 結果取得後の全頭照合（馬番・馬ID・馬名・レースID）
 │   ├── calibrate_threshold.py # 🔥閾値を過去データから自動計算
 │   ├── paper_trade.py        # ペーパートレード台帳 generate/settle/report（Issue #3）
+│   ├── axis_record.py        # 買い目の軸の再検証の記録 record・欠けの検査 check・記録の復元 restore（2026-11-12〜）
 │   ├── rescore.py            # 停止中（2026-11-05〜。古い前走キャッシュを使うため。実行すると理由を出して止まる）
 │   ├── build_horse_style.py  # コーナー通過順から脚質推定・horse_style.json更新
 │   └── export_json.py        # CSV/Excel → JSON変換 + dates.json生成（GitHub Pages用）
@@ -152,6 +153,7 @@ netkeiba/
 │   │   ├── race_conditions.json # 馬場・天気・距離・クラス等
 │   │   ├── payouts_jra.json     # JRA公式払戻
 │   │   ├── paper_bets.json      # ペーパートレード買い目・精算結果
+│   │   ├── axis_candidates.json # 買い目の軸の再検証の記録（前日の採点の後に書き、書き換えない。2026-11-12〜）
 │   │   └── invalidated.json     # 無効にしたレースと理由（ある日だけ）
 │   ├── horse_db.json         # 旧・馬別前走データ キャッシュ（2026-11-05 から採点に使わない）
 │   ├── horse_pedigree.json   # 馬別血統（父・母父）永続キャッシュ
@@ -179,7 +181,8 @@ cd ~/Desktop/netkeiba
 3. `calibrate_threshold.py` → 🔥閾値の再計算（条件を満たさなければ更新しない）
 4. `export_json.py` → JSON 変換・dates.json 更新
 5. `paper_trade.py generate` → ペーパートレードの買い目
-6. `git push` → GitHub Pages 自動更新（1〜2分後）
+6. `axis_record.py record` → 買い目の軸の再検証の記録（失敗しても続行。`run_cron.sh` が LINE で知らせる）
+7. `git push` → GitHub Pages 自動更新（1〜2分後）
 
 ### 2. 初回・クッキー切れ時のログイン
 
@@ -366,6 +369,7 @@ Issue管理・スケジュール・担当割当は `docs/betting_workflow_issues
   - `pickup_scores.json` がない場合でもレース一覧ページから race_id を取得する
   - 取得後に `verify_results.py` で全頭照合し、不一致があれば LINE で通知する（公開は続ける。2026-11-02〜）
   - `output/{date}/` だけを commit する（`horse_pedigree.json` は含まれない）
+- **軸の再検証の記録の検査**: `run_cron.sh` の最初で毎日 `axis_record.py check` を動かし、記録の欠けと、水曜日の期限を過ぎた結果・払戻の欠けを LINE で知らせる（成績は出さない）。記録の失敗は `run.sh` の出力の印 `AXIS_RECORD_FAILED` で知らせる。開始日（`axis_record.AXIS_START_DATE`）が未設定のあいだは検査しない。設計は `docs/axis_record_design_202611.md`、計画は `docs/axis_recheck_plan_202611.md`
 - ログは `cron.log`。LINE通知（成功/失敗）は `.env` の LINE_TOKEN / LINE_USER_ID
 - **カレンダー**: `jra_calendar_YYYY.json`（JRA公式ICSから取得）。年末に翌年分を取得する
 - **デプロイ**: GitHub（hirowax/keiba_test_01・public）の main への push で GitHub Pages が1〜2分で更新
