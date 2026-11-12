@@ -19,6 +19,15 @@
   着順が「除」（競走除外。発走していない）の行は前走に選ばず飛ばす（続けて何行でも）。飛ばした次の行は今までと同じ規則で読み、
   知らない表記・読めない行なら取得失敗（さらに古い行へは進まない）。飛ばした後に行が無ければ、前走なしとは確かめられないので
   取得失敗。飛ばした行は skipped_rows、選んだ理由は selected_reason に残す。「中」（競走中止）は発走しているので今までどおり前走。
+- 2026-11-12（実ページの確認 research/prev_rows_check_20261112/ と外部レビュー）:
+  - 着順「取」（出走取消）も「除」と同じく飛ばす。結果の記録で「取消」の中央の馬5頭で、馬ページの同じレースの行がすべて「取」だった。
+  - 前走が障害戦（距離が「障」で始まる）で、着順・人気が数字、指数のセルが空白だけの行は、状態「指数が空（障害戦）」。
+    ページが正常なときだけ（JUMP_PAGE_CHECKS）。指数だけを使わず（前走指数の加点・レース内1位の比較の対象外）、
+    日付・人気・着順・距離は採点に渡す（中4週・前走好走・同距離は今の規則どおり）。正常と確かめられなければ取得失敗のまま。
+  - 初出走: 成績の表が無く、成績の欄に「競走データがありません」が1つだけあり、ページの馬ID・馬名・見出しが正常なら「前走なし」。
+    「競走データがありません」は存在しない馬IDのページにも出るので、その文字だけでは前走なしにしない。
+  - 対象日より前の行が、確かめた発走していない表記（取・除）だけの馬も、ページが正常なら「前走なし」（実際に出走した行が無い）。
+  - ページが正常かの確かめ（page_identity）は、この3つの「正常な値なし」のときだけ行う（取れた値は今までどおり）。
 """
 import json
 import logging
@@ -27,16 +36,18 @@ import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-PREV_FETCH_VERSION = "見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_除外の行は飛ばす_20261106"
-TOP1_RULE = "比較値が不明なら保留_前走なしと中止等は対象外_20261105"
+PREV_FETCH_VERSION = "見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_除外取消の行は飛ばす_障害戦の指数の空_初出走_20261112"
+TOP1_RULE = "比較値が不明なら保留_前走なしと中止等と障害戦は対象外_20261112"
 
 OK = "取れた"
 NO_PREV = "前走なし"
 IDX_EMPTY = "指数が空（着順が数字でない）"   # 競走中止など。指数が無いことが分かっている（正常）
+JUMP_IDX_EMPTY = "指数が空（障害戦）"   # 前走が障害戦で指数のセルが空（ページが正常なときだけ。2026-11-12）
 FAILED = "取得失敗"
 AFTER_DEADLINE = "期限後の取得"   # 期限（対象日 00:00 JST）の後に取り終えた値。採点にも再利用にも使わない
 SCRATCHED = "取消・除外（出馬表）"   # 候補が出馬表で取消・除外。前走データを取らず、品質の判定の対象外
-REUSABLE_STATUSES = {OK, NO_PREV, IDX_EMPTY}
+REUSABLE_STATUSES = {OK, NO_PREV, IDX_EMPTY, JUMP_IDX_EMPTY}
+IDX_UNAVAILABLE_STATUSES = {NO_PREV, IDX_EMPTY, JUMP_IDX_EMPTY}   # 指数が無いと分かっている（レース内1位の比較の対象外）
 USABLE_STATUSES = REUSABLE_STATUSES   # 採点に使える状態
 # 品質の判定（data_quality.race_quality_issues）で、候補の状態として問題なしとするもの。
 # 出馬表で取消・除外の候補は採点もしないので対象外（問題にしない）
@@ -70,8 +81,12 @@ CONFIRMED_NONNUMERIC_RANKS = {"中": "競走中止"}
 # 前走に選ばず飛ばす着順（表記 → 意味）。発走していないレース。実ページで確かめた表記だけを入れる。
 # - 「除」: 競走除外（2026-11-06、tests/fixtures/horse_2020103876_20261106.html・horse_2021104929_20261106.html。
 #   人気・指数は空。自前の結果の状態「除外」と一致し、1頭は JRA 公式の払戻ページでも確かめた）
-# 取消の表記（「取」と見込んでいる）は確かめていないので、ここに入れない（取得失敗のまま）
-SKIP_RANKS = {"除": "競走除外"}
+# - 「取」: 出走取消（2026-11-12、research/prev_rows_check_20261112/。結果の記録で「取消」の中央の馬5頭の馬ページで、
+#   同じレース（レースIDで照合）の行がすべて「取」、人気・オッズ・タイム・指数は空。地方の1件（浦和）も同じ表示）
+SKIP_RANKS = {"除": "競走除外", "取": "出走取消"}
+# 初出走の馬のページの成績の欄の表示（2026-11-12 確認。存在しない馬IDのページにも出るので、これだけでは決めない）
+NO_RESULTS_TEXT = "競走データがありません"
+HORSE_URL = "https://db.netkeiba.com/horse/{}/"
 
 
 class FetchError(Exception):
@@ -111,15 +126,89 @@ def _header_text(th) -> str:
     return th.get_text(strip=True)
 
 
-def parse_results_table(html: str, target_date: str) -> dict:
+def _norm_name(s) -> str:
+    return re.sub(r"\s+", "", s or "")
+
+
+def page_identity(soup, horse_id, horse_name) -> list:
+    """ページがその馬の正常なページかを確かめ、問題の一覧を返す（空なら正常）。2026-11-12 実ページで確認した形:
+    canonical の URL が https://db.netkeiba.com/horse/{馬ID}/、.horse_title h1 が馬名、#horse_results_box の見出しが
+    「{馬名}の競走成績」。存在しない馬IDのページは、馬名が空・見出し「の競走成績」・canonical が /horse//。
+    馬名は出馬表の馬名と照らす（許す違いは空白だけ）。"""
+    if not horse_id or not horse_name:
+        return ["馬ID・出馬表の馬名が渡されていない"]
+    issues = []
+    canon = soup.find_all("link", rel="canonical")
+    want = HORSE_URL.format(horse_id)
+    if len(canon) != 1 or canon[0].get("href") != want:
+        issues.append(f"canonical の URL が {want} 1つ、ではない（{[c.get('href') for c in canon]}）")
+    h1 = soup.select(".horse_title h1")
+    name = h1[0].get_text(strip=True) if len(h1) == 1 else None
+    if len(h1) != 1:
+        issues.append(f"馬名の要素が{len(h1)}個")
+    elif not name:
+        issues.append("馬名が空")
+    elif _norm_name(name) != _norm_name(horse_name):
+        issues.append(f"ページの馬名「{name}」が出馬表の馬名「{horse_name}」と違う")
+    boxes = soup.select("#horse_results_box")
+    if len(boxes) != 1:
+        issues.append(f"成績の欄が{len(boxes)}個")
+    else:
+        h2 = boxes[0].find_all("h2")
+        if len(h2) != 1 or (name and h2[0].get_text(strip=True) != f"{name}の競走成績"):
+            issues.append(f"成績の欄の見出しが「{name}の競走成績」1つ、ではない（{[x.get_text(strip=True) for x in h2]}）")
+    return issues
+
+
+def _no_results_marks(soup) -> int:
+    """ページの中の「競走データがありません」の数"""
+    return len(soup.find_all(string=lambda t: t and NO_RESULTS_TEXT in t))
+
+
+def _no_table(soup, horse_id, horse_name) -> dict:
+    """成績の表が無いページ。初出走（正常なページで「競走データがありません」が成績の欄に1つだけ）なら前走なし"""
+    issues = page_identity(soup, horse_id, horse_name)
+    msgs = soup.select("#horse_results_box div.contents")
+    if not (len(msgs) == 1 and msgs[0].get_text(strip=True) == NO_RESULTS_TEXT and _no_results_marks(soup) == 1):
+        issues.append(f"成績の欄に「{NO_RESULTS_TEXT}」が1つだけ、ではない")
+    if issues:
+        return _failed("成績の表が無い（" + "; ".join(issues) + "）")
+    return {"status": NO_PREV, "reason": f"初出走: 成績の表が無く「{NO_RESULTS_TEXT}」（ページの馬ID・馬名・見出しを確かめた）",
+            "headers": None, "row": None, "values": None}
+
+
+def _jump_page_issues(soup, horse_id, horse_name, parsed, col) -> list:
+    """障害戦の行の指数の空を正常とするための、ページの確かめ（2026-11-12 外部レビュー）。問題の一覧を返す。
+    - ページの馬ID・馬名・見出しが正常（page_identity）。列の対応は parse_results_table で確かめ済み。
+    - ログインした状態の証拠: 指数の列に「**」（ログインしていない状態の表示）が1つも無く、かつ最新の行（日付が最も新しい行）
+      より前の行に数字の指数が1つ以上ある（ログインしていない状態では、最新の行より前の指数は「**」になる。2026-11-05 確認）。
+      最新の行より前に数字の指数が無い馬（障害戦しか走っていない馬など）は、ログインの状態を確かめられないので取得失敗のまま。"""
+    issues = page_identity(soup, horse_id, horse_name)
+    texts = [(d, _cell_text(tds[col["idx"]])) for d, tds in parsed]
+    if any(t == "**" for _, t in texts):
+        issues.append("指数の列に「**」がある（ログインしていない状態の表示）")
+    newest = max(d for d, _ in texts)
+    if not any(INT_RE.match(t) for d, t in texts if d != newest):
+        issues.append("最新の行より前の行に数字の指数が無い（ログインした状態を確かめられない）")
+    return issues
+
+
+def parse_results_table(html: str, target_date: str, horse_id: str = None, horse_name: str = None) -> dict:
     """馬ページの HTML から、対象日より前の最新の行を選んで値を返す。
     戻り値: {"status", "reason", "headers", "row": {...元の文字...}, "values": {...変換後...}}
-    状態の決め方は docs/prev_cache_fix_plan_202611.md 案A。"""
+    状態の決め方は docs/prev_cache_fix_plan_202611.md 案A。
+    horse_id・horse_name（出馬表の馬名）は、正常な値なし（初出走・発走していない行だけ・障害戦の指数の空）のときの
+    ページの確かめに使う。渡されなければ、それらは取得失敗のまま（2026-11-12）。"""
     from bs4 import BeautifulSoup
     soup = BeautifulSoup(html, "html.parser")
-    table = soup.find("table", class_="db_h_race_results")
-    if table is None:
-        return _failed("成績の表が無い")
+    tables = soup.find_all("table", class_="db_h_race_results")
+    if len(tables) > 1:
+        return _failed(f"成績の表が{len(tables)}個")
+    if not tables:
+        return _no_table(soup, horse_id, horse_name)
+    table = tables[0]
+    if _no_results_marks(soup):
+        return _failed(f"成績の表と「{NO_RESULTS_TEXT}」の両方がある")
     header_cells = None
     for tr in table.find_all("tr"):
         ths = tr.find_all("th")
@@ -169,11 +258,21 @@ def parse_results_table(html: str, target_date: str) -> dict:
         chosen = (d, tds)
         break
     if chosen is None:
-        return _with_skipped(_failed(f"発走していない行（{'・'.join(sorted({x['rank'] for x in skipped}))}）を"
-                                     f"{len(skipped)}行飛ばした後に行が無い（前走なしとは確かめられない）",
-                                     headers=header_cells), skipped)
+        kinds = "・".join(sorted({x["rank"] for x in skipped}))
+        issues = page_identity(soup, horse_id, horse_name)
+        if issues:
+            return _with_skipped(_failed(f"発走していない行（{kinds}）を{len(skipped)}行飛ばした後に行が無く、"
+                                         f"ページを確かめられない（前走なしとは確かめられない）: {'; '.join(issues)}",
+                                         headers=header_cells), skipped)
+        e = {"status": NO_PREV, "reason": f"対象日より前に実際に出走した行が無い（発走していない行（{kinds}）だけ{len(skipped)}行。"
+                                          f"ページの馬ID・馬名・見出しを確かめた）",
+             "headers": header_cells, "row": None, "values": None}
+        e = _with_skipped(e, skipped)
+        e["selected_reason"] = "対象日より前に実際に出走した行が無い"
+        return e
     d, tds = chosen
-    return _with_skipped(_read_row(d, tds, col, header_cells), skipped)
+    return _with_skipped(_read_row(d, tds, col, header_cells,
+                                   lambda: _jump_page_issues(soup, horse_id, horse_name, parsed, col)), skipped)
 
 
 def _with_skipped(e: dict, skipped: list) -> dict:
@@ -183,8 +282,9 @@ def _with_skipped(e: dict, skipped: list) -> dict:
     return e
 
 
-def _read_row(d, tds, col, header_cells) -> dict:
-    """前走に選んだ1行を読む（2026-11-05 からの規則。2026-11-06 に parse_results_table から分けた）"""
+def _read_row(d, tds, col, header_cells, jump_issues=None) -> dict:
+    """前走に選んだ1行を読む（2026-11-05 からの規則。2026-11-06 に parse_results_table から分けた）。
+    jump_issues: 障害戦の行の指数の空を正常としてよいかを確かめる関数（問題の一覧を返す。2026-11-12）"""
     raw = {k: _cell_text(tds[i]) for k, i in col.items()}
     link = tds[col["race_name"]].find("a", href=RACE_LINK_RE)
     raw["race_id"] = RACE_LINK_RE.search(link["href"]).group(1) if link else ""
@@ -213,6 +313,14 @@ def _read_row(d, tds, col, header_cells) -> dict:
         status, reason = IDX_EMPTY, f"指数が空で、着順が「{raw['rank']}」（{CONFIRMED_NONNUMERIC_RANKS[raw['rank']]}）"
     elif values["rank"] is None:
         return _failed(f"着順が「{raw['rank']}」なのに指数が空でない（{raw['idx']!r}）", headers=header_cells, raw=raw)
+    elif raw["idx"] == "" and raw["dist"].startswith("障"):
+        # 障害戦の行で、着順・人気が数字（上で確かめ済み）、指数のセルが空白だけ（2026-11-12）
+        issues = jump_issues() if jump_issues else ["ページを確かめる材料が無い"]
+        if issues:
+            return _failed("障害戦の行で指数が空だが、正常と確かめられない: " + "; ".join(issues),
+                           headers=header_cells, raw=raw)
+        values["idx"] = None
+        status, reason = JUMP_IDX_EMPTY, "障害戦の行で指数が空（ページの馬ID・馬名・見出し・ログインした状態を確かめた）"
     elif INT_RE.match(raw["idx"]):
         v = int(raw["idx"])
         if v >= IDX_MAX:
@@ -229,18 +337,19 @@ def _failed(reason, headers=None, raw=None):
 
 
 # ── 取得（ブラウザ）──
-def fetch_entry(page, horse_id: str, target_date: str, browse, settle) -> dict:
-    """馬ページを開いて読み取る。browse(page, url) でページを開き、settle(page) で読み込みを待つ。"""
-    url = f"https://db.netkeiba.com/horse/{horse_id}/"
+def fetch_entry(page, horse_id: str, target_date: str, browse, settle, horse_name: str = None) -> dict:
+    """馬ページを開いて読み取る。browse(page, url) でページを開き、settle(page) で読み込みを待つ。
+    horse_name: 出馬表の馬名（正常な値なしのときのページの確かめに使う。2026-11-12）"""
+    url = HORSE_URL.format(horse_id)
     started = now_jst()
     try:
         browse(page, url)
         settle(page)
         html = page.content()
-        e = parse_results_table(html, target_date)
+        e = parse_results_table(html, target_date, horse_id, horse_name)
     except Exception as ex:  # ページが開けない等
         e = _failed(f"ページを開けない（{type(ex).__name__}: {ex}）")
-    e.update(horse_id=horse_id, target_date=target_date, fetch_version=PREV_FETCH_VERSION,
+    e.update(horse_id=horse_id, horse_name_expected=horse_name, target_date=target_date, fetch_version=PREV_FETCH_VERSION,
              fetch_started_at=started.isoformat(timespec="seconds"),
              fetched_at=now_jst().isoformat(timespec="seconds"), source="取得")
     return mark_deadline(e)
@@ -409,8 +518,9 @@ def reusable_entries(out_dir: Path, target_date: str) -> dict:
 
 # ── 採点への受け渡し ──
 def prev_db_entry(e: dict):
-    """score_horses に渡す前走の値（今までの horse_db と同じ形）。取れた・指数が空（着順が数字でない）だけ"""
-    if e is None or e.get("status") not in (OK, IDX_EMPTY):
+    """score_horses に渡す前走の値（今までの horse_db と同じ形）。取れた・指数が空（着順が数字でない・障害戦）だけ。
+    指数が空の状態では prev_idx が空（指数の加点なし）。日付・人気・着順・距離はそのまま渡す"""
+    if e is None or e.get("status") not in (OK, IDX_EMPTY, JUMP_IDX_EMPTY):
         return None
     v = e["values"]
     d = v["date"]
@@ -423,7 +533,7 @@ def prev_db_entry(e: dict):
 
 def race_top1(active: dict, entries: dict) -> dict:
     """前走指数レース内1位の比較。active: {馬番: 馬ID}（取消・除外を除く）、entries: {馬ID: entry}
-    比較に必要な値が分からない馬がいれば保留（race_max=None）。前走なし・指数が空（着順が数字でない）は対象外。"""
+    比較に必要な値が分からない馬がいれば保留（race_max=None）。前走なし・指数が空（着順が数字でない・障害戦）は対象外。"""
     compared, excluded, unknown = {}, {}, {}
     for num, hid in active.items():
         e = entries.get(hid) if hid else None
@@ -431,7 +541,7 @@ def race_top1(active: dict, entries: dict) -> dict:
             unknown[num] = "馬IDが無い"
         elif e is None:
             unknown[num] = "入力が無い"
-        elif e["status"] in (NO_PREV, IDX_EMPTY):
+        elif e["status"] in IDX_UNAVAILABLE_STATUSES:
             excluded[num] = e["status"]
         elif e["status"] == OK:
             compared[num] = e["values"]["idx"]

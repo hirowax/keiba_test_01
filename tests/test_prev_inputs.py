@@ -443,7 +443,7 @@ class CollectFlowTest(unittest.TestCase):
         shutuba = {"horse_id_map": {"1": "A", "2": "B", "3": "C"}, "scratched_nums": {"2": "取消"}}
         fetched = []
 
-        def fake_fetch(page, hid, date, browse, settle):
+        def fake_fetch(page, hid, date, browse, settle, horse_name=None):
             fetched.append(hid)
             return entry(pi.OK, idx={"A": 80, "C": 70}[hid])
         with tempfile.TemporaryDirectory() as t:

@@ -605,7 +605,7 @@ class ScoreRaceFlowTest(unittest.TestCase):
         lock = pi.DateLock(out)
         rec = pi.RunRecord(out, "20261107", "test", rp.SCORING_VERSION, lock)
 
-        def fake_fetch(page, hid, date, browse, settle):
+        def fake_fetch(page, hid, date, browse, settle, horse_name=None):
             return {"status": pi.NO_PREV, "reason": "", "values": None, "target_date": "20261107",
                     "fetched_at": "2026-11-06T17:30:00+09:00", "fetch_version": pi.PREV_FETCH_VERSION,
                     "source": "取得", "horse_id": hid}

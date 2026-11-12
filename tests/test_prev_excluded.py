@@ -72,7 +72,7 @@ class SkipRuleTest(unittest.TestCase):
         self.assertEqual((e["status"], e["values"]["date"], e["values"]["idx"]), (pi.IDX_EMPTY, "20260912", None))
 
     def test_excluded_then_unknown_spelling_is_failed_without_going_older(self):
-        for rank in ("取", "失", "", "不明"):
+        for rank in ("失", "", "不明"):   # 「取」は 2026-11-12 から飛ばす表記（tests/test_prev_rows_20261112.py）
             e = self.parse([self.EXCL1, ("2026/09/12", "202606040311", "", rank, "ダ1200", ""), self.RUN])
             self.assertEqual(e["status"], pi.FAILED, rank)
             self.assertIsNone(e["values"])
@@ -83,11 +83,12 @@ class SkipRuleTest(unittest.TestCase):
         self.assertEqual(e["status"], pi.FAILED)
 
     def test_only_excluded_rows_is_failed_not_no_prev(self):
-        """飛ばした後に行が無い → 前走なしとは確かめられないので取得失敗（2026-11-06 外部レビュー指摘）"""
+        """飛ばした後に行が無い → ページを確かめられなければ前走なしとは確かめられないので取得失敗（2026-11-06 外部レビュー指摘）。
+        ページが正常なら前走なし（2026-11-12。tests/test_prev_rows_20261112.py）。ここは馬ID・馬名を渡さない呼び方"""
         for rows in ([self.EXCL1], [self.EXCL1, self.EXCL2]):
             e = self.parse(rows)
             self.assertEqual(e["status"], pi.FAILED)
-            self.assertIn("飛ばした後に行が無い", e["reason"])
+            self.assertIn("飛ばした後に行が無く", e["reason"])
             self.assertEqual(len(e["skipped_rows"]), len(rows))
 
     def test_no_rows_before_target_is_still_no_prev(self):
