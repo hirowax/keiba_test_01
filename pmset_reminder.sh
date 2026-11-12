@@ -2,7 +2,8 @@
 # 夏季開催前後のpmset変更リマインド
 # crontab:
 #   0 8 29 6 * ~/Desktop/netkeiba/pmset_reminder.sh summer >> ~/Desktop/netkeiba/cron.log 2>&1
-#   0 8 28 9 * ~/Desktop/netkeiba/pmset_reminder.sh winter >> ~/Desktop/netkeiba/cron.log 2>&1
+#   0 8 31 8 * ~/Desktop/netkeiba/pmset_reminder.sh winter >> ~/Desktop/netkeiba/cron.log 2>&1
+#   （2026-11-12 に実際の crontab -l に合わせた。b990c79 で 7/25〜8/30 の拡大に合わせて crontab を変えたとき、このコメントが古いままだった）
 
 cd "$(dirname "$0")"
 

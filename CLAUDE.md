@@ -364,12 +364,12 @@ Issue管理・スケジュール・担当割当は `docs/betting_workflow_issues
 - **pmset**: 毎日16:55にMac自動スリープ解除（Mac を閉じていると動かない）
 - **データ取得**: `0 17 * * * ~/Desktop/netkeiba/run_cron.sh` — 翌日がJRA開催日なら `run.sh`
 - **結果取得**: 当日がJRA開催日なら `scrape_results.py` を実行して結果→push
-  - `30 18 * 1-6,10-12 * ~/Desktop/netkeiba/run_results_cron.sh`（通常期：18:30）
-  - `30 19 * 7-9 *       ~/Desktop/netkeiba/run_results_cron.sh`（夏期7〜9月：19:30）
+  - `30 18 * 1-6,9-12 * ~/Desktop/netkeiba/run_results_cron.sh`（通常期：18:30）
+  - `30 19 * 7-8 *      ~/Desktop/netkeiba/run_results_cron.sh`（夏期7〜8月：19:30。夏の競走時間帯の拡大 7/25〜8/30 に合わせている。正は `crontab -l`。2026-11-12 に文書を合わせた）
   - `pickup_scores.json` がない場合でもレース一覧ページから race_id を取得する
   - 取得後に `verify_results.py` で全頭照合し、不一致があれば LINE で通知する（公開は続ける。2026-11-02〜）
   - `output/{date}/` だけを commit する（`horse_pedigree.json` は含まれない）
-- **軸の再検証の記録の検査**: `run_cron.sh` の最初で毎日 `axis_record.py check` を動かし、記録の欠けと、水曜日の期限を過ぎた結果・払戻の欠けを LINE で知らせる（成績は出さない）。記録の失敗は `run.sh` の出力の印 `AXIS_RECORD_FAILED` で知らせる。開始日（`axis_record.AXIS_START_DATE`）が未設定のあいだは検査しない。設計は `docs/axis_record_design_202611.md`、計画は `docs/axis_recheck_plan_202611.md`
+- **軸の再検証の記録の検査**: `run_cron.sh` の最初で毎日 `axis_record.py check` を動かし、記録の欠けと、水曜日の期限を過ぎた結果・払戻の欠けを LINE で知らせる（成績は出さない）。記録の失敗は `run.sh` の出力の印 `AXIS_RECORD_FAILED` で知らせる。記録と検査を始める日（`axis_record.AXIS_START_DATE`。2026-11-14〜）が未設定のあいだは検査しない。正式な評価の開始日は未定で、それより前の記録は試運転（計画 4.3）。設計は `docs/axis_record_design_202611.md`、計画は `docs/axis_recheck_plan_202611.md`
 - ログは `cron.log`。LINE通知（成功/失敗）は `.env` の LINE_TOKEN / LINE_USER_ID
 - **カレンダー**: `jra_calendar_YYYY.json`（JRA公式ICSから取得）。年末に翌年分を取得する
 - **デプロイ**: GitHub（hirowax/keiba_test_01・public）の main への push で GitHub Pages が1〜2分で更新

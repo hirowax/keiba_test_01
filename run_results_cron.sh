@@ -1,8 +1,8 @@
 #!/bin/bash
 # レース結果を当日18:30(夏19:30)に自動取得してpushするcronラッパー
-# crontab:
-#   30 18 * 1-6,10-12 * ~/Desktop/netkeiba/run_results_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1
-#   30 19 * 7-9 *       ~/Desktop/netkeiba/run_results_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1
+# crontab（2026-11-12 に実際の crontab -l に合わせた。夏の競走時間帯の拡大 7/25〜8/30 に合わせて 7〜8月を夏期にしている）:
+#   30 18 * 1-6,9-12 * ~/Desktop/netkeiba/run_results_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1
+#   30 19 * 7-8 *      ~/Desktop/netkeiba/run_results_cron.sh >> ~/Desktop/netkeiba/cron.log 2>&1
 #
 # 動作: 今日がJRA開催日なら scrape_results.py を実行してpush
 
