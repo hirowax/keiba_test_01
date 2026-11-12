@@ -69,6 +69,7 @@ def collect_prev_for_race(page, date: str, race_label: str, race_id: str, shutub
     再利用してよい値（prev_inputs.reusable_entries）が無い馬だけ馬ページを取る。失敗しても前の値に戻らない。
     戻り値: (採点に渡す前走の値 {馬ID: dict}, 前走指数レース内1位の判定, quality.prev_status)"""
     active = active_horse_ids(shutuba_data)
+    names = shutuba_data.get("horse_name_full") or {}   # 出馬表の馬名（正常な値なしのときのページの確かめに使う。2026-11-12）
     entries = {}
     for num, hid in active.items():
         if not hid:
@@ -76,7 +77,7 @@ def collect_prev_for_race(page, date: str, race_label: str, race_id: str, shutub
         if hid in reusable:
             entries[hid] = dict(reusable[hid], source="再利用")
             continue
-        e = fetch_entry(page, hid, date, human_browse, _settle_horse_page)
+        e = fetch_entry(page, hid, date, human_browse, _settle_horse_page, horse_name=names.get(num))
         if e["status"] == FAILED:
             logger.warning(f"  {race_label} {num}番 前走データ取得失敗: {e['reason']}")
         entries[hid] = e

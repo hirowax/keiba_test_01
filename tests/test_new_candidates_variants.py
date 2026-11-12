@@ -3,6 +3,12 @@
 実ページの表（tests/fixtures/rank_202605041007_average.html、東京7R。「96*」の3番が1位）を3指数とも同じ表として使う。
 この表では、今の定義の候補に3番が入り、旧方式（6f2ed8d）では「96*」を読めずに3番が外れる（=新しく候補）。
 
+2026-11-12: 固定した v5.1 の評価は、v5.2 への移行で打ち切った（docs/new_candidates_criteria_202611.md の改訂の記録）。
+同じ日の前走の修正で、固定した前走の関数・定数が変わり、今のコードでは評価は止まる。テストを2つに分けた（外部レビュー）:
+- FrozenCheckTest: 今の本当のコードで、変更を見つけて止まり、出力を作らないことを確かめる（固定の検査は差し替えない）。
+- VariantsTest: 作る処理（新しく候補を外す・買い目への混入の検査・前の記録を残す）の単体テスト。テストの中だけで固定の検査を
+  差し替える。本番のコードに検査を飛ばす仕組みは足さない。テストの入力の前走の版は、評価が固定した版（ncv.FIXED）を使う。
+
 実行: python3 -m unittest discover -s tests -v
 """
 import io
@@ -20,7 +26,6 @@ from fixture_pages import read_fixture  # noqa: E402
 import new_candidates_variants as ncv  # noqa: E402
 import scraper  # noqa: E402
 from data_quality import build_quality  # noqa: E402
-from prev_inputs import PREV_FETCH_VERSION  # noqa: E402
 
 DATE = "20261107"
 LABEL = "東京7R"
@@ -35,14 +40,16 @@ def good_quality(cands):
     src = {"index_reader_version": scraper.INDEX_READER_VERSION,
            "candidate_rule_version": ncv.FIXED["candidate_rule_version"],
            "races": {LABEL: {"modes": {"近走平均": "type=rank", "当該距離": "type=rank", "当該コース": "type=rank"}}}}
-    prev = {"prev_fetch": PREV_FETCH_VERSION, "prev_inputs_run": "r",
+    prev = {"prev_fetch": ncv.FIXED["prev_fetch_version"], "prev_inputs_run": "r",   # 評価が固定した版（今の定数ではない）
             "prev_status": {"candidates": {n: "取れた" for n in cands}, "others": {}, "top1": "判定"}}
     return build_quality("v", src, LABEL, prev=prev, table_check={"version": "t", "ok": True, "modes": {}, "problems": []},
                          data_top_reader="test",
                          pages={"shutuba": {"path": "p", "sha256": "h"}, "data_top": {"path": "p", "sha256": "h"}})
 
 
-class VariantsTest(unittest.TestCase):
+class Base(unittest.TestCase):
+    FREEZE_PASSES = False   # True なら、テストの中だけで固定の検査を通す（作る処理の単体テスト）
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         root = Path(self.tmp.name)
@@ -61,6 +68,8 @@ class VariantsTest(unittest.TestCase):
                                          "quality": good_quality(self.new_def)}}}
         self.patches = [mock.patch.object(ncv, "OUTPUT_DIR", self.out), mock.patch.object(ncv, "SUMMARY_DIR", self.summ),
                         mock.patch.object(ncv, "load_index_tables", lambda p: tables())]
+        if self.FREEZE_PASSES:
+            self.patches.append(mock.patch.object(ncv, "check_frozen", lambda: []))
         for p in self.patches:
             p.start()
 
@@ -81,6 +90,33 @@ class VariantsTest(unittest.TestCase):
         files = sorted((self.out / DATE / "new_candidates_variants").glob("*.json")) \
             if (self.out / DATE / "new_candidates_variants").exists() else []
         return code, buf.getvalue(), files
+
+
+class FrozenCheckTest(Base):
+    """今の本当のコードで、固定の検査が変更を見つけて止まる（2026-11-12 の前走の修正で、前走の4関数と2定数が変わった）"""
+
+    def test_current_code_is_detected_and_stops_without_output(self):
+        problems = ncv.check_frozen()
+        for k in ("prev_inputs.parse_results_table", "prev_inputs._read_row", "prev_inputs.prev_db_entry",
+                  "prev_inputs.race_top1"):
+            self.assertTrue(any(f"関数の中身が変わった: {k}" in x for x in problems), (k, problems))
+        for k in ("prev_inputs.PREV_FETCH_VERSION", "prev_inputs.SKIP_RANKS"):
+            self.assertTrue(any(f"定数が変わった: {k}" in x for x in problems), (k, problems))
+        code, msg, files = self.run_script()
+        self.assertEqual(code, 2)
+        self.assertIn("固定したものが変わったので作らない", msg)
+        self.assertEqual(files, [])
+
+    def test_frozen_code_change_stops(self):
+        with mock.patch.dict(ncv.FROZEN_CODE, {"paper_trade.build_menus": "0000000000000000"}):
+            code, msg, files = self.run_script()
+        self.assertEqual(code, 2)
+        self.assertIn("関数の中身が変わった: paper_trade.build_menus", msg)
+        self.assertEqual(files, [])
+
+
+class VariantsTest(Base):
+    FREEZE_PASSES = True
 
     def test_eligible_race_has_both_variants_and_excludes_new_candidate(self):
         code, msg, files = self.run_script()
@@ -146,13 +182,6 @@ class VariantsTest(unittest.TestCase):
         _, _, f3 = self.run_script(changed)
         self.assertEqual(len(f3), 2)
         self.assertIn(f1[0], f3)
-
-    def test_frozen_code_change_stops(self):
-        with mock.patch.dict(ncv.FROZEN_CODE, {"paper_trade.build_menus": "0000000000000000"}):
-            code, msg, files = self.run_script()
-        self.assertEqual(code, 2)
-        self.assertIn("関数の中身が変わった", msg)
-        self.assertEqual(files, [])
 
     def test_leak_of_excluded_horse_into_bets_stops(self):
         """外す場合の買い目に新しく候補が入ったら止める（検査そのものが働くか）"""
