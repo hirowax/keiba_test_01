@@ -14,6 +14,7 @@ usage:
 
 import json
 import logging
+import os
 import random
 import re
 import sys
@@ -224,9 +225,17 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
 NON_FINISH_STATUSES = ("取消", "除外", "中止", "失格")
 
 
+def _corner_cell(tr):
+    """コーナー通過順のセル。実ページ（tests/fixtures/result_202605041106_torikeshi.html）で td.PassageRate と確認（2026-11-12）。
+    クラス名を明示して取る（位置やあいまいな正規表現で探さない）。無ければ None"""
+    return tr.find("td", class_="PassageRate")
+
+
 def parse_result_html(html: str, race_label: str = "") -> dict:
-    """結果ページの HTML を {"condition", "horses"(着順が数字の馬), "others"(着順が数字でない馬)} にする。
-    2026-11-02 まで、着順が数字でない行（取消・除外・中止・失格）は捨てていた（docs/index_top3_definition_202611.md）"""
+    """結果ページの HTML を {"condition", "horses"(着順が数字の馬), "others"(着順が数字でない馬), "problems"} にする。
+    2026-11-02 まで、着順が数字でない行（取消・除外・中止・失格）は捨てていた（docs/index_top3_definition_202611.md）。
+    problems（2026-11-12〜）: ページの形の異常（成績の表が無い・馬番や馬名が読めない行・着順のある行に通過順のセルが無い・
+    着順のある馬が0頭）。空でなければ、結果の取得はそのレースを「取得の失敗」として扱い、前に保存した値に上書きしない"""
     soup = BeautifulSoup(html, "html.parser")
 
     condition = parse_race_condition(soup)
@@ -234,6 +243,7 @@ def parse_result_html(html: str, race_label: str = "") -> dict:
 
     horses = []
     others = []  # 着順が数字でない馬（取消・除外・中止・失格・不明）
+    problems = []
 
     # メイン結果テーブル（.HorseList）
     table = soup.find("table", class_=re.compile(r"HorseList"))
@@ -245,6 +255,7 @@ def parse_result_html(html: str, race_label: str = "") -> dict:
     if table:
         rows = table.find_all("tr")
     else:
+        problems.append("成績の表が無い")
         # 最後の手段: page内の全trからそれらしい行を収集
         rows = soup.find_all("tr", class_=re.compile(r"HorseInfo|Horse\d"))
 
@@ -282,17 +293,24 @@ def parse_result_html(html: str, race_label: str = "") -> dict:
                 name = re.sub(r"\s+", "", name_cell.get_text())
 
         if not name or not num.isdigit():
-            if not finished:
-                log.warning(f"  {race_label}: 着順「{rank_text}」の行の馬番・馬名が読めない")
+            log.warning(f"  {race_label}: 着順「{rank_text}」の行の馬番・馬名が読めない")
+            problems.append(f"馬番・馬名が読めない行がある（着順「{rank_text}」）")
             continue
+
+        corner_cell = _corner_cell(tr)
+        corners_text = _text(corner_cell) if corner_cell else None
+        corners = parse_corner_order(corners_text) if corners_text else []
 
         if not finished:
             status = rank_text if rank_text in NON_FINISH_STATUSES else "不明"
             if status == "不明":
                 log.warning(f"  {race_label}: 着順の書き方が未知「{rank_text}」（{num}番 {name}）")
             others.append({"status": status, "rank_text": rank_text, "gate": gate,
-                           "num": num, "name": name, "horse_id": horse_id})
+                           "num": num, "name": name, "horse_id": horse_id,
+                           "corners_text": corners_text, "corners": corners})
             continue
+        if corner_cell is None:
+            problems.append(f"着順のある行に通過順のセル（td.PassageRate）が無い（{num}番）")
 
         # 性齢: 専用クラスがなく td.Horse_Info.Txt_C（馬名セルは Horse_Info のみ）
         sex_age = ""
@@ -364,12 +382,6 @@ def parse_result_html(html: str, race_label: str = "") -> dict:
             if 25.0 <= v <= 50.0:
                 last3f = v
 
-        # コーナー通過順
-        corners = []
-        corner_cell = tr.find("td", class_=re.compile(r"[Cc]orner|[Pp]assage"))
-        if corner_cell:
-            corners = parse_corner_order(_text(corner_cell))
-
         # 馬体重・増減
         hw, hw_diff = 0, 0
         hw_cell = tr.find("td", class_=re.compile(r"[Hh]orse[Ww]eight|Weight"))
@@ -400,16 +412,132 @@ def parse_result_html(html: str, race_label: str = "") -> dict:
             "place_odds":    place_odds_map.get(num),
             "last3f":        last3f,
             "corners":       corners,
+            "corners_text":  corners_text,
             "horse_weight":  hw,
             "horse_weight_diff": hw_diff,
         })
 
+    if not horses:
+        problems.append("着順のある馬が0頭")
     condition["num_horses"] = len(horses)
     log.info(f"  {race_label}: {len(horses)}頭 馬場={condition.get('condition','?')} "
              f"距離={condition.get('distance','?')}m 天気={condition.get('weather','?')}"
              + (f" 着順なし={[(o['num'], o['status']) for o in others]}" if others else ""))
 
-    return {"condition": condition, "horses": horses, "others": others}
+    return {"condition": condition, "horses": horses, "others": others, "problems": problems}
+
+
+SCRAPE_VERSION = "全レース_通過順はPassageRateを明示_形の異常は取得の失敗_レースごとに置き換え_20261112"
+RESULTS_ALL_NAME = "race_results_all.json"
+FETCH_LOG_NAME = "results_fetch_log.json"
+MAX_CONSECUTIVE_FAIL = 5          # rescrape_results_full.py と同じ（IPブロックなどを疑って止める）
+RETRY_SCHEDULE_DAYS = 14          # 予定を確定できなかった日の、JRA 公式の一覧だけの取り直しを試す範囲
+
+
+def _now_iso() -> str:
+    from prev_inputs import now_jst
+    return now_jst().isoformat(timespec="seconds")
+
+
+def _load_json(path: Path, default):
+    if not path.exists():
+        return default
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _write_json_atomic(path: Path, data, indent=2) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=indent)
+    os.replace(tmp, path)
+
+
+def refresh_jra_lists(date: str, cache: dict) -> None:
+    """JRA 公式の結果の一覧（月ごとのページ → 開催場・日のページ → 各レース）を取り直してキャッシュに足す。
+    scrape_jra_payouts.py の関数とキャッシュ（output/jra_cname_cache.json）を使う。失敗は例外"""
+    import scrape_jra_payouts as J
+    month_cname, reached = J.crawl_month_chain(date[:6], cache)
+    if month_cname is None:
+        raise RuntimeError(f"JRA 公式の {date[:6]} の月ごとのページに着けない（最古 {reached}）")
+    J.find_srl_links_for_month(month_cname, cache)
+    keys = sorted(k for k in cache.get("srl", {}) if k.startswith(f"{date}_"))
+    if not keys:
+        raise RuntimeError(f"JRA 公式に {date} の開催場・日のページが無い")
+    for k in keys:
+        J.find_sde_links_for_day(cache["srl"][k]["cname"], cache)
+    J.save_cache(cache)
+
+
+def schedule_check_for(date: str, race_id_map: dict, cache: dict, jra_error, extra_reason=None) -> dict:
+    from schedule_check import day_schedule, UNCONFIRMED
+    sc = day_schedule(date, race_id_map, cache)
+    sc["jra_checked_at"] = _now_iso()
+    sc["jra_error"] = jra_error
+    if jra_error and sc["status"] != UNCONFIRMED:
+        sc.update(status=UNCONFIRMED, reason=f"JRA 公式の一覧を取り直せなかった: {jra_error}")
+    if extra_reason:
+        sc.update(status=UNCONFIRMED, reason=extra_reason)
+    return sc
+
+
+def merge_all_results(existing: dict, date: str, race_id_map: dict, fetched: dict) -> tuple:
+    """race_results_all.json をレースごとに置き換える（計画 2.1 の 2026-11-12 変更）。
+    今回取れたレースだけ、着順・着順の無い馬・条件を一組で置き換え、取れなかったレースは前の値を残す。
+    戻り値 (新しい中身, {前の値を残したレース: 前の fetched_at})"""
+    data = existing or {"date": date, "complete": False, "races": {}}
+    data["date"] = date
+    data["race_ids"] = dict(race_id_map)
+    races = data.setdefault("races", {})
+    kept_old = {}
+    for label, rid in race_id_map.items():
+        if label in fetched:
+            races[label] = fetched[label]
+        elif label in races:
+            kept_old[label] = races[label].get("fetched_at")
+    # complete: 今回の取得の成否ではなく、保存済みのレースの集合が一覧とそろっていること
+    data["complete"] = set(races) == set(race_id_map)
+    return data, kept_old
+
+
+def append_fetch_log(out_dir: Path, attempt: dict) -> Path:
+    path = out_dir / FETCH_LOG_NAME
+    log_data = _load_json(path, {"attempts": []})
+    log_data.setdefault("attempts", []).append(attempt)
+    _write_json_atomic(path, log_data)
+    return path
+
+
+def retry_unconfirmed_schedules(today: str, cache: dict, output_dir: Path = OUTPUT_DIR) -> list:
+    """前の開催日で予定を確定できなかった日（schedule_check がある日だけ）について、JRA 公式の一覧だけを取り直す
+    （netkeiba にはアクセスしない）。戻り値は書き換えたファイルのパス"""
+    from datetime import timedelta
+    from schedule_check import CONFIRMED
+    changed = []
+    start = (datetime.strptime(today, "%Y%m%d") - timedelta(days=RETRY_SCHEDULE_DAYS)).strftime("%Y%m%d")
+    for path in sorted(output_dir.glob(f"*/{RESULTS_ALL_NAME}")):
+        d = path.parent.name
+        if not (re.fullmatch(r"\d{8}", d) and start <= d < today):
+            continue
+        data = _load_json(path, {})
+        sc = data.get("schedule_check")
+        if not sc or sc.get("status") == CONFIRMED:
+            continue
+        err = None
+        try:
+            refresh_jra_lists(d, cache)
+        except Exception as e:  # noqa: BLE001
+            err = f"{type(e).__name__}: {e}"
+        data["schedule_check"] = schedule_check_for(d, data.get("race_ids") or {}, cache, err)
+        _write_json_atomic(path, data, indent=1)
+        logp = append_fetch_log(path.parent, {"at": _now_iso(), "scrape_version": SCRAPE_VERSION,
+                                              "kind": "JRA 公式の一覧だけ取り直し", "jra_error": err,
+                                              "schedule_status": data["schedule_check"]["status"]})
+        log.info(f"{d}: JRA 公式の一覧を取り直した → {data['schedule_check']['status']}"
+                 f"（{data['schedule_check'].get('reason')}）")
+        changed += [path, logp]
+    return changed
 
 
 def main():
@@ -417,20 +545,13 @@ def main():
     out_dir = OUTPUT_DIR / date
     pickup_path = out_dir / "pickup_scores.json"
 
-    # race_id マップ: pickup_scores.json があればそこから、なければレース一覧ページから取得
-    race_id_map = {}
+    # 採点したレース（race_results.json などに入れるレース）。全レースは race_results_all.json に入れる
+    scored_labels = None
     if pickup_path.exists():
         with open(pickup_path, encoding="utf-8") as f:
             pickup = json.load(f)
-        race_id_map = {
-            label: rdata["race_id"]
-            for label, rdata in pickup.get("races", {}).items()
-            if rdata.get("race_id")
-        }
-        if race_id_map:
-            log.info(f"pickup_scores.json から {len(race_id_map)} レース取得")
-    else:
-        log.info("pickup_scores.json なし → レース一覧ページから取得します")
+        scored_labels = {label for label, rdata in pickup.get("races", {}).items() if rdata.get("race_id")}
+        log.info(f"pickup_scores.json の採点したレース: {len(scored_labels)}")
 
     # 血統キャッシュ（永続・馬IDをキーに父・母父を保存）
     pedigree_cache: dict = {}
@@ -440,6 +561,9 @@ def main():
         log.info(f"血統キャッシュ: {len(pedigree_cache)}頭")
 
     email, password = load_env()
+    attempt = {"at": _now_iso(), "scrape_version": SCRAPE_VERSION, "kind": "結果の取得",
+               "fetched": [], "failed": {}, "kept_old": {}, "stopped": None}
+    fetched = {}
 
     with sync_playwright() as p:
         browser = p.chromium.launch(
@@ -467,73 +591,55 @@ def main():
         page.goto("https://www.netkeiba.com/", wait_until="domcontentloaded")
         human_sleep(1.0, 2.0)
 
-        # pickup_scores.json がなかった場合、レース一覧ページから race_id を取得
+        # レースIDは、採点ファイルがあってもレース一覧から全レースを取る（設計 2章）
+        races = get_race_ids(page, date)
+        race_id_map = {r["label"]: r["race_id"] for r in races}
+        log.info(f"レース一覧ページから {len(race_id_map)} レース取得")
         if not race_id_map:
-            races = get_race_ids(page, date)
-            race_id_map = {r["label"]: r["race_id"] for r in races}
-            log.info(f"レース一覧ページから {len(race_id_map)} レース取得")
-            if not race_id_map:
-                log.error("レースが見つかりません")
-                browser.close()
-                sys.exit(1)
+            log.error("レースが見つかりません")
+            browser.close()
+            sys.exit(1)
 
-        race_results = {}    # calibrate_threshold.py 互換: {label: [{rank,num,name,...}]}
-        race_others = {}     # 着順が数字でない馬: {label: [{status,rank_text,num,name,horse_id,gate}]}
-        race_conditions = {} # レース条件: {label: {distance, surface, condition, ...}}
-
+        fails = 0
         for label, race_id in sorted(race_id_map.items()):
             log.info(f"スクレイプ中: {label} ({race_id})")
             human_browse(page, RESULT_URL.format(race_id=race_id))
             time.sleep(random.uniform(2.0, 5.0))
 
+            t = _now_iso()
             result = scrape_race_result(page, race_id, label)
             if not result:
-                log.warning(f"  {label}: 取得失敗")
+                attempt["failed"][label] = "取れない（タイムアウト）"
+            elif result["problems"]:
+                attempt["failed"][label] = "形の異常: " + "・".join(result["problems"])
+            if label in attempt["failed"]:
+                fails += 1
+                log.warning(f"  {label}: 取得の失敗（連続 {fails}）: {attempt['failed'][label]}")
+                if fails >= MAX_CONSECUTIVE_FAIL:
+                    attempt["stopped"] = f"連続 {fails} 回の失敗で止めた（IPブロックなどを疑う）"
+                    log.error(attempt["stopped"])
+                    break
+                human_sleep(10.0, 20.0)
                 continue
-
-            horses = result["horses"]
-            condition = result["condition"]
-            condition["race_id"] = race_id
-
-            # calibrate_threshold.py 互換形式（rank/num/name を保持）
-            race_results[label] = [
-                {
-                    "rank":              h["rank"],
-                    "num":               h["num"],
-                    "name":              h["name"],
-                    "horse_id":          h["horse_id"],
-                    "pop":               h["pop"],
-                    "odds":              h["odds"],
-                    "place_odds":        h["place_odds"],
-                    "jockey":            h["jockey"],
-                    "trainer":           h["trainer"],
-                    "weight_carried":    h["weight_carried"],
-                    "horse_weight":      h["horse_weight"],
-                    "horse_weight_diff": h["horse_weight_diff"],
-                    "time":              h["time"],
-                    "margin":            h["margin"],
-                    "last3f":            h["last3f"],
-                    "corners":           h["corners"],
-                    "sex_age":           h["sex_age"],
-                    "gate":              h["gate"],
-                    "sire":              "",
-                    "dam_sire":          "",
-                }
-                for h in horses
-            ]
-            race_conditions[label] = condition
-            race_others[label] = result["others"]
-
+            fails = 0
+            result["condition"]["race_id"] = race_id
+            fetched[label] = {"race_id": race_id, "condition": result["condition"], "horses": result["horses"],
+                              "others": result["others"], "fetched_at": t, "scrape_version": SCRAPE_VERSION}
+            attempt["fetched"].append(label)
             human_sleep(4.0, 9.0)
+        not_tried = [l for l in sorted(race_id_map) if l not in fetched and l not in attempt["failed"]]
+        for l in not_tried:
+            attempt["failed"][l] = "止めたので取っていない"
 
-        # 血統取得（キャッシュにない馬のみ）
-        new_horse_ids = sorted(
+        # 血統取得（採点したレースの馬で、キャッシュにない馬のみ）
+        sub_labels = scored_labels if scored_labels is not None else set(race_id_map)
+        new_horse_ids = sorted({
             h["horse_id"]
-            for rows in race_results.values()
-            for h in rows
+            for label, r in fetched.items() if label in sub_labels
+            for h in r["horses"]
             if h["horse_id"] and h["horse_id"] not in pedigree_cache
-        )
-        if new_horse_ids:
+        })
+        if new_horse_ids and not attempt["stopped"]:
             log.info(f"血統取得: {len(new_horse_ids)}頭（初回は時間がかかります）")
             consecutive_fail = 0
             for i, horse_id in enumerate(new_horse_ids, 1):
@@ -541,61 +647,96 @@ def main():
                 if ped:
                     pedigree_cache[horse_id] = ped
                     consecutive_fail = 0
-                    log.debug(f"  {horse_id}: 父={ped.get('sire','')} 母父={ped.get('dam_sire','')}")
                 else:
                     consecutive_fail += 1
                     # 連続失敗が続く場合はIPブロック等を疑い中断（取得済みは下で保存される）
                     if consecutive_fail >= 10:
                         log.error(f"⚠️  血統取得が{consecutive_fail}連続で失敗。ブロックを疑い中断します")
                         break
-                # 取得済みを定期保存（中断してもキャッシュを失わない）
                 if i % 20 == 0:
                     with open(PEDIGREE_FILE, "w", encoding="utf-8") as f:
                         json.dump(pedigree_cache, f, ensure_ascii=False, indent=2)
                     log.info(f"  血統 {i}/{len(new_horse_ids)}頭 取得・キャッシュ保存")
                 human_sleep(2.0, 5.0)
-        else:
-            log.info("血統: 全馬キャッシュ済み")
-
-        # race_results に血統情報を反映
-        for rows in race_results.values():
-            for h in rows:
-                ped = pedigree_cache.get(h["horse_id"], {})
-                h["sire"] = ped.get("sire", "")
-                h["dam_sire"] = ped.get("dam_sire", "")
-
         browser.close()
 
-    # 保存
-    out_dir.mkdir(parents=True, exist_ok=True)
+    # JRA 公式の結果の一覧と照合（予定の確定。設計 2章）
+    import scrape_jra_payouts as J
+    cache = J.load_cache()
+    jra_error = None
+    try:
+        refresh_jra_lists(date, cache)
+    except Exception as e:  # noqa: BLE001
+        jra_error = f"{type(e).__name__}: {e}"
+        log.error(f"JRA 公式の一覧を取れない: {jra_error}")
+    extra = None
+    if scored_labels and scored_labels - set(race_id_map):
+        extra = f"採点したレースがレース一覧に無い: {sorted(scored_labels - set(race_id_map))}"
+
+    # 全レース: レースごとに置き換える
+    all_path = out_dir / RESULTS_ALL_NAME
+    data, kept_old = merge_all_results(_load_json(all_path, None), date, race_id_map, fetched)
+    data["schedule_check"] = schedule_check_for(date, race_id_map, cache, jra_error, extra)
+    _write_json_atomic(all_path, data, indent=1)
+    attempt["kept_old"] = kept_old
+    attempt["complete"] = data["complete"]
+    attempt["schedule_status"] = data["schedule_check"]["status"]
+    attempt["schedule_reason"] = data["schedule_check"].get("reason")
+
+    # 採点したレースだけのファイル（読む側の処理を変えない）。取れなかったレースは前の値を残す
     results_path = out_dir / "race_results.json"
     conditions_path = out_dir / "race_conditions.json"
-
-    with open(results_path, "w", encoding="utf-8") as f:
-        json.dump(race_results, f, ensure_ascii=False, indent=2)
-    with open(conditions_path, "w", encoding="utf-8") as f:
-        json.dump(race_conditions, f, ensure_ascii=False, indent=2)
-    # 着順が数字でない馬（2026-11-02〜）。race_results.json には入れない（rank が数字の前提の処理が多いため）
     others_path = out_dir / "race_nonfinishers.json"
-    with open(others_path, "w", encoding="utf-8") as f:
-        json.dump(race_others, f, ensure_ascii=False, indent=2)
+    race_results = _load_json(results_path, {})
+    race_conditions = _load_json(conditions_path, {})
+    race_others = _load_json(others_path, {})
+    for label in sorted(sub_labels):
+        if label not in fetched:
+            continue
+        r = fetched[label]
+        race_results[label] = [
+            {k: h[k] for k in ("rank", "num", "name", "horse_id", "pop", "odds", "place_odds", "jockey", "trainer",
+                               "weight_carried", "horse_weight", "horse_weight_diff", "time", "margin", "last3f",
+                               "corners", "sex_age", "gate")}
+            | {"sire": pedigree_cache.get(h["horse_id"], {}).get("sire", ""),
+               "dam_sire": pedigree_cache.get(h["horse_id"], {}).get("dam_sire", "")}
+            for h in r["horses"]
+        ]
+        race_conditions[label] = r["condition"]
+        race_others[label] = r["others"]
+    attempt["kept_old_scored_files"] = sorted(l for l in sub_labels if l not in fetched and l in race_results)
+    _write_json_atomic(results_path, race_results)
+    _write_json_atomic(conditions_path, race_conditions)
+    # 着順が数字でない馬（2026-11-02〜）。race_results.json には入れない（rank が数字の前提の処理が多いため）
+    _write_json_atomic(others_path, race_others)
     with open(PEDIGREE_FILE, "w", encoding="utf-8") as f:
         json.dump(pedigree_cache, f, ensure_ascii=False, indent=2)
+    append_fetch_log(out_dir, attempt)
 
-    log.info(f"保存完了: {results_path}")
-    log.info(f"保存完了: {conditions_path}")
-    log.info(f"血統キャッシュ保存: {PEDIGREE_FILE} ({len(pedigree_cache)}頭)")
-    log.info(f"取得レース数: {len(race_results)} / {len(race_id_map)}")
+    log.info(f"保存完了: {all_path}（complete={data['complete']}・予定 {data['schedule_check']['status']}）")
+    log.info(f"取得レース数: {len(fetched)} / {len(race_id_map)}")
+
+    # 前の開催日で予定を確定できなかった日の、JRA 公式の一覧だけの取り直し
+    changed = [out_dir] + retry_unconfirmed_schedules(date, cache) + [J.CACHE_PATH]
+    for pth in changed:
+        print(f"CHANGED_FILE: {Path(pth).resolve().relative_to(BASE_DIR.resolve())}")
+
+    # 知らせ: 今回の取得の失敗・予定を確定できない（complete: true でも残す）
+    from schedule_check import CONFIRMED
+    if attempt["failed"] or attempt["stopped"] or data["schedule_check"]["status"] != CONFIRMED:
+        print(f"RESULTS_FETCH_INCOMPLETE: {date} 取れた {len(fetched)}/{len(race_id_map)}・"
+              f"失敗 {len(attempt['failed'])}・予定 {data['schedule_check']['status']}"
+              + (f"（{data['schedule_check'].get('reason')}）" if data['schedule_check'].get('reason') else ""))
 
     # データ品質チェック（cronログで気づけるように WARNING を出す）
-    all_horses = [h for rows in race_results.values() for h in rows]
+    all_horses = [h for r in fetched.values() for h in r["horses"]]
     if all_horses:
-        n_corner = sum(1 for h in all_horses if h.get("corners"))
-        n_last3f = sum(1 for h in all_horses if h.get("last3f"))
-        if n_corner == 0:
+        if sum(1 for h in all_horses if h.get("corners")) == 0:
             log.warning(f"⚠️  コーナー通過順が全馬空です（掲載前の可能性）。後日 scrape_results.py {date} で再取得を推奨")
-        if n_last3f == 0:
+        if sum(1 for h in all_horses if h.get("last3f")) == 0:
             log.warning(f"⚠️  上がり3Fが全馬空です。ページ構造変更の可能性を確認してください")
+    if not fetched:
+        sys.exit(1)
 
 
 if __name__ == "__main__":

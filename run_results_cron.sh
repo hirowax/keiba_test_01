@@ -54,11 +54,18 @@ sys.exit(0 if '$TODAY' in dates else 1)
 "; then
     echo "  ✓ $TODAY はJRA開催日 → scrape_results.py 実行"
 
-    # scrape_results.py 実行
-    if ! python3 scrape_results.py "$TODAY"; then
+    # scrape_results.py 実行。出力の CHANGED_FILE: の行が、書き換えたファイル（前の開催日の JRA 公式の一覧の取り直しを含む）
+    SCRAPE_LOG=/tmp/netkeiba_results_scrape.log
+    python3 scrape_results.py "$TODAY" 2>&1 | tee "$SCRAPE_LOG"
+    if [ "${PIPESTATUS[0]}" -ne 0 ]; then
         echo "$(date '+%Y-%m-%d %H:%M:%S') scrape_results.py 失敗"
         notify_line "[netkeiba] $TODAY のレース結果取得が失敗しました ✗ cron.logを確認してください"
         exit 1
+    fi
+    # 一部のレースの取得の失敗・予定を確定できない日は、保存は続けて知らせる（complete でも知らせる。2026-11-12〜）
+    INCOMPLETE=$(grep "RESULTS_FETCH_INCOMPLETE" "$SCRAPE_LOG" | head -1 | tr -d '"')
+    if [ -n "$INCOMPLETE" ]; then
+        notify_line "[netkeiba] ⚠️ $INCOMPLETE"
     fi
 
     # 採点時の馬番・馬ID・馬名を結果と全頭照合（2026-11-02〜）。不一致は LINE で知らせる（公開は続ける）
@@ -70,7 +77,12 @@ sys.exit(0 if '$TODAY' in dates else 1)
     fi
 
     # git commit & push（各ステップの失敗を個別ハンドリング）
+    # 当日の output/{日}/ に加えて、scrape_results.py が書き換えたファイル（前の開催日の race_results_all.json・
+    # results_fetch_log.json、output/jra_cname_cache.json）も入れる（git add -A は使わない）
     git add "output/${TODAY}/"
+    grep "^CHANGED_FILE: " "$SCRAPE_LOG" | sed 's/^CHANGED_FILE: //' | while read -r f; do
+        git add -- "$f"
+    done
     git commit -m "results: ${TODAY}" || echo "  (変更なし — コミットスキップ)"
 
     if git push; then
@@ -107,8 +119,15 @@ for d in sorted(set(all_dates)):
 if [ -n "$MISSING_RESULTS" ]; then
     echo "────────────────────────────────────"
     echo "$(date '+%Y-%m-%d %H:%M:%S') レース結果欠損補完: $MISSING_RESULTS"
-    if python3 scrape_results.py "$MISSING_RESULTS"; then
+    CATCHUP_LOG=/tmp/netkeiba_results_catchup.log
+    python3 scrape_results.py "$MISSING_RESULTS" 2>&1 | tee "$CATCHUP_LOG"
+    if [ "${PIPESTATUS[0]}" -eq 0 ]; then
         git add "output/${MISSING_RESULTS}/"
+        grep "^CHANGED_FILE: " "$CATCHUP_LOG" | sed 's/^CHANGED_FILE: //' | while read -r f; do
+            git add -- "$f"
+        done
+        INCOMPLETE=$(grep "RESULTS_FETCH_INCOMPLETE" "$CATCHUP_LOG" | head -1 | tr -d '"')
+        [ -n "$INCOMPLETE" ] && notify_line "[netkeiba] ⚠️ $INCOMPLETE"
         git commit -m "results: ${MISSING_RESULTS} (catchup)" || true
         git push || true
         notify_line "[netkeiba] 過去結果補完完了: $MISSING_RESULTS ✓"
