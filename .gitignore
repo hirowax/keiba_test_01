@@ -10,6 +10,7 @@ rescrape_full.log
 
 # 前走データの実行のロック・一時ファイル（強制終了で残っても run.sh の git add output/ に入れない。2026-11-05）
 output/*/prev_inputs/.lock
+output/*/horse_style/.lock
 # 軸の記録のロックと、欠けの検査の状態（手元の運用の記録。2026-11-12）
 output/*/.axis_record.lock
 output/axis_check_status.json
