@@ -21,23 +21,176 @@ import scrape_results as SR  # noqa: E402
 import schedule_check as S  # noqa: E402
 
 
+FULL = "result_202603030211_20261113.html"          # 11/8 福島11R（16頭）の実ページ全体（2026-11-13 取得）
+CHUSHI = "result_202608050103_chushi_20261112.html"  # 11/7 京都3R（中止1頭・13頭）の実ページ全体（2026-11-12 取得）
+
+
 class ParseTest(unittest.TestCase):
-    def test_passage_rate_and_scratched_row(self):
+    def test_cut_down_fixture_rows(self):
+        """成績の表だけを切り出した保存ページ（「N頭」が無い）。通過順と取消の行の読み取りだけを確かめる"""
         r = SR.parse_result_html(read_fixture("result_202605041106_torikeshi.html"), "東京6R")
-        self.assertEqual(r["problems"], [])
+        self.assertEqual(r["problems"], ["ページの「N頭」の表示が無い"])
         first = r["horses"][0]
         self.assertEqual((first["num"], first["corners"], first["corners_text"]), ("12", [13, 13], "13-13"))
         self.assertEqual([(o["status"], o["corners"], o["corners_text"]) for o in r["others"]], [("取消", [], "")])
 
+    def test_full_real_pages_have_no_problem(self):
+        r = SR.parse_result_html(read_fixture(FULL), "福島11R")
+        self.assertEqual(r["problems"], [])
+        self.assertEqual(len(r["horses"]), 16)
+        self.assertEqual((r["horses"][0]["num"], r["horses"][0]["gate"], r["horses"][0]["corners_text"]), ("8", "4", "8-9"))
+        c = SR.parse_result_html(read_fixture(CHUSHI), "京都3R")
+        self.assertEqual(c["problems"], [])
+        self.assertEqual([(o["status"], o["num"], o["corners_text"]) for o in c["others"]], [("中止", "3", "11-11-13-13")])
+
+    def _break_row(self, fn):
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(read_fixture(FULL), "html.parser")
+        rows = soup.find("table", id="All_Result_Table").find_all("tr", class_="HorseList")
+        fn(rows[5])
+        return SR.parse_result_html(str(soup), "福島11R")
+
+    def test_broken_horse_row_is_a_problem(self):
+        """16頭のうち1頭の行が壊れていたら、15頭の正常な結果として読まない（2026-11-13 外部レビュー指摘1）"""
+        def cut_cells(tr):
+            for td in tr.find_all("td")[3:]:
+                td.decompose()
+        r = self._break_row(cut_cells)
+        self.assertTrue(r["problems"])
+        self.assertTrue(any("馬名のリンク" in p or "馬番" in p or "通過順" in p for p in r["problems"]), r["problems"])
+
+    def test_missing_row_count_mismatch(self):
+        r = self._break_row(lambda tr: tr.decompose())
+        self.assertIn("馬の行の数 15 がページの「16頭」と違う", r["problems"])
+
+    def test_unknown_row_and_duplicates(self):
+        r = self._break_row(lambda tr: tr.__setitem__("class", ["Other"]))
+        self.assertTrue(any("知らない形の行" in p for p in r["problems"]))
+
+        def dup_num(tr):
+            tr.select_one("td.Num.Txt_C").string = "8"
+        self.assertTrue(any("馬番が重複" in p for p in self._break_row(dup_num)["problems"]))
+
     def test_missing_passage_cell_is_a_problem(self):
-        html = read_fixture("result_202605041106_torikeshi.html").replace('class="PassageRate"', 'class="X"', 1)
-        r = SR.parse_result_html(html, "東京6R")
+        html = read_fixture(FULL).replace('class="PassageRate"', 'class="X"', 1)
+        r = SR.parse_result_html(html, "福島11R")
         self.assertTrue(any("td.PassageRate" in p for p in r["problems"]))
 
     def test_no_table_is_a_problem(self):
         r = SR.parse_result_html("<html><body>メンテナンス中</body></html>", "東京6R")
         self.assertIn("成績の表が無い", r["problems"])
         self.assertIn("着順のある馬が0頭", r["problems"])
+
+
+class FakePage:
+    """結果ページの移動と中身を差し替える（ネットワークに出ない）。pages: {race_id: HTML | 例外}"""
+
+    def __init__(self, pages):
+        self.pages = pages
+        self.url = ""
+        self.visits = []
+
+    def goto(self, url, **k):
+        self.visits.append(url)
+        self.url = url
+        m = [rid for rid in self.pages if rid in url]
+        if m and isinstance(self.pages[m[0]], Exception):
+            raise self.pages[m[0]]
+
+    def content(self):
+        m = [rid for rid in self.pages if rid in self.url]
+        return self.pages[m[0]] if m else "<html></html>"
+
+    def evaluate(self, *a, **k):
+        pass
+
+
+class FetchRacesTest(unittest.TestCase):
+    """取得の繰り返し（fetch_races）と保存（save_results）を模擬のページで確かめる（外部レビュー指摘2〜4）"""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        self.good = read_fixture(FULL)
+        self.ids = {"福島1R": "202603030201", "福島2R": "202603030202", "福島3R": "202603030203"}
+        self.patches = [mock.patch.object(SR, "human_sleep"), mock.patch.object(SR.time, "sleep"),
+                        mock.patch("scraper.random.random", return_value=0.99)]   # 中間ページを経由しない
+        for pt in self.patches:
+            pt.start()
+
+    def tearDown(self):
+        for pt in self.patches:
+            pt.stop()
+        shutil.rmtree(self.tmp)
+
+    def attempt(self):
+        return {"at": "t", "scrape_version": SR.SCRAPE_VERSION, "fetched": [], "failed": {}, "kept_old": {}, "stopped": None}
+
+    def test_one_navigation_per_race(self):
+        page = FakePage({rid: self.good for rid in self.ids.values()})
+        att = self.attempt()
+        fetched = SR.fetch_races(page, self.ids, att)
+        self.assertEqual(sorted(fetched), sorted(self.ids))
+        result_visits = [u for u in page.visits if "result.html" in u]
+        self.assertEqual(len(result_visits), 3)   # 1レース1回（前は2回）
+
+    def test_navigation_timeout_is_a_race_failure_and_results_are_saved(self):
+        page = FakePage({"202603030201": self.good, "202603030202": TimeoutError("Timeout 30000ms"),
+                         "202603030203": self.good})
+        att = self.attempt()
+        fetched = SR.fetch_races(page, self.ids, att)
+        self.assertEqual(sorted(fetched), ["福島1R", "福島3R"])
+        self.assertIn("Timeout", att["failed"]["福島2R"])
+        out = self.tmp / "20261108"
+        old = {"date": "20261108", "complete": True, "race_ids": self.ids,
+               "races": {l: {"race_id": r, "fetched_at": "前"} for l, r in self.ids.items()}}
+        out.mkdir()
+        (out / SR.RESULTS_ALL_NAME).write_text(json.dumps(old, ensure_ascii=False))
+        data = SR.save_results("20261108", out, self.ids, fetched, att, None, {}, {"srl": {}, "sde": {}}, None)
+        self.assertEqual(data["races"]["福島2R"]["fetched_at"], "前")   # 古い値を残す
+        self.assertTrue(data["complete"])
+        log = json.loads((out / SR.FETCH_LOG_NAME).read_text())["attempts"][-1]
+        self.assertEqual(log["kept_old"], {"福島2R": "前"})
+        self.assertIn("福島2R", log["failed"])
+
+    def test_block_stops_immediately_and_saves_what_was_fetched(self):
+        blocked = "<html><body>Too Many Requests</body></html>"
+        page = FakePage({"202603030201": self.good, "202603030202": blocked, "202603030203": self.good})
+        att = self.attempt()
+        fetched = SR.fetch_races(page, self.ids, att)
+        self.assertEqual(sorted(fetched), ["福島1R"])
+        self.assertIn("IPブロック", att["stopped"])
+        self.assertEqual(att["failed"]["福島3R"], "止めたので取っていない")
+        self.assertFalse(any("202603030203" in u for u in page.visits))   # 検知の後は取らない
+        out = self.tmp / "20261108"
+        out.mkdir()
+        data = SR.save_results("20261108", out, self.ids, fetched, att, None, {}, {"srl": {}, "sde": {}}, None)
+        self.assertFalse(data["complete"])
+        self.assertEqual(list(data["races"]), ["福島1R"])
+        self.assertIn("IPブロック", json.loads((out / SR.FETCH_LOG_NAME).read_text())["attempts"][-1]["stopped"])
+
+    def test_broken_page_does_not_overwrite_good_old_value(self):
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(self.good, "html.parser")
+        soup.find("table", id="All_Result_Table").find_all("tr", class_="HorseList")[3].decompose()
+        page = FakePage({"202603030201": str(soup)})
+        att = self.attempt()
+        ids = {"福島1R": "202603030201"}
+        fetched = SR.fetch_races(page, ids, att)
+        self.assertEqual(fetched, {})
+        self.assertIn("形の異常", att["failed"]["福島1R"])
+        out = self.tmp / "d"
+        out.mkdir()
+        (out / SR.RESULTS_ALL_NAME).write_text(json.dumps({"races": {"福島1R": {"fetched_at": "前", "horses": [1] * 16}}}))
+        data = SR.save_results("d", out, ids, fetched, att, None, {}, {"srl": {}, "sde": {}}, None)
+        self.assertEqual(data["races"]["福島1R"]["fetched_at"], "前")
+
+    def test_consecutive_failures_stop(self):
+        page = FakePage({rid: TimeoutError("x") for rid in self.ids.values()})
+        with mock.patch.object(SR, "MAX_CONSECUTIVE_FAIL", 2):
+            att = self.attempt()
+            SR.fetch_races(page, self.ids, att)
+        self.assertIn("連続 2 回", att["stopped"])
+        self.assertEqual(att["failed"]["福島3R"], "止めたので取っていない")
 
 
 def race(t, rank_text="1"):

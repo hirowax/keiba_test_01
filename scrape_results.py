@@ -27,7 +27,7 @@ from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
 # scraper.py の共通ユーティリティを流用
-from scraper import human_sleep, human_browse, load_cookies, login, load_env, COOKIES_FILE, get_race_ids
+from scraper import human_sleep, human_browse, load_cookies, login, load_env, COOKIES_FILE, get_race_ids, is_ip_blocked
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger(__name__)
@@ -234,8 +234,16 @@ def _corner_cell(tr):
 def parse_result_html(html: str, race_label: str = "") -> dict:
     """結果ページの HTML を {"condition", "horses"(着順が数字の馬), "others"(着順が数字でない馬), "problems"} にする。
     2026-11-02 まで、着順が数字でない行（取消・除外・中止・失格）は捨てていた（docs/index_top3_definition_202611.md）。
-    problems（2026-11-12〜）: ページの形の異常（成績の表が無い・馬番や馬名が読めない行・着順のある行に通過順のセルが無い・
-    着順のある馬が0頭）。空でなければ、結果の取得はそのレースを「取得の失敗」として扱い、前に保存した値に上書きしない"""
+    problems（2026-11-12〜）: ページの形の異常。空でなければ、結果の取得はそのレースを「取得の失敗」として扱い、
+    前に保存した値に上書きしない。
+    - 成績の表 table#All_Result_Table がちょうど1つでない
+    - 行が見出し（tr.Header で td が無い）でも馬の行（tr.HorseList）でもない
+    - 馬の行の要素（着順 td.Result_Num・枠番 td.Num.Waku{n}・馬番 td.Num.Txt_C・馬名 td.Horse_Info の /horse/ リンク）が
+      ちょうど1つでない・読めない（2026-11-13 まで、馬番・馬名・枠番・着順は列の位置で読んでいた。値は72ページで同じと確かめた）
+    - 着順のある行に通過順のセル td.PassageRate が無い
+    - 馬の行の数が、ページの「N頭」（.RaceData02）と違う・「N頭」が無い
+    - 馬番・馬IDの重複、馬IDが無い馬、着順のある馬が0頭
+    実ページ（2026-11-12 取得の72ページ）の成績の表の行は、tr.Header と tr.HorseList（取消は Torikeshi も付く）だけだった"""
     soup = BeautifulSoup(html, "html.parser")
 
     condition = parse_race_condition(soup)
@@ -245,52 +253,49 @@ def parse_result_html(html: str, race_label: str = "") -> dict:
     others = []  # 着順が数字でない馬（取消・除外・中止・失格・不明）
     problems = []
 
-    # メイン結果テーブル（.HorseList）
-    table = soup.find("table", class_=re.compile(r"HorseList"))
-    if not table:
-        # フォールバック: <tbody>内の<tr>を探す
-        table = soup.find("div", id="All_Result_Table") or soup.find("div", class_="ResultTableWrap")
-
+    tables = soup.find_all("table", id="All_Result_Table")
     rows = []
-    if table:
-        rows = table.find_all("tr")
+    if len(tables) != 1:
+        problems.append("成績の表が無い" if not tables else f"成績の表が {len(tables)} 個ある")
     else:
-        problems.append("成績の表が無い")
-        # 最後の手段: page内の全trからそれらしい行を収集
-        rows = soup.find_all("tr", class_=re.compile(r"HorseInfo|Horse\d"))
+        rows = tables[0].find_all("tr")
 
+    n_horse_rows = 0
     for tr in rows:
+        cls = tr.get("class") or []
         tds = tr.find_all("td")
-        if len(tds) < 8:
+        if "Header" in cls and not tds:
+            continue
+        if "HorseList" not in cls:
+            problems.append(f"知らない形の行がある（class={cls}）")
+            continue
+        n_horse_rows += 1
+
+        def one(sel, what):
+            found = tr.select(sel)
+            if len(found) != 1:
+                problems.append(f"馬の行の{what}（{sel}）が {len(found)} 個（{n_horse_rows} 行目）")
+                return None
+            return found[0]
+
+        rank_cell = one("td.Result_Num", "着順")
+        gate_cell = one('td.Num[class*="Waku"]', "枠番")
+        num_cell = one("td.Num.Txt_C", "馬番")
+        name_links = [a for td in tr.select("td.Horse_Info") for a in td.find_all("a", href=re.compile(r"/horse/\d+"))]
+        if len(name_links) != 1:
+            problems.append(f"馬の行の馬名のリンクが {len(name_links)} 個（{n_horse_rows} 行目）")
+        if rank_cell is None or gate_cell is None or num_cell is None or len(name_links) != 1:
             continue
 
-        # 着順。数字でない行は others に分けて残す（見出し行は td が8個未満で上で除外済み）
-        rank_text = re.sub(r"\s+", "", tds[0].get_text())
+        # 着順。数字でない行は others に分けて残す
+        rank_text = re.sub(r"\s+", "", rank_cell.get_text())
         finished = bool(re.match(r"^\d{1,2}$", rank_text))
         rank = int(rank_text) if finished else None
-
-        # 枠番
-        gate = _text(tds[1]) if len(tds) > 1 else ""
-
-        # 馬番
-        num_cell = tr.find("td", class_=re.compile(r"[Uu]maban|HorseNum|Num2"))
-        num = _text(num_cell) if num_cell else (_text(tds[2]) if len(tds) > 2 else "")
-
-        # 馬名 + horse_id
-        name = ""
-        horse_id = ""
-        name_cell = tr.find("td", class_=re.compile(r"HorseName|horse_name"))
-        if not name_cell:
-            name_cell = tds[3] if len(tds) > 3 else None
-        if name_cell:
-            a = name_cell.find("a", href=re.compile(r"/horse/"))
-            if a:
-                name = re.sub(r"\s+", "", a.get_text())
-                m = re.search(r"/horse/(\d+)", a.get("href", ""))
-                if m:
-                    horse_id = m.group(1)
-            else:
-                name = re.sub(r"\s+", "", name_cell.get_text())
+        gate = _text(gate_cell)
+        num = _text(num_cell)
+        a = name_links[0]
+        name = re.sub(r"\s+", "", a.get_text())
+        horse_id = re.search(r"/horse/(\d+)", a.get("href", "")).group(1)
 
         if not name or not num.isdigit():
             log.warning(f"  {race_label}: 着順「{rank_text}」の行の馬番・馬名が読めない")
@@ -419,6 +424,22 @@ def parse_result_html(html: str, race_label: str = "") -> dict:
 
     if not horses:
         problems.append("着順のある馬が0頭")
+    # 頭数: ページの「N頭」と馬の行の数（取消・除外を含む）
+    d2 = soup.find(class_="RaceData02")
+    m = re.search(r"(\d+)頭", d2.get_text(" ", strip=True)) if d2 else None
+    if not m:
+        problems.append("ページの「N頭」の表示が無い")
+    elif int(m.group(1)) != n_horse_rows:
+        problems.append(f"馬の行の数 {n_horse_rows} がページの「{m.group(1)}頭」と違う")
+    everyone = horses + others
+    nums = [h["num"] for h in everyone]
+    ids = [h["horse_id"] for h in everyone]
+    if len(set(nums)) != len(nums):
+        problems.append(f"馬番が重複している: {sorted(n for n in set(nums) if nums.count(n) > 1)}")
+    if not all(ids):
+        problems.append("馬IDが無い馬がいる")
+    elif len(set(ids)) != len(ids):
+        problems.append("馬IDが重複している")
     condition["num_horses"] = len(horses)
     log.info(f"  {race_label}: {len(horses)}頭 馬場={condition.get('condition','?')} "
              f"距離={condition.get('distance','?')}m 天気={condition.get('weather','?')}"
@@ -427,7 +448,7 @@ def parse_result_html(html: str, race_label: str = "") -> dict:
     return {"condition": condition, "horses": horses, "others": others, "problems": problems}
 
 
-SCRAPE_VERSION = "全レース_通過順はPassageRateを明示_形の異常は取得の失敗_レースごとに置き換え_20261112"
+SCRAPE_VERSION = "全レース_要素を明示_頭数と重複の照合_形の異常は取得の失敗_レースごとに置き換え_20261113"
 RESULTS_ALL_NAME = "race_results_all.json"
 FETCH_LOG_NAME = "results_fetch_log.json"
 MAX_CONSECUTIVE_FAIL = 5          # rescrape_results_full.py と同じ（IPブロックなどを疑って止める）
@@ -540,140 +561,97 @@ def retry_unconfirmed_schedules(today: str, cache: dict, output_dir: Path = OUTP
     return changed
 
 
-def main():
-    date = sys.argv[1] if len(sys.argv) >= 2 else datetime.now().strftime("%Y%m%d")
-    out_dir = OUTPUT_DIR / date
-    pickup_path = out_dir / "pickup_scores.json"
+class BlockedError(Exception):
+    """IPブロック・アクセス拒否のページを検知した（その時点で追加の取得を止める）"""
 
-    # 採点したレース（race_results.json などに入れるレース）。全レースは race_results_all.json に入れる
-    scored_labels = None
-    if pickup_path.exists():
-        with open(pickup_path, encoding="utf-8") as f:
-            pickup = json.load(f)
-        scored_labels = {label for label, rdata in pickup.get("races", {}).items() if rdata.get("race_id")}
-        log.info(f"pickup_scores.json の採点したレース: {len(scored_labels)}")
 
-    # 血統キャッシュ（永続・馬IDをキーに父・母父を保存）
-    pedigree_cache: dict = {}
-    if PEDIGREE_FILE.exists():
-        with open(PEDIGREE_FILE, encoding="utf-8") as f:
-            pedigree_cache = json.load(f)
-        log.info(f"血統キャッシュ: {len(pedigree_cache)}頭")
+def fetch_one_race(page, race_id: str, race_label: str) -> dict:
+    """1レースの結果ページへ1回だけ移動して読む（2026-11-13〜。それまでは human_browse と scrape_race_result で
+    同じページへ2回移動していた）。中間ページを経由することはある（human_browse。約35%）。
+    ブロックを検知したら BlockedError。移動・読み取りの例外はそのまま上へ（呼び出し元がレース単位で失敗として扱う）"""
+    human_browse(page, RESULT_URL.format(race_id=race_id))
+    time.sleep(random.uniform(3.0, 7.0))
+    if is_ip_blocked(page):
+        raise BlockedError(f"IPブロック・アクセス拒否のページを検知（{page.url}）")
+    return parse_result_html(page.content(), race_label)
 
-    email, password = load_env()
-    attempt = {"at": _now_iso(), "scrape_version": SCRAPE_VERSION, "kind": "結果の取得",
-               "fetched": [], "failed": {}, "kept_old": {}, "stopped": None}
+
+def fetch_races(page, race_id_map: dict, attempt: dict) -> dict:
+    """全レースを取る。失敗はレース単位で attempt["failed"] に理由付きで残し、続ける。
+    連続 MAX_CONSECUTIVE_FAIL 回の失敗・ブロックの検知では止め、残りを「止めたので取っていない」にする。
+    戻り値は取れたレース（形の異常が無いものだけ）"""
     fetched = {}
-
-    with sync_playwright() as p:
-        browser = p.chromium.launch(
-            headless=True,
-            args=["--disable-blink-features=AutomationControlled"],
-        )
-        context = browser.new_context(
-            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                       "AppleWebKit/537.36 (KHTML, like Gecko) "
-                       "Chrome/124.0.0.0 Safari/537.36",
-            viewport={"width": 1280, "height": 800},
-            locale="ja-JP",
-            timezone_id="Asia/Tokyo",
-        )
-        context.add_init_script(
-            "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
-        )
-        page = context.new_page()
-
-        if not load_cookies(context):
-            log.error("❌ cookies.json が見つかりません。")
-            log.error("   → python3 save_cookies.py を実行してログインしてください")
-            browser.close()
-            sys.exit(1)
-        page.goto("https://www.netkeiba.com/", wait_until="domcontentloaded")
-        human_sleep(1.0, 2.0)
-
-        # レースIDは、採点ファイルがあってもレース一覧から全レースを取る（設計 2章）
-        races = get_race_ids(page, date)
-        race_id_map = {r["label"]: r["race_id"] for r in races}
-        log.info(f"レース一覧ページから {len(race_id_map)} レース取得")
-        if not race_id_map:
-            log.error("レースが見つかりません")
-            browser.close()
-            sys.exit(1)
-
-        fails = 0
-        for label, race_id in sorted(race_id_map.items()):
-            log.info(f"スクレイプ中: {label} ({race_id})")
-            human_browse(page, RESULT_URL.format(race_id=race_id))
-            time.sleep(random.uniform(2.0, 5.0))
-
-            t = _now_iso()
-            result = scrape_race_result(page, race_id, label)
-            if not result:
-                attempt["failed"][label] = "取れない（タイムアウト）"
-            elif result["problems"]:
+    fails = 0
+    for label, race_id in sorted(race_id_map.items()):
+        log.info(f"スクレイプ中: {label} ({race_id})")
+        t = _now_iso()
+        try:
+            result = fetch_one_race(page, race_id, label)
+            if result["problems"]:
                 attempt["failed"][label] = "形の異常: " + "・".join(result["problems"])
-            if label in attempt["failed"]:
-                fails += 1
-                log.warning(f"  {label}: 取得の失敗（連続 {fails}）: {attempt['failed'][label]}")
-                if fails >= MAX_CONSECUTIVE_FAIL:
-                    attempt["stopped"] = f"連続 {fails} 回の失敗で止めた（IPブロックなどを疑う）"
-                    log.error(attempt["stopped"])
-                    break
-                human_sleep(10.0, 20.0)
-                continue
-            fails = 0
-            result["condition"]["race_id"] = race_id
-            fetched[label] = {"race_id": race_id, "condition": result["condition"], "horses": result["horses"],
-                              "others": result["others"], "fetched_at": t, "scrape_version": SCRAPE_VERSION}
-            attempt["fetched"].append(label)
-            human_sleep(4.0, 9.0)
-        not_tried = [l for l in sorted(race_id_map) if l not in fetched and l not in attempt["failed"]]
-        for l in not_tried:
-            attempt["failed"][l] = "止めたので取っていない"
+        except BlockedError as e:
+            attempt["failed"][label] = str(e)
+            attempt["stopped"] = f"{e} → 追加の取得を止めた"
+            log.error(attempt["stopped"])
+            break
+        except Exception as e:  # noqa: BLE001  移動のタイムアウトなどもレース単位の失敗にする
+            attempt["failed"][label] = f"取れない: {type(e).__name__}: {e}"
+        if label in attempt["failed"]:
+            fails += 1
+            log.warning(f"  {label}: 取得の失敗（連続 {fails}）: {attempt['failed'][label]}")
+            if fails >= MAX_CONSECUTIVE_FAIL:
+                attempt["stopped"] = f"連続 {fails} 回の失敗で止めた（IPブロックなどを疑う）"
+                log.error(attempt["stopped"])
+                break
+            human_sleep(10.0, 20.0)
+            continue
+        fails = 0
+        result["condition"]["race_id"] = race_id
+        fetched[label] = {"race_id": race_id, "condition": result["condition"], "horses": result["horses"],
+                          "others": result["others"], "fetched_at": t, "scrape_version": SCRAPE_VERSION}
+        attempt["fetched"].append(label)
+        human_sleep(4.0, 9.0)
+    for label in sorted(race_id_map):
+        if label not in fetched and label not in attempt["failed"]:
+            attempt["failed"][label] = "止めたので取っていない"
+    return fetched
 
-        # 血統取得（採点したレースの馬で、キャッシュにない馬のみ）
-        sub_labels = scored_labels if scored_labels is not None else set(race_id_map)
-        new_horse_ids = sorted({
-            h["horse_id"]
-            for label, r in fetched.items() if label in sub_labels
-            for h in r["horses"]
-            if h["horse_id"] and h["horse_id"] not in pedigree_cache
-        })
-        if new_horse_ids and not attempt["stopped"]:
-            log.info(f"血統取得: {len(new_horse_ids)}頭（初回は時間がかかります）")
+
+def fetch_pedigrees(page, fetched: dict, sub_labels: set, pedigree_cache: dict, attempt: dict) -> None:
+    """血統（採点したレースの馬で、キャッシュにない馬のみ）。止めた回は取らない"""
+    new_horse_ids = sorted({h["horse_id"] for label, r in fetched.items() if label in sub_labels
+                            for h in r["horses"] if h["horse_id"] and h["horse_id"] not in pedigree_cache})
+    if not new_horse_ids or attempt["stopped"]:
+        return
+    log.info(f"血統取得: {len(new_horse_ids)}頭（初回は時間がかかります）")
+    consecutive_fail = 0
+    for i, horse_id in enumerate(new_horse_ids, 1):
+        ped = fetch_horse_pedigree(page, horse_id)
+        if is_ip_blocked(page):
+            attempt["stopped"] = "血統の取得中に IPブロック・アクセス拒否のページを検知 → 止めた"
+            log.error(attempt["stopped"])
+            break
+        if ped:
+            pedigree_cache[horse_id] = ped
             consecutive_fail = 0
-            for i, horse_id in enumerate(new_horse_ids, 1):
-                ped = fetch_horse_pedigree(page, horse_id)
-                if ped:
-                    pedigree_cache[horse_id] = ped
-                    consecutive_fail = 0
-                else:
-                    consecutive_fail += 1
-                    # 連続失敗が続く場合はIPブロック等を疑い中断（取得済みは下で保存される）
-                    if consecutive_fail >= 10:
-                        log.error(f"⚠️  血統取得が{consecutive_fail}連続で失敗。ブロックを疑い中断します")
-                        break
-                if i % 20 == 0:
-                    with open(PEDIGREE_FILE, "w", encoding="utf-8") as f:
-                        json.dump(pedigree_cache, f, ensure_ascii=False, indent=2)
-                    log.info(f"  血統 {i}/{len(new_horse_ids)}頭 取得・キャッシュ保存")
-                human_sleep(2.0, 5.0)
-        browser.close()
+        else:
+            consecutive_fail += 1
+            if consecutive_fail >= 10:
+                log.error(f"⚠️  血統取得が{consecutive_fail}連続で失敗。ブロックを疑い中断します")
+                break
+        if i % 20 == 0:
+            with open(PEDIGREE_FILE, "w", encoding="utf-8") as f:
+                json.dump(pedigree_cache, f, ensure_ascii=False, indent=2)
+            log.info(f"  血統 {i}/{len(new_horse_ids)}頭 取得・キャッシュ保存")
+        human_sleep(2.0, 5.0)
 
-    # JRA 公式の結果の一覧と照合（予定の確定。設計 2章）
-    import scrape_jra_payouts as J
-    cache = J.load_cache()
-    jra_error = None
-    try:
-        refresh_jra_lists(date, cache)
-    except Exception as e:  # noqa: BLE001
-        jra_error = f"{type(e).__name__}: {e}"
-        log.error(f"JRA 公式の一覧を取れない: {jra_error}")
+
+def save_results(date: str, out_dir: Path, race_id_map: dict, fetched: dict, attempt: dict, scored_labels,
+                 pedigree_cache: dict, cache: dict, jra_error) -> dict:
+    """取れた分を保存する（途中で止まった回も必ず通す）。戻り値は race_results_all.json の中身"""
     extra = None
     if scored_labels and scored_labels - set(race_id_map):
         extra = f"採点したレースがレース一覧に無い: {sorted(scored_labels - set(race_id_map))}"
-
-    # 全レース: レースごとに置き換える
     all_path = out_dir / RESULTS_ALL_NAME
     data, kept_old = merge_all_results(_load_json(all_path, None), date, race_id_map, fetched)
     data["schedule_check"] = schedule_check_for(date, race_id_map, cache, jra_error, extra)
@@ -684,6 +662,7 @@ def main():
     attempt["schedule_reason"] = data["schedule_check"].get("reason")
 
     # 採点したレースだけのファイル（読む側の処理を変えない）。取れなかったレースは前の値を残す
+    sub_labels = scored_labels if scored_labels is not None else set(race_id_map)
     results_path = out_dir / "race_results.json"
     conditions_path = out_dir / "race_conditions.json"
     others_path = out_dir / "race_nonfinishers.json"
@@ -709,23 +688,112 @@ def main():
     _write_json_atomic(conditions_path, race_conditions)
     # 着順が数字でない馬（2026-11-02〜）。race_results.json には入れない（rank が数字の前提の処理が多いため）
     _write_json_atomic(others_path, race_others)
-    with open(PEDIGREE_FILE, "w", encoding="utf-8") as f:
-        json.dump(pedigree_cache, f, ensure_ascii=False, indent=2)
     append_fetch_log(out_dir, attempt)
-
     log.info(f"保存完了: {all_path}（complete={data['complete']}・予定 {data['schedule_check']['status']}）")
     log.info(f"取得レース数: {len(fetched)} / {len(race_id_map)}")
+    return data
+
+
+def main():
+    date = sys.argv[1] if len(sys.argv) >= 2 else datetime.now().strftime("%Y%m%d")
+    out_dir = OUTPUT_DIR / date
+    pickup_path = out_dir / "pickup_scores.json"
+
+    # 採点したレース（race_results.json などに入れるレース）。全レースは race_results_all.json に入れる
+    scored_labels = None
+    if pickup_path.exists():
+        with open(pickup_path, encoding="utf-8") as f:
+            pickup = json.load(f)
+        scored_labels = {label for label, rdata in pickup.get("races", {}).items() if rdata.get("race_id")}
+        log.info(f"pickup_scores.json の採点したレース: {len(scored_labels)}")
+
+    # 血統キャッシュ（永続・馬IDをキーに父・母父を保存）
+    pedigree_cache: dict = {}
+    if PEDIGREE_FILE.exists():
+        with open(PEDIGREE_FILE, encoding="utf-8") as f:
+            pedigree_cache = json.load(f)
+        log.info(f"血統キャッシュ: {len(pedigree_cache)}頭")
+
+    load_env()
+    attempt = {"at": _now_iso(), "scrape_version": SCRAPE_VERSION, "kind": "結果の取得",
+               "fetched": [], "failed": {}, "kept_old": {}, "stopped": None}
+    fetched, race_id_map = {}, {}
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(
+            headless=True,
+            args=["--disable-blink-features=AutomationControlled"],
+        )
+        try:
+            context = browser.new_context(
+                user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                           "AppleWebKit/537.36 (KHTML, like Gecko) "
+                           "Chrome/124.0.0.0 Safari/537.36",
+                viewport={"width": 1280, "height": 800},
+                locale="ja-JP",
+                timezone_id="Asia/Tokyo",
+            )
+            context.add_init_script(
+                "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
+            )
+            page = context.new_page()
+
+            if not load_cookies(context):
+                log.error("❌ cookies.json が見つかりません。")
+                log.error("   → python3 save_cookies.py を実行してログインしてください")
+                sys.exit(1)
+            page.goto("https://www.netkeiba.com/", wait_until="domcontentloaded")
+            human_sleep(1.0, 2.0)
+
+            # レースIDは、採点ファイルがあってもレース一覧から全レースを取る（設計 2章）
+            races = get_race_ids(page, date)
+            if is_ip_blocked(page):
+                print(f"RESULTS_FETCH_INCOMPLETE: {date} レース一覧で IPブロック・アクセス拒否のページを検知 → 何も取らずに止めた")
+                sys.exit(1)
+            race_id_map = {r["label"]: r["race_id"] for r in races}
+            log.info(f"レース一覧ページから {len(race_id_map)} レース取得")
+            if not race_id_map:
+                log.error("レースが見つかりません")
+                sys.exit(1)
+
+            try:
+                fetched = fetch_races(page, race_id_map, attempt)
+                sub_labels = scored_labels if scored_labels is not None else set(race_id_map)
+                fetch_pedigrees(page, fetched, sub_labels, pedigree_cache, attempt)
+            except Exception as e:  # noqa: BLE001  予期しない例外でも、取れた分は下で保存する
+                attempt["stopped"] = f"予期しない例外で止めた: {type(e).__name__}: {e}"
+                log.error(attempt["stopped"])
+                for label in race_id_map:
+                    if label not in fetched and label not in attempt["failed"]:
+                        attempt["failed"][label] = "止めたので取っていない"
+        finally:
+            browser.close()
+
+    # JRA 公式の結果の一覧と照合（予定の確定。設計 2章）
+    import scrape_jra_payouts as J
+    cache = J.load_cache()
+    jra_error = None
+    try:
+        refresh_jra_lists(date, cache)
+    except Exception as e:  # noqa: BLE001
+        jra_error = f"{type(e).__name__}: {e}"
+        log.error(f"JRA 公式の一覧を取れない: {jra_error}")
+
+    data = save_results(date, out_dir, race_id_map, fetched, attempt, scored_labels, pedigree_cache, cache, jra_error)
+    with open(PEDIGREE_FILE, "w", encoding="utf-8") as f:
+        json.dump(pedigree_cache, f, ensure_ascii=False, indent=2)
 
     # 前の開催日で予定を確定できなかった日の、JRA 公式の一覧だけの取り直し
     changed = [out_dir] + retry_unconfirmed_schedules(date, cache) + [J.CACHE_PATH]
     for pth in changed:
         print(f"CHANGED_FILE: {Path(pth).resolve().relative_to(BASE_DIR.resolve())}")
 
-    # 知らせ: 今回の取得の失敗・予定を確定できない（complete: true でも残す）
+    # 知らせ: 今回の取得の失敗・止めた・予定を確定できない（complete: true でも残す）
     from schedule_check import CONFIRMED
     if attempt["failed"] or attempt["stopped"] or data["schedule_check"]["status"] != CONFIRMED:
         print(f"RESULTS_FETCH_INCOMPLETE: {date} 取れた {len(fetched)}/{len(race_id_map)}・"
               f"失敗 {len(attempt['failed'])}・予定 {data['schedule_check']['status']}"
+              + (f"・止めた: {attempt['stopped']}" if attempt["stopped"] else "")
               + (f"（{data['schedule_check'].get('reason')}）" if data['schedule_check'].get('reason') else ""))
 
     # データ品質チェック（cronログで気づけるように WARNING を出す）
@@ -735,8 +803,7 @@ def main():
             log.warning(f"⚠️  コーナー通過順が全馬空です（掲載前の可能性）。後日 scrape_results.py {date} で再取得を推奨")
         if sum(1 for h in all_horses if h.get("last3f")) == 0:
             log.warning(f"⚠️  上がり3Fが全馬空です。ページ構造変更の可能性を確認してください")
-    if not fetched:
-        sys.exit(1)
+    # 取れたレースが0件でも、取得の記録は保存したので 0 で終わる（cron が commit し、上の印で知らせる）
 
 
 if __name__ == "__main__":
