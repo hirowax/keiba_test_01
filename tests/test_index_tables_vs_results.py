@@ -36,6 +36,8 @@ class AllRacesTest(unittest.TestCase):
         self.results = {"東京7R": self.race(), "東京5R": self.race(cls="サラ系２歳 新馬", nums=["1", "2"]),
                         "東京4R": self.race(cls="障害３歳以上 未勝利", nums=["1", "2"])}
         self.sources = {"東京7R": {"modes": dict(ALL3)}, "東京5R": {"modes": dict(NONE3)}, "東京4R": {"modes": dict(NONE3)}}
+        self.planned = {"東京7R": "x7", "東京5R": "x5", "東京4R": "x4"}
+        self.schedule = {"status": "確定", "reason": None}
 
     def tearDown(self):
         shutil.rmtree(self.tmp)
@@ -47,18 +49,35 @@ class AllRacesTest(unittest.TestCase):
         others = [dict(h, status="取消") for h in hs if h["num"] in scratched]
         return {"condition": {"class_name": cls}, "horses": horses, "others": others}
 
-    def run_check(self):
-        (self.tmp / DATE / "race_results_all.json").write_text(json.dumps({"races": self.results}, ensure_ascii=False))
+    def write(self):
+        body = {"races": self.results, "race_ids": self.planned}
+        if self.schedule is not None:
+            body["schedule_check"] = self.schedule
+        (self.tmp / DATE / "race_results_all.json").write_text(json.dumps(body, ensure_ascii=False))
         (self.tmp / DATE / "index_sources.json").write_text(json.dumps({"races": self.sources}, ensure_ascii=False))
+
+    def run_check(self):
+        self.write()
         with mock.patch.object(I, "load_index_tables", return_value=self.tables):
             return I.check_day_against_results(DATE, self.tmp)
 
+    def run_main(self):
+        self.write()
+        printed = []
+        with mock.patch.object(I, "load_index_tables", return_value=self.tables), \
+                mock.patch.object(V, "OUTPUT_DIR", self.tmp), mock.patch.object(V.sys, "argv", ["x", DATE]), \
+                mock.patch("builtins.print", side_effect=lambda *a, **k: printed.append(" ".join(map(str, a)))):
+            with self.assertRaises(SystemExit) as cm:
+                V.main()
+        return cm.exception.code, printed
+
     def test_all_consistent(self):
+        """表なしは、新馬戦でも正常に数えず「未確認」（2026-11-13 外部レビュー）"""
         r = self.run_check()
-        self.assertEqual((r["races"], r["tables"], r["problems"]), (3, 3, []))
-        self.assertEqual(sorted(r["no_table_new_horse"]), ["東京5R 当該コース", "東京5R 当該距離", "東京5R 近走平均"])
-        self.assertEqual(len(r["no_table_unknown"]), 3)
-        self.assertTrue(all("障害" in x for x in r["no_table_unknown"]))
+        self.assertEqual((r["races"], r["tables"], r["problems"], r["uncheckable"]), (3, 3, [], []))
+        self.assertEqual(sorted(r["no_table_new_horse_unconfirmed"]), ["東京5R 当該コース", "東京5R 当該距離", "東京5R 近走平均"])
+        self.assertEqual(len(r["no_table_unconfirmed"]), 3)
+        self.assertTrue(all("障害" in x for x in r["no_table_unconfirmed"]))
 
     def test_missing_extra_and_name_are_problems(self):
         """表の欠け（結果にある出走馬が表に無い）・余分・馬名の違いは問題"""
@@ -86,28 +105,52 @@ class AllRacesTest(unittest.TestCase):
         self.tables["東京7R"]["distance"] = self.df
         self.assertTrue(any("食い違い" in p for p in self.run_check()["problems"]))
         del self.sources["東京4R"]
-        self.assertIn("東京4R: 結果にあるレースが、指数の取得の記録に無い", self.run_check()["problems"])
+        self.assertIn("東京4R: 予定のレースが、指数の取得の記録に無い", self.run_check()["problems"])
 
     def test_table_without_record_is_problem(self):
         self.tables["東京9R"] = {"average": self.df}
         self.assertIn("東京9R: 指数の表があるのに、取得の記録にレースが無い", self.run_check()["problems"])
 
-    def test_missing_files_are_not_checked(self):
+    def test_missing_file_is_uncheckable_and_fails(self):
+        """レビューの再現: 指数の表のファイルが無いと、前は0レース・問題0・終了コード0（成功扱い）だった"""
         (self.tmp / f"{DATE}.xlsx").unlink()
         r = self.run_check()
-        self.assertEqual(r["not_checked"], {"（その日）": f"指数の表のファイル（{DATE}.xlsx）が無い"})
+        self.assertEqual(r["uncheckable"], [f"（その日）指数の表のファイル（{DATE}.xlsx）が無い"])
+        code, printed = self.run_main()
+        self.assertEqual(code, 1)
+        self.assertTrue(any(p.startswith("INDEX_TABLES_SUMMARY: ") and "検査不能1" in p for p in printed), printed)
+
+    def test_schedule_not_confirmed_or_missing_is_uncheckable(self):
+        self.schedule = {"status": "予定を確定できない", "reason": "JRA 公式の結果の一覧が無い"}
+        self.assertTrue(any("予定を確定できない" in u for u in self.run_check()["uncheckable"]))
+        self.schedule = None
+        self.assertTrue(any("schedule_check" in u for u in self.run_check()["uncheckable"]))
+
+    def test_race_missing_from_both_record_and_results_is_caught(self):
+        """予定のレースが、取得の記録と結果の両方から抜けていても見逃さない"""
+        self.planned["東京9R"] = "x9"
+        r = self.run_check()
+        self.assertIn("東京9R: 予定のレースの結果が無い", r["uncheckable"])
+        self.assertIn("東京9R: 予定のレースが、指数の取得の記録に無い", r["problems"])
+
+    def test_unplanned_race_in_record_or_results_is_problem(self):
+        del self.planned["東京4R"]
+        r = self.run_check()
+        self.assertIn("東京4R: 結果にあるレースが、予定のレースの一覧に無い", r["problems"])
+        self.assertIn("東京4R: 指数の取得の記録にあるレースが、予定のレースの一覧に無い", r["problems"])
+
+    def test_summary_line_shows_unconfirmed_counts(self):
+        """問題0でも、要約の行に表なしの未確認の件数を出す（cron が LINE の完了の通知に付ける）"""
+        code, printed = self.run_main()
+        self.assertEqual(code, 0)
+        line = [p for p in printed if p.startswith("INDEX_TABLES_SUMMARY: ")]
+        self.assertEqual(line, ["INDEX_TABLES_SUMMARY: 指数の表 3表を照合・問題0・検査不能0・表なし未確認6（新馬戦3・ほか3）"])
 
     def test_verify_results_exit_code_and_output(self):
         """verify_results の main: 指数の表の問題があれば終了コード1、results_check.json に index_tables"""
         self.results["東京7R"]["horses"][1]["name"] = "ベツノウマ"
-        (self.tmp / DATE / "race_results_all.json").write_text(json.dumps({"races": self.results}, ensure_ascii=False))
-        (self.tmp / DATE / "index_sources.json").write_text(json.dumps({"races": self.sources}, ensure_ascii=False))
-        with mock.patch.object(I, "load_index_tables", return_value=self.tables), \
-                mock.patch.object(V, "OUTPUT_DIR", self.tmp), mock.patch.object(V.sys, "argv", ["x", DATE]), \
-                mock.patch("builtins.print"):
-            with self.assertRaises(SystemExit) as cm:
-                V.main()
-        self.assertEqual(cm.exception.code, 1)
+        code, _ = self.run_main()
+        self.assertEqual(code, 1)
         saved = json.loads((self.tmp / DATE / "results_check.json").read_text())
         self.assertTrue(saved["index_tables"]["problems"])
 

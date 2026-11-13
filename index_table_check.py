@@ -113,11 +113,18 @@ def _num_key(n):
 # 結果と照合する。後から見つけるための検査で、当日の公開を防ぐ検査ではない。
 # 照合の規則は check_index_tables と同じ（相手を出馬表から結果に替えるだけ）:
 #   結果の馬（着順のある馬と、着順が数字でない馬）から 馬番→馬ID・馬名、取消・除外の馬を作る。
-# 表が無い指数の分け方（取得の時点で表なしの理由を記録していないので、記録から確実に言えることだけで分ける）:
-#   - 新馬戦（結果のクラス名に「新馬」）で、取得の記録（index_sources.json）が「なし」 → 正常な表なし
-#   - 取得の記録が「取得異常」・記録にレースが無い・表があるのに記録が「なし」（食い違い） → 問題
-#   - それ以外の「なし」（障害戦・初めてのコースなど） → 正常か取得失敗かを区別できない（件数と一覧を出す。問題には数えない）
-ALL_RACES_CHECK_VERSION = "結果の後に全レースの指数の表を結果と照合_新馬戦の表なしは正常_ほかの表なしは区別できない_20261113"
+# 表が無い指数の扱い（取得の時点で表なしの理由を記録していないので、表なしを正常とは確定しない。2026-11-13 外部レビュー）:
+#   - 取得の記録（index_sources.json）が「取得異常」・記録にレースが無い・表があるのに記録が「なし」（食い違い） → 問題
+#   - 「なし」で新馬戦（結果のクラス名に「新馬」） → 新馬戦のため表なしが想定されるが、取得の状態は未確認
+#   - それ以外の「なし」（障害戦・初めてのコースなど） → 正常か取得失敗か未確認
+#   どちらの未確認も正常の件数に入れず、件数を要約に出す（個別には知らせない）。
+#   「なし」には、ページに表が無い・表を待つ時間切れ・ランキングでないページ・取得中の例外が入る（scraper.py）。
+#   正常な表なしと確定するのは、取得の時点でページの表示などの証拠を記録するようにしてから。
+# 検査できない（検査不能。問題とは分けるが、知らせる）:
+#   - 必要なファイル（race_results_all.json・index_sources.json・{日}.xlsx）が無い
+#   - 予定の照合の記録（race_results_all.json の schedule_check）が無い・予定を確定できない
+#   - 予定のレース（race_results_all.json の race_ids）の結果が無い
+ALL_RACES_CHECK_VERSION = "結果の後に全レースの指数の表を結果と照合_表なしは未確認_検査不能を分ける_20261113"
 NEW_HORSE_CLASS_TEXT = "新馬"
 NOT_STARTED = ("取消", "除外")
 
@@ -133,33 +140,48 @@ def result_as_shutuba(race: dict) -> dict:
 
 def check_day_against_results(date: str, output_dir: Path) -> dict:
     """その日の全レースの指数の表を結果と照合する。ファイルは読むだけ。
-    戻り値: {"version", "races", "tables", "problems": [文字], "no_table_new_horse": [...], "no_table_unknown": [...],
-            "not_checked": {レース: 理由}}"""
+    戻り値: {"version", "races", "tables", "problems": [文字], "uncheckable": [文字],
+            "no_table_new_horse_unconfirmed": [...], "no_table_unconfirmed": [...]}"""
     import json
     import scraper
-    out = {"version": ALL_RACES_CHECK_VERSION, "races": 0, "tables": 0, "problems": [],
-           "no_table_new_horse": [], "no_table_unknown": [], "not_checked": {}}
+    from schedule_check import CONFIRMED
+    out = {"version": ALL_RACES_CHECK_VERSION, "races": 0, "tables": 0, "problems": [], "uncheckable": [],
+           "no_table_new_horse_unconfirmed": [], "no_table_unconfirmed": []}
     d = output_dir / date
     allp, srcp, xlsx = d / "race_results_all.json", d / "index_sources.json", output_dir / f"{date}.xlsx"
-    for p, why in ((allp, "全レースの結果（race_results_all.json）が無い"), (srcp, "指数の取得の記録（index_sources.json）が無い"),
-                   (xlsx, f"指数の表のファイル（{xlsx.name}）が無い")):
-        if not p.exists():
-            out["not_checked"]["（その日）"] = why
-            return out
-    results = json.loads(allp.read_text(encoding="utf-8")).get("races") or {}
+    missing = [why for p, why in ((allp, "全レースの結果（race_results_all.json）が無い"),
+                                  (srcp, "指数の取得の記録（index_sources.json）が無い"),
+                                  (xlsx, f"指数の表のファイル（{xlsx.name}）が無い")) if not p.exists()]
+    if missing:
+        out["uncheckable"] += [f"（その日）{w}" for w in missing]
+        return out
+    all_data = json.loads(allp.read_text(encoding="utf-8"))
+    results = all_data.get("races") or {}
+    planned = all_data.get("race_ids") or {}
     sources = json.loads(srcp.read_text(encoding="utf-8")).get("races") or {}
     tables = load_index_tables(xlsx)
+    sc = all_data.get("schedule_check")
+    if not sc:
+        out["uncheckable"].append("（その日）予定の照合の記録（schedule_check）が無いので、予定のレースがそろっているか確かめられない")
+    elif sc.get("status") != CONFIRMED:
+        out["uncheckable"].append(f"（その日）予定を確定できない（{sc.get('reason')}）")
+    if not planned:
+        out["uncheckable"].append("（その日）予定のレースの一覧（race_ids）が無い")
+    # 予定・結果・取得の記録・表の対応（どれかから抜けたレースを見逃さない）
+    for label in sorted(set(planned) - set(results)):
+        out["uncheckable"].append(f"{label}: 予定のレースの結果が無い")
+    for label in sorted(set(results) - set(planned)):
+        out["problems"].append(f"{label}: 結果にあるレースが、予定のレースの一覧に無い")
+    for label in sorted(set(planned) - set(sources)):
+        out["problems"].append(f"{label}: 予定のレースが、指数の取得の記録に無い")
+    for label in sorted(set(sources) - set(planned)):
+        out["problems"].append(f"{label}: 指数の取得の記録にあるレースが、予定のレースの一覧に無い")
     for label in sorted(set(tables) - set(sources)):
         out["problems"].append(f"{label}: 指数の表があるのに、取得の記録にレースが無い")
-    for label in sorted(set(sources) | set(results)):
-        race = results.get(label)
-        src = sources.get(label)
-        if race is None:
-            out["not_checked"][label] = "結果にレースが無い"
-            continue
-        if src is None:
-            out["problems"].append(f"{label}: 結果にあるレースが、指数の取得の記録に無い")
-            continue
+    for label in sorted(set(results) & set(sources)):
+        race, src = results[label], sources[label]
+        if planned.get(label) and src.get("race_id") and str(src["race_id"]) != str(planned[label]):
+            out["problems"].append(f"{label}: レースIDが違う（取得の記録 {src['race_id']} / 予定 {planned[label]}）")
         new_horse = NEW_HORSE_CLASS_TEXT in str((race.get("condition") or {}).get("class_name") or "")
         dfs = tables.get(label) or {}
         res = check_index_tables(dfs, result_as_shutuba(race))
@@ -175,9 +197,10 @@ def check_day_against_results(date: str, output_dir: Path) -> dict:
                 if bad:
                     out["problems"].append(f"{label} {mode}: 結果とそろわない {bad}")
             elif recorded == "なし" and new_horse:
-                out["no_table_new_horse"].append(f"{label} {mode}")
+                out["no_table_new_horse_unconfirmed"].append(f"{label} {mode}")
             elif recorded == "なし":
-                out["no_table_unknown"].append(f"{label} {mode}（{(race.get('condition') or {}).get('class_name') or 'クラス名なし'}）")
+                out["no_table_unconfirmed"].append(
+                    f"{label} {mode}（{(race.get('condition') or {}).get('class_name') or 'クラス名なし'}）")
             else:
                 out["problems"].append(f"{label} {mode}: 表が無く、取得の記録が「{recorded}」")
     return out

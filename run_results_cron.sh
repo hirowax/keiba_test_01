@@ -72,8 +72,10 @@ sys.exit(0 if '$TODAY' in dates else 1)
     CHECK_OUT=$(python3 verify_results.py "$TODAY" 2>&1)
     CHECK_RC=$?
     echo "$CHECK_OUT"
+    # 指数の表の照合（全レース）の要約。照合の失敗の通知と、最後の完了の通知に付ける（表なしの未確認の件数を含む。2026-11-13〜）
+    INDEX_SUMMARY=$(echo "$CHECK_OUT" | grep "^INDEX_TABLES_SUMMARY: " | head -1 | sed 's/^INDEX_TABLES_SUMMARY: //' | tr -d '"')
     if [ $CHECK_RC -ne 0 ]; then
-        notify_line "[netkeiba] $TODAY 全頭照合で不一致 ✗ $(echo "$CHECK_OUT" | head -4 | tr '\n' ' ' | tr -d '"')"
+        notify_line "[netkeiba] $TODAY 全頭照合で不一致・検査不能 ✗ $(echo "$CHECK_OUT" | grep -v "^INDEX_TABLES_SUMMARY: " | head -4 | tr '\n' ' ' | tr -d '"') ${INDEX_SUMMARY}"
     fi
 
     # git commit & push（各ステップの失敗を個別ハンドリング）
@@ -89,10 +91,10 @@ sys.exit(0 if '$TODAY' in dates else 1)
     if git push; then
         if [ -n "$INCOMPLETE" ]; then
             echo "$(date '+%Y-%m-%d %H:%M:%S') 保存できた分を公開（取得・保存は不完全）"
-            notify_line "[netkeiba] $TODAY のレース結果は保存できた分を公開しました（取得・保存は不完全・要対応）⚠️"
+            notify_line "[netkeiba] $TODAY のレース結果は保存できた分を公開しました（取得・保存は不完全・要対応）⚠️ ${INDEX_SUMMARY}"
         else
             echo "$(date '+%Y-%m-%d %H:%M:%S') 完了"
-            notify_line "[netkeiba] $TODAY のレース結果を取得・公開しました ✓"
+            notify_line "[netkeiba] $TODAY のレース結果を取得・公開しました ✓ ${INDEX_SUMMARY}"
         fi
     else
         echo "$(date '+%Y-%m-%d %H:%M:%S') git push 失敗"
