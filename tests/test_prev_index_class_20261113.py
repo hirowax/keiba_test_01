@@ -118,10 +118,11 @@ class FailedRecordNotReusedTest(unittest.TestCase):
     """11/13 17:43〜 の取得失敗の記録（70頭）は、成功した値として再利用しない"""
 
     def test_failed_entries(self):
-        files = sorted(Path(__file__).resolve().parent.parent.glob("output/20261114/prev_inputs/2026*.json"))
-        if not files:
-            raise unittest.SkipTest("11/14 の前走データの記録が手元に無い")
-        entries = [e for r in json.loads(files[0].read_text(encoding="utf-8"))["races"].values()
+        # 今回の失敗の記録を名前で指定する（同じフォルダに後の取り直しの記録 20261113T183557765843 もある）
+        f = Path(__file__).resolve().parent.parent / "output/20261114/prev_inputs/20261113T174239994092_d21877c8.json"
+        if not f.exists():
+            raise unittest.SkipTest("11/14 の前走データの失敗の記録が手元に無い")
+        entries = [e for r in json.loads(f.read_text(encoding="utf-8"))["races"].values()
                    for e in r["horses"].values()]
         self.assertEqual(len(entries), 70)
         self.assertTrue(all(e["status"] == pi.FAILED for e in entries))
