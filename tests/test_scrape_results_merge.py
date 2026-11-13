@@ -218,8 +218,10 @@ class FetchRacesTest(unittest.TestCase):
         data = SR.save_results("20261108", out, self.ids, fetched, att, None, {}, {"srl": {}, "sde": {}}, None)
         self.assertEqual(list(data["races"]), ["福島1R"])
 
-    def test_main_saves_races_fetched_before_unexpected_exception(self):
-        """main の流れ全体: 1レース取った後に予期しない例外 → 取れた1レースが race_results_all.json に入り、止めた理由が残る"""
+    def run_main(self, sleep_effect=None, retry=None):
+        """main を模擬のページで動かす。戻り値は標準出力"""
+        import contextlib
+        import io
         out_root = self.tmp / "output"
         page = FakePage({rid: self.good for rid in self.ids.values()})
 
@@ -237,22 +239,36 @@ class FetchRacesTest(unittest.TestCase):
         import scrape_jra_payouts as J
         with mock.patch.object(SR, "sync_playwright", PW), mock.patch.object(SR, "load_cookies", return_value=True), \
                 mock.patch.object(SR, "get_race_ids", return_value=races), \
-                mock.patch.object(SR, "human_sleep", side_effect=[None, RuntimeError("待機の例外")]), \
+                mock.patch.object(SR, "human_sleep", side_effect=sleep_effect), \
                 mock.patch.object(SR, "OUTPUT_DIR", out_root), mock.patch.object(SR, "PEDIGREE_FILE", self.tmp / "ped.json"), \
                 mock.patch.object(SR, "BASE_DIR", self.tmp), mock.patch.object(SR, "refresh_jra_lists"), \
-                mock.patch.object(SR, "retry_unconfirmed_schedules", return_value=[]), \
+                mock.patch.object(SR, "retry_unconfirmed_schedules", **(retry or {"return_value": []})), \
                 mock.patch.object(J, "load_cache", return_value={"srl": {}, "sde": {}}), \
                 mock.patch.object(J, "CACHE_PATH", self.tmp / "cache.json"), \
                 mock.patch.object(SR, "load_env"), mock.patch.object(SR.sys, "argv", ["x", "20261108"]):
-            try:
-                SR.main()
-            except SystemExit:
-                pass
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                SR.main()   # 保存の後は 0 で終わる（SystemExit を出さない）
+        return buf.getvalue()
+
+    def test_main_saves_races_fetched_before_unexpected_exception(self):
+        """main の流れ全体: 1レース取った後に予期しない例外 → 取れた1レースが race_results_all.json に入り、止めた理由が残る"""
+        out_root = self.tmp / "output"
+        self.run_main(sleep_effect=[None, RuntimeError("待機の例外")])
         data = json.loads((out_root / "20261108" / SR.RESULTS_ALL_NAME).read_text())
         self.assertEqual(list(data["races"]), ["福島1R"])
         log = json.loads((out_root / "20261108" / SR.FETCH_LOG_NAME).read_text())["attempts"][-1]
         self.assertIn("予期しない例外", log["stopped"])
         self.assertEqual(log["failed"]["福島2R"], "止めたので取っていない")
+
+    def test_main_exception_after_save_still_prints_changed_files(self):
+        """保存の後の、前の開催日の JRA 公式の一覧の取り直しで例外 → 止まらず、保存したファイルの CHANGED_FILE: と知らせの印を出す
+        （2026-11-13〜。それまでは 0 以外で終わり、cron が commit しなかった）"""
+        out = self.run_main(retry={"side_effect": RuntimeError("取り直しの例外")})
+        self.assertIn("CHANGED_FILE: output/20261108", out)
+        self.assertIn("CHANGED_FILE: cache.json", out)
+        self.assertIn("保存の後の失敗: 前の開催日の JRA 公式の一覧の取り直し RuntimeError: 取り直しの例外", out)
+        self.assertEqual(len(json.loads((self.tmp / "output" / "20261108" / SR.RESULTS_ALL_NAME).read_text())["races"]), 3)
 
     def test_consecutive_failures_stop(self):
         page = FakePage({rid: TimeoutError("x") for rid in self.ids.values()})
@@ -332,6 +348,26 @@ class FetchLogAndRetryTest(unittest.TestCase):
         data = json.loads(p.read_text())
         self.assertEqual(data["schedule_check"]["status"], S.UNCONFIRMED)
         self.assertIn("つながらない", data["schedule_check"]["jra_error"])
+
+    def test_retry_exception_on_one_day_continues_and_keeps_written_file(self):
+        """1日目で書き換えた後に例外 → その日のファイルは戻り値に入り、理由を errors に残して2日目へ進む"""
+        for d in ("20261107", "20261108"):
+            p = self.tmp / d / SR.RESULTS_ALL_NAME
+            p.parent.mkdir(parents=True)
+            p.write_text(json.dumps({"race_ids": {"東京1R": "202605010101"}, "schedule_check": {"status": S.UNCONFIRMED}}))
+        real = SR.append_fetch_log
+
+        def flaky(out_dir, attempt):
+            if Path(out_dir).name == "20261107":
+                raise OSError("書けない")
+            return real(out_dir, attempt)
+        errors = []
+        with mock.patch.object(SR, "refresh_jra_lists"), mock.patch.object(SR, "append_fetch_log", side_effect=flaky):
+            changed = SR.retry_unconfirmed_schedules("20261114", {"srl": {}, "sde": {}}, self.tmp, errors=errors)
+        names = sorted(f"{Path(c).parent.name}/{Path(c).name}" for c in changed)
+        self.assertEqual(names, sorted([f"20261107/{SR.RESULTS_ALL_NAME}", f"20261108/{SR.FETCH_LOG_NAME}",
+                                        f"20261108/{SR.RESULTS_ALL_NAME}"]))
+        self.assertEqual(errors, ["20261107: OSError: 書けない"])
 
     def test_schedule_check_for_marks_missing_scored_race(self):
         ids = {f"東京{n}R": f"2026050101{n:02d}" for n in range(1, 13)}

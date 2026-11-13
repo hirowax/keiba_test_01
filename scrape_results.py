@@ -534,34 +534,43 @@ def append_fetch_log(out_dir: Path, attempt: dict) -> Path:
     return path
 
 
-def retry_unconfirmed_schedules(today: str, cache: dict, output_dir: Path = OUTPUT_DIR) -> list:
+def retry_unconfirmed_schedules(today: str, cache: dict, output_dir: Path = OUTPUT_DIR, errors: list = None) -> list:
     """前の開催日で予定を確定できなかった日（schedule_check がある日だけ）について、JRA 公式の一覧だけを取り直す
-    （netkeiba にはアクセスしない）。戻り値は書き換えたファイルのパス"""
+    （netkeiba にはアクセスしない）。戻り値は書き換えたファイルのパス。
+    日ごとに予期しない例外を受け、errors に「日付: 理由」を足して次の日へ進む（2026-11-13〜。それまでは例外で止まり、
+    呼び出し元が CHANGED_FILE: を出せず、cron が保存済みのファイルを commit しなかった）。書き換えた後の例外でも、そのファイルは戻り値に入る"""
     from datetime import timedelta
     from schedule_check import CONFIRMED
     changed = []
+    if errors is None:
+        errors = []
     start = (datetime.strptime(today, "%Y%m%d") - timedelta(days=RETRY_SCHEDULE_DAYS)).strftime("%Y%m%d")
     for path in sorted(output_dir.glob(f"*/{RESULTS_ALL_NAME}")):
         d = path.parent.name
         if not (re.fullmatch(r"\d{8}", d) and start <= d < today):
             continue
-        data = _load_json(path, {})
-        sc = data.get("schedule_check")
-        if not sc or sc.get("status") == CONFIRMED:
-            continue
-        err = None
         try:
-            refresh_jra_lists(d, cache)
+            data = _load_json(path, {})
+            sc = data.get("schedule_check")
+            if not sc or sc.get("status") == CONFIRMED:
+                continue
+            err = None
+            try:
+                refresh_jra_lists(d, cache)
+            except Exception as e:  # noqa: BLE001
+                err = f"{type(e).__name__}: {e}"
+            data["schedule_check"] = schedule_check_for(d, data.get("race_ids") or {}, cache, err)
+            _write_json_atomic(path, data, indent=1)
+            changed.append(path)
+            logp = append_fetch_log(path.parent, {"at": _now_iso(), "scrape_version": SCRAPE_VERSION,
+                                                  "kind": "JRA 公式の一覧だけ取り直し", "jra_error": err,
+                                                  "schedule_status": data["schedule_check"]["status"]})
+            changed.append(logp)
+            log.info(f"{d}: JRA 公式の一覧を取り直した → {data['schedule_check']['status']}"
+                     f"（{data['schedule_check'].get('reason')}）")
         except Exception as e:  # noqa: BLE001
-            err = f"{type(e).__name__}: {e}"
-        data["schedule_check"] = schedule_check_for(d, data.get("race_ids") or {}, cache, err)
-        _write_json_atomic(path, data, indent=1)
-        logp = append_fetch_log(path.parent, {"at": _now_iso(), "scrape_version": SCRAPE_VERSION,
-                                              "kind": "JRA 公式の一覧だけ取り直し", "jra_error": err,
-                                              "schedule_status": data["schedule_check"]["status"]})
-        log.info(f"{d}: JRA 公式の一覧を取り直した → {data['schedule_check']['status']}"
-                 f"（{data['schedule_check'].get('reason')}）")
-        changed += [path, logp]
+            errors.append(f"{d}: {type(e).__name__}: {e}")
+            log.error(f"{d}: JRA 公式の一覧の取り直しで予期しない例外: {type(e).__name__}: {e}")
     return changed
 
 
@@ -787,21 +796,39 @@ def main():
         log.error(f"JRA 公式の一覧を取れない: {jra_error}")
 
     data = save_results(date, out_dir, race_id_map, fetched, attempt, scored_labels, pedigree_cache, cache, jra_error)
-    with open(PEDIGREE_FILE, "w", encoding="utf-8") as f:
-        json.dump(pedigree_cache, f, ensure_ascii=False, indent=2)
+
+    # 保存の後の処理は、例外が出ても止めずに知らせる（2026-11-13〜）。保存したファイルの CHANGED_FILE: の行は先に出す
+    # （cron は scrape_results.py が 0 以外で終わると commit しないので、保存の後は 0 で終わり RESULTS_FETCH_INCOMPLETE で知らせる）
+    def changed_file(pth):
+        print(f"CHANGED_FILE: {Path(pth).resolve().relative_to(BASE_DIR.resolve())}", flush=True)
+    changed_file(out_dir)
+    changed_file(J.CACHE_PATH)
+    after_save_errors = []
+    try:
+        with open(PEDIGREE_FILE, "w", encoding="utf-8") as f:
+            json.dump(pedigree_cache, f, ensure_ascii=False, indent=2)
+    except Exception as e:  # noqa: BLE001
+        after_save_errors.append(f"血統のキャッシュを保存できない: {type(e).__name__}: {e}")
 
     # 前の開催日で予定を確定できなかった日の、JRA 公式の一覧だけの取り直し
-    changed = [out_dir] + retry_unconfirmed_schedules(date, cache) + [J.CACHE_PATH]
-    for pth in changed:
-        print(f"CHANGED_FILE: {Path(pth).resolve().relative_to(BASE_DIR.resolve())}")
+    retry_errors = []
+    try:
+        for pth in retry_unconfirmed_schedules(date, cache, errors=retry_errors):
+            changed_file(pth)
+    except Exception as e:  # noqa: BLE001
+        retry_errors.append(f"{type(e).__name__}: {e}")
+    after_save_errors += [f"前の開催日の JRA 公式の一覧の取り直し {e}" for e in retry_errors]
+    for e in after_save_errors:
+        log.error(e)
 
     # 知らせ: 今回の取得の失敗・止めた・予定を確定できない（complete: true でも残す）
     from schedule_check import CONFIRMED
-    if attempt["failed"] or attempt["stopped"] or data["schedule_check"]["status"] != CONFIRMED:
+    if attempt["failed"] or attempt["stopped"] or data["schedule_check"]["status"] != CONFIRMED or after_save_errors:
         print(f"RESULTS_FETCH_INCOMPLETE: {date} 取れた {len(fetched)}/{len(race_id_map)}・"
               f"失敗 {len(attempt['failed'])}・予定 {data['schedule_check']['status']}"
               + (f"・止めた: {attempt['stopped']}" if attempt["stopped"] else "")
-              + (f"（{data['schedule_check'].get('reason')}）" if data['schedule_check'].get('reason') else ""))
+              + (f"（{data['schedule_check'].get('reason')}）" if data['schedule_check'].get('reason') else "")
+              + (f"・保存の後の失敗: {' / '.join(after_save_errors)}" if after_save_errors else ""))
 
     # データ品質チェック（cronログで気づけるように WARNING を出す）
     all_horses = [h for r in fetched.values() for h in r["horses"]]
