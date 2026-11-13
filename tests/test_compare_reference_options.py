@@ -26,7 +26,7 @@ import compare_index_top3_202611 as cmp  # noqa: E402
 from export_tables import write_day  # noqa: E402
 
 OLD = str(ROOT / "research" / "index_top3_compare_202611" / "old_scraper_6f2ed8d.py")
-COLS = ["順位", "枠", "馬番", "印", "馬名", "テスト指数"]
+COLS = ["順位", "枠", "馬番", "印", "馬名", "近5走平均指数"]   # 実際の見出しの形（2026-11-13〜 知らない見出しは取得異常）
 LABELS = {"average": "近走平均", "distance": "当該距離", "course": "当該コース"}
 
 

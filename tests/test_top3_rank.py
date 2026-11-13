@@ -26,7 +26,7 @@ from scraper import (  # noqa: E402
     parse_speed_shutuba_html, rank_notes, ranked_horses, top_rank_horses,
 )
 
-COLS = ["順位", "枠", "馬番", "印", "馬名", "テスト最高指数"]
+COLS = ["順位", "枠", "馬番", "印", "馬名", "東京芝コース最高指数"]   # 実際の見出しの形（2026-11-13〜 知らない見出しは取得異常）
 
 
 def table(rows, subheader=("着度数", "勝率", "連対率", "複勝率", "", "")):

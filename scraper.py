@@ -344,7 +344,7 @@ def parse_rank_html(html: str) -> Optional[pd.DataFrame]:
 # 0 とマイナスは正当な値。INDEX_MAX 以上は隠し値などの読み取り誤りとして異常扱い（200 は異常）。
 INDEX_MAX = 200
 # 指数の読み方の版。読み方を変えたら値を変える（output/{date}/index_sources.json → pickup_scores.json の quality）
-INDEX_READER_VERSION = "画面の値_0とマイナスと*は正常_200以上は異常_順位の形と馬番の重複も検査_20261102"
+INDEX_READER_VERSION = "画面の値_0とマイナスと*は正常_200以上は異常_順位の形と馬番の重複も検査_20261102_列は見出しの完全一致と馬名の次_20261113"
 INDEX_NO_DATA = {"", "-", "−", "－", "未", "未経験"}
 INDEX_TEXT_RE = re.compile(r"(-?\d+(?:\.\d+)?)(\*?)")
 
@@ -387,12 +387,33 @@ SUBHEADER_FIRST_CELLS = ("5走前", "着度数")
 RANK_TEXT_RE = re.compile(r"(\d+)位")
 
 
+# 指数の表の見出し（2026-11-13〜。それまでは「名前に『指数』を含む最初の列」で、列が増えると別の値を読む危険があった）。
+# 保存済みの 10,336 表（output/*.xlsx。2025-09-20〜2026-11-14）で確かめた形:
+#   見出しの先頭はすべて「順位・枠・馬番・印・馬名」。指数の列はすべて馬名のすぐ次で、見出しは次のどれか:
+#   近走平均「近5走平均指数」（右に「近5走の指数」＝各レースの値もある）、当該距離「{芝/ダート/障害}{距離}最高指数」、
+#   当該コース「{10場}{芝/ダート/障害}コース最高指数」、代わりの取り方（shutuba_submenu）で作った表の「指数」。
+# ページのソースでは、順位・馬番・馬名のセルに class（Rank・UmaBan・Horse_Name）があるが、指数のセルには決まった class が
+# 無い（値で変わる色の class だけ）。保存した表（xlsx）も同じ読み方をするので、見出しの文字の完全一致と、馬名の次の列で決める。
+TABLE_RANK_HEADER, TABLE_NUM_HEADER, TABLE_NAME_HEADER = "順位", "馬番", "馬名"
+INDEX_HEADER_RE = re.compile(
+    r"^(近5走平均指数|(芝|ダート|障害)\d{3,4}最高指数|"
+    r"(東京|中山|京都|阪神|中京|新潟|福島|函館|札幌|小倉)(芝|ダート|障害)コース最高指数|指数)$")
+
+
 def _table_columns(df: pd.DataFrame):
-    """(順位列, 馬番列, 馬名列, 指数列)。順位列は先頭列、指数列は名前に「指数」を含む最初の列"""
-    idx_col = next((c for c in df.columns if "指数" in str(c)), None)
-    num_col = next((c for c in df.columns if "馬番" in str(c)), None)
-    name_col = next((c for c in df.columns if "馬名" in str(c)), None)
-    return df.columns[0], num_col, name_col, idx_col
+    """(順位列, 馬番列, 馬名列, 指数列)。決められない列は None（呼び出し側で取得異常にする）。
+    順位・馬番・馬名: 見出しの完全一致がちょうど1つ（順位は先頭の列であることも確かめる）。
+    指数: 見出しが INDEX_HEADER_RE に完全一致する列がちょうど1つで、馬名の列のすぐ次にあるもの。"""
+    cols = [str(c).strip() for c in df.columns]
+
+    def one(name):
+        hit = [i for i, c in enumerate(cols) if c == name]
+        return hit[0] if len(hit) == 1 else None
+    rank_i, num_i, name_i = one(TABLE_RANK_HEADER), one(TABLE_NUM_HEADER), one(TABLE_NAME_HEADER)
+    idx_hit = [i for i, c in enumerate(cols) if INDEX_HEADER_RE.match(c)]
+    idx_i = idx_hit[0] if len(idx_hit) == 1 and name_i is not None and idx_hit[0] == name_i + 1 else None
+    col = lambda i: df.columns[i] if i is not None else None  # noqa: E731
+    return (col(rank_i) if rank_i == 0 else None), col(num_i), col(name_i), col(idx_i)
 
 
 def ranked_horses(df: pd.DataFrame) -> Tuple[List[dict], List[str], List[dict]]:
@@ -411,8 +432,9 @@ def ranked_horses(df: pd.DataFrame) -> Tuple[List[dict], List[str], List[dict]]:
     どれも5位以下だった。
     """
     rank_col, num_col, name_col, idx_col = _table_columns(df)
-    if idx_col is None or num_col is None:
-        return [], ["指数列か馬番列が無い"], []
+    if idx_col is None or num_col is None or rank_col is None or name_col is None:
+        return [], [f"列を決められない（順位{rank_col is not None}・馬番{num_col is not None}・馬名{name_col is not None}・"
+                    f"指数{idx_col is not None}。見出し {[str(c) for c in df.columns][:8]}）"], []
     horses, errors, notes = [], [], []
     for _, row in df.iterrows():
         rank_text = str(row[rank_col]).strip()
