@@ -3,6 +3,10 @@ import json, collections, sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from common import OUT
+import sys as _sys  # 2026-11-13〜: 結果の保存が不完全な日があれば止める
+_sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parents[2]))
+from data_quality import stop_if_any_results_save_incomplete
+stop_if_any_results_save_incomplete()
 c = collections.Counter(); bad = []
 for pj in sorted(OUT.glob("*/payouts_jra.json")):
     d = pj.parent.name; rp = OUT / d / "race_results.json"

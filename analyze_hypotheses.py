@@ -8,12 +8,15 @@ H2: 前走上位人気(1-3番人気)で凡走(4着以下) + 今回人気落ち�
 import json
 from pathlib import Path
 import statistics
+from data_quality import skip_results_day  # 結果の保存が不完全な日を使わない（2026-11-13〜）
 
 BASE_DIR = Path(__file__).parent
 DATE = "20260328"
 
 def main():
     # データ読み込み
+    if skip_results_day(BASE_DIR / "output" / DATE):
+        raise SystemExit(1)
     with open(BASE_DIR / "output" / DATE / "race_results.json", encoding="utf-8") as f:
         race_results = json.load(f)
 

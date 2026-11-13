@@ -14,6 +14,7 @@ usage: python3 analyze_pedigree_dictionary.py
 import json
 from pathlib import Path
 from collections import defaultdict
+from data_quality import skip_results_day  # 結果の保存が不完全な日を使わない（2026-11-13〜）
 
 BASE_DIR = Path(__file__).parent
 OUTPUT_DIR = BASE_DIR / "output"
@@ -153,6 +154,8 @@ def collect():
         cond_path = OUTPUT_DIR / date / "race_conditions.json"
         res_path = OUTPUT_DIR / date / "race_results.json"
         if not cond_path.exists() or not res_path.exists():
+            continue
+        if skip_results_day(OUTPUT_DIR / date):
             continue
         cond = json.load(open(cond_path, encoding="utf-8"))
         res = json.load(open(res_path, encoding="utf-8"))

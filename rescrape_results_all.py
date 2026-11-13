@@ -14,6 +14,8 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 from scraper import load_cookies, human_sleep, human_browse
 from scrape_results import scrape_race_result, RESULT_URL
+from data_quality import stop_if_any_results_save_incomplete  # 2026-11-13〜
+stop_if_any_results_save_incomplete()   # 結果の保存が不完全な日があれば止める
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger(__name__)

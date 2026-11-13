@@ -19,6 +19,10 @@ import sys
 from collections import Counter, defaultdict
 from datetime import datetime
 from pathlib import Path
+import sys as _sys  # 2026-11-13〜: 結果の保存が不完全な日があれば止める
+_sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parents[1]))
+from data_quality import stop_if_any_results_save_incomplete
+stop_if_any_results_save_incomplete()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = BASE_DIR / "output"

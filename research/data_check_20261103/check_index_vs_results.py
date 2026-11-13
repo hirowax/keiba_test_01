@@ -7,6 +7,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from xlsx_blocks import load_day
 from common import OUT
+import sys as _sys  # 2026-11-13〜: 結果の保存が不完全な日があれば止める
+_sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parents[2]))
+from data_quality import stop_if_any_results_save_incomplete
+stop_if_any_results_save_incomplete()
 SP = re.compile(r"[\s　]+")
 SUB = ("5走前", "着度数")
 

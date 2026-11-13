@@ -41,6 +41,10 @@ import prev_inputs as prev_new  # noqa: E402
 import race_pickup  # noqa: E402
 import scraper  # noqa: E402
 from index_table_check import load_index_tables  # noqa: E402
+import sys as _sys  # 2026-11-13〜: 結果の保存が不完全な日があれば止める
+_sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parents[2]))
+from data_quality import stop_if_any_results_save_incomplete
+stop_if_any_results_save_incomplete()
 
 spec = importlib.util.spec_from_file_location("prev_inputs_7b65ee7", WT / "prev_inputs.py")
 prev_old = importlib.util.module_from_spec(spec)

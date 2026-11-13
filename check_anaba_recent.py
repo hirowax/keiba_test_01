@@ -8,6 +8,7 @@ import re
 import sys
 from pathlib import Path
 from datetime import datetime
+from data_quality import skip_results_day  # 結果の保存が不完全な日を使わない（2026-11-13〜）
 
 BASE_DIR = Path(__file__).parent
 OUTPUT_DIR = BASE_DIR / "output"
@@ -99,6 +100,8 @@ def main():
         rc_path = OUTPUT_DIR / date / "race_conditions.json"
         if not rr_path.exists():
             print(f"[{date}] race_results.json なし → スキップ")
+            continue
+        if skip_results_day(OUTPUT_DIR / date):
             continue
         rr = json.loads(rr_path.read_text(encoding="utf-8"))
         rc = json.loads(rc_path.read_text(encoding="utf-8")) if rc_path.exists() else {}

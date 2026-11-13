@@ -32,6 +32,8 @@ BASE_DIR = Path(__file__).parent
 OUTPUT_DIR = BASE_DIR / "output"
 
 from playwright.sync_api import sync_playwright
+from data_quality import stop_if_any_results_save_incomplete  # 2026-11-13〜
+stop_if_any_results_save_incomplete()   # 結果の保存が不完全な日があれば止める
 
 
 def scrape_date(page, date: str) -> None:

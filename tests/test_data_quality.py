@@ -143,6 +143,25 @@ class IndexErrorRecordTest(unittest.TestCase):
         self.assertEqual(list(errors), ["course"])
         self.assertIn("1072", errors["course"][0])
 
+class ResultsSaveMarkerEntryTest(unittest.TestCase):
+    """研究用の入口の確認（2026-11-13〜）"""
+
+    def test_skip_and_stop(self):
+        import json
+        import tempfile
+        import data_quality as D
+        t = Path(tempfile.mkdtemp())
+        (t / "20261107").mkdir()
+        (t / "20261108").mkdir()
+        self.assertFalse(D.skip_results_day(t / "20261107"))
+        D.stop_if_any_results_save_incomplete(t)   # 印が無ければ止めない
+        (t / "20261108" / D.RESULTS_SAVE_MARKER).write_text(json.dumps({"state": "保存中", "errors": ["x"]}), encoding="utf-8")
+        self.assertTrue(D.skip_results_day(t / "20261108"))
+        with self.assertRaises(SystemExit) as cm:
+            D.stop_if_any_results_save_incomplete(t)
+        self.assertIn("20261108", str(cm.exception))
+        self.assertNotIn("20261107", str(cm.exception))
+
 
 if __name__ == "__main__":
     unittest.main()

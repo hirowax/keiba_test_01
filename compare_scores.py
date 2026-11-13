@@ -4,6 +4,7 @@ import json
 import re
 from pathlib import Path
 from collections import defaultdict
+from data_quality import skip_results_day  # 結果の保存が不完全な日を使わない（2026-11-13〜）
 
 OUTPUT_DIR = Path("output")
 
@@ -37,6 +38,8 @@ def _mark(rank) -> str:
 def load_results(date):
     rr_path = OUTPUT_DIR / date / "race_results.json"
     if not rr_path.exists():
+        return {}
+    if skip_results_day(OUTPUT_DIR / date):
         return {}
     with open(rr_path, encoding="utf-8") as f:
         rr = json.load(f)

@@ -7,6 +7,7 @@ import json
 import re
 from pathlib import Path
 from collections import defaultdict
+from data_quality import skip_results_day  # 結果の保存が不完全な日を使わない（2026-11-13〜）
 
 BASE_DIR = Path(__file__).parent
 OUTPUT_DIR = BASE_DIR / "output"
@@ -20,6 +21,8 @@ def load_all_data():
         ps_path = OUTPUT_DIR / date / "pickup_scores.json"
         rr_path = OUTPUT_DIR / date / "race_results.json"
         if not ps_path.exists() or not rr_path.exists():
+            continue
+        if skip_results_day(OUTPUT_DIR / date):
             continue
         with open(ps_path, encoding="utf-8") as f:
             ps = json.load(f)

@@ -171,3 +171,22 @@ def results_save_issue(date_dir) -> str:
     except Exception as e:  # noqa: BLE001
         detail = f"印のファイルを読めない: {type(e).__name__}"
     return f"結果の保存が不完全（{detail}。scrape_results.py --rebuild-scored で作り直す）"
+
+
+def skip_results_day(date_dir) -> bool:
+    """研究用の集計の入口で使う: その日の結果の保存が不完全なら理由を表示して True（その日を使わない）。2026-11-13〜"""
+    issue = results_save_issue(date_dir)
+    if issue:
+        print(f"  {Path(date_dir).name}: {issue} → この日を使わない")
+        return True
+    return False
+
+
+def stop_if_any_results_save_incomplete(output_dir=None) -> None:
+    """研究用のスクリプト・結果のファイルを直接書く古いスクリプトの入口で使う: output/ のどこかに結果の保存が不完全な日があれば、
+    日付と理由を出して止める（その日を使う・書き換える前に scrape_results.py --rebuild-scored で直す）。2026-11-13〜"""
+    out = Path(output_dir) if output_dir else Path(__file__).resolve().parent / "output"
+    days = sorted(p.parent for p in out.glob(f"*/{RESULTS_SAVE_MARKER}"))
+    if days:
+        lines = [f"  {d.name}: {results_save_issue(d)}" for d in days]
+        raise SystemExit("結果の保存が不完全な日がある → 止める（直してから実行する）:\n" + "\n".join(lines))

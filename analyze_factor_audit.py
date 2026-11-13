@@ -21,6 +21,7 @@ import re
 from pathlib import Path
 from collections import defaultdict
 from datetime import datetime
+from data_quality import skip_results_day  # 結果の保存が不完全な日を使わない（2026-11-13〜）
 
 BASE_DIR = Path(__file__).parent
 OUTPUT_DIR = BASE_DIR / "output"
@@ -47,6 +48,8 @@ def load_results_history():
         rr_path = OUTPUT_DIR / date / "race_results.json"
         rc_path = OUTPUT_DIR / date / "race_conditions.json"
         if not rr_path.exists():
+            continue
+        if skip_results_day(OUTPUT_DIR / date):
             continue
         rr = json.load(open(rr_path, encoding="utf-8"))
         rc = json.load(open(rc_path, encoding="utf-8")) if rc_path.exists() else {}
@@ -93,6 +96,8 @@ def load_all():
         rr_path = OUTPUT_DIR / date / "race_results.json"
         rc_path = OUTPUT_DIR / date / "race_conditions.json"
         if not ps_path.exists() or not rr_path.exists():
+            continue
+        if skip_results_day(OUTPUT_DIR / date):
             continue
         ps = json.load(open(ps_path, encoding="utf-8"))
         rr = json.load(open(rr_path, encoding="utf-8"))

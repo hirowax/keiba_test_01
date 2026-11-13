@@ -68,7 +68,7 @@ netkeiba のタイム指数（近走平均・当該距離・当該コース）�
 
 成績を集計する前に、`docs/index_top3_definition_202611.md` の形で計画を文書にし、ユーザーの承認を得てから実行する。計画に必ず書くこと:
 - **対象**: 開始日・終了日、使うファイル、対象から外した日と理由。実行時に使ったファイルの一覧を保存する。
-  - 結果のファイル（`race_results.json`・`race_conditions.json`・`race_nonfinishers.json`）を読む集計・評価は、入口で `data_quality.results_save_issue()` を確かめ、保存が不完全の日（`results_save_incomplete.json` がある日）を使わない。外した日は理由別の件数に入れる（2026-11-13〜）。新しく書くものも、今までのスクリプトを今後実行し直すときも同じ（今までのスクリプトにはまだ入れていないので、実行し直す前に足す）。過去の出力は書き換えない。
+  - 結果のファイル（`race_results.json`・`race_conditions.json`・`race_nonfinishers.json`）を読む集計・評価は、入口で `data_quality.results_save_issue()` を確かめ、保存が不完全の日（`results_save_incomplete.json` がある日）を使わない。外した日は理由別の件数に入れる（2026-11-13〜）。新しく書くものも、今までのスクリプトを今後実行し直すときも同じ。今までのスクリプトには 2026-11-13 に入れた（ルート直下の集計は `data_quality.skip_results_day()` でその日を飛ばす。`research/` と、結果のファイルを直接書く `rescrape_results_all.py`・`scrape_history.py` は `stop_if_any_results_save_incomplete()` で、印のある日が1日でもあれば止まる）。過去の出力は書き換えない。
   - 条件にするファイルは、実際の保存状況を確かめてから決める。
   - `invalidated.json` は無効レースがある日にだけ置く記録なので、必須にしない。
   - `payouts_jra.json` の有無は、回収率の対象選びにだけ使う。

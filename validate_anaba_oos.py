@@ -9,6 +9,7 @@ import re
 from pathlib import Path
 from datetime import datetime
 from analyze_anaba_filters import calc_v2, calc_stats, extract_class, extract_age_class, is_female_only
+from data_quality import skip_results_day  # 結果の保存が不完全な日を使わない（2026-11-13〜）
 
 BASE_DIR = Path(__file__).parent
 OUTPUT_DIR = BASE_DIR / "output"
@@ -26,6 +27,7 @@ def load_all_with_prev():
         rc_path = OUTPUT_DIR / date / "race_conditions.json"
         ps_path = OUTPUT_DIR / date / "pickup_scores.json"
         if not rr_path.exists(): continue
+        if skip_results_day(OUTPUT_DIR / date): continue
 
         rr = json.loads(rr_path.read_text())
         rc = json.loads(rc_path.read_text()) if rc_path.exists() else {}

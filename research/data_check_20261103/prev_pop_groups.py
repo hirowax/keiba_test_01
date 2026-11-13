@@ -5,6 +5,10 @@ import json, collections, sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from common import OUT
+import sys as _sys  # 2026-11-13〜: 結果の保存が不完全な日があれば止める
+_sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parents[2]))
+from data_quality import stop_if_any_results_save_incomplete
+stop_if_any_results_save_incomplete()
 prev = collections.defaultdict(set)
 for pp in sorted(OUT.glob("*/prev_data.json")):
     for hid, v in json.load(open(pp)).items():
