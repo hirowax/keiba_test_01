@@ -68,7 +68,7 @@ netkeiba のタイム指数（近走平均・当該距離・当該コース）�
 
 成績を集計する前に、`docs/index_top3_definition_202611.md` の形で計画を文書にし、ユーザーの承認を得てから実行する。計画に必ず書くこと:
 - **対象**: 開始日・終了日、使うファイル、対象から外した日と理由。実行時に使ったファイルの一覧を保存する。
-  - 結果のファイル（`race_results.json`・`race_conditions.json`・`race_nonfinishers.json`）を読む集計・評価は、入口で `data_quality.results_save_issue()` を確かめ、保存が不完全の日（`results_save_incomplete.json` がある日）を使わない。外した日は理由別の件数に入れる（2026-11-13〜）。新しく書くものも、今までのスクリプトを今後実行し直すときも同じ。今までのスクリプトには 2026-11-13 に入れた（ルート直下の集計は `data_quality.skip_results_day()` でその日を飛ばす。`research/` と、結果のファイルを直接書く `rescrape_results_all.py`・`scrape_history.py` は `stop_if_any_results_save_incomplete()` で、印のある日が1日でもあれば止まる）。過去の出力は書き換えない。
+  - 結果のファイル（`race_results.json`・`race_conditions.json`・`race_nonfinishers.json`）を読む集計・評価は、入口で `data_quality.results_save_issue()` を確かめ、保存が不完全の日（`results_save_incomplete.json` がある日）を使わない。外した日は理由別の件数に入れる（2026-11-13〜）。新しく書くものも、今までのスクリプトを今後実行し直すときも同じ。今までのスクリプトには 2026-11-13 に入れた（ルート直下の集計は `data_quality.skip_results_day()` でその日を飛ばす。`research/` は `stop_if_any_results_save_incomplete()` で、印のある日が1日でもあれば止まる）。結果のファイルを共通の保存の手順を通さずに直接書く `rescrape_results_all.py`・`scrape_history.py` は、入口の確認だけでは安全な書き込みにならないので止めた（必要になったら `scrape_results.py` の共通の取得・保存へ移す）。過去の出力は書き換えない。
   - 条件にするファイルは、実際の保存状況を確かめてから決める。
   - `invalidated.json` は無効レースがある日にだけ置く記録なので、必須にしない。
   - `payouts_jra.json` の有無は、回収率の対象選びにだけ使う。
@@ -111,8 +111,8 @@ netkeiba/
 │   ├── scrape_results.py     # レース結果を包括的スクレイプ（当日夜〜翌日実行）。2026-11-12〜 全レースを race_results_all.json に、JRA公式の一覧と照合
 │   ├── schedule_check.py     # その日の予定（開催場・レース）を確定できるかの判定（netkeiba の一覧と JRA 公式の結果の一覧。2026-11-12〜）
 │   ├── scrape_jra_payouts.py # JRA公式(jra.go.jp)から払戻を取得（Issue #1）
-│   ├── scrape_history.py     # 過去日付のレース結果を一括取得（pickup_scores.json不要）
-│   ├── rescrape_results_all.py # 全日付のrace_results.jsonを再スクレイプ（フィールド追加時等）
+│   ├── scrape_history.py     # 停止中（2026-11-13〜。結果のファイルを共通の保存の手順を通さずに書くため。実行すると理由を出して止まる）
+│   ├── rescrape_results_all.py # 停止中（2026-11-13〜。同上）
 │   ├── rescrape_results_full.py # 過去の全レースの結果を別ファイル race_results_all.json に取り直す（再開可）
 │   ├── run_history_batch.py  # 過去日付のXLSX+pickup_scores.json一括生成（完了済みはスキップ）
 │   └── save_cookies.py       # 初回ログイン・クッキー保存用

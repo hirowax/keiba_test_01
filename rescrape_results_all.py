@@ -14,8 +14,6 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 from scraper import load_cookies, human_sleep, human_browse
 from scrape_results import scrape_race_result, RESULT_URL
-from data_quality import stop_if_any_results_save_incomplete  # 2026-11-13〜
-stop_if_any_results_save_incomplete()   # 結果の保存が不完全な日があれば止める
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger(__name__)
@@ -46,7 +44,19 @@ def save_results(date: str, race_results: dict, race_conditions: dict):
         json.dump(race_conditions, f, ensure_ascii=False, indent=2)
 
 
+STOP_REASON = (
+    "rescrape_results_all.py は 2026-11-13 から止めています（外部レビュー 2026-11-13）。\n"
+    "  - race_results.json・race_conditions.json などを、結果の保存の共通の手順（scrape_results.save_scored_set: 印を置く→保存→\n"
+    "    読み直して確かめる→印を消す）を通さずに直接書く。途中で失敗すると、保存が不完全の印の無い新旧の混在を作れる。\n"
+    "  - 着順が数字でない馬（取消・除外・中止・失格）を race_nonfinishers.json に分けない。\n"
+    "  必要になったら、共通の取得・保存の処理（scrape_results.py）へ移してから使う。過去の結果の取り直しは rescrape_results_full.py\n"
+    "  （race_results_all.json に別に保存する）を使う。\n"
+)
+
+
 def main():
+    print(STOP_REASON)
+    sys.exit(2)
     # 対象日付：race_results.json が存在する全日付
     dates = sorted(
         d.name for d in OUTPUT_DIR.iterdir()

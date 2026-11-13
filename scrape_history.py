@@ -32,8 +32,6 @@ BASE_DIR = Path(__file__).parent
 OUTPUT_DIR = BASE_DIR / "output"
 
 from playwright.sync_api import sync_playwright
-from data_quality import stop_if_any_results_save_incomplete  # 2026-11-13〜
-stop_if_any_results_save_incomplete()   # 結果の保存が不完全な日があれば止める
 
 
 def scrape_date(page, date: str) -> None:
@@ -112,7 +110,19 @@ def scrape_date(page, date: str) -> None:
     log.info(f"{date}: 保存完了 ({len(race_results)}レース) → {results_path}")
 
 
+STOP_REASON = (
+    "scrape_history.py は 2026-11-13 から止めています（外部レビュー 2026-11-13）。\n"
+    "  - race_results.json・race_conditions.json などを、結果の保存の共通の手順（scrape_results.save_scored_set: 印を置く→保存→\n"
+    "    読み直して確かめる→印を消す）を通さずに直接書く。途中で失敗すると、保存が不完全の印の無い新旧の混在を作れる。\n"
+    "  - 着順が数字でない馬（取消・除外・中止・失格）を race_nonfinishers.json に分けない。\n"
+    "  必要になったら、共通の取得・保存の処理（scrape_results.py）へ移してから使う。過去の結果の取り直しは rescrape_results_full.py\n"
+    "  （race_results_all.json に別に保存する）を使う。\n"
+)
+
+
 def main():
+    print(STOP_REASON)
+    sys.exit(2)
     if len(sys.argv) < 2:
         print("usage: python3 scrape_history.py YYYYMMDD [YYYYMMDD ...]")
         sys.exit(1)
