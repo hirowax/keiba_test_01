@@ -267,8 +267,45 @@ class FetchRacesTest(unittest.TestCase):
         out = self.run_main(retry={"side_effect": RuntimeError("取り直しの例外")})
         self.assertIn("CHANGED_FILE: output/20261108", out)
         self.assertIn("CHANGED_FILE: cache.json", out)
-        self.assertIn("保存の後の失敗: 前の開催日の JRA 公式の一覧の取り直し RuntimeError: 取り直しの例外", out)
+        self.assertIn("保存とその後の失敗: 前の開催日の JRA 公式の一覧の取り直し RuntimeError: 取り直しの例外", out)
         self.assertEqual(len(json.loads((self.tmp / "output" / "20261108" / SR.RESULTS_ALL_NAME).read_text())["races"]), 3)
+
+    def test_scored_files_failure_keeps_all_results_and_fetch_log(self):
+        """race_results_all.json を書いた後に race_results.json などを書けない → 例外で止めず、取得の記録に理由を残す"""
+        page = FakePage({rid: self.good for rid in self.ids.values()})
+        att = self.attempt()
+        fetched = SR.fetch_races(page, self.ids, att)
+        out = self.tmp / "20261108"
+        out.mkdir()
+        real = SR._write_json_atomic
+
+        def flaky(path, data, indent=2):
+            if Path(path).name == "race_results.json":
+                raise OSError("No space left on device")
+            return real(path, data, indent)
+        with mock.patch.object(SR, "_write_json_atomic", side_effect=flaky):
+            data = SR.save_results("20261108", out, self.ids, fetched, att, None, {}, {"srl": {}, "sde": {}}, None)
+        self.assertEqual(len(data["races"]), 3)
+        self.assertEqual(len(json.loads((out / SR.RESULTS_ALL_NAME).read_text())["races"]), 3)
+        log = json.loads((out / SR.FETCH_LOG_NAME).read_text())["attempts"][-1]
+        self.assertTrue(log["save_errors"][0].startswith("採点したレースのファイル（race_results.json など）を保存できない: OSError"))
+
+    def test_main_all_results_write_failure_still_ends_normally_and_notifies(self):
+        """race_results_all.json を書けない → 前のファイルのまま、一時ファイルを残さず、0 で終わって知らせの印を出す"""
+        real_replace = SR.os.replace
+
+        def failing_replace(src, dst):
+            if Path(dst).name == SR.RESULTS_ALL_NAME:
+                raise OSError("No space left on device")
+            return real_replace(src, dst)
+        with mock.patch.object(SR.os, "replace", side_effect=failing_replace):
+            out = self.run_main()
+        day = self.tmp / "output" / "20261108"
+        self.assertFalse((day / SR.RESULTS_ALL_NAME).exists())
+        self.assertEqual(list(day.glob(".*.tmp")), [])
+        self.assertIn("CHANGED_FILE: output/20261108", out)
+        self.assertIn(f"保存とその後の失敗: {SR.RESULTS_ALL_NAME} を保存できない（前のファイルのまま）: OSError", out)
+        self.assertIn("予定 保存できないので照合の結果なし", out)
 
     def test_consecutive_failures_stop(self):
         page = FakePage({rid: TimeoutError("x") for rid in self.ids.values()})

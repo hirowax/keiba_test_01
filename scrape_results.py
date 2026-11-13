@@ -474,9 +474,13 @@ def _load_json(path: Path, default):
 def _write_json_atomic(path: Path, data, indent=2) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
-    with open(tmp, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=indent)
-    os.replace(tmp, path)
+    try:
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=indent)
+        os.replace(tmp, path)
+    except BaseException:
+        tmp.unlink(missing_ok=True)   # 書けなかったときは元のファイルのまま。一時ファイルを残さない
+        raise
 
 
 def refresh_jra_lists(date: str, cache: dict) -> None:
@@ -664,7 +668,9 @@ def fetch_pedigrees(page, fetched: dict, sub_labels: set, pedigree_cache: dict, 
 
 def save_results(date: str, out_dir: Path, race_id_map: dict, fetched: dict, attempt: dict, scored_labels,
                  pedigree_cache: dict, cache: dict, jra_error) -> dict:
-    """取れた分を保存する（途中で止まった回も必ず通す）。戻り値は race_results_all.json の中身"""
+    """取れた分を保存する（途中で止まった回も必ず通す）。戻り値は race_results_all.json の中身。
+    race_results_all.json を書けなければ例外（元のファイルのまま）。その後の、採点したレースのファイルと取得の記録の保存の失敗は
+    attempt["save_errors"] に残して続ける（2026-11-13〜。それまでは例外で止まり、cron が書いた分も commit しなかった）"""
     extra = None
     if scored_labels and scored_labels - set(race_id_map):
         extra = f"採点したレースがレース一覧に無い: {sorted(scored_labels - set(race_id_map))}"
@@ -676,7 +682,24 @@ def save_results(date: str, out_dir: Path, race_id_map: dict, fetched: dict, att
     attempt["complete"] = data["complete"]
     attempt["schedule_status"] = data["schedule_check"]["status"]
     attempt["schedule_reason"] = data["schedule_check"].get("reason")
+    attempt["save_errors"] = []
+    try:
+        _save_scored_files(out_dir, race_id_map, fetched, attempt, scored_labels, pedigree_cache)
+    except Exception as e:  # noqa: BLE001
+        attempt["save_errors"].append(f"採点したレースのファイル（race_results.json など）を保存できない: {type(e).__name__}: {e}")
+        log.error(attempt["save_errors"][-1])
+    try:
+        append_fetch_log(out_dir, attempt)
+    except Exception as e:  # noqa: BLE001
+        attempt["save_errors"].append(f"取得の記録（{FETCH_LOG_NAME}）を保存できない: {type(e).__name__}: {e}")
+        log.error(attempt["save_errors"][-1])
+    log.info(f"保存完了: {all_path}（complete={data['complete']}・予定 {data['schedule_check']['status']}）")
+    log.info(f"取得レース数: {len(fetched)} / {len(race_id_map)}")
+    return data
 
+
+def _save_scored_files(out_dir: Path, race_id_map: dict, fetched: dict, attempt: dict, scored_labels,
+                       pedigree_cache: dict) -> None:
     # 採点したレースだけのファイル（読む側の処理を変えない）。取れなかったレースは前の値を残す
     sub_labels = scored_labels if scored_labels is not None else set(race_id_map)
     results_path = out_dir / "race_results.json"
@@ -704,10 +727,6 @@ def save_results(date: str, out_dir: Path, race_id_map: dict, fetched: dict, att
     _write_json_atomic(conditions_path, race_conditions)
     # 着順が数字でない馬（2026-11-02〜）。race_results.json には入れない（rank が数字の前提の処理が多いため）
     _write_json_atomic(others_path, race_others)
-    append_fetch_log(out_dir, attempt)
-    log.info(f"保存完了: {all_path}（complete={data['complete']}・予定 {data['schedule_check']['status']}）")
-    log.info(f"取得レース数: {len(fetched)} / {len(race_id_map)}")
-    return data
 
 
 def main():
@@ -795,7 +814,12 @@ def main():
         jra_error = f"{type(e).__name__}: {e}"
         log.error(f"JRA 公式の一覧を取れない: {jra_error}")
 
-    data = save_results(date, out_dir, race_id_map, fetched, attempt, scored_labels, pedigree_cache, cache, jra_error)
+    try:
+        data = save_results(date, out_dir, race_id_map, fetched, attempt, scored_labels, pedigree_cache, cache, jra_error)
+    except Exception as e:  # noqa: BLE001  元のファイルのまま。下で知らせる
+        data = None
+        attempt["save_errors"] = [f"{RESULTS_ALL_NAME} を保存できない（前のファイルのまま）: {type(e).__name__}: {e}"]
+        log.error(attempt["save_errors"][0])
 
     # 保存の後の処理は、例外が出ても止めずに知らせる（2026-11-13〜）。保存したファイルの CHANGED_FILE: の行は先に出す
     # （cron は scrape_results.py が 0 以外で終わると commit しないので、保存の後は 0 で終わり RESULTS_FETCH_INCOMPLETE で知らせる）
@@ -803,7 +827,7 @@ def main():
         print(f"CHANGED_FILE: {Path(pth).resolve().relative_to(BASE_DIR.resolve())}", flush=True)
     changed_file(out_dir)
     changed_file(J.CACHE_PATH)
-    after_save_errors = []
+    after_save_errors = list(attempt.get("save_errors") or [])
     try:
         with open(PEDIGREE_FILE, "w", encoding="utf-8") as f:
             json.dump(pedigree_cache, f, ensure_ascii=False, indent=2)
@@ -823,12 +847,13 @@ def main():
 
     # 知らせ: 今回の取得の失敗・止めた・予定を確定できない（complete: true でも残す）
     from schedule_check import CONFIRMED
-    if attempt["failed"] or attempt["stopped"] or data["schedule_check"]["status"] != CONFIRMED or after_save_errors:
+    sc = data["schedule_check"] if data else {"status": "保存できないので照合の結果なし", "reason": None}
+    if attempt["failed"] or attempt["stopped"] or sc["status"] != CONFIRMED or after_save_errors:
         print(f"RESULTS_FETCH_INCOMPLETE: {date} 取れた {len(fetched)}/{len(race_id_map)}・"
-              f"失敗 {len(attempt['failed'])}・予定 {data['schedule_check']['status']}"
+              f"失敗 {len(attempt['failed'])}・予定 {sc['status']}"
               + (f"・止めた: {attempt['stopped']}" if attempt["stopped"] else "")
-              + (f"（{data['schedule_check'].get('reason')}）" if data['schedule_check'].get('reason') else "")
-              + (f"・保存の後の失敗: {' / '.join(after_save_errors)}" if after_save_errors else ""))
+              + (f"（{sc.get('reason')}）" if sc.get('reason') else "")
+              + (f"・保存とその後の失敗: {' / '.join(after_save_errors)}" if after_save_errors else ""))
 
     # データ品質チェック（cronログで気づけるように WARNING を出す）
     all_horses = [h for r in fetched.values() for h in r["horses"]]
