@@ -225,10 +225,10 @@ def scrape_race_result(page, race_id: str, race_label: str) -> Optional[dict]:
 NON_FINISH_STATUSES = ("取消", "除外", "中止", "失格")
 
 
-def _corner_cell(tr):
+def _corner_cells(tr):
     """コーナー通過順のセル。実ページ（tests/fixtures/result_202605041106_torikeshi.html）で td.PassageRate と確認（2026-11-12）。
-    クラス名を明示して取る（位置やあいまいな正規表現で探さない）。無ければ None"""
-    return tr.find("td", class_="PassageRate")
+    クラス名を明示して取る（位置やあいまいな正規表現で探さない）。見つかったセルをすべて返す（2個以上は形の異常。2026-11-13〜）"""
+    return tr.find_all("td", class_="PassageRate")
 
 
 def parse_result_html(html: str, race_label: str = "") -> dict:
@@ -240,7 +240,7 @@ def parse_result_html(html: str, race_label: str = "") -> dict:
     - 行が見出し（tr.Header で td が無い）でも馬の行（tr.HorseList）でもない
     - 馬の行の要素（着順 td.Result_Num・枠番 td.Num.Waku{n}・馬番 td.Num.Txt_C・馬名 td.Horse_Info の /horse/ リンク）が
       ちょうど1つでない・読めない（2026-11-13 まで、馬番・馬名・枠番・着順は列の位置で読んでいた。値は72ページで同じと確かめた）
-    - 着順のある行に通過順のセル td.PassageRate が無い
+    - 着順のある行に通過順のセル td.PassageRate が無い・どの行でも td.PassageRate が2個以上ある（2026-11-13〜。それまでは最初の1つを読んでいた）
     - 馬の行の数が、ページの「N頭」（.RaceData02）と違う・「N頭」が無い
     - 馬番・馬IDの重複、馬IDが無い馬、着順のある馬が0頭
     実ページ（2026-11-12 取得の72ページ）の成績の表の行は、tr.Header と tr.HorseList（取消は Torikeshi も付く）だけだった"""
@@ -302,7 +302,11 @@ def parse_result_html(html: str, race_label: str = "") -> dict:
             problems.append(f"馬番・馬名が読めない行がある（着順「{rank_text}」）")
             continue
 
-        corner_cell = _corner_cell(tr)
+        corner_cells = _corner_cells(tr)
+        if len(corner_cells) > 1:
+            problems.append(f"馬の行の通過順（td.PassageRate）が {len(corner_cells)} 個（{num}番）")
+            continue
+        corner_cell = corner_cells[0] if corner_cells else None
         corners_text = _text(corner_cell) if corner_cell else None
         corners = parse_corner_order(corners_text) if corners_text else []
 
@@ -448,7 +452,7 @@ def parse_result_html(html: str, race_label: str = "") -> dict:
     return {"condition": condition, "horses": horses, "others": others, "problems": problems}
 
 
-SCRAPE_VERSION = "全レース_要素を明示_頭数と重複の照合_形の異常は取得の失敗_レースごとに置き換え_20261113"
+SCRAPE_VERSION = "全レース_要素を明示_通過順のセルも1つ_頭数と重複の照合_形の異常は取得の失敗_レースごとに置き換え_20261113b"
 RESULTS_ALL_NAME = "race_results_all.json"
 FETCH_LOG_NAME = "results_fetch_log.json"
 MAX_CONSECUTIVE_FAIL = 5          # rescrape_results_full.py と同じ（IPブロックなどを疑って止める）
@@ -576,11 +580,14 @@ def fetch_one_race(page, race_id: str, race_label: str) -> dict:
     return parse_result_html(page.content(), race_label)
 
 
-def fetch_races(page, race_id_map: dict, attempt: dict) -> dict:
+def fetch_races(page, race_id_map: dict, attempt: dict, fetched: dict = None) -> dict:
     """全レースを取る。失敗はレース単位で attempt["failed"] に理由付きで残し、続ける。
     連続 MAX_CONSECUTIVE_FAIL 回の失敗・ブロックの検知では止め、残りを「止めたので取っていない」にする。
-    戻り値は取れたレース（形の異常が無いものだけ）"""
-    fetched = {}
+    取れたレース（形の異常が無いものだけ）は、呼び出し元から渡された辞書 fetched に1レースずつ足す
+    （2026-11-13〜。途中で予期しない例外が出ても、呼び出し元に取れた分が残る。それまでは戻り値だけで、例外で失っていた）。
+    戻り値も同じ辞書"""
+    if fetched is None:
+        fetched = {}
     fails = 0
     for label, race_id in sorted(race_id_map.items()):
         log.info(f"スクレイプ中: {label} ({race_id})")
@@ -757,7 +764,7 @@ def main():
                 sys.exit(1)
 
             try:
-                fetched = fetch_races(page, race_id_map, attempt)
+                fetch_races(page, race_id_map, attempt, fetched)   # 途中の例外でも、取れた分は fetched に残る
                 sub_labels = scored_labels if scored_labels is not None else set(race_id_map)
                 fetch_pedigrees(page, fetched, sub_labels, pedigree_cache, attempt)
             except Exception as e:  # noqa: BLE001  予期しない例外でも、取れた分は下で保存する
