@@ -40,8 +40,15 @@ LEGACY_STYLE_PATH = OUTPUT_DIR / "horse_style.json"
 STYLE_DIR_NAME = "horse_style"
 RESULTS_ALL_NAME = "race_results_all.json"
 
-STYLE_BUILD_VERSION = "全レース_発走頭数_全発走馬の最初の通過順_前日より前_基準commit_20261112"
-STYLE_BUILD_VERSIONS = (STYLE_BUILD_VERSION,)   # 品質の判定が知っている版
+# 版の履歴（古い版の記録も消さない・上書きしない）
+# - 20261112: 最初の版。予定の照合で、中止のレースがある日（2026-02-07・02-08）は「予定を確定できない」で入力から外れていた
+# - 20261113: JRA 公式の発表で中止を確かめたレース（schedule_check.CONFIRMED_CANCELLATIONS）を 1R〜12R の欠けとして数えない。
+#   入力に 2/7・2/8 が入る（対象日 11/14 で 122日・3,513レース → 124日・3,552レース）
+STYLE_BUILD_VERSION_20261112 = "全レース_発走頭数_全発走馬の最初の通過順_前日より前_基準commit_20261112"
+STYLE_BUILD_VERSION = "全レース_発走頭数_全発走馬の最初の通過順_前日より前_基準commit_中止を確かめたレースは欠けにしない_20261113"
+# 品質の判定と記録の検査が知っている版。古い版で確定した日の記録は、その日の正式な記録としてそのまま使い、作り直さない
+# （その日は軸の再検証では試運転。docs/axis_recheck_plan_202611.md 4.3）
+STYLE_BUILD_VERSIONS = (STYLE_BUILD_VERSION, STYLE_BUILD_VERSION_20261112)
 
 STATUS_OK = "作成成功"
 STATUS_FAILED = "作成失敗"
@@ -272,8 +279,8 @@ def check_record(path: Path, target: str) -> dict:
             raise StyleRecordError(f"作成失敗の記録に理由が無い: {path.name}")
         return rec
     # 作成成功
-    if rec["style_build_version"] != STYLE_BUILD_VERSION:
-        raise StyleRecordError(f"作成成功の記録の版が今のコードと違う（その日の扱いは手で決める）: {path.name}: "
+    if rec["style_build_version"] not in STYLE_BUILD_VERSIONS:
+        raise StyleRecordError(f"作成成功の記録の版が知らない版（その日の扱いは手で決める）: {path.name}: "
                                f"{rec['style_build_version']}")
     try:
         fin = datetime.fromisoformat(rec["finished_at"])
@@ -391,7 +398,8 @@ def make_record(target: str, repo: Path = BASE_DIR, now=now_jst) -> dict:
 
 def ensure_style(target: str, output_dir: Path = OUTPUT_DIR, repo: Path = BASE_DIR, now=now_jst) -> tuple:
     """その日の脚質の記録を用意する（run_pickup_all.py の最初で呼ぶ）。戻り値 (記録, 参照)。
-    確定した作成成功があればそれを使う。無ければ作る（作成失敗も記録して返す）。
+    確定した作成成功があればそれを使う（今のコードより前の版 STYLE_BUILD_VERSIONS で確定した記録も、作り直さずに使う）。
+    無ければ作る（作成失敗も記録して返す）。
     記録の検査に通らない・保存できないときは StyleRecordError（呼び出し元は HORSE_STYLE_RECORD_FAILED で知らせる）"""
     lock = StyleLock(target, output_dir)
     try:
@@ -399,7 +407,8 @@ def ensure_style(target: str, output_dir: Path = OUTPUT_DIR, repo: Path = BASE_D
         got = confirmed(records)
         if got:
             path, rec = got
-            log.info(f"脚質: 確定した記録を使う {path.name}（{rec['counts']['horses']}頭）")
+            old = "" if rec["style_build_version"] == STYLE_BUILD_VERSION else f"・前の版 {rec['style_build_version']}"
+            log.info(f"脚質: 確定した記録を使う {path.name}（{rec['counts']['horses']}頭{old}）")
             return rec, ref_of(path, rec)
         rec = make_record(target, repo, now)
         path = style_dir(target, output_dir) / f"{rec['run_id']}.json"

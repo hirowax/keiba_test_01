@@ -327,7 +327,7 @@ class EnsureTest(RepoCase):
         bad_cases = [
             {**good, "target_date": "20261114"},
             {**good, "run_id": "other"},
-            {**good, "style_build_version": "古い版"},
+            {**good, "style_build_version": "知らない版"},
             {**good, "finished_at": T_DEADLINE.isoformat()},
             {**good, "horses": {}},
             {**good, "counts": {**good["counts"], "horses": 999}},
@@ -338,6 +338,24 @@ class EnsureTest(RepoCase):
             with self.assertRaises(B.StyleRecordError, msg=i):
                 self.ensure()
         self.assertEqual(len(self.files()), 1)
+
+    def test_record_confirmed_by_previous_version_is_reused_not_rebuilt(self):
+        """前の版（20261112）で確定した日は、今のコードでも作り直さず、上書きせずにその記録を使う（2026-11-13 外部レビュー）"""
+        rec, ref = self.ensure()
+        path = self.files()[0]
+        old = json.loads(path.read_text())
+        old["style_build_version"] = B.STYLE_BUILD_VERSION_20261112
+        path.write_text(json.dumps(old, ensure_ascii=False))
+        before = path.read_bytes()
+        rec2, ref2 = self.ensure()
+        self.assertEqual(ref2["version"], B.STYLE_BUILD_VERSION_20261112)
+        self.assertEqual(len(self.files()), 1)
+        self.assertEqual(path.read_bytes(), before)
+        self.assertEqual(B.load_for_rerun("20261115", self.out)[1], ref2)
+
+    def test_versions(self):
+        self.assertNotEqual(B.STYLE_BUILD_VERSION, B.STYLE_BUILD_VERSION_20261112)
+        self.assertEqual(B.STYLE_BUILD_VERSIONS, (B.STYLE_BUILD_VERSION, B.STYLE_BUILD_VERSION_20261112))
 
     def test_two_successes_stop(self):
         rec, ref = self.ensure()

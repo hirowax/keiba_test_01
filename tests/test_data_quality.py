@@ -169,6 +169,10 @@ class HorseStyleQualityTest(unittest.TestCase):
         self.assertEqual(self.issues(horse_style={**HS_OK, "sha256": None}), ["脚質の記録の形が違う"])
         self.assertEqual(self.issues(horse_style="x"), ["脚質の記録の形が違う"])
 
+    def test_previous_version_is_known(self):
+        """前の版（20261112）で作った記録を参照するレースも、版の理由では問題にしない（その日は軸の再検証では試運転）"""
+        self.assertEqual(self.issues(horse_style={**HS_OK, "version": bhs.STYLE_BUILD_VERSION_20261112}), [])
+
     def test_version_missing_or_unknown(self):
         for v in (None, "知らない版"):
             out = self.issues(horse_style={**HS_OK, "version": v})
