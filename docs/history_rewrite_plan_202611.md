@@ -4,6 +4,15 @@
 - 2026-11-13: 外部レビューで、今日は見送ると決めた（17:00 に間に合わせるために急ぐ作業ではない）。
 - 2026-11-13 13:00〜: ユーザーの指示で、公開しない作業用の複製で手順3まで行った（履歴から2件を消し、494組を確かめ、対応表 `docs/commit_id_map_20261113.md` を作り、`AXIS_PLAN_COMMIT` を直し、全体のテストを通した）。自動実行を止めるのは force push の直前にした（先に止めると、戻し忘れたときに 17:00 の採点が抜けるため）。force push はユーザーの許可の後。
 
+- **2026-11-13 13:10〜13:20 実行した**（ユーザーの指示「force push して」。外部レビューで足した4つの条件を守った）:
+  - 直前に、実行中の処理が無いことと、GitHub の main が d28dacf のままであることを確かめてから、crontab の3行（17:00・18:30・19:30）を一時的に止めた。
+  - 送り先を専用の remote にし、新しい main（9b5bc1f）だけを `refs/heads/main` へ、lease に旧 HEAD の完全な ID（d28dacf）を指定して force push した。`refs/original` などは送っていない。
+  - 本番の作業フォルダを `git reset --hard origin/main` で合わせた。前に未追跡・無視対象のファイル974件（`.env`・`cookies.json` を除く）と axis_trial の中身を `/Users/hirowax/netkeiba_history_backup_20261113` に退避し、後で976件（`.env`・`cookies.json` を含む）がそろい、中身が退避と同じことを確かめた。
+  - GitHub と手元の HEAD の一致（9b5bc1f）、作業ツリー、`AXIS_PLAN_COMMIT`（a41d01a。HEAD の祖先）、2件に触れる commit が0、全395件のテストを確かめ、この追記の commit で通常の push を確かめてから crontab を戻した。
+  - 検証値: 履歴だけを書き換えた段階は 2b83a20（494 commit・tree 79d3333。書き換え前の d28dacf と同じ tree）、定数と対応表を足した公開の HEAD は 9b5bc1f（495 commit・tree 30ef963）。
+  - axis_trial（古い commit c43a7cc を指す作業ツリー）は、復元の確かめが済むまで残す。そこから push はしない。
+  - 確かめていないこと: 成功する復元（新しい履歴での試運転の記録ができた後に、別のフォルダで確かめる）。GitHub で古い commit が ID の直接指定でしばらく見えること。
+
 ## 影響（2026-11-13 に確かめた）
 - 90d7f9f より後の commit（2026-11-13 時点で112個）の ID がすべて変わる。
 - `axis_record.AXIS_PLAN_COMMIT`（b0eeb46）も変わる。復元（`axis_record.py restore`）は、期限前に GitHub の main にあった commit の存在と、計画の commit との祖先関係に頼っているので、対応表を作るだけでは動かない。
