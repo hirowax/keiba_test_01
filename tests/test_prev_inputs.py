@@ -109,11 +109,13 @@ class ParseTest(unittest.TestCase):
         self.assertEqual(pi.parse_results_table(table(rows), "20261107")["status"], pi.FAILED)
 
     # ── 前走なしの条件（すべてを満たすときだけ。満たさなければ取得失敗）──
-    def test_no_prev_when_no_rows(self):
-        self.assertEqual(pi.parse_results_table(table([]), "20261107")["status"], pi.NO_PREV)
-
-    def test_no_prev_when_all_rows_on_or_after_target(self):
-        self.assertEqual(pi.parse_results_table(table(ROWS[:1]), "20261107")["status"], pi.NO_PREV)
+    def test_no_rows_without_page_identity_is_failed(self):
+        """2026-11-13〜: 対象日より前の行が無くても、ページ（馬ID・馬名・見出し）を確かめられなければ前走なしにしない。
+        確かめられる場合は tests/test_prev_rows_20261112.py の NoRowsBeforeTargetTest"""
+        for rows in ([], ROWS[:1]):
+            e = pi.parse_results_table(table(rows), "20261107")
+            self.assertEqual(e["status"], pi.FAILED)
+            self.assertIn("前走なしとは確かめられない", e["reason"])
 
     def test_unreadable_date_is_failed_not_no_prev(self):
         rows = [("2026/11/07", "202605050211", "1", "1", "芝1600", "90"), ("不明", "x", "", "", "", "")]

@@ -36,7 +36,8 @@ import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-PREV_FETCH_VERSION = "見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_除外取消の行は飛ばす_障害戦の指数の空_初出走_20261112"
+# 20261113: 成績の表があって対象日より前の行が無い場合も、ページの馬ID・馬名・見出しを確かめてから前走なし（前走なしの全経路で同じ確かめ）
+PREV_FETCH_VERSION = "見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_除外取消の行は飛ばす_障害戦の指数の空_初出走_前走なしは全経路でページを確かめる_20261113"
 TOP1_RULE = "比較値が不明なら保留_前走なしと中止等と障害戦は対象外_20261112"
 
 OK = "取れた"
@@ -242,7 +243,12 @@ def parse_results_table(html: str, target_date: str, horse_id: str = None, horse
 
     before = [(d, tds) for d, tds in parsed if d < target_date]
     if not before:
-        return {"status": NO_PREV, "reason": f"対象日より前の行が無い（行{len(parsed)}件）",
+        # 2026-11-13〜: ほかの前走なしの経路（初出走・発走していない行だけ）と同じく、ページを確かめてから前走なしにする
+        issues = page_identity(soup, horse_id, horse_name)
+        if issues:
+            return _failed(f"対象日より前の行が無い（行{len(parsed)}件）が、ページを確かめられない（前走なしとは確かめられない）: "
+                           f"{'; '.join(issues)}", headers=header_cells)
+        return {"status": NO_PREV, "reason": f"対象日より前の行が無い（行{len(parsed)}件。ページの馬ID・馬名・見出しを確かめた）",
                 "headers": header_cells, "row": None, "values": None}
     skipped = []
     chosen = None

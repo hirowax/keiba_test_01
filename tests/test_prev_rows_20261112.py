@@ -55,6 +55,30 @@ def parse(html, target="20261107", hid=HID, name=NAME):
     return pi.parse_results_table(html, target, hid, name)
 
 
+class NoRowsBeforeTargetTest(unittest.TestCase):
+    """成績の表があって対象日より前の行が無い場合も、ページを確かめてから前走なし（2026-11-13〜。前走なしの全経路で同じ確かめ）"""
+    TODAY_ROW = ("2026/11/07", "202605050211", "1", "1", "芝1600", "90")
+
+    def test_normal_page_is_no_prev(self):
+        for rows in ([], [self.TODAY_ROW]):
+            e = parse(page(rows=rows))
+            self.assertEqual(e["status"], pi.NO_PREV, rows)
+            self.assertIn("ページの馬ID・馬名・見出しを確かめた", e["reason"])
+
+    def test_abnormal_page_is_failed(self):
+        bad = {"別の馬名": page(rows=[], name="ベツノウマ"),
+               "別の馬ID": page(rows=[], canonical=HORSE_URL("2020100234")),
+               "見出しが違う": page(rows=[], h2="ベツノウマの競走成績"),
+               "存在しない馬": page(rows=[], name="", canonical="https://db.netkeiba.com/horse//")}
+        for why, html in bad.items():
+            e = parse(html)
+            self.assertEqual(e["status"], pi.FAILED, why)
+            self.assertIn("前走なしとは確かめられない", e["reason"], why)
+
+    def test_without_id_or_name_is_failed(self):
+        self.assertEqual(pi.parse_results_table(page(rows=[]), "20261107")["status"], pi.FAILED)
+
+
 class DebutTest(unittest.TestCase):
     def test_debut_page_is_no_prev(self):
         e = parse(page())
