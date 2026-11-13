@@ -16,6 +16,16 @@ VENUE_CODES = {"01": "札幌", "02": "函館", "03": "福島", "04": "新潟", "
 CONFIRMED = "確定"
 UNCONFIRMED = "予定を確定できない"
 
+# JRA 公式の発表で中止（取りやめ）を確かめたレース {レースID: 出典}。1R〜12R の補助の条件で、欠けとして数えない。
+# 開催場ごと中止の日（2026-02-08 の東京・京都）は、両方の一覧に開催場が無いので、ここに書かなくても照合は通る。
+# 足すときは、JRA 公式の発表を確かめて出典を書く（2026-11-13〜。残りのタスク5）
+CONFIRMED_CANCELLATIONS = {
+    **{f"2026050103{n:02d}": "JRA 公式 2026-02-07「第1回東京競馬第3日 降雪のため第8レース以降の競走を取り止め」"
+       "（https://www.jra.go.jp/news/202602/020709.html。2026-11-13 確認）" for n in range(8, 13)},
+    "202610010604": "JRA 公式 2026-02-08「東京競馬・京都競馬の開催中止、第1回小倉競馬第6日 第4レースの取り止め」"
+                    "（https://www.jra.go.jp/news/202602/020802.html。2026-11-13 確認）",
+}
+
 
 def jra_lists(date: str, jra_cache: dict) -> tuple:
     """JRA 公式の一覧 (開催場コードの集合, レースIDの集合)"""
@@ -29,7 +39,7 @@ def day_schedule(date: str, race_ids: dict, jra_cache: dict) -> dict:
     nk_ids = set(race_ids.values())
     jra_venues, jra_ids = jra_lists(date, jra_cache)
     out = {"status": UNCONFIRMED, "reason": None, "netkeiba_race_ids": sorted(nk_ids),
-           "jra_race_ids": sorted(jra_ids), "per_venue_1to12": {}}
+           "jra_race_ids": sorted(jra_ids), "per_venue_1to12": {}, "confirmed_cancellations": {}}
     if not nk_ids:
         out["reason"] = "netkeiba のレース一覧が空"
         return out
@@ -54,9 +64,18 @@ def day_schedule(date: str, race_ids: dict, jra_cache: dict) -> dict:
         out["reason"] = (f"レースIDが一致しない（netkeiba だけ {sorted(nk_ids - jra_ids)}・"
                          f"JRA 公式だけ {sorted(jra_ids - nk_ids)}）")
         return out
+    listed_cancel = sorted(r for r in CONFIRMED_CANCELLATIONS if r in nk_ids)
+    if listed_cancel:
+        out["reason"] = f"中止を確かめたレースが一覧に載っている（食い違い）: {listed_cancel}"
+        return out
     bad = []
     for v in sorted(nk_venues):
         nums = sorted(int(rid[10:12]) for rid in nk_ids if rid[4:6] == v)
+        # 同じ開催場・日（レースIDの前10桁）の、中止を確かめたレース
+        prefixes = {rid[:10] for rid in nk_ids if rid[4:6] == v}
+        cancelled = {r: src for r, src in CONFIRMED_CANCELLATIONS.items() if r[:10] in prefixes}
+        out["confirmed_cancellations"].update(cancelled)
+        nums = sorted(nums + [int(r[10:12]) for r in cancelled])
         ok = nums == list(range(1, 13))
         out["per_venue_1to12"][VENUE_CODES[v]] = ok
         if not ok:

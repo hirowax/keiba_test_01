@@ -93,6 +93,21 @@ class ScheduleTest(unittest.TestCase):
         self.assertIn("1R〜12R そろわない", out["reason"])
         self.assertIn("中止・変更の記録は確かめていない", out["reason"])
 
+    def test_confirmed_cancellation_counts_as_present(self):
+        """JRA 公式で中止を確かめた 2026-02-07 東京8〜12R は、1R〜12R の欠けとして数えない"""
+        d = day("20260207", nums=range(1, 8))
+        d["race_ids"] = {f"東京{n}R": f"2026050103{n:02d}" for n in range(1, 8)}
+        out = S.day_schedule("20260207", d["race_ids"], jra_cache_for(d))
+        self.assertEqual(out["status"], S.CONFIRMED, out["reason"])
+        self.assertEqual(sorted(out["confirmed_cancellations"]), [f"2026050103{n:02d}" for n in range(8, 13)])
+
+    def test_cancelled_race_in_list_is_a_conflict(self):
+        d = day("20260207")
+        d["race_ids"] = {f"東京{n}R": f"2026050103{n:02d}" for n in range(1, 13)}
+        out = S.day_schedule("20260207", d["race_ids"], jra_cache_for(d))
+        self.assertEqual(out["status"], S.UNCONFIRMED)
+        self.assertIn("食い違い", out["reason"])
+
     def test_label_and_id_mismatch(self):
         d = day("20261101")
         d["race_ids"]["東京5R"], d["race_ids"]["東京6R"] = d["race_ids"]["東京6R"], d["race_ids"]["東京5R"]
