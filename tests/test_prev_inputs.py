@@ -18,13 +18,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import prev_inputs as pi  # noqa: E402
 import build_horse_style  # noqa: E402
 
-FAKE_HEADERS = {"date": "日付", "race_name": "レース名", "pop": "人気", "rank": "着順", "dist": "距離", "idx": "指数"}
+FAKE_HEADERS = {"date": "日付", "race_name": "レース名", "pop": "人気", "rank": "着順", "dist": "距離"}
+IDX_TEXTS = ("指数", "ﾀｲﾑ指数", "タイム指数")   # 指数の見出しには実ページと同じ class を付ける（列は class で決める。2026-11-13〜）
+
+
+def th(c):
+    return f'<th class="{pi.IDX_CELL_CLASS}">{c}</th>' if c in IDX_TEXTS else f"<th>{c}</th>"
 COLS = ["日付", "開催", "レース名", "人気", "着順", "距離", "指数"]
 
 
 def table(rows, cols=COLS, cls="db_h_race_results"):
     """rows: [(日付, レースID, 人気, 着順, 距離, 指数)]"""
-    head = "<tr>" + "".join(f"<th>{c}</th>" for c in cols) + "</tr>"
+    head = "<tr>" + "".join(th(c) for c in cols) + "</tr>"
     body = ""
     for d, rid, pop, rank, dist, idx in rows:
         body += (f"<tr><td>{d}</td><td>5東京2</td><td><a href=\"/race/{rid}/\">テストS</a></td>"

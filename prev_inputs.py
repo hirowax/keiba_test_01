@@ -37,7 +37,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 # 20261113: 成績の表があって対象日より前の行が無い場合も、ページの馬ID・馬名・見出しを確かめてから前走なし（前走なしの全経路で同じ確かめ）
-PREV_FETCH_VERSION = "見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_除外取消の行は飛ばす_障害戦の指数の空_初出走_前走なしは全経路でページを確かめる_20261113"
+PREV_FETCH_VERSION = "見出しで列を特定_対象日ごとに取得_着順は確かめた表記だけ_除外取消の行は飛ばす_障害戦の指数の空_初出走_前走なしは全経路でページを確かめる_20261113_指数の列はclassで決める_20261113b"
 TOP1_RULE = "比較値が不明なら保留_前走なしと中止等と障害戦は対象外_20261112"
 
 OK = "取れた"
@@ -66,13 +66,18 @@ RACE_LINK_RE = re.compile(r"/race/(\d{12})/?")
 # - 「ﾀｲﾑ指数」（半角カナ）が通常のタイム指数。隣の「ﾀｲﾑ指数M」はタイム指数マスターで、見出しも各行のセルも
 #   非表示（style="display:none"）。旧コードの添字21（prev_idx_m）はこの列で、4頭の全行で空か「**」だった。
 # - 指数のセルには見出しと同じ class TimeIndexHeadCell01 が付いている。これも確かめる（IDX_CELL_CLASS）。
+# - 2026-11-13〜 指数の列は見出しの文字でなく、class で決める（IDX_CELL_CLASS）。11/13 の採点で見出しが「タイム指数」
+#   （全角）として読め、文字の完全一致で探していたため全頭が取得失敗になった（画面の見た目は変わっていない）。
+#   同じ日の実ページ2頭（tests/fixtures/horse_2021110023_20261113.html・horse_2022101469_20261113.html）では、
+#   見出し th.TimeIndexHeadCell01・各行 td.TimeIndexHeadCell01 がどちらも1つずつで表示されている。
+#   タイム指数M・スタート指数・追走指数・上がり指数は TimeIndexMasterHeadCell01／TimeIndexMasterCell01 で非表示。読まない。
+#   ほかの5列（日付・レース名・人気・着順・距離）は、列を決められる class が無いので、見出しの文字の完全一致と一意性で決める。
 HEADERS = {
     "date": "日付",
     "race_name": "レース名",
     "pop": "人気",
     "rank": "着順",
     "dist": "距離",
-    "idx": "ﾀｲﾑ指数",
 }
 IDX_CELL_CLASS = "TimeIndexHeadCell01"
 # 正常とする数字でない着順（表記 → 意味）。実ページで確かめた表記だけを入れる。
@@ -211,9 +216,11 @@ def parse_results_table(html: str, target_date: str, horse_id: str = None, horse
     if _no_results_marks(soup):
         return _failed(f"成績の表と「{NO_RESULTS_TEXT}」の両方がある")
     header_cells = None
+    header_ths = []
     for tr in table.find_all("tr"):
         ths = tr.find_all("th")
         if ths:
+            header_ths = ths
             header_cells = [_header_text(th) for th in ths]
             break
     if not header_cells:
@@ -226,6 +233,11 @@ def parse_results_table(html: str, target_date: str, horse_id: str = None, horse
         if len(idx) != 1:
             return _failed(f"見出し「{name}」が{len(idx)}個", headers=header_cells)
         col[key] = idx[0]
+    # 指数の列は class で決める（見出しの文字は使わない。2026-11-13〜）
+    idx_th = [i for i, th in enumerate(header_ths) if IDX_CELL_CLASS in (th.get("class") or [])]
+    if len(idx_th) != 1:
+        return _failed(f"指数の見出し（th.{IDX_CELL_CLASS}）が{len(idx_th)}個", headers=header_cells)
+    col["idx"] = idx_th[0]
 
     rows = [tr for tr in table.find_all("tr") if tr.find_all("td")]
     parsed = []
@@ -237,8 +249,10 @@ def parse_results_table(html: str, target_date: str, horse_id: str = None, horse
         m = DATE_RE.match(date_s)
         if not m:
             return _failed(f"日付を読めない行がある（{date_s!r}）", headers=header_cells)
-        if IDX_CELL_CLASS not in (tds[col["idx"]].get("class") or []):
-            return _failed(f"指数の列のセルに class {IDX_CELL_CLASS} が無い", headers=header_cells)
+        idx_td = [i for i, td in enumerate(tds) if IDX_CELL_CLASS in (td.get("class") or [])]
+        if idx_td != [col["idx"]]:
+            return _failed(f"行の指数のセル（td.{IDX_CELL_CLASS}）が見出しの位置に1つだけ、ではない（{idx_td}・見出し{col['idx']}）",
+                           headers=header_cells)
         parsed.append(("".join(m.groups()), tds))
 
     before = [(d, tds) for d, tds in parsed if d < target_date]
