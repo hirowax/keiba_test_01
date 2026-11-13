@@ -415,6 +415,10 @@ class SaveMarkerTest(unittest.TestCase):
         with mock.patch.object(calibrate_threshold, "OUTPUT_DIR", self.tmp), \
                 mock.patch.object(calibrate_threshold, "CLEAN_START", "20200101"):
             self.assertEqual(calibrate_threshold.load_pairs(), [])
+        import scrape_jra_payouts
+        with mock.patch.object(scrape_jra_payouts, "OUTPUT_DIR", self.tmp):
+            with self.assertRaises(scrape_jra_payouts.ResultsSaveIncomplete):
+                scrape_jra_payouts.load_known_races("20261108")
 
     def test_rebuild_from_all_results_makes_a_consistent_set_and_clears_marker(self):
         self.save(fail_name="race_conditions.json")
@@ -426,6 +430,65 @@ class SaveMarkerTest(unittest.TestCase):
         self.assertEqual(len(json.loads((self.out / "race_results.json").read_text())["福島1R"]), 16)
         log = json.loads((self.out / SR.FETCH_LOG_NAME).read_text())["attempts"][-1]
         self.assertIn("作り直し", log["kind"])
+
+    def test_next_run_with_nothing_fetched_rebuilds_from_all_results_before_clearing(self):
+        """レビュー（実装の4回目）の再現: 条件のファイルを書けず結果だけ新しい → 次の回は1件も取れない。
+        前は混在したまま印だけ消えた。今は保存済みの全レースの結果から3ファイルを作り直してから消す"""
+        self.save(fail_name="race_conditions.json")
+        self.assertEqual(json.loads((self.out / "race_conditions.json").read_text())["福島1R"], {"old": True})
+        self.fetched = {}
+        self.att = {"at": "t2", "scrape_version": SR.SCRAPE_VERSION, "fetched": [], "failed": {}, "kept_old": {}, "stopped": None}
+        self.save()
+        self.assertIsNone(DQ.results_save_issue(self.out))
+        conds = json.loads((self.out / "race_conditions.json").read_text())
+        self.assertEqual(conds["福島1R"]["race_id"], "202603030201")   # 古い値が残っていない
+        self.assertEqual(sorted(self.att["scored_rebuilt_from_all_results"]), sorted(self.ids))
+
+    def test_prior_marker_with_races_that_cannot_be_rebuilt_keeps_marker(self):
+        """前の回の印があり、race_results_all.json から作り直せない採点したレースがファイルに残る → 印を残す"""
+        for name in ("race_results.json", "race_conditions.json", "race_nonfinishers.json"):
+            body = json.loads((self.out / name).read_text())
+            body["福島9R"] = [{"num": "1"}] if name == "race_results.json" else {"x": 1}
+            (self.out / name).write_text(json.dumps(body, ensure_ascii=False))
+        labels = set(self.ids) | {"福島9R"}
+        SR._write_save_marker(self.out, "前の回の失敗")
+        att = {"save_errors": []}
+        data = {"race_ids": self.ids, "races": dict(self.fetched)}
+        self.assertFalse(SR.save_scored_set(self.out, data, labels, {}, att, write_all=False))
+        self.assertIn("作り直せないレースが残る", DQ.results_save_issue(self.out))
+        self.assertEqual(att["kept_old_scored_files"], ["福島9R"])
+        # 前の回の印が無ければ、作り直せないレース（前の取り方の値）は前の値のまま、印は残らない
+        (self.out / DQ.RESULTS_SAVE_MARKER).unlink()
+        self.assertTrue(SR.save_scored_set(self.out, data, labels, {}, {"save_errors": []}, write_all=False))
+        self.assertIsNone(DQ.results_save_issue(self.out))
+
+    def test_read_back_mismatch_keeps_marker(self):
+        real = SR._write_json_atomic
+
+        def corrupt(path, data, indent=2):
+            if Path(path).name == "race_nonfinishers.json":
+                data = {}
+            return real(path, data, indent)
+        with mock.patch.object(SR, "_write_json_atomic", side_effect=corrupt):
+            self.assertFalse(SR.save_scored_set(self.out, {"race_ids": self.ids, "races": dict(self.fetched)}, None, {},
+                                                {"save_errors": []}, write_all=False))
+        self.assertIn("読み直すと中身が違う", DQ.results_save_issue(self.out))
+
+    def test_rebuild_places_marker_first_and_keeps_it_on_failure(self):
+        """レビュー（実装の4回目）の再現: 印の無い日に作り直して条件のファイルで失敗 → 前は印なしの不完全な状態になった。今は印が残る"""
+        self.save()
+        self.assertIsNone(DQ.results_save_issue(self.out))
+        real = SR._write_json_atomic
+
+        def flaky(path, data, indent=2):
+            if Path(path).name == "race_conditions.json":
+                raise OSError("No space left on device")
+            return real(path, data, indent)
+        with mock.patch.object(SR, "PEDIGREE_FILE", self.tmp / "ped.json"), \
+                mock.patch.object(SR, "_write_json_atomic", side_effect=flaky):
+            att = SR.rebuild_scored_files("20261108", self.tmp)
+        self.assertFalse(att["marker_cleared"])
+        self.assertIn("race_conditions.json を書けない", DQ.results_save_issue(self.out))
 
     def test_all_results_failure_without_prior_marker_leaves_old_set_unmarked(self):
         with self.assertRaises(OSError):

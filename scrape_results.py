@@ -672,53 +672,31 @@ def _write_save_marker(out_dir: Path, state: str, errors=None) -> None:
                                                        "errors": list(errors or [])})
 
 
+SCORED_FILE_NAMES = ("race_results.json", "race_conditions.json", "race_nonfinishers.json")
+RESULT_KEYS = ("rank", "num", "name", "horse_id", "pop", "odds", "place_odds", "jockey", "trainer",
+               "weight_carried", "horse_weight", "horse_weight_diff", "time", "margin", "last3f",
+               "corners", "sex_age", "gate")
+
+
 def save_results(date: str, out_dir: Path, race_id_map: dict, fetched: dict, attempt: dict, scored_labels,
                  pedigree_cache: dict, cache: dict, jra_error) -> dict:
     """取れた分を保存する（途中で止まった回も必ず通す）。戻り値は race_results_all.json の中身。
-    保存を始める前に「保存が不完全」の印（data_quality.RESULTS_SAVE_MARKER）を置き、race_results_all.json と採点したレースの
-    3ファイルを書き終えたら消す（2026-11-13〜）。印を置けなければ何も書かずに例外。
-    race_results_all.json を書けなければ例外（元のファイルのまま。前から印が無ければ印も消す）。
-    その後の3ファイルの保存の失敗は attempt["save_errors"] に残して続け、印は残す（読み手はその日の結果を使わない）。
-    取得の記録（results_fetch_log.json）だけの失敗は、結果の一式には関わらないので印を残さない（save_errors には残す）"""
-    from data_quality import RESULTS_SAVE_MARKER
-    marker = out_dir / RESULTS_SAVE_MARKER
-    out_dir.mkdir(parents=True, exist_ok=True)
-    marker_before = marker.exists()
-    _write_save_marker(out_dir, "保存中（途中で止まった）")
+    race_results_all.json を今回取れたレースで置き換え、採点したレースの3ファイルは保存済みの全レースの結果から作る
+    （save_scored_set。印を置く→保存→読み直して一致を確かめる→印を消す）。
+    印を置けない・race_results_all.json を書けないときは例外（何も書き換えていない）。3ファイルの失敗は attempt["save_errors"] に残す。
+    取得の記録（results_fetch_log.json）だけの失敗は、結果の一式には関わらないので印に関わらない（save_errors には残す）"""
     extra = None
     if scored_labels and scored_labels - set(race_id_map):
         extra = f"採点したレースがレース一覧に無い: {sorted(scored_labels - set(race_id_map))}"
     all_path = out_dir / RESULTS_ALL_NAME
     data, kept_old = merge_all_results(_load_json(all_path, None), date, race_id_map, fetched)
     data["schedule_check"] = schedule_check_for(date, race_id_map, cache, jra_error, extra)
-    try:
-        _write_json_atomic(all_path, data, indent=1)
-    except BaseException:
-        if not marker_before:   # 何も書き換えていないので、前の一式のまま
-            marker.unlink(missing_ok=True)
-        raise
     attempt["kept_old"] = kept_old
     attempt["complete"] = data["complete"]
     attempt["schedule_status"] = data["schedule_check"]["status"]
     attempt["schedule_reason"] = data["schedule_check"].get("reason")
     attempt["save_errors"] = []
-    scored_ok = False
-    try:
-        _save_scored_files(out_dir, race_id_map, fetched, attempt, scored_labels, pedigree_cache)
-        scored_ok = True
-    except Exception as e:  # noqa: BLE001
-        attempt["save_errors"].append(f"採点したレースのファイル（race_results.json など）を保存できない: {type(e).__name__}: {e}")
-        log.error(attempt["save_errors"][-1])
-    if scored_ok:
-        try:
-            marker.unlink(missing_ok=True)
-        except Exception as e:  # noqa: BLE001
-            attempt["save_errors"].append(f"保存が不完全の印を消せない（読み手はその日の結果を使わない）: {type(e).__name__}: {e}")
-    else:
-        try:
-            _write_save_marker(out_dir, "採点したレースのファイルの一部だけが新しい可能性", attempt["save_errors"])
-        except Exception:  # noqa: BLE001  書けなくても「保存中」の印が残っている
-            pass
+    save_scored_set(out_dir, data, scored_labels, pedigree_cache, attempt, write_all=True)
     try:
         append_fetch_log(out_dir, attempt)
     except Exception as e:  # noqa: BLE001
@@ -729,68 +707,123 @@ def save_results(date: str, out_dir: Path, race_id_map: dict, fetched: dict, att
     return data
 
 
-def _save_scored_files(out_dir: Path, race_id_map: dict, fetched: dict, attempt: dict, scored_labels,
-                       pedigree_cache: dict) -> None:
-    """採点したレースだけのファイル（読む側の処理を変えない）。取れなかったレースは前の値を残す。
-    fetched は今回取れたレース（通常）か、保存済みの race_results_all.json のレース（--rebuild-scored）"""
-    sub_labels = scored_labels if scored_labels is not None else set(race_id_map)
-    results_path = out_dir / "race_results.json"
-    conditions_path = out_dir / "race_conditions.json"
-    others_path = out_dir / "race_nonfinishers.json"
-    race_results = _load_json(results_path, {})
-    race_conditions = _load_json(conditions_path, {})
-    race_others = _load_json(others_path, {})
+def _scored_entry(r: dict, pedigree_cache: dict) -> tuple:
+    """race_results_all.json の1レースから、3ファイルのそのレースの値 (結果, 条件, 着順の無い馬)"""
+    results = [{k: h[k] for k in RESULT_KEYS}
+               | {"sire": pedigree_cache.get(h["horse_id"], {}).get("sire", ""),
+                  "dam_sire": pedigree_cache.get(h["horse_id"], {}).get("dam_sire", "")}
+               for h in r["horses"]]
+    return results, r["condition"], r["others"]
+
+
+def build_scored_set(out_dir: Path, all_data: dict, scored_labels, pedigree_cache: dict) -> tuple:
+    """採点したレースの3ファイルの、書くべき中身を作る（書かない）。戻り値 (中身 {ファイル名: dict}, 作り直せたレース, 作り直せないレース)。
+    作り直せるのは、race_results_all.json にこの取得処理（fetch_races）で保存した値（scrape_version がある）があるレースだけ。
+    作り直せない採点したレースは、今のファイルの値を残す（2026-11-12 より前の取り方の値など）"""
+    races = all_data.get("races") or {}
+    sub_labels = scored_labels if scored_labels is not None else set(all_data.get("race_ids") or {})
+    bodies = {n: _load_json(out_dir / n, {}) for n in SCORED_FILE_NAMES}
+    rebuilt, not_rebuilt = [], []
     for label in sorted(sub_labels):
-        if label not in fetched:
-            continue
-        r = fetched[label]
-        race_results[label] = [
-            {k: h[k] for k in ("rank", "num", "name", "horse_id", "pop", "odds", "place_odds", "jockey", "trainer",
-                               "weight_carried", "horse_weight", "horse_weight_diff", "time", "margin", "last3f",
-                               "corners", "sex_age", "gate")}
-            | {"sire": pedigree_cache.get(h["horse_id"], {}).get("sire", ""),
-               "dam_sire": pedigree_cache.get(h["horse_id"], {}).get("dam_sire", "")}
-            for h in r["horses"]
-        ]
-        race_conditions[label] = r["condition"]
-        race_others[label] = r["others"]
-    attempt["kept_old_scored_files"] = sorted(l for l in sub_labels if l not in fetched and l in race_results)
-    # 着順が数字でない馬（2026-11-02〜）は race_nonfinishers.json。race_results.json には入れない（rank が数字の前提の処理が多いため）
-    written = []
-    for path, body in ((results_path, race_results), (conditions_path, race_conditions), (others_path, race_others)):
+        r = races.get(label)
+        if r and r.get("scrape_version"):
+            vals = _scored_entry(r, pedigree_cache)
+            for n, v in zip(SCORED_FILE_NAMES, vals):
+                bodies[n][label] = v
+            rebuilt.append(label)
+        elif any(label in b for b in bodies.values()):
+            not_rebuilt.append(label)
+    return bodies, rebuilt, not_rebuilt
+
+
+def save_scored_set(out_dir: Path, all_data: dict, scored_labels, pedigree_cache: dict, attempt: dict,
+                    write_all: bool) -> bool:
+    """通常の保存と作り直し（--rebuild-scored）で共通の手順（2026-11-13〜）:
+    1. 「保存が不完全」の印を置く（置けなければ何も書かずに例外）
+    2. write_all なら race_results_all.json を書く（書けなければ例外。前の回の印が無ければ印も消す。何も書き換えていない）
+    3. 保存済みの全レースの結果（all_data）から3ファイルを作って書く
+    4. 3ファイルを読み直し、書くべき中身と一致するか確かめる
+    5. 一致し、かつ前の回の印があった日は作り直せないレースが3ファイルに残っていないときだけ、印を消す
+    戻り値は印を消せたか。失敗の理由は attempt["save_errors"]、印にも入れる"""
+    from data_quality import RESULTS_SAVE_MARKER
+    out_dir.mkdir(parents=True, exist_ok=True)
+    marker = out_dir / RESULTS_SAVE_MARKER
+    marker_before = marker.exists()
+    _write_save_marker(out_dir, "保存中（途中で止まった）")
+    if write_all:
         try:
-            _write_json_atomic(path, body)
-        except Exception as e:
-            raise RuntimeError(f"{path.name} を書けない（書けたもの: {written or 'なし'}）: {type(e).__name__}: {e}") from e
-        written.append(path.name)
+            _write_json_atomic(out_dir / RESULTS_ALL_NAME, all_data, indent=1)
+        except BaseException:
+            if not marker_before:
+                marker.unlink(missing_ok=True)
+            raise
+    errors = attempt.setdefault("save_errors", [])
+    state = None
+    try:
+        bodies, rebuilt, not_rebuilt = build_scored_set(out_dir, all_data, scored_labels, pedigree_cache)
+        attempt["scored_rebuilt_from_all_results"] = rebuilt
+        attempt["kept_old_scored_files"] = not_rebuilt
+        written = []
+        for n in SCORED_FILE_NAMES:
+            try:
+                _write_json_atomic(out_dir / n, bodies[n])
+            except Exception as e:
+                raise RuntimeError(f"{n} を書けない（書けたもの: {written or 'なし'}）: {type(e).__name__}: {e}") from e
+            written.append(n)
+        differ = [n for n in SCORED_FILE_NAMES if _load_json(out_dir / n, None) != bodies[n]]
+        if differ:
+            state = "書いた後に読み直すと中身が違う"
+            errors.append(f"採点したレースのファイルを読み直すと中身が違う: {differ}")
+        elif marker_before and not_rebuilt:
+            state = "前の回の保存が不完全で、作り直せないレースが残る"
+            errors.append(f"前の回の保存が不完全で、{RESULTS_ALL_NAME} から作り直せないレースが残る: {not_rebuilt}")
+    except Exception as e:  # noqa: BLE001
+        state = "採点したレースのファイルの一部だけが新しい可能性"
+        errors.append(f"採点したレースのファイル（race_results.json など）を保存できない: {type(e).__name__}: {e}")
+    if state is None:
+        try:
+            marker.unlink(missing_ok=True)
+            return True
+        except Exception as e:  # noqa: BLE001
+            errors.append(f"保存が不完全の印を消せない（読み手はその日の結果を使わない）: {type(e).__name__}: {e}")
+            return False
+    log.error(f"{out_dir.name}: {state}: {errors[-1]}")
+    try:
+        _write_save_marker(out_dir, state, errors)
+    except Exception:  # noqa: BLE001  書けなくても「保存中」の印が残っている
+        pass
+    return False
 
 
 def rebuild_scored_files(date: str, output_dir: Path = OUTPUT_DIR) -> dict:
-    """保存済みの race_results_all.json から、採点したレースの3ファイルを作り直し、「保存が不完全」の印を消す（取得しない）。
-    使うのは、この取得処理（fetch_races）で保存したレース（scrape_version がある）だけ。それ以外の採点したレースは前の値を残す。
-    戻り値は取得の記録に足した中身"""
-    from data_quality import RESULTS_SAVE_MARKER
+    """保存済みの race_results_all.json から、採点したレースの3ファイルを作り直す（取得しない）。
+    通常の保存と同じ手順（save_scored_set）で、一致を確かめてから印を消す。消せなければ 1 で終わる。戻り値は取得の記録に足した中身"""
     out_dir = output_dir / date
     data = _load_json(out_dir / RESULTS_ALL_NAME, None)
     if not data or not isinstance(data.get("races"), dict):
         raise SystemExit(f"{date}: {RESULTS_ALL_NAME} が無い・形が違う → 作り直せない（取り直す）")
     pickup = _load_json(out_dir / "pickup_scores.json", None)
     scored_labels = ({l for l, r in pickup.get("races", {}).items() if r.get("race_id")} if pickup else None)
-    races = {l: r for l, r in data["races"].items() if r.get("scrape_version")}
     pedigree_cache = _load_json(PEDIGREE_FILE, {})
-    attempt = {"at": _now_iso(), "scrape_version": SCRAPE_VERSION, "kind": f"採点したレースのファイルを {RESULTS_ALL_NAME} から作り直し",
-               "from_all_results": sorted(races), "save_errors": []}
-    _save_scored_files(out_dir, data.get("race_ids") or {}, races, attempt, scored_labels, pedigree_cache)
-    (out_dir / RESULTS_SAVE_MARKER).unlink(missing_ok=True)
+    attempt = {"at": _now_iso(), "scrape_version": SCRAPE_VERSION,
+               "kind": f"採点したレースのファイルを {RESULTS_ALL_NAME} から作り直し", "save_errors": []}
+    ok = save_scored_set(out_dir, data, scored_labels, pedigree_cache, attempt, write_all=False)
+    attempt["marker_cleared"] = ok
     append_fetch_log(out_dir, attempt)
-    log.info(f"{date}: 採点したレースのファイルを作り直した（{len(races)}レースから）。保存が不完全の印を消した")
+    if ok:
+        log.info(f"{date}: 採点したレースのファイルを作り直した（{len(attempt['scored_rebuilt_from_all_results'])}レース）。保存が不完全の印は無い")
+    else:
+        log.error(f"{date}: 作り直したが、保存が不完全の印を消せない: {attempt['save_errors']}")
     return attempt
 
 
 def main():
     if len(sys.argv) == 3 and sys.argv[1] == "--rebuild-scored":
-        rebuild_scored_files(sys.argv[2])
+        att = rebuild_scored_files(sys.argv[2])
         print(f"CHANGED_FILE: {(OUTPUT_DIR / sys.argv[2]).resolve().relative_to(BASE_DIR.resolve())}")
+        if not att["marker_cleared"]:
+            print(f"RESULTS_FETCH_INCOMPLETE: {sys.argv[2]} 作り直したが保存が不完全の印が残る: {' / '.join(att['save_errors'])}")
+            sys.exit(1)
         return
     date = sys.argv[1] if len(sys.argv) >= 2 else datetime.now().strftime("%Y%m%d")
     out_dir = OUTPUT_DIR / date
