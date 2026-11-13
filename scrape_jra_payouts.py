@@ -316,14 +316,20 @@ class ResultsSaveIncomplete(RuntimeError):
     """その日の結果の保存が不完全（data_quality.RESULTS_SAVE_MARKER）。レースの一覧が古いままの可能性があるので払戻を取らない"""
 
 
-def load_known_races(date: str) -> dict:
-    """その日のレースの一覧（race_conditions.json、無ければ race_results.json）。
-    結果の保存が不完全な日は ResultsSaveIncomplete で止める（2026-11-13〜。古い一覧で取得漏れが起きるため。
-    scrape_results.py --rebuild-scored で直してから取り直す）"""
+def ensure_results_saved(date: str) -> None:
+    """払戻を取る前の共通の検査（2026-11-13〜）。結果の保存が不完全な日は ResultsSaveIncomplete で止める
+    （レースの一覧が古いままで取得漏れが起きるため。scrape_results.py --rebuild-scored で直してから取り直す）。
+    払戻を取る経路はすべてここを通る: load_known_races（1日・--all・--verify で払戻が無い日）と fill_races（--races-file）。
+    --verify で payouts_jra.json がもうある日は、結果のファイルを読まず取得もしないので通らない"""
     from data_quality import results_save_issue
     issue = results_save_issue(OUTPUT_DIR / date)
     if issue:
         raise ResultsSaveIncomplete(f"{date}: {issue} → 払戻を取らない")
+
+
+def load_known_races(date: str) -> dict:
+    """その日のレースの一覧（race_conditions.json、無ければ race_results.json）。先に ensure_results_saved で検査する"""
+    ensure_results_saved(date)
     cond_path = OUTPUT_DIR / date / "race_conditions.json"
     if cond_path.exists():
         with open(cond_path, encoding="utf-8") as f:
@@ -397,7 +403,9 @@ def scrape_date(date: str, cache: dict) -> dict:
 def fill_races(date: str, labels: list, cache: dict) -> dict:
     """指定したレースのうち payouts_jra.json に無いものだけを取り、既存のファイルに足して保存する。
     既存のレースの値は書き換えない。取れなかったレースは書かない（次の実行でまた対象になる）。
-    戻り値: {"added": [...], "failed": [...], "skipped_existing": [...], "no_race_id": [...]}"""
+    戻り値: {"added": [...], "failed": [...], "skipped_existing": [...], "no_race_id": [...]}
+    結果の保存が不完全な日は、何も取らずに ResultsSaveIncomplete（ensure_results_saved）"""
+    ensure_results_saved(date)
     path = OUTPUT_DIR / date / "payouts_jra.json"
     existing = {}
     if path.exists():
@@ -550,7 +558,11 @@ def main():
                  f"払戻が無いもの {sum(len(v) for v in todo.values())}レース・{len(todo)}日。今回 {len(target)}日を処理します")
         summary = {}
         for d in target:
-            summary[d] = fill_races(d, todo[d], cache)
+            try:
+                summary[d] = fill_races(d, todo[d], cache)
+            except ResultsSaveIncomplete as e:   # その日は取らず、次の日へ
+                log.error(str(e))
+                summary[d] = {"added": [], "failed": [], "skipped_existing": [], "no_race_id": [], "stopped": str(e)}
             save_cache(cache)
         n_added = sum(len(v["added"]) for v in summary.values())
         n_failed = sum(len(v["failed"]) for v in summary.values())
@@ -558,6 +570,8 @@ def main():
         log.info(f"完了: {len(target)}日。足した {n_added}レース・取れなかった {n_failed}・レースIDが無い {n_noid}。"
                  f"残り {len(todo) - len(target)}日")
         for d, v in summary.items():
+            if v.get("stopped"):
+                log.info(f"  {d}: 止めた（{v['stopped']}）")
             if v["failed"] or v["no_race_id"]:
                 log.info(f"  {d}: 取れなかった {v['failed']} レースIDが無い {v['no_race_id']}")
         return

@@ -419,6 +419,25 @@ class SaveMarkerTest(unittest.TestCase):
         with mock.patch.object(scrape_jra_payouts, "OUTPUT_DIR", self.tmp):
             with self.assertRaises(scrape_jra_payouts.ResultsSaveIncomplete):
                 scrape_jra_payouts.load_known_races("20261108")
+            # --races-file の経路（fill_races）も、通信の前に止まる（2026-11-13 外部レビュー 実装の5回目）
+            with mock.patch.object(scrape_jra_payouts, "ensure_sde_cname") as sde, \
+                    mock.patch.object(scrape_jra_payouts, "fetch_post") as post:
+                with self.assertRaises(scrape_jra_payouts.ResultsSaveIncomplete):
+                    scrape_jra_payouts.fill_races("20261108", ["福島1R"], {})
+            sde.assert_not_called()
+            post.assert_not_called()
+            self.assertEqual((self.out / "payouts_jra.json").read_text(), "{}")
+            # 入口全体（--races-file）: 印がある日は通信せず、例外で止まらずに終わる
+            rf = self.tmp / "races.json"
+            rf.write_text(json.dumps([["20261108", "福島1R"]], ensure_ascii=False))
+            with mock.patch.object(scrape_jra_payouts, "ensure_sde_cname") as sde, \
+                    mock.patch.object(scrape_jra_payouts, "fetch_post") as post, \
+                    mock.patch.object(scrape_jra_payouts, "load_cache", return_value={}), \
+                    mock.patch.object(scrape_jra_payouts, "save_cache"), \
+                    mock.patch.object(scrape_jra_payouts.sys, "argv", ["x", "--races-file", str(rf)]):
+                scrape_jra_payouts.main()
+            sde.assert_not_called()
+            post.assert_not_called()
 
     def test_rebuild_from_all_results_makes_a_consistent_set_and_clears_marker(self):
         self.save(fail_name="race_conditions.json")

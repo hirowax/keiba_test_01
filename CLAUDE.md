@@ -68,7 +68,7 @@ netkeiba のタイム指数（近走平均・当該距離・当該コース）�
 
 成績を集計する前に、`docs/index_top3_definition_202611.md` の形で計画を文書にし、ユーザーの承認を得てから実行する。計画に必ず書くこと:
 - **対象**: 開始日・終了日、使うファイル、対象から外した日と理由。実行時に使ったファイルの一覧を保存する。
-  - 結果のファイル（`race_results.json`・`race_conditions.json`・`race_nonfinishers.json`）を読む集計・評価は、入口で `data_quality.results_save_issue()` を確かめ、保存が不完全の日（`results_save_incomplete.json` がある日）を使わない。外した日は理由別の件数に入れる（2026-11-13〜。それまでに書いた研究用のスクリプトは確かめていない。過去の出力は書き換えない）。
+  - 結果のファイル（`race_results.json`・`race_conditions.json`・`race_nonfinishers.json`）を読む集計・評価は、入口で `data_quality.results_save_issue()` を確かめ、保存が不完全の日（`results_save_incomplete.json` がある日）を使わない。外した日は理由別の件数に入れる（2026-11-13〜）。新しく書くものも、今までのスクリプトを今後実行し直すときも同じ（今までのスクリプトにはまだ入れていないので、実行し直す前に足す）。過去の出力は書き換えない。
   - 条件にするファイルは、実際の保存状況を確かめてから決める。
   - `invalidated.json` は無効レースがある日にだけ置く記録なので、必須にしない。
   - `payouts_jra.json` の有無は、回収率の対象選びにだけ使う。
@@ -206,7 +206,7 @@ git add output/20260404/ output/horse_pedigree.json && git commit -m "results: 2
 
 - コーナー通過順は当日夜には空のことがある（警告が出る）。後日 `scrape_results.py` で取り直す。
 - 2026-11-12〜（脚質の設計 `docs/horse_style_design_202611.md` 2章）: レース一覧から全レースを取り、`race_results_all.json` にレースごとに置き換えて保存する（取れなかったレース・形の異常のページは前の値を残す。`complete` は保存済みのレースの集合が一覧とそろっていること）。JRA 公式の結果の一覧と照合した結果は `schedule_check`。`race_results.json` などは今までどおり採点したレースだけ。取得の失敗・予定を確定できない日は出力の印 `RESULTS_FETCH_INCOMPLETE` で知らせる。書き換えたファイル（前の開催日の JRA 公式の一覧の取り直しを含む）は出力の `CHANGED_FILE:` の行で、cron はそれを add する。
-- 2026-11-13〜: 保存の途中で書けなかった日は `output/{date}/results_save_incomplete.json`（保存が不完全の印）が残る。印がある日は、照合（`verify_results.py`。不一致として知らせる）・軸の記録の検査・精算・🔥閾値の計算・払戻の取得（`scrape_jra_payouts.py`。止まる）がその日の結果を使わない（判定は `data_quality.results_save_issue()`）。直し方は `python3 scrape_results.py --rebuild-scored 20260404`（保存済みの `race_results_all.json` から採点したレースの3ファイルを作り直し、読み直して一致を確かめてから印を消す。取得しない。作り直せないレースが残れば印は残る）の後に `output/{date}/` を commit。cron の完了通知は、不完全の印があれば「保存できた分を公開・要対応」になる（push の成否とは別）。
+- 2026-11-13〜: 保存の途中で書けなかった日は `output/{date}/results_save_incomplete.json`（保存が不完全の印）が残る。印がある日は、照合（`verify_results.py`。不一致として知らせる）・軸の記録の検査・精算・🔥閾値の計算・払戻の取得（`scrape_jra_payouts.py`。`ensure_results_saved()` で止まる。1日・`--all`・`--races-file`、`--verify` で払戻がまだ無い日）がその日の結果を使わない（判定は `data_quality.results_save_issue()`）。直し方は `python3 scrape_results.py --rebuild-scored 20260404`（保存済みの `race_results_all.json` から採点したレースの3ファイルを作り直し、読み直して一致を確かめてから印を消す。取得しない。作り直せないレースが残れば印は残る）の後に `output/{date}/` を commit。cron の完了通知は、不完全の印があれば「保存できた分を公開・要対応」になる（push の成否とは別）。
 - 取得後、`python3 verify_results.py 20260404` で採点時の馬番・馬ID・馬名と結果を全頭照合する（cron では自動。不一致は LINE で通知。結果は `output/{date}/results_check.json`）。
 
 ### 4. ペーパートレードの精算（払戻取得後・cron 未組み込み）
