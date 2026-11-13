@@ -312,7 +312,18 @@ def parse_refund(container) -> dict:
 
 # ---------- 対象日レース一覧（netkeiba側データから） ----------
 
+class ResultsSaveIncomplete(RuntimeError):
+    """その日の結果の保存が不完全（data_quality.RESULTS_SAVE_MARKER）。レースの一覧が古いままの可能性があるので払戻を取らない"""
+
+
 def load_known_races(date: str) -> dict:
+    """その日のレースの一覧（race_conditions.json、無ければ race_results.json）。
+    結果の保存が不完全な日は ResultsSaveIncomplete で止める（2026-11-13〜。古い一覧で取得漏れが起きるため。
+    scrape_results.py --rebuild-scored で直してから取り直す）"""
+    from data_quality import results_save_issue
+    issue = results_save_issue(OUTPUT_DIR / date)
+    if issue:
+        raise ResultsSaveIncomplete(f"{date}: {issue} → 払戻を取らない")
     cond_path = OUTPUT_DIR / date / "race_conditions.json"
     if cond_path.exists():
         with open(cond_path, encoding="utf-8") as f:
