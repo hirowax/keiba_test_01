@@ -152,6 +152,7 @@ netkeiba/
 │   │   ├── race_nonfinishers.json # 着順が数字でない馬（取消・除外・中止・失格。2026-11-02〜）
 │   │   ├── race_results_all.json  # 全レースの結果（着順なしの馬を含む。過去分は rescrape_results_full.py、2026-11-12〜 は scrape_results.py。schedule_check を含む）
 │   │   ├── results_fetch_log.json # 結果の取得の記録（回ごと。取れなかったレース・前の値を残したレースと取得日時。2026-11-12〜）
+│   │   ├── results_save_incomplete.json # 結果の保存が不完全の印（ある日だけ。結果のファイルが新旧で混ざっている可能性。2026-11-13〜）
 │   │   ├── horse_style/{実行ID}.json # その日の脚質の全体の記録（作成成功・作成失敗。その日の最初の作成成功で確定。2026-11-12〜）
 │   │   ├── race_conditions.json # 馬場・天気・距離・クラス等
 │   │   ├── payouts_jra.json     # JRA公式払戻
@@ -204,6 +205,7 @@ git add output/20260404/ output/horse_pedigree.json && git commit -m "results: 2
 
 - コーナー通過順は当日夜には空のことがある（警告が出る）。後日 `scrape_results.py` で取り直す。
 - 2026-11-12〜（脚質の設計 `docs/horse_style_design_202611.md` 2章）: レース一覧から全レースを取り、`race_results_all.json` にレースごとに置き換えて保存する（取れなかったレース・形の異常のページは前の値を残す。`complete` は保存済みのレースの集合が一覧とそろっていること）。JRA 公式の結果の一覧と照合した結果は `schedule_check`。`race_results.json` などは今までどおり採点したレースだけ。取得の失敗・予定を確定できない日は出力の印 `RESULTS_FETCH_INCOMPLETE` で知らせる。書き換えたファイル（前の開催日の JRA 公式の一覧の取り直しを含む）は出力の `CHANGED_FILE:` の行で、cron はそれを add する。
+- 2026-11-13〜: 保存の途中で書けなかった日は `output/{date}/results_save_incomplete.json`（保存が不完全の印）が残る。印がある日は、照合（`verify_results.py`。不一致として知らせる）・軸の記録の検査・精算・🔥閾値の計算がその日の結果を使わない（判定は `data_quality.results_save_issue()`）。直し方は `python3 scrape_results.py --rebuild-scored 20260404`（保存済みの `race_results_all.json` から採点したレースの3ファイルを作り直し、印を消す。取得しない）の後に `output/{date}/` を commit。cron の完了通知は、不完全の印があれば「保存できた分を公開・要対応」になる（push の成否とは別）。
 - 取得後、`python3 verify_results.py 20260404` で採点時の馬番・馬ID・馬名と結果を全頭照合する（cron では自動。不一致は LINE で通知。結果は `output/{date}/results_check.json`）。
 
 ### 4. ペーパートレードの精算（払戻取得後・cron 未組み込み）

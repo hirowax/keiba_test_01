@@ -85,9 +85,15 @@ sys.exit(0 if '$TODAY' in dates else 1)
     done
     git commit -m "results: ${TODAY}" || echo "  (変更なし — コミットスキップ)"
 
+    # push の成否と、取得・保存の完了は別に判定する（2026-11-13〜）。不完全の印があれば「保存できた分を公開・要対応」
     if git push; then
-        echo "$(date '+%Y-%m-%d %H:%M:%S') 完了"
-        notify_line "[netkeiba] $TODAY のレース結果を取得・公開しました ✓"
+        if [ -n "$INCOMPLETE" ]; then
+            echo "$(date '+%Y-%m-%d %H:%M:%S') 保存できた分を公開（取得・保存は不完全）"
+            notify_line "[netkeiba] $TODAY のレース結果は保存できた分を公開しました（取得・保存は不完全・要対応）⚠️"
+        else
+            echo "$(date '+%Y-%m-%d %H:%M:%S') 完了"
+            notify_line "[netkeiba] $TODAY のレース結果を取得・公開しました ✓"
+        fi
     else
         echo "$(date '+%Y-%m-%d %H:%M:%S') git push 失敗"
         notify_line "[netkeiba] $TODAY の結果は取得済みですがpushに失敗しました ✗ 手動で git push してください"
@@ -129,8 +135,13 @@ if [ -n "$MISSING_RESULTS" ]; then
         INCOMPLETE=$(grep "RESULTS_FETCH_INCOMPLETE" "$CATCHUP_LOG" | head -1 | tr -d '"')
         [ -n "$INCOMPLETE" ] && notify_line "[netkeiba] ⚠️ $INCOMPLETE"
         git commit -m "results: ${MISSING_RESULTS} (catchup)" || true
-        git push || true
-        notify_line "[netkeiba] 過去結果補完完了: $MISSING_RESULTS ✓"
+        if ! git push; then
+            notify_line "[netkeiba] 過去結果補完: $MISSING_RESULTS は保存しましたが push に失敗しました ✗ 手動で git push してください"
+        elif [ -n "$INCOMPLETE" ]; then
+            notify_line "[netkeiba] 過去結果補完: $MISSING_RESULTS は保存できた分を公開しました（取得・保存は不完全・要対応）⚠️"
+        else
+            notify_line "[netkeiba] 過去結果補完完了: $MISSING_RESULTS ✓"
+        fi
     else
         echo "  補完失敗: $MISSING_RESULTS"
         notify_line "[netkeiba] 過去結果補完失敗: $MISSING_RESULTS ✗"
