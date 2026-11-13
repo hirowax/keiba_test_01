@@ -71,8 +71,12 @@ class RealPageTest(unittest.TestCase):
                                        "dist": 2910, "surface_dist": "障2910", "idx": None})
 
     def test_debut_then_no_prev(self):
-        """京都5R 11/1 の新馬戦が初出走。11/1 を対象日にすると前走なし、11/7 なら新馬戦の行"""
-        self.assertEqual(parse("2024107034", "20261101")["status"], pi.NO_PREV)
+        """京都5R 11/1 の新馬戦が初出走。11/7 なら新馬戦の行。
+        11/1 を対象日にすると対象日より前の行が無い。2026-11-13 からは、この場合もページ（馬ID・馬名・見出し）を確かめてから
+        前走なしにする。この保存ファイルは成績の表だけを切り出したものでページを確かめられないので、取得失敗になる"""
+        e = parse("2024107034", "20261101")
+        self.assertEqual(e["status"], pi.FAILED)
+        self.assertIn("前走なしとは確かめられない", e["reason"])
         e = parse("2024107034", "20261107")
         self.assertEqual((e["status"], e["values"]["race_id"], e["values"]["rank"], e["values"]["idx"]),
                          (pi.OK, "202608041105", 1, 69))

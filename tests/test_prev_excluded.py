@@ -91,9 +91,11 @@ class SkipRuleTest(unittest.TestCase):
             self.assertIn("飛ばした後に行が無く", e["reason"])
             self.assertEqual(len(e["skipped_rows"]), len(rows))
 
-    def test_no_rows_before_target_is_still_no_prev(self):
+    def test_no_rows_before_target_without_page_identity_is_failed(self):
+        """2026-11-13〜: 対象日より前の行が無い場合も、ページを確かめてから前走なし（この模擬の表には馬ID・馬名が無い）。
+        確かめられる場合は tests/test_prev_rows_20261112.py の NoRowsBeforeTargetTest"""
         e = self.parse([("2026/11/07", "202605050211", "1", "1", "芝1600", "90")])
-        self.assertEqual(e["status"], pi.NO_PREV)
+        self.assertEqual(e["status"], pi.FAILED)
 
     def test_old_previous_run_is_used_as_is(self):
         """除外の前に長い休みがあっても、直近の正式な発走ならそのまま使う（古さの制限は無い）"""
