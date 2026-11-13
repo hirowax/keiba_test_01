@@ -19,6 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from fixture_pages import read_fixture  # noqa: E402
 import scrape_results as SR  # noqa: E402
 import schedule_check as S  # noqa: E402
+import data_quality as DQ  # noqa: E402
 
 
 FULL = "result_202603030211_20261113.html"          # 11/8 福島11R（16頭）の実ページ全体（2026-11-13 取得）
@@ -288,7 +289,8 @@ class FetchRacesTest(unittest.TestCase):
         self.assertEqual(len(data["races"]), 3)
         self.assertEqual(len(json.loads((out / SR.RESULTS_ALL_NAME).read_text())["races"]), 3)
         log = json.loads((out / SR.FETCH_LOG_NAME).read_text())["attempts"][-1]
-        self.assertTrue(log["save_errors"][0].startswith("採点したレースのファイル（race_results.json など）を保存できない: OSError"))
+        self.assertIn("race_results.json を書けない（書けたもの: なし）: OSError", log["save_errors"][0])
+        self.assertIsNotNone(DQ.results_save_issue(out))   # 印が残る
 
     def test_main_all_results_write_failure_still_ends_normally_and_notifies(self):
         """race_results_all.json を書けない → 前のファイルのまま、一時ファイルを残さず、0 で終わって知らせの印を出す"""
@@ -343,6 +345,110 @@ class MergeTest(unittest.TestCase):
         new = race("new")
         data, _ = SR.merge_all_results(old, "d", {"東京1R": "202605010101"}, {"東京1R": new})
         self.assertEqual(data["races"]["東京1R"], new)   # 着順・着順の無い馬・条件を一組で置き換える
+
+
+class SaveMarkerTest(unittest.TestCase):
+    """保存が不完全の印（data_quality.RESULTS_SAVE_MARKER）と、読み手がその日の結果を使わないこと、作り直し
+    （2026-11-13 外部レビュー 実装の3回目の指摘1）"""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        self.out = self.tmp / "20261108"
+        self.out.mkdir()
+        self.ids = {"福島1R": "202603030201", "福島2R": "202603030202"}
+        self.patches = [mock.patch.object(SR, "human_sleep"), mock.patch.object(SR.time, "sleep"),
+                        mock.patch("scraper.random.random", return_value=0.99)]
+        for pt in self.patches:
+            pt.start()
+        page = FakePage({rid: read_fixture(FULL) for rid in self.ids.values()})
+        self.att = {"at": "t", "scrape_version": SR.SCRAPE_VERSION, "fetched": [], "failed": {}, "kept_old": {}, "stopped": None}
+        self.fetched = SR.fetch_races(page, self.ids, self.att)
+        # 前の回の一式（古い値）
+        old = {l: [{"num": "1", "name": "古い馬"}] for l in self.ids}
+        for name in ("race_results.json", "race_conditions.json", "race_nonfinishers.json"):
+            (self.out / name).write_text(json.dumps(old if name == "race_results.json" else {l: {"old": True} for l in self.ids},
+                                                    ensure_ascii=False))
+
+    def tearDown(self):
+        for pt in self.patches:
+            pt.stop()
+        shutil.rmtree(self.tmp)
+
+    def save(self, fail_name=None, fail_marker=False):
+        real = SR._write_json_atomic
+
+        def flaky(path, data, indent=2):
+            name = Path(path).name
+            if name == fail_name or (fail_marker and name == DQ.RESULTS_SAVE_MARKER):
+                raise OSError("No space left on device")
+            return real(path, data, indent)
+        with mock.patch.object(SR, "_write_json_atomic", side_effect=flaky):
+            return SR.save_results("20261108", self.out, self.ids, self.fetched, self.att, None, {},
+                                   {"srl": {}, "sde": {}}, None)
+
+    def test_success_leaves_no_marker(self):
+        self.save()
+        self.assertIsNone(DQ.results_save_issue(self.out))
+        self.assertFalse((self.out / DQ.RESULTS_SAVE_MARKER).exists())
+
+    def test_conditions_failure_marks_day_and_readers_do_not_use_it(self):
+        """レビューの再現: 条件のファイルを書けない → 結果だけ新しい。印が残り、照合・軸の記録・精算・閾値は使わない"""
+        self.save(fail_name="race_conditions.json")
+        results = json.loads((self.out / "race_results.json").read_text())
+        conds = json.loads((self.out / "race_conditions.json").read_text())
+        self.assertEqual(len(results["福島1R"]), 16)          # 新しい
+        self.assertEqual(conds["福島1R"], {"old": True})       # 古い（混ざっている）
+        issue = DQ.results_save_issue(self.out)
+        self.assertIn("採点したレースのファイルの一部だけが新しい可能性", issue)
+        self.assertIn("race_conditions", issue)
+
+        import verify_results, axis_record, paper_trade, calibrate_threshold
+        v = verify_results.check_day("20261108", self.tmp)
+        self.assertEqual(v["save_incomplete"], issue)
+        self.assertEqual(v["mismatch"], [f"その日の結果を照合しない: {issue}"])
+        self.assertEqual(axis_record.purchase_gap(self.out, "福島1R", "8", "x", {}), issue)
+        (self.out / "paper_bets.json").write_text(json.dumps({"races": {}}))
+        (self.out / "payouts_jra.json").write_text(json.dumps({}))
+        with mock.patch.object(paper_trade, "OUTPUT_DIR", self.tmp):
+            self.assertFalse(paper_trade.settle_for_date("20261108"))
+        (self.out / "pickup_scores.json").write_text(json.dumps({"races": {}}))
+        with mock.patch.object(calibrate_threshold, "OUTPUT_DIR", self.tmp), \
+                mock.patch.object(calibrate_threshold, "CLEAN_START", "20200101"):
+            self.assertEqual(calibrate_threshold.load_pairs(), [])
+
+    def test_rebuild_from_all_results_makes_a_consistent_set_and_clears_marker(self):
+        self.save(fail_name="race_conditions.json")
+        with mock.patch.object(SR, "PEDIGREE_FILE", self.tmp / "ped.json"):
+            SR.rebuild_scored_files("20261108", self.tmp)
+        self.assertIsNone(DQ.results_save_issue(self.out))
+        conds = json.loads((self.out / "race_conditions.json").read_text())
+        self.assertEqual(conds["福島1R"]["race_id"], "202603030201")
+        self.assertEqual(len(json.loads((self.out / "race_results.json").read_text())["福島1R"]), 16)
+        log = json.loads((self.out / SR.FETCH_LOG_NAME).read_text())["attempts"][-1]
+        self.assertIn("作り直し", log["kind"])
+
+    def test_all_results_failure_without_prior_marker_leaves_old_set_unmarked(self):
+        with self.assertRaises(OSError):
+            self.save(fail_name=SR.RESULTS_ALL_NAME)
+        self.assertIsNone(DQ.results_save_issue(self.out))   # 何も書き換えていない
+        self.assertEqual(json.loads((self.out / "race_conditions.json").read_text())["福島1R"], {"old": True})
+
+    def test_all_results_failure_keeps_prior_marker(self):
+        self.save(fail_name="race_conditions.json")
+        with self.assertRaises(OSError):
+            self.save(fail_name=SR.RESULTS_ALL_NAME)
+        self.assertIsNotNone(DQ.results_save_issue(self.out))   # 前の回の混在が残っている
+
+    def test_marker_write_failure_writes_nothing(self):
+        with self.assertRaises(OSError):
+            self.save(fail_marker=True)
+        self.assertFalse((self.out / SR.RESULTS_ALL_NAME).exists())
+        self.assertEqual(json.loads((self.out / "race_conditions.json").read_text())["福島1R"], {"old": True})
+
+    def test_fetch_log_only_failure_is_not_marked(self):
+        self.save(fail_name=SR.FETCH_LOG_NAME)
+        self.assertIsNone(DQ.results_save_issue(self.out))
+        self.assertTrue(self.att["save_errors"][0].startswith("取得の記録"))
 
 
 class FetchLogAndRetryTest(unittest.TestCase):

@@ -32,7 +32,7 @@ from contextlib import contextmanager
 from datetime import date as date_cls, datetime, timedelta, timezone
 from pathlib import Path
 
-from data_quality import load_invalidated, race_quality_issues
+from data_quality import load_invalidated, race_quality_issues, results_save_issue
 
 BASE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = BASE_DIR / "output"
@@ -668,6 +668,10 @@ def purchase_gap(date_dir: Path, label: str, num: str, name: str, cache: dict):
         if fname not in cache:
             cache[fname] = load_json_file(date_dir / fname)
         return cache[fname]
+    if "__save_issue" not in cache:
+        cache["__save_issue"] = results_save_issue(date_dir)
+    if cache["__save_issue"]:   # ファイルが新旧で混ざっている可能性がある（2026-11-13〜）
+        return cache["__save_issue"]
     results = get("race_results.json")
     if results is None:
         return "結果（race_results.json）が無い"

@@ -12,7 +12,7 @@ from datetime import date
 from collections import Counter
 from pathlib import Path
 
-from data_quality import load_invalidated, race_quality_issues
+from data_quality import load_invalidated, race_quality_issues, results_save_issue
 from race_pickup import FIRE_RULE_SCORING_VERSIONS, SCORING_VERSION
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -47,6 +47,10 @@ def load_pairs():
         pickup_path = date_dir / "pickup_scores.json"
         results_path = date_dir / "race_results.json"
         if not pickup_path.exists() or not results_path.exists():
+            continue
+        issue = results_save_issue(date_dir)
+        if issue:   # ファイルが新旧で混ざっている可能性がある（2026-11-13〜）
+            print(f"  {date_dir.name}: {issue} → 使わない")
             continue
         with open(pickup_path, encoding="utf-8") as f:
             pickup = json.load(f)

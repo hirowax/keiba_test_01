@@ -20,7 +20,7 @@ import re
 import sys
 from pathlib import Path
 
-from data_quality import load_invalidated
+from data_quality import load_invalidated, results_save_issue
 
 OUTPUT_DIR = Path(__file__).parent / "output"
 SPACES = re.compile(r"[\s　]+")
@@ -43,6 +43,11 @@ def check_day(date: str, output_dir: Path = OUTPUT_DIR) -> dict:
 
     out = {"date": date, "races": 0, "horses": 0, "match": 0, "mismatch": [], "not_checked": {},
            "nonfinishers_file": others is not None}
+    issue = results_save_issue(d)
+    if issue:   # ファイルが新旧で混ざっている可能性がある → 照合しない（不一致として知らせる。2026-11-13〜）
+        out["save_incomplete"] = issue
+        out["mismatch"].append(f"その日の結果を照合しない: {issue}")
+        return out
     for label, r in sorted(pickup.get("races", {}).items()):
         if label in invalid:
             out["not_checked"][label] = "無効レース"

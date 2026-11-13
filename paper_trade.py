@@ -44,7 +44,7 @@ from datetime import datetime
 from itertools import combinations
 from pathlib import Path
 
-from data_quality import load_invalidated, race_quality_issues
+from data_quality import load_invalidated, race_quality_issues, results_save_issue
 from race_pickup import FIRE_RULE_SCORING_VERSIONS
 from validate_trifecta_202608 import himo_set, maru_num, combo_key, MIN_SCORE, BET_UNIT
 
@@ -353,6 +353,10 @@ def settle_for_date(date: str) -> bool:
     results = load_json(OUTPUT_DIR / date / "race_results.json")
     if results is None:
         print(f"  {date}: race_results.json なし（出走の確認ができない）→ スキップ")
+        return False
+    issue = results_save_issue(OUTPUT_DIR / date)
+    if issue:   # ファイルが新旧で混ざっている可能性がある（2026-11-13〜）
+        print(f"  {date}: {issue} → スキップ")
         return False
     invalid = load_invalidated(date, OUTPUT_DIR)  # 買い目ファイルは書き換えず、ここで外す
     nonfinishers = load_json(OUTPUT_DIR / date / "race_nonfinishers.json") or {}

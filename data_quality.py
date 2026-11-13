@@ -148,3 +148,26 @@ def race_quality_issues(rdata: dict, invalid_reason: str = None) -> list:
     if "error" not in rdata:
         issues += horse_style_issues(q)
     return issues
+
+
+# ── 結果の保存が不完全な日（2026-11-13〜。docs/horse_style_design_202611.md 2章の追記） ──
+# scrape_results.py は保存を始める前にこの印を置き、race_results_all.json と採点したレースの3ファイル
+# （race_results.json・race_conditions.json・race_nonfinishers.json）を書き終えたら消す。
+# 印が残っている日は、ファイルが新旧で混ざっている可能性がある。照合・軸の記録・精算・閾値の計算は、その日の結果を使わない。
+# 直し方: python3 scrape_results.py --rebuild-scored {日付}（保存済みの race_results_all.json から3ファイルを作り直し、印を消す。取得しない）
+RESULTS_SAVE_MARKER = "results_save_incomplete.json"
+
+
+def results_save_issue(date_dir) -> str:
+    """その日の結果の保存が不完全なら理由、そうでなければ None"""
+    p = Path(date_dir) / RESULTS_SAVE_MARKER
+    if not p.exists():
+        return None
+    try:
+        m = json.loads(p.read_text(encoding="utf-8"))
+        detail = m.get("state") or "状態の記録が無い"
+        if m.get("errors"):
+            detail += ": " + " / ".join(m["errors"])
+    except Exception as e:  # noqa: BLE001
+        detail = f"印のファイルを読めない: {type(e).__name__}"
+    return f"結果の保存が不完全（{detail}。scrape_results.py --rebuild-scored で作り直す）"
