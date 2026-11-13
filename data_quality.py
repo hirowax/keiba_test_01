@@ -22,6 +22,8 @@ pickup_scores.json の各レースに "quality" を保存し、研究・閾値�
                  データ分析が公開されていない）。あれば問題あり。読み方が修正前の理由とは別に出す（調べやすさのため）
 - pages:         採点に使ったページの保存先とハッシュ（{種類: {path, sha256}} または {種類: {error}}。2026-11-07〜）。
                  読み方が修正後のデータで、記録が無い・保存に失敗した種類があれば問題あり（採点の根拠を確かめられない）
+- horse_style:   採点に使った脚質の記録の参照（{run, sha256, status, version, failure_reason}。2026-11-12〜。
+                 docs/horse_style_design_202611.md 4.3）。キーが無いのはこの変更より前の採点（旧方式の horse_style.json）
 - 無効化:        output/{date}/invalidated.json に載ったレース（買い目・採点ファイルは書き換えない）
 """
 import json
@@ -32,6 +34,8 @@ from prev_inputs import QUALITY_OK_STATUSES as USABLE_PREV_STATUSES
 OUTPUT_DIR = Path(__file__).parent / "output"
 INDEX_SOURCES_FILE = "index_sources.json"
 DATA_TOP_READER_OLD = "出走馬分析の読み方が修正前（2026-11-07 に誤りを確認。🔥・買い目の対象外）"
+HORSE_STYLE_OLD = "脚質が旧方式（horse_style.json。作成の入力の記録が無い）"
+_NO_KEY = object()   # build_quality で horse_style を渡さなかった（キーを置かない）
 
 
 def _load(path: Path):
@@ -54,12 +58,12 @@ def load_index_sources(date: str, output_dir: Path = None) -> dict:
 
 def build_quality(collector_version: str, index_sources: dict, label: str, prev: dict = None,
                   table_check: dict = None, data_top_reader: str = None, data_top_issues: list = None,
-                  pages: dict = None) -> dict:
+                  pages: dict = None, horse_style=_NO_KEY) -> dict:
     """採点時に pickup_scores.json の各レースへ保存する quality。prev は前走データの版・記録・状態、
     table_check は指数の表と出馬表の照合（index_table_check.check_index_tables の戻り値）"""
     race = index_sources.get("races", {}).get(label, {})
     prev = prev or {}
-    return {
+    q = {
         "index_table_check": table_check,
         "prev_fetch": prev.get("prev_fetch"),
         "prev_inputs_run": prev.get("prev_inputs_run"),
@@ -74,6 +78,28 @@ def build_quality(collector_version: str, index_sources: dict, label: str, prev:
         "data_top_issues": list(data_top_issues or []),
         "pages": pages,
     }
+    if horse_style is not _NO_KEY:
+        q["horse_style"] = horse_style   # 記録を用意できなかったときは None（キーは置く）
+    return q
+
+
+def horse_style_issues(q: dict) -> list:
+    """脚質の参照だけで判定する（ファイルは読まない。参照先との照合は axis_record と build_horse_style.ensure_style）"""
+    from build_horse_style import STATUS_FAILED, STATUS_OK, STYLE_BUILD_VERSIONS
+    if "horse_style" not in q:
+        return [HORSE_STYLE_OLD]
+    hs = q["horse_style"]
+    if hs is None:
+        return ["脚質の記録が無い"]
+    if not isinstance(hs, dict) or not hs.get("run") or not hs.get("sha256") or not hs.get("status"):
+        return ["脚質の記録の形が違う"]
+    if hs.get("version") not in STYLE_BUILD_VERSIONS:
+        return [f"脚質の作成コードの版が無い・知らない版: {hs.get('version')!r}"]
+    if hs["status"] == STATUS_FAILED:
+        return [f"脚質を作れない: {hs.get('failure_reason') or '理由の記録が無い'}"]
+    if hs["status"] != STATUS_OK:
+        return [f"脚質の記録の状態が分からない: {hs['status']!r}"]
+    return []
 
 
 def race_quality_issues(rdata: dict, invalid_reason: str = None) -> list:
@@ -119,4 +145,6 @@ def race_quality_issues(rdata: dict, invalid_reason: str = None) -> list:
             bad = {k: v.get("error", "記録の形が違う") for k, v in pages.items() if not (v or {}).get("sha256")}
             if bad:
                 issues.append(f"採点に使ったページを保存できなかった: {bad}")
+    if "error" not in rdata:
+        issues += horse_style_issues(q)
     return issues

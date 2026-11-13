@@ -547,7 +547,7 @@ class RestoreTest(unittest.TestCase):
         git(cls.repo, "config", "user.email", "t@example.com")
         git(cls.repo, "config", "user.name", "t")
         for f in ("axis_record.py", "data_quality.py", "race_pickup.py", "prev_inputs.py", "scraper.py",
-                  "index_table_check.py"):
+                  "index_table_check.py", "build_horse_style.py", "schedule_check.py"):
             shutil.copy(ROOT / f, cls.repo / f)
         git(cls.repo, "add", ".")
         git(cls.repo, "commit", "-q", "-m", "plan")

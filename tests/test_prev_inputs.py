@@ -16,6 +16,7 @@ from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import prev_inputs as pi  # noqa: E402
+import build_horse_style  # noqa: E402
 
 FAKE_HEADERS = {"date": "日付", "race_name": "レース名", "pop": "人気", "rank": "着順", "dist": "距離", "idx": "指数"}
 COLS = ["日付", "開催", "レース名", "人気", "着順", "距離", "指数"]
@@ -463,7 +464,9 @@ class CollectFlowTest(unittest.TestCase):
                   "races": {"東京1R": {"modes": {"average": "type=rank"}}}}, "東京1R",
             prev=dict(prev_fetch=pi.PREV_FETCH_VERSION, prev_inputs_run="x", prev_status=st),
             table_check={"version": "t", "ok": True, "modes": {}, "problems": []}, data_top_reader="test",
-                         pages={"shutuba": {"path": "p", "sha256": "h"}, "data_top": {"path": "p", "sha256": "h"}})}
+                         pages={"shutuba": {"path": "p", "sha256": "h"}, "data_top": {"path": "p", "sha256": "h"}},
+            horse_style={"run": "r1", "sha256": "h", "status": "作成成功",
+                         "version": build_horse_style.STYLE_BUILD_VERSION, "failure_reason": None})}
         self.assertEqual(race_quality_issues(rd), [])
 
 

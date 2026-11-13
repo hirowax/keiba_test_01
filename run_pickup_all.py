@@ -22,6 +22,7 @@ from scraper import (
     get_race_ids, human_sleep, human_browse, _random_scroll, is_ip_blocked,
 )
 from data_quality import build_quality, load_index_sources, race_quality_issues
+from build_horse_style import StyleRecordError, bind_race, ensure_style, style_db_from_bound
 from index_table_check import check_index_tables, load_index_tables
 from race_pickup import (scrape_shutuba, scrape_data_top, score_horses, active_horse_ids,
                          SCORING_VERSION, COLLECTOR_VERSION, DATA_TOP_READER_VERSION)
@@ -35,14 +36,15 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).parent
-HORSE_STYLE_PATH = BASE_DIR / "output" / "horse_style.json"
 
 
-def load_horse_style() -> dict:
-    if HORSE_STYLE_PATH.exists():
-        with open(HORSE_STYLE_PATH, encoding="utf-8") as f:
-            return json.load(f)
-    return {}
+class StyleContext:
+    """その日の脚質の記録（build_horse_style。docs/horse_style_design_202611.md 4章）。
+    record: 記録（作成成功・作成失敗）。保存にも失敗したときは None。ref: quality に入れる参照（None のこともある）"""
+
+    def __init__(self, record, ref):
+        self.record = record
+        self.ref = ref
 
 
 def _settle_horse_page(page) -> None:
@@ -134,7 +136,7 @@ def save_page(out_dir: Path, run_id: str, race_id: str, kind: str, html: str) ->
 
 
 def score_race(page, context, date: str, race_label: str, race_id: str, venue: str, race_num: str,
-               triple_horses: list, index_sources: dict, reusable: dict, record, horse_style_db: dict,
+               triple_horses: list, index_sources: dict, reusable: dict, record, style: StyleContext,
                index_tables: dict) -> tuple:
     """1レース分: 出馬表・データ分析・前走データ（全馬）・採点・穴馬ライン。
     run_pickup_all.py と rerun_failed_pickup.py の両方から呼ぶ（同じ処理を1か所にまとめる）。
@@ -193,6 +195,10 @@ def score_race(page, context, date: str, race_label: str, race_id: str, venue: s
         prev_db, top1, prev_status = collect_prev_for_race(
             page, date, race_label, race_id, shutuba_data, triple_nums, reusable, record)
         race_max_prev_idx = top1["race_max"]   # 保留なら None（1位の加点なし）
+
+        # 脚質: 出走馬（取消・除外を除く）を、その日の脚質の全体に結び付けてから点数を出す（設計 4.1）
+        bound = bind_race(style.record, active_horse_ids(shutuba_data))
+        horse_style_db = style_db_from_bound(bound)
 
         race_dist = shutuba_data.get("race_dist")
         scored = score_horses(triple_horses, shutuba_data, data_top_data,
@@ -262,7 +268,9 @@ def score_race(page, context, date: str, race_label: str, race_id: str, venue: s
                                                prev_status=prev_status),
                                      table_check=table_check,
                                      data_top_reader=DATA_TOP_READER_VERSION, data_top_issues=data_top_issues,
-                                     pages=pages),
+                                     pages=pages, horse_style=style.ref),
+            "horse_style": {"run": (style.ref or {}).get("run"), "sha256": (style.ref or {}).get("sha256"),
+                            "horses": bound},
             "prev_inputs_run": record.run_id,
             "horse_id_map": horse_id_map,
             # 集合のままだと保存で集合の文字列になる（json の default=str。2026-11-07 に見つけた問題）ので、並べたリストで保存する
@@ -324,8 +332,14 @@ def main():
     logger.info(f"前走データ: 再利用できる値 {len(reusable)}頭")
     record = RunRecord(out_dir, date, "run_pickup_all.py", SCORING_VERSION, lock)
     logger.info(f"前走データの記録: {record.path}")
-    horse_style_db = load_horse_style()
-    logger.info(f"horse_style: {len(horse_style_db)}頭")
+    # 脚質: その日の記録を用意する（確定した作成成功があれば使う。無ければ作る。作成失敗でも採点は続ける）
+    try:
+        style_rec, style_ref = ensure_style(date)
+    except StyleRecordError as e:
+        print(f"HORSE_STYLE_RECORD_FAILED: {e}", flush=True)
+        logger.error(f"脚質の記録を用意できない → 脚質なし・参照なしで採点を続ける（品質の問題・軸の記録はできない）: {e}")
+        style_rec, style_ref = None, None
+    style = StyleContext(style_rec, style_ref)
     index_tables = read_index_tables(date)
 
     results = {}  # race_label -> 結果dict
@@ -388,7 +402,7 @@ def main():
             triple_horses = group.to_dict(orient="records")
 
             result, page, blocked = score_race(page, context, date, race_label, race_id, venue, race_num,
-                                               triple_horses, index_sources, reusable, record, horse_style_db,
+                                               triple_horses, index_sources, reusable, record, style,
                                                index_tables)
             if blocked:
                 break

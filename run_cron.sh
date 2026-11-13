@@ -82,6 +82,10 @@ sys.exit(0 if '$TOMORROW' in dates else 1)
     if grep -q "AXIS_RECORD_FAILED" /tmp/netkeiba_run.log; then
         notify_line "[netkeiba] ⚠️ $TOMORROW の軸の記録が失敗しました（採点・公開は続行）。cron.log を確認してください"
     fi
+    # 脚質の記録を用意できなかった（作成失敗の記録の保存にも失敗した・記録の検査に通らない。2026-11-12〜）
+    if grep -q "HORSE_STYLE_RECORD_FAILED" /tmp/netkeiba_run.log; then
+        notify_line "[netkeiba] ⚠️ $TOMORROW の脚質の記録を用意できませんでした（採点は脚質なしで続行・軸の記録はできない）。cron.log を確認してください"
+    fi
     if grep -q "AXIS_CHECK_STALE" /tmp/netkeiba_run.log; then
         notify_line "[netkeiba] ⚠️ 軸の記録の欠けの検査が止まっているかもしれません。cron.log を確認してください"
     fi

@@ -13,7 +13,9 @@ from bs4 import BeautifulSoup
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from fixture_pages import read_fixture  # noqa: E402
-from data_quality import DATA_TOP_READER_OLD, build_quality, race_quality_issues  # noqa: E402
+from data_quality import DATA_TOP_READER_OLD, HORSE_STYLE_OLD, race_quality_issues  # noqa: E402
+from data_quality import build_quality as _build_quality  # noqa: E402
+import build_horse_style as bhs  # noqa: E402
 from prev_inputs import PREV_FETCH_VERSION  # noqa: E402
 from scraper import CANDIDATE_RULE_VERSION, INDEX_READER_VERSION, parse_speed_shutuba_html  # noqa: E402
 
@@ -32,6 +34,13 @@ OLD_PREV = "前走データの取り方が修正前（2026-11-05 より前）"
 TABLE_OK = {"version": "test", "ok": True, "modes": {}, "problems": []}
 PAGES_OK = {"shutuba": {"path": "p", "sha256": "h"}, "data_top": {"path": "p", "sha256": "h"}}
 DTR = "test"   # 出走馬分析などの読み方の版（2026-11-07〜。直した読み取りはまだ無いので、テスト用の値）
+HS_OK = {"run": "r1", "sha256": "h", "status": bhs.STATUS_OK, "version": bhs.STYLE_BUILD_VERSION, "failure_reason": None}
+
+
+def build_quality(*a, **k):
+    """脚質の参照（2026-11-12〜）は、指定が無ければ作成成功を入れる（脚質以外の判定のテストのため）"""
+    k.setdefault("horse_style", HS_OK)
+    return _build_quality(*a, **k)
 
 
 class QualityTest(unittest.TestCase):
@@ -45,7 +54,7 @@ class QualityTest(unittest.TestCase):
         issues = race_quality_issues({"collector_version": "v"})
         self.assertEqual(issues, ["指数の読み方が未記録（2026-10-30 夜の修正前）",
                                   "候補の選び方が修正前（「*」付きを外す・同じ値は並び順。2026-11-02 より前）",
-                                  OLD_PREV, DATA_TOP_READER_OLD])
+                                  OLD_PREV, DATA_TOP_READER_OLD, HORSE_STYLE_OLD])
 
     def test_old_candidate_rule(self):
         """11/1 のように指数の読み方が記録されていても、候補の選び方が修正前なら使わない"""
@@ -137,3 +146,44 @@ class IndexErrorRecordTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class HorseStyleQualityTest(unittest.TestCase):
+    """脚質の参照の判定（docs/horse_style_design_202611.md 4.3）"""
+
+    def issues(self, **k):
+        q = _build_quality("v", SOURCES, "東京7R", prev=PREV_OK, table_check=TABLE_OK, data_top_reader=DTR,
+                           pages=PAGES_OK, **k)
+        return race_quality_issues({"collector_version": "v", "quality": q})
+
+    def test_ok(self):
+        self.assertEqual(self.issues(horse_style=HS_OK), [])
+
+    def test_old_method_when_key_missing(self):
+        self.assertEqual(self.issues(), [HORSE_STYLE_OLD])
+
+    def test_no_record(self):
+        self.assertEqual(self.issues(horse_style=None), ["脚質の記録が無い"])
+
+    def test_bad_shape(self):
+        self.assertEqual(self.issues(horse_style={**HS_OK, "sha256": None}), ["脚質の記録の形が違う"])
+        self.assertEqual(self.issues(horse_style="x"), ["脚質の記録の形が違う"])
+
+    def test_version_missing_or_unknown(self):
+        for v in (None, "知らない版"):
+            out = self.issues(horse_style={**HS_OK, "version": v})
+            self.assertEqual(len(out), 1)
+            self.assertTrue(out[0].startswith("脚質の作成コードの版が無い・知らない版"))
+
+    def test_failed_with_and_without_reason(self):
+        self.assertEqual(self.issues(horse_style={**HS_OK, "status": bhs.STATUS_FAILED, "failure_reason": "使えたレースが0件"}),
+                         ["脚質を作れない: 使えたレースが0件"])
+        self.assertEqual(self.issues(horse_style={**HS_OK, "status": bhs.STATUS_FAILED}),
+                         ["脚質を作れない: 理由の記録が無い"])
+
+    def test_unknown_status(self):
+        self.assertEqual(self.issues(horse_style={**HS_OK, "status": "途中"}), ["脚質の記録の状態が分からない: '途中'"])
+
+    def test_error_race_is_not_judged_twice(self):
+        rd = {"error": "x", "quality": _build_quality("v", SOURCES, "東京7R")}
+        self.assertFalse(any("脚質" in x for x in race_quality_issues(rd)))

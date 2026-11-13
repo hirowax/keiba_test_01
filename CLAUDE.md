@@ -107,7 +107,8 @@ netkeiba/
 │   ├── rerun_failed_pickup.py # エラーレースのみ再ピックアップ・pickup_scores.jsonにマージ
 │   ├── prev_inputs.py        # 前走データ（馬ページ）の読み取り・入力の記録 prev_inputs/・前走指数レース内1位の判定
 │   ├── scrape_prev_data.py   # 停止中（2026-11-05〜。実行すると理由を出して止まる）
-│   ├── scrape_results.py     # レース結果を包括的スクレイプ（当日夜〜翌日実行）
+│   ├── scrape_results.py     # レース結果を包括的スクレイプ（当日夜〜翌日実行）。2026-11-12〜 全レースを race_results_all.json に、JRA公式の一覧と照合
+│   ├── schedule_check.py     # その日の予定（開催場・レース）を確定できるかの判定（netkeiba の一覧と JRA 公式の結果の一覧。2026-11-12〜）
 │   ├── scrape_jra_payouts.py # JRA公式(jra.go.jp)から払戻を取得（Issue #1）
 │   ├── scrape_history.py     # 過去日付のレース結果を一括取得（pickup_scores.json不要）
 │   ├── rescrape_results_all.py # 全日付のrace_results.jsonを再スクレイプ（フィールド追加時等）
@@ -121,7 +122,7 @@ netkeiba/
 │   ├── paper_trade.py        # ペーパートレード台帳 generate/settle/report（Issue #3）
 │   ├── axis_record.py        # 買い目の軸の再検証の記録 record・欠けの検査 check・記録の復元 restore（2026-11-12〜）
 │   ├── rescore.py            # 停止中（2026-11-05〜。古い前走キャッシュを使うため。実行すると理由を出して止まる）
-│   ├── build_horse_style.py  # コーナー通過順から脚質推定・horse_style.json更新
+│   ├── build_horse_style.py  # 対象日ごとの脚質の全体を作り output/{date}/horse_style/ に記録・レースごとの結び付け（2026-11-12〜。horse_style.json は書き換えない）
 │   └── export_json.py        # CSV/Excel → JSON変換 + dates.json生成（GitHub Pages用）
 ├── 研究・検証
 │   ├── analyze_roi.py / analyze_hypotheses.py / compare_scores.py
@@ -149,7 +150,9 @@ netkeiba/
 │   │   ├── triple.json          # 3指数重複馬（GitHub Pages用JSON）
 │   │   ├── race_results.json    # 着順のある全馬の着順・人気・馬番・馬ID等（取消・除外・中止は載らない）
 │   │   ├── race_nonfinishers.json # 着順が数字でない馬（取消・除外・中止・失格。2026-11-02〜）
-│   │   ├── race_results_all.json  # 全レースの結果の取り直し（着順なしの馬を含む。rescrape_results_full.py）
+│   │   ├── race_results_all.json  # 全レースの結果（着順なしの馬を含む。過去分は rescrape_results_full.py、2026-11-12〜 は scrape_results.py。schedule_check を含む）
+│   │   ├── results_fetch_log.json # 結果の取得の記録（回ごと。取れなかったレース・前の値を残したレースと取得日時。2026-11-12〜）
+│   │   ├── horse_style/{実行ID}.json # その日の脚質の全体の記録（作成成功・作成失敗。その日の最初の作成成功で確定。2026-11-12〜）
 │   │   ├── race_conditions.json # 馬場・天気・距離・クラス等
 │   │   ├── payouts_jra.json     # JRA公式払戻
 │   │   ├── paper_bets.json      # ペーパートレード買い目・精算結果
@@ -157,7 +160,7 @@ netkeiba/
 │   │   └── invalidated.json     # 無効にしたレースと理由（ある日だけ）
 │   ├── horse_db.json         # 旧・馬別前走データ キャッシュ（2026-11-05 から採点に使わない）
 │   ├── horse_pedigree.json   # 馬別血統（父・母父）永続キャッシュ
-│   ├── horse_style.json      # 馬別脚質データ
+│   ├── horse_style.json      # 旧・馬別脚質データ（2026-06-14 に作ったもの。2026-11-12〜 採点に使わない。研究用のスクリプトが読む）
 │   ├── dates.json            # 利用可能な日付一覧
 │   └── threshold_config.json # 🔥閾値設定
 └── summary/YYYYMMDD.xlsx / .json # サマリー（レース別トップ5・重複馬）
@@ -200,6 +203,7 @@ git add output/20260404/ output/horse_pedigree.json && git commit -m "results: 2
 ```
 
 - コーナー通過順は当日夜には空のことがある（警告が出る）。後日 `scrape_results.py` で取り直す。
+- 2026-11-12〜（脚質の設計 `docs/horse_style_design_202611.md` 2章）: レース一覧から全レースを取り、`race_results_all.json` にレースごとに置き換えて保存する（取れなかったレース・形の異常のページは前の値を残す。`complete` は保存済みのレースの集合が一覧とそろっていること）。JRA 公式の結果の一覧と照合した結果は `schedule_check`。`race_results.json` などは今までどおり採点したレースだけ。取得の失敗・予定を確定できない日は出力の印 `RESULTS_FETCH_INCOMPLETE` で知らせる。書き換えたファイル（前の開催日の JRA 公式の一覧の取り直しを含む）は出力の `CHANGED_FILE:` の行で、cron はそれを add する。
 - 取得後、`python3 verify_results.py 20260404` で採点時の馬番・馬ID・馬名と結果を全頭照合する（cron では自動。不一致は LINE で通知。結果は `output/{date}/results_check.json`）。
 
 ### 4. ペーパートレードの精算（払戻取得後・cron 未組み込み）
@@ -243,7 +247,7 @@ report は `status: settled` のメニューだけを集計する。2026-10-30 �
 | 前走タイム指数70〜89 | +1 | 前走データの記録から取得 |
 | 前走指数レース内1位 | +2 | 出走全馬（取消・除外を除く）の前走指数と比較。比較に必要な値が分からない馬がいれば保留（加点しない。v5.1） |
 | 中4週以内（前走28日以内） | +2 | 前走の日付から計算 |
-| 逃げ馬（Sペース予測時のみ・2走以上実績） | +1 | horse_style.json のコーナー通過順履歴から推定。Sペース(スロー)のときのみ加点 |
+| 逃げ馬（Sペース予測時のみ・2走以上実績） | +1 | 対象日ごとの脚質の記録（`output/{date}/horse_style/`。2026-11-12〜。それまでは horse_style.json）のコーナー通過順履歴から推定。Sペース(スロー)のときのみ加点。脚質の記録の参照は quality の `horse_style`、レースの出走馬への結び付けはレースの `horse_style` |
 | 巻き返し馬 | 0（廃止） | 前走1〜3番人気かつ4着以下（N=83勝率2%回収10%→廃止） |
 | 前走好走 | +2 | 前走1〜6番人気かつ1〜3着 |
 | 同距離前走（±50m） | +1 | 前走の距離と当日距離を比較 |
@@ -369,7 +373,8 @@ Issue管理・スケジュール・担当割当は `docs/betting_workflow_issues
   - `30 19 * 7-8 *      ~/Desktop/netkeiba/run_results_cron.sh`（夏期7〜8月：19:30。夏の競走時間帯の拡大 7/25〜8/30 に合わせている。正は `crontab -l`。2026-11-12 に文書を合わせた）
   - `pickup_scores.json` がない場合でもレース一覧ページから race_id を取得する
   - 取得後に `verify_results.py` で全頭照合し、不一致があれば LINE で通知する（公開は続ける。2026-11-02〜）
-  - `output/{date}/` だけを commit する（`horse_pedigree.json` は含まれない）
+  - `output/{date}/` と、`scrape_results.py` が `CHANGED_FILE:` で出した書き換えたファイル（前の開催日の `race_results_all.json`・`results_fetch_log.json`、`output/jra_cname_cache.json`）を commit する（`horse_pedigree.json` は含まれない。2026-11-12〜）
+- **脚質の記録**: `run_pickup_all.py` の最初で、その日の脚質の記録を用意する（`build_horse_style.ensure_style`）。作成失敗でも採点は続け、その日の全レースが品質の問題になる。記録を用意できない（作成失敗の記録の保存にも失敗・記録の検査に通らない）ときは、出力の印 `HORSE_STYLE_RECORD_FAILED` を `run_cron.sh` が LINE で知らせる。`rerun_failed_pickup.py` は作らずに、その日の記録を使う（無ければ止まる）
 - **軸の再検証の記録の検査**: `run_cron.sh` の最初で毎日 `axis_record.py check` を動かし、記録の欠けと、水曜日の期限を過ぎた結果・払戻の欠けを LINE で知らせる（成績は出さない）。記録の失敗は `run.sh` の出力の印 `AXIS_RECORD_FAILED` で知らせる。記録と検査を始める日（`axis_record.AXIS_START_DATE`。2026-11-14〜）が未設定のあいだは検査しない。正式な評価の開始日は未定で、それより前の記録は試運転（計画 4.3）。設計は `docs/axis_record_design_202611.md`、計画は `docs/axis_recheck_plan_202611.md`
 - ログは `cron.log`。LINE通知（成功/失敗）は `.env` の LINE_TOKEN / LINE_USER_ID
 - **カレンダー**: `jra_calendar_YYYY.json`（JRA公式ICSから取得）。年末に翌年分を取得する

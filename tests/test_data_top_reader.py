@@ -611,11 +611,16 @@ class ScoreRaceFlowTest(unittest.TestCase):
                     "source": "取得", "horse_id": hid}
         src = {"index_reader_version": "r", "candidate_rule_version": "c",
                "races": {"福島4R": {"modes": {"average": "type=rank"}}}}
+        import build_horse_style as bhs
+        style_rec = {"status": bhs.STATUS_OK, "horses": {"0000000000": {"style": "逃げ", "n_races": 3, "avg_ratio": 0.1}}}
+        self.style_ref = {"run": "r1", "sha256": "h", "status": bhs.STATUS_OK, "version": bhs.STYLE_BUILD_VERSION,
+                          "failure_reason": None}
+        style = rpa.StyleContext(style_rec, self.style_ref)
         with mock.patch.object(rpa, "BASE_DIR", Path(t)), mock.patch.object(rpa, "fetch_entry", fake_fetch), \
                 mock.patch.object(rpa, "human_sleep"), mock.patch.object(rp.time, "sleep"), \
                 mock.patch.object(rp.random, "random", return_value=0.99):
             res, _, blocked = rpa.score_race(Page(), None, "20261107", "福島4R", rid, "福島", "4R",
-                                             [{"馬番": 2, "馬名": "x"}], src, {}, rec, {}, {})
+                                             [{"馬番": 2, "馬名": "x"}], src, {}, rec, style, {})
         rec.finish()
         lock.release()
         return res, race_quality_issues(res), out
@@ -636,6 +641,12 @@ class ScoreRaceFlowTest(unittest.TestCase):
             self.assertFalse(any(x.startswith("3項目") or "ページ" in x for x in issues))
             # 指数の表を渡していないので、その理由だけが出る
             self.assertTrue(issues and all(x.startswith("指数の表が出馬表とそろわない") for x in issues))
+            # 脚質: 出走馬（取消・除外を除く）が全員結び付き、参照が quality に入る（2026-11-12〜）
+            import build_horse_style as bhs
+            active = {n for n in res["horse_id_map"] if n not in (res["scratched_nums"] or {})}
+            self.assertEqual(set(res["horse_style"]["horses"]), active)
+            self.assertTrue(all(b["status"] == bhs.HS_NONE for b in res["horse_style"]["horses"].values()))
+            self.assertEqual(q["horse_style"], self.style_ref)
 
     def test_save_failure_makes_race_bad(self):
         import tempfile

@@ -24,7 +24,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from fixture_pages import read_fixture  # noqa: E402
 import new_candidates_variants as ncv  # noqa: E402
-import scraper  # noqa: E402
+import scraper
+import build_horse_style  # noqa: E402
 from data_quality import build_quality  # noqa: E402
 
 DATE = "20261107"
@@ -44,7 +45,9 @@ def good_quality(cands):
             "prev_status": {"candidates": {n: "取れた" for n in cands}, "others": {}, "top1": "判定"}}
     return build_quality("v", src, LABEL, prev=prev, table_check={"version": "t", "ok": True, "modes": {}, "problems": []},
                          data_top_reader="test",
-                         pages={"shutuba": {"path": "p", "sha256": "h"}, "data_top": {"path": "p", "sha256": "h"}})
+                         pages={"shutuba": {"path": "p", "sha256": "h"}, "data_top": {"path": "p", "sha256": "h"}},
+                         horse_style={"run": "r1", "sha256": "h", "status": "作成成功",
+                                      "version": build_horse_style.STYLE_BUILD_VERSION, "failure_reason": None})
 
 
 class Base(unittest.TestCase):

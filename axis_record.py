@@ -319,6 +319,7 @@ def code_versions() -> dict:
         import prev_inputs
         import scraper
         import index_table_check
+        import build_horse_style
     except Exception as e:  # noqa: BLE001
         raise RecordFailure(f"版を読むためのモジュールを取り込めない: {e}")
     return {
@@ -330,6 +331,7 @@ def code_versions() -> dict:
         "INDEX_READER_VERSION": scraper.INDEX_READER_VERSION,
         "CANDIDATE_RULE_VERSION": scraper.CANDIDATE_RULE_VERSION,
         "INDEX_TABLE_CHECK_VERSION": index_table_check.INDEX_TABLE_CHECK_VERSION,
+        "STYLE_BUILD_VERSION": build_horse_style.STYLE_BUILD_VERSION,
     }
 
 
@@ -360,6 +362,8 @@ def rules_identity() -> dict:
         "n_min": N_MIN,
         "axis_record_sha256": sha256_file(Path(__file__).resolve()),
         "data_quality_sha256": sha256_file(BASE_DIR / "data_quality.py"),
+        # 品質の判定が使う脚質の版の一覧と、脚質の記録の検査（2026-11-12〜）
+        "build_horse_style_sha256": sha256_file(BASE_DIR / "build_horse_style.py"),
     }
 
 
@@ -401,6 +405,60 @@ def load_prev_entry(date_dir: Path, date: str, label: str, rdata: dict, cache: d
     return entry
 
 
+def load_style_entry(date_dir: Path, date: str, label: str, rdata: dict, cache: dict):
+    """そのレースの採点に使った脚質の記録（output/{date}/horse_style/{実行ID}.json）を確かめる（2026-11-12〜。
+    docs/horse_style_design_202611.md 4.4）。戻り値は同じ入力かどうかの判定に入れる部分。
+    - quality に horse_style のキーが無い（この変更より前の採点）: None（品質の判定が「旧方式」として問題にする）
+    - 参照が None（記録を用意できなかった）・記録が無い・読めない・検査に通らない・SHA-256 や状態・版・失敗の理由が
+      参照と違う: RecordError（記録できない）
+    - 作成成功: 結び付け（rdata["horse_style"]["horses"]）の出走馬の集合・馬番と馬IDの対応・値が、記録から作り直したものと
+      同じでなければ RecordError。作成失敗: 失敗の記録がそろっていれば通す（品質の判定で問題になり、軸なしとして記録される）"""
+    from build_horse_style import STATUS_FAILED, StyleRecordError, bind_race, check_record
+    q = rdata.get("quality") or {}
+    if "horse_style" not in q:
+        return None
+    ref = q["horse_style"]
+    if ref is None:
+        raise RecordError("脚質の記録を指していない（採点のときに記録を用意できなかった）")
+    run = (ref or {}).get("run") if isinstance(ref, dict) else None
+    if not re.fullmatch(r"[0-9A-Za-z_]+", str(run or "")):
+        raise RecordError(f"脚質の記録の実行IDの形が違う: {run!r}")
+    if run not in cache:
+        path = date_dir / "horse_style" / f"{run}.json"
+        if not path.exists():
+            raise RecordError(f"脚質の記録が無い: horse_style/{run}.json")
+        try:
+            rec = check_record(path, date)
+        except StyleRecordError as e:
+            raise RecordError(f"脚質の記録が検査に通らない: {e}")
+        cache[run] = (rec, sha256_file(path))
+    rec, sha = cache[run]
+    if sha != ref.get("sha256"):
+        raise RecordError(f"脚質の記録の SHA-256 が参照と違う: horse_style/{run}.json")
+    if rec["status"] != ref.get("status") or rec["style_build_version"] != ref.get("version"):
+        raise RecordError(f"脚質の記録の状態・版が参照と違う: {rec['status']}/{ref.get('status')}")
+    if rec["status"] == STATUS_FAILED:
+        if rec["failure"]["reason"] != ref.get("failure_reason"):
+            raise RecordError("脚質の作成失敗の理由が参照と違う")
+        return {"run": run, "sha256": sha, "status": rec["status"], "failure_reason": rec["failure"]["reason"]}
+    bound_rec = rdata.get("horse_style") or {}
+    bound = bound_rec.get("horses")
+    if bound_rec.get("run") != run or bound_rec.get("sha256") != sha or not isinstance(bound, dict):
+        raise RecordError("採点の結果の脚質の結び付けが、参照している記録と合わない・無い")
+    ids = rdata.get("horse_id_map") or {}
+    scratched = rdata.get("scratched_nums") or {}
+    active = {str(n): h for n, h in ids.items() if n not in scratched}
+    if set(bound) != set(active):
+        raise RecordError(f"脚質の結び付けの出走馬が違う（足りない {sorted(set(active) - set(bound))}・"
+                          f"余分 {sorted(set(bound) - set(active))}）")
+    wrong_id = sorted(n for n in active if (bound[n] or {}).get("horse_id") != active[n])
+    if wrong_id:
+        raise RecordError(f"脚質の結び付けの馬番と馬IDの対応が違う（馬番 {wrong_id}）")
+    if bound != bind_race(rec, active):
+        raise RecordError("脚質の結び付けの値が、記録から作り直したものと違う")
+    return {"run": run, "sha256": sha, "status": rec["status"], "horses": bound}
+
+
 def compute_day(date: str, output_dir: Path = OUTPUT_DIR) -> dict:
     """ファイルを読んで1日分を計算する。戻り値の races は記録（採点エラーのレースは全候補「軸なし（採点エラー）」）、
     cannot_record は記録できないレース（理由と入力のハッシュ）"""
@@ -427,18 +485,22 @@ def compute_day(date: str, output_dir: Path = OUTPUT_DIR) -> dict:
     common = {**rules, "pickup_top": {k: v for k, v in pickup.items() if k != "races"}}
     prev_runs = sorted({(r.get("quality") or {}).get("prev_inputs_run")
                         for r in races.values() if isinstance(r, dict)} - {None})
+    style_runs = sorted({((r.get("quality") or {}).get("horse_style") or {}).get("run")
+                         for r in races.values() if isinstance(r, dict)} - {None})
     result["files"] = {
         "pickup_scores.json": sha256_file(pickup_path),
         CSV_NAME: schedule["csv_sha256"],
         "invalidated.json": sha256_file(date_dir / "invalidated.json"),
         "prev_inputs": {run: sha256_file(date_dir / "prev_inputs" / f"{run}.json") for run in prev_runs},
+        "horse_style": {run: sha256_file(date_dir / "horse_style" / f"{run}.json")
+                        for run in style_runs if re.fullmatch(r"[0-9A-Za-z_]+", str(run))},
         "data_quality.py": rules["data_quality_sha256"],
         "axis_record.py": rules["axis_record_sha256"],
     }
-    prev_cache = {}
+    prev_cache, style_cache = {}, {}
     for label in schedule["races"]:
         rdata = races.get(label)
-        prev_part = None
+        prev_part = style_part = None
         try:
             if rdata is None:
                 raise RecordError("採点結果にこのレースが無い")
@@ -451,8 +513,16 @@ def compute_day(date: str, output_dir: Path = OUTPUT_DIR) -> dict:
             key = race_key(common, rdata, rows_by[label], invalid.get(label), prev_part)
             result["cannot_record"][label] = {"reason": str(e), "input_key": key}
             continue
-        # 同じ入力かどうかには、そのレースで使った前走データの記録も入れる
-        key = race_key(common, rdata, rows_by[label], invalid.get(label), prev_part)
+        try:
+            if "error" not in rdata:
+                style_part = load_style_entry(date_dir, date, label, rdata, style_cache)
+        except RecordError as e:
+            style_part = {"読めない": str(e)}
+            key = race_key(common, rdata, rows_by[label], invalid.get(label), prev_part, style_part)
+            result["cannot_record"][label] = {"reason": str(e), "input_key": key}
+            continue
+        # 同じ入力かどうかには、そのレースで使った前走データの記録と脚質の記録も入れる
+        key = race_key(common, rdata, rows_by[label], invalid.get(label), prev_part, style_part)
         try:
             if "error" in rdata:
                 # 採点エラー: 記録の時点の入力で、全候補を「軸なし（採点エラー）」として明示的に記録する（計画 4.2 追記）
@@ -467,9 +537,12 @@ def compute_day(date: str, output_dir: Path = OUTPUT_DIR) -> dict:
     return result
 
 
-def race_key(common, rdata, csv_rows, invalid_reason, prev_part) -> str:
-    return sha256_bytes(canonical({**common, "race": rdata, "csv_rows": csv_rows,
-                                   "invalid_reason": invalid_reason, "prev_inputs_race": prev_part}))
+def race_key(common, rdata, csv_rows, invalid_reason, prev_part, style_part=None) -> str:
+    body = {**common, "race": rdata, "csv_rows": csv_rows,
+            "invalid_reason": invalid_reason, "prev_inputs_race": prev_part}
+    if style_part is not None:   # 脚質の記録が無い採点（2026-11-12 より前）は、今までと同じ形のまま
+        body["horse_style_race"] = style_part
+    return sha256_bytes(canonical(body))
 
 
 def run_meta() -> dict:
