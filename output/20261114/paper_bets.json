@@ -1,0 +1,25 @@
+{
+ "date": "20261114",
+ "generated_at": "2026-11-13T19:29:27+09:00",
+ "settled": false,
+ "races": {},
+ "skipped_races": {
+  "京都11R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "京都12R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "京都1R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "京都2R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "京都3R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "京都7R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "京都8R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "京都9R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "東京11R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "東京1R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "東京2R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "東京4R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "東京7R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "東京9R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "福島10R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "福島12R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い",
+  "福島4R": "scoring_version: 点数の版 v5.2 には買い目の基準が無い"
+ }
+}
