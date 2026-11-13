@@ -11,6 +11,11 @@
 - 照合できない: 馬番の対応表が無いレース（修正前・無効レース等）。数を出す
 - 無効レース（invalidated.json）は照合しない
 
+2026-11-13〜: その日の全レースの指数の表も、全レースの結果（race_results_all.json）と照合する
+（index_table_check.check_day_against_results。採点しなかったレースの表の欠けも見つける。後から見つけるための検査）。
+結果は results_check.json の index_tables。問題は不一致と同じく終了コード1。新馬戦の表なしは正常、ほかの表なしは
+「区別できない」として件数と一覧を出す（問題には数えない）。
+
 結果は output/{date}/results_check.json に保存。不一致が1件でもあれば終了コード1（cron が LINE で知らせる）。
 
 使い方: python3 verify_results.py 20261101
@@ -48,6 +53,12 @@ def check_day(date: str, output_dir: Path = OUTPUT_DIR) -> dict:
         out["save_incomplete"] = issue
         out["mismatch"].append(f"その日の結果を照合しない: {issue}")
         return out
+    from index_table_check import check_day_against_results
+    try:
+        out["index_tables"] = check_day_against_results(date, output_dir)
+    except Exception as e:  # noqa: BLE001  検査そのものの失敗も問題として知らせる
+        out["index_tables"] = {"races": 0, "tables": 0, "problems": [f"照合に失敗: {type(e).__name__}: {e}"],
+                               "no_table_new_horse": [], "no_table_unknown": [], "not_checked": {}}
     for label, r in sorted(pickup.get("races", {}).items()):
         if label in invalid:
             out["not_checked"][label] = "無効レース"
@@ -90,7 +101,7 @@ def check_day(date: str, output_dir: Path = OUTPUT_DIR) -> dict:
 
 def main():
     date = sys.argv[1]
-    out = check_day(date)
+    out = check_day(date, OUTPUT_DIR)
     with open(OUTPUT_DIR / date / "results_check.json", "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
     summary = (f"{date} 全頭照合: {out['races']}レース {out['horses']}頭中 {out['match']}頭一致・"
@@ -100,7 +111,16 @@ def main():
         print("  不一致: " + m)
     for label, why in out["not_checked"].items():
         print(f"  照合できない: {label}（{why}）")
-    sys.exit(1 if out["mismatch"] else 0)
+    it = out.get("index_tables") or {}
+    if it:
+        print(f"{date} 指数の表と結果の照合（全レース）: {it['races']}レース・{it['tables']}表・問題{len(it['problems'])}件・"
+              f"新馬戦の表なし{len(it['no_table_new_horse'])}・区別できない表なし{len(it['no_table_unknown'])}"
+              + (f"・照合しない {it['not_checked']}" if it["not_checked"] else ""))
+        for m in it["problems"]:
+            print("  指数の表の問題: " + m)
+        for m in it["no_table_unknown"]:
+            print("  表なし（正常か取得失敗か区別できない）: " + m)
+    sys.exit(1 if out["mismatch"] or it.get("problems") else 0)
 
 
 if __name__ == "__main__":

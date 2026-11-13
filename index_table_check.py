@@ -19,6 +19,8 @@ CLAUDE.md の「頭数はページの N頭と一致すること」を、指数�
 🔥・最注目馬から外す。
 
 限界: 照合は採点するレース（3指数の候補がいるレース）だけ。表の欠けのせいで候補が出なかったレースは見つけられない。
+→ 2026-11-13〜: 結果を取った後に、その日の全レースの表を結果と照合する（下の check_day_against_results。verify_results.py が呼ぶ）。
+  後から見つけるための検査で、当日の公開は防がない。
 サマリー（各指数のトップ5・単指数1位）は照合していない。
 """
 import re
@@ -103,3 +105,79 @@ def check_index_tables(dfs, shutuba_data: dict) -> dict:
 
 def _num_key(n):
     return int(n) if str(n).isdigit() else 999
+
+
+# ── 結果を取った後の、その日の全レースの照合（2026-11-13〜。docs/incident_umaban_20261030.md タスク3の残り）──
+# 本番の照合（check_index_tables）は採点するレース（候補がいるレース）だけなので、表の欠けで候補が出なかったレースを
+# 見つけられない。結果を全レース分取るようになった（scrape_results.py。2026-11-12〜）ので、結果の後に全レースの表を
+# 結果と照合する。後から見つけるための検査で、当日の公開を防ぐ検査ではない。
+# 照合の規則は check_index_tables と同じ（相手を出馬表から結果に替えるだけ）:
+#   結果の馬（着順のある馬と、着順が数字でない馬）から 馬番→馬ID・馬名、取消・除外の馬を作る。
+# 表が無い指数の分け方（取得の時点で表なしの理由を記録していないので、記録から確実に言えることだけで分ける）:
+#   - 新馬戦（結果のクラス名に「新馬」）で、取得の記録（index_sources.json）が「なし」 → 正常な表なし
+#   - 取得の記録が「取得異常」・記録にレースが無い・表があるのに記録が「なし」（食い違い） → 問題
+#   - それ以外の「なし」（障害戦・初めてのコースなど） → 正常か取得失敗かを区別できない（件数と一覧を出す。問題には数えない）
+ALL_RACES_CHECK_VERSION = "結果の後に全レースの指数の表を結果と照合_新馬戦の表なしは正常_ほかの表なしは区別できない_20261113"
+NEW_HORSE_CLASS_TEXT = "新馬"
+NOT_STARTED = ("取消", "除外")
+
+
+def result_as_shutuba(race: dict) -> dict:
+    """race_results_all.json の1レースを、check_index_tables が受け取る出馬表の形にする"""
+    horses = list(race.get("horses") or []) + list(race.get("others") or [])
+    return {"horse_id_map": {str(h["num"]): h.get("horse_id") for h in horses},
+            "horse_name_full": {str(h["num"]): h.get("name") for h in horses},
+            "scratched_nums": {str(h["num"]): h.get("status") for h in (race.get("others") or [])
+                               if h.get("status") in NOT_STARTED}}
+
+
+def check_day_against_results(date: str, output_dir: Path) -> dict:
+    """その日の全レースの指数の表を結果と照合する。ファイルは読むだけ。
+    戻り値: {"version", "races", "tables", "problems": [文字], "no_table_new_horse": [...], "no_table_unknown": [...],
+            "not_checked": {レース: 理由}}"""
+    import json
+    import scraper
+    out = {"version": ALL_RACES_CHECK_VERSION, "races": 0, "tables": 0, "problems": [],
+           "no_table_new_horse": [], "no_table_unknown": [], "not_checked": {}}
+    d = output_dir / date
+    allp, srcp, xlsx = d / "race_results_all.json", d / "index_sources.json", output_dir / f"{date}.xlsx"
+    for p, why in ((allp, "全レースの結果（race_results_all.json）が無い"), (srcp, "指数の取得の記録（index_sources.json）が無い"),
+                   (xlsx, f"指数の表のファイル（{xlsx.name}）が無い")):
+        if not p.exists():
+            out["not_checked"]["（その日）"] = why
+            return out
+    results = json.loads(allp.read_text(encoding="utf-8")).get("races") or {}
+    sources = json.loads(srcp.read_text(encoding="utf-8")).get("races") or {}
+    tables = load_index_tables(xlsx)
+    for label in sorted(set(tables) - set(sources)):
+        out["problems"].append(f"{label}: 指数の表があるのに、取得の記録にレースが無い")
+    for label in sorted(set(sources) | set(results)):
+        race = results.get(label)
+        src = sources.get(label)
+        if race is None:
+            out["not_checked"][label] = "結果にレースが無い"
+            continue
+        if src is None:
+            out["problems"].append(f"{label}: 結果にあるレースが、指数の取得の記録に無い")
+            continue
+        new_horse = NEW_HORSE_CLASS_TEXT in str((race.get("condition") or {}).get("class_name") or "")
+        dfs = tables.get(label) or {}
+        res = check_index_tables(dfs, result_as_shutuba(race))
+        out["races"] += 1
+        for mode_key, mode in scraper.MODES.items():
+            recorded = (src.get("modes") or {}).get(mode)
+            if mode_key in dfs:
+                out["tables"] += 1
+                if recorded in (None, "なし", "取得異常"):
+                    out["problems"].append(f"{label} {mode}: 表があるのに取得の記録が「{recorded}」（食い違い）")
+                rec = res["modes"][mode_key]
+                bad = {k: rec[k] for k in ("errors", "missing", "extra", "name_mismatch") if rec[k]}
+                if bad:
+                    out["problems"].append(f"{label} {mode}: 結果とそろわない {bad}")
+            elif recorded == "なし" and new_horse:
+                out["no_table_new_horse"].append(f"{label} {mode}")
+            elif recorded == "なし":
+                out["no_table_unknown"].append(f"{label} {mode}（{(race.get('condition') or {}).get('class_name') or 'クラス名なし'}）")
+            else:
+                out["problems"].append(f"{label} {mode}: 表が無く、取得の記録が「{recorded}」")
+    return out

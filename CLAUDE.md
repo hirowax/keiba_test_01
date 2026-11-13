@@ -207,7 +207,7 @@ git add output/20260404/ output/horse_pedigree.json && git commit -m "results: 2
 - コーナー通過順は当日夜には空のことがある（警告が出る）。後日 `scrape_results.py` で取り直す。
 - 2026-11-12〜（脚質の設計 `docs/horse_style_design_202611.md` 2章）: レース一覧から全レースを取り、`race_results_all.json` にレースごとに置き換えて保存する（取れなかったレース・形の異常のページは前の値を残す。`complete` は保存済みのレースの集合が一覧とそろっていること）。JRA 公式の結果の一覧と照合した結果は `schedule_check`。`race_results.json` などは今までどおり採点したレースだけ。取得の失敗・予定を確定できない日は出力の印 `RESULTS_FETCH_INCOMPLETE` で知らせる。書き換えたファイル（前の開催日の JRA 公式の一覧の取り直しを含む）は出力の `CHANGED_FILE:` の行で、cron はそれを add する。
 - 2026-11-13〜: 保存の途中で書けなかった日は `output/{date}/results_save_incomplete.json`（保存が不完全の印）が残る。印がある日は、照合（`verify_results.py`。不一致として知らせる）・軸の記録の検査・精算・🔥閾値の計算・払戻の取得（`scrape_jra_payouts.py`。`ensure_results_saved()` で止まる。1日・`--all`・`--races-file`、`--verify` で払戻がまだ無い日）がその日の結果を使わない（判定は `data_quality.results_save_issue()`）。直し方は `python3 scrape_results.py --rebuild-scored 20260404`（保存済みの `race_results_all.json` から採点したレースの3ファイルを作り直し、読み直して一致を確かめてから印を消す。取得しない。作り直せないレースが残れば印は残る）の後に `output/{date}/` を commit。cron の完了通知は、不完全の印があれば「保存できた分を公開・要対応」になる（push の成否とは別）。
-- 取得後、`python3 verify_results.py 20260404` で採点時の馬番・馬ID・馬名と結果を全頭照合する（cron では自動。不一致は LINE で通知。結果は `output/{date}/results_check.json`）。
+- 取得後、`python3 verify_results.py 20260404` で採点時の馬番・馬ID・馬名と結果を全頭照合する。2026-11-13〜 その日の全レースの指数の表も、全レースの結果と照合する（`index_table_check.check_day_against_results`。採点しなかったレースの表の欠けも見つける。新馬戦の表なしは正常、ほかの表なしは「区別できない」として件数を出す）（cron では自動。不一致は LINE で通知。結果は `output/{date}/results_check.json`）。
 
 ### 4. ペーパートレードの精算（払戻取得後・cron 未組み込み）
 
