@@ -76,6 +76,24 @@ class ParseTest(unittest.TestCase):
         r = SR.parse_result_html(html, "福島11R")
         self.assertTrue(any("td.PassageRate" in p for p in r["problems"]))
 
+    def test_duplicated_passage_cell_is_a_problem(self):
+        """通過順のセルが2つある行は、最初の1つを読まずに形の異常にする（2026-11-13 外部レビュー 2回目の指摘2）"""
+        import copy
+
+        def dup_passage(tr):
+            cell = tr.select_one("td.PassageRate")
+            cell.insert_after(copy.copy(cell))
+        r = self._break_row(dup_passage)
+        self.assertTrue(any("通過順（td.PassageRate）が 2 個" in p for p in r["problems"]), r["problems"])
+
+        from bs4 import BeautifulSoup   # 中止の馬の行（着順が数字でない行）でも同じ
+        soup = BeautifulSoup(read_fixture(CHUSHI), "html.parser")
+        tr = [t for t in soup.find("table", id="All_Result_Table").find_all("tr", class_="HorseList")
+              if "中止" in t.select_one("td.Result_Num").get_text()][0]
+        dup_passage(tr)
+        self.assertTrue(any("通過順（td.PassageRate）が 2 個" in p
+                            for p in SR.parse_result_html(str(soup), "京都3R")["problems"]))
+
     def test_no_table_is_a_problem(self):
         r = SR.parse_result_html("<html><body>メンテナンス中</body></html>", "東京6R")
         self.assertIn("成績の表が無い", r["problems"])
@@ -183,6 +201,58 @@ class FetchRacesTest(unittest.TestCase):
         (out / SR.RESULTS_ALL_NAME).write_text(json.dumps({"races": {"福島1R": {"fetched_at": "前", "horses": [1] * 16}}}))
         data = SR.save_results("d", out, ids, fetched, att, None, {}, {"srl": {}, "sde": {}}, None)
         self.assertEqual(data["races"]["福島1R"]["fetched_at"], "前")
+
+    def test_unexpected_exception_keeps_fetched_races_for_caller(self):
+        """1レース取った後の待機で予期しない例外が出ても、呼び出し元の辞書に取れた分が残り、保存される
+        （2026-11-13 外部レビュー 2回目の指摘1。それまでは戻り値の代入が終わらず、0件になっていた）"""
+        page = FakePage({rid: self.good for rid in self.ids.values()})
+        att = self.attempt()
+        fetched = {}
+        with mock.patch.object(SR, "human_sleep", side_effect=RuntimeError("待機の例外")):
+            with self.assertRaises(RuntimeError):
+                SR.fetch_races(page, self.ids, att, fetched)
+        self.assertEqual(sorted(fetched), ["福島1R"])
+        self.assertEqual(att["fetched"], ["福島1R"])
+        out = self.tmp / "20261108"
+        out.mkdir()
+        data = SR.save_results("20261108", out, self.ids, fetched, att, None, {}, {"srl": {}, "sde": {}}, None)
+        self.assertEqual(list(data["races"]), ["福島1R"])
+
+    def test_main_saves_races_fetched_before_unexpected_exception(self):
+        """main の流れ全体: 1レース取った後に予期しない例外 → 取れた1レースが race_results_all.json に入り、止めた理由が残る"""
+        out_root = self.tmp / "output"
+        page = FakePage({rid: self.good for rid in self.ids.values()})
+
+        class PW:
+            def __enter__(s):
+                br = mock.MagicMock()
+                br.new_context.return_value.new_page.return_value = page
+                pw = mock.MagicMock()
+                pw.chromium.launch.return_value = br
+                return pw
+
+            def __exit__(s, *a):
+                return False
+        races = [{"label": l, "race_id": r} for l, r in self.ids.items()]
+        import scrape_jra_payouts as J
+        with mock.patch.object(SR, "sync_playwright", PW), mock.patch.object(SR, "load_cookies", return_value=True), \
+                mock.patch.object(SR, "get_race_ids", return_value=races), \
+                mock.patch.object(SR, "human_sleep", side_effect=[None, RuntimeError("待機の例外")]), \
+                mock.patch.object(SR, "OUTPUT_DIR", out_root), mock.patch.object(SR, "PEDIGREE_FILE", self.tmp / "ped.json"), \
+                mock.patch.object(SR, "BASE_DIR", self.tmp), mock.patch.object(SR, "refresh_jra_lists"), \
+                mock.patch.object(SR, "retry_unconfirmed_schedules", return_value=[]), \
+                mock.patch.object(J, "load_cache", return_value={"srl": {}, "sde": {}}), \
+                mock.patch.object(J, "CACHE_PATH", self.tmp / "cache.json"), \
+                mock.patch.object(SR, "load_env"), mock.patch.object(SR.sys, "argv", ["x", "20261108"]):
+            try:
+                SR.main()
+            except SystemExit:
+                pass
+        data = json.loads((out_root / "20261108" / SR.RESULTS_ALL_NAME).read_text())
+        self.assertEqual(list(data["races"]), ["福島1R"])
+        log = json.loads((out_root / "20261108" / SR.FETCH_LOG_NAME).read_text())["attempts"][-1]
+        self.assertIn("予期しない例外", log["stopped"])
+        self.assertEqual(log["failed"]["福島2R"], "止めたので取っていない")
 
     def test_consecutive_failures_stop(self):
         page = FakePage({rid: TimeoutError("x") for rid in self.ids.values()})
