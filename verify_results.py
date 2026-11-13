@@ -11,6 +11,12 @@
 - 照合できない: 馬番の対応表が無いレース（修正前・無効レース等）。数を出す
 - 無効レース（invalidated.json）は照合しない
 
+2026-11-13〜: その日の全レースの指数の表も、全レースの結果（race_results_all.json）と照合する
+（index_table_check.check_day_against_results。採点しなかったレースの表の欠けも見つける。後から見つけるための検査）。
+結果は results_check.json の index_tables。問題と検査不能（必要なファイル・予定の照合の記録・予定のレースの結果が無い）は、
+不一致と同じく終了コード1。表なしは取得の状態を確かめられないので、正常には数えず「未確認」として件数と一覧を出す
+（新馬戦のため表なしが想定されるもの／それ以外。個別には知らせないが、要約に件数を出す）。
+
 結果は output/{date}/results_check.json に保存。不一致が1件でもあれば終了コード1（cron が LINE で知らせる）。
 
 使い方: python3 verify_results.py 20261101
@@ -48,6 +54,12 @@ def check_day(date: str, output_dir: Path = OUTPUT_DIR) -> dict:
         out["save_incomplete"] = issue
         out["mismatch"].append(f"その日の結果を照合しない: {issue}")
         return out
+    from index_table_check import check_day_against_results
+    try:
+        out["index_tables"] = check_day_against_results(date, output_dir)
+    except Exception as e:  # noqa: BLE001  検査そのものの失敗も問題として知らせる
+        out["index_tables"] = {"races": 0, "tables": 0, "problems": [], "uncheckable": [f"照合に失敗: {type(e).__name__}: {e}"],
+                               "no_table_new_horse_unconfirmed": [], "no_table_unconfirmed": []}
     for label, r in sorted(pickup.get("races", {}).items()):
         if label in invalid:
             out["not_checked"][label] = "無効レース"
@@ -90,7 +102,7 @@ def check_day(date: str, output_dir: Path = OUTPUT_DIR) -> dict:
 
 def main():
     date = sys.argv[1]
-    out = check_day(date)
+    out = check_day(date, OUTPUT_DIR)
     with open(OUTPUT_DIR / date / "results_check.json", "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
     summary = (f"{date} 全頭照合: {out['races']}レース {out['horses']}頭中 {out['match']}頭一致・"
@@ -100,7 +112,24 @@ def main():
         print("  不一致: " + m)
     for label, why in out["not_checked"].items():
         print(f"  照合できない: {label}（{why}）")
-    sys.exit(1 if out["mismatch"] else 0)
+    it = out.get("index_tables") or {}
+    if it:
+        print(f"{date} 指数の表と結果の照合（全レース）: {it['races']}レース・{it['tables']}表を照合・問題{len(it['problems'])}件・"
+              f"検査不能{len(it['uncheckable'])}件・表なし（取得の状態は未確認）{len(it['no_table_new_horse_unconfirmed']) + len(it['no_table_unconfirmed'])}件"
+              f"（新馬戦のため想定されるもの{len(it['no_table_new_horse_unconfirmed'])}・それ以外{len(it['no_table_unconfirmed'])}）")
+        # cron が LINE の通知に付ける要約の行（run_results_cron.sh）
+        print(f"INDEX_TABLES_SUMMARY: 指数の表 {it['tables']}表を照合・問題{len(it['problems'])}・検査不能{len(it['uncheckable'])}・"
+              f"表なし未確認{len(it['no_table_new_horse_unconfirmed']) + len(it['no_table_unconfirmed'])}"
+              f"（新馬戦{len(it['no_table_new_horse_unconfirmed'])}・ほか{len(it['no_table_unconfirmed'])}）")
+        for m in it["problems"]:
+            print("  指数の表の問題: " + m)
+        for m in it["uncheckable"]:
+            print("  指数の表の検査不能: " + m)
+        for m in it["no_table_new_horse_unconfirmed"]:
+            print("  表なし（新馬戦のため想定されるが、取得の状態は未確認）: " + m)
+        for m in it["no_table_unconfirmed"]:
+            print("  表なし（正常か取得失敗か未確認）: " + m)
+    sys.exit(1 if out["mismatch"] or it.get("problems") or it.get("uncheckable") else 0)
 
 
 if __name__ == "__main__":
