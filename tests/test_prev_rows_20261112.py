@@ -29,7 +29,8 @@ def page(rows=None, hid=HID, name=NAME, canonical=None, h2=None, no_results=None
     if rows is None:
         body = "".join('<div class="contents"> 競走データがありません </div>' for _ in range(1 if no_results is None else no_results))
     else:
-        head = "<tr>" + "".join(f"<th>{c}</th>" for c in COLS) + "</tr>"
+        head = "<tr>" + "".join(f'<th class="{pi.IDX_CELL_CLASS}">{c}</th>' if c == "ﾀｲﾑ指数" else f"<th>{c}</th>"
+                                for c in COLS) + "</tr>"
         trs = "".join(
             f"<tr><td>{d}</td><td>5東京2</td><td><a href=\"https://db.netkeiba.com/race/{rid}/\">テスト</a></td>"
             f"<td>{pop}</td><td>{rank}</td><td>{dist}</td><td class=\"{pi.IDX_CELL_CLASS} bml\">\n {idx} \n</td></tr>"
