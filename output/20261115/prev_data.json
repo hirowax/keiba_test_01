@@ -1,0 +1,1793 @@
+{
+  "2022102394": {
+    "prev_date": "2026/08/09",
+    "prev_pop": "7",
+    "prev_rank": "6",
+    "prev_idx": "76",
+    "prev_dist": "ダ1700",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021107278": {
+    "prev_date": "2026/10/20",
+    "prev_pop": "3",
+    "prev_rank": "7",
+    "prev_idx": "84",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2016100126": {
+    "prev_date": "2026/11/01",
+    "prev_pop": "9",
+    "prev_rank": "5",
+    "prev_idx": "92",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022103186": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "8",
+    "prev_rank": "6",
+    "prev_idx": "73",
+    "prev_dist": "ダ1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021105637": {
+    "prev_date": "2026/09/27",
+    "prev_pop": "8",
+    "prev_rank": "12",
+    "prev_idx": "73",
+    "prev_dist": "ダ2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023103532": {
+    "prev_date": "2026/09/26",
+    "prev_pop": "5",
+    "prev_rank": "9",
+    "prev_idx": "83",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023103176": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "5",
+    "prev_rank": "2",
+    "prev_idx": "104",
+    "prev_dist": "ダ1900",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022105075": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "2",
+    "prev_rank": "1",
+    "prev_idx": "104",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021104295": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "7",
+    "prev_rank": "6",
+    "prev_idx": "93",
+    "prev_dist": "ダ1900",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021105384": {
+    "prev_date": "2026/09/21",
+    "prev_pop": "14",
+    "prev_rank": "3",
+    "prev_idx": "104",
+    "prev_dist": "芝2200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022105485": {
+    "prev_date": "2026/09/06",
+    "prev_pop": "4",
+    "prev_rank": "14",
+    "prev_idx": "63",
+    "prev_dist": "芝2600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022105580": {
+    "prev_date": "2026/02/22",
+    "prev_pop": "9",
+    "prev_rank": "9",
+    "prev_idx": "89",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022102500": {
+    "prev_date": "2026/10/11",
+    "prev_pop": "5",
+    "prev_rank": "8",
+    "prev_idx": "98",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2019104732": {
+    "prev_date": "2026/10/04",
+    "prev_pop": "9",
+    "prev_rank": "3",
+    "prev_idx": "104",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022100381": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "3",
+    "prev_rank": "1",
+    "prev_idx": "86",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022102303": {
+    "prev_date": "2026/06/13",
+    "prev_pop": "3",
+    "prev_rank": "1",
+    "prev_idx": "100",
+    "prev_dist": "芝2200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2020100976": {
+    "prev_date": "2026/10/11",
+    "prev_pop": "13",
+    "prev_rank": "14",
+    "prev_idx": "95",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022105399": {
+    "prev_date": "2026/09/12",
+    "prev_pop": "6",
+    "prev_rank": "9",
+    "prev_idx": "78",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022102744": {
+    "prev_date": "2026/10/11",
+    "prev_pop": "11",
+    "prev_rank": "9",
+    "prev_idx": "97",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022110054": {
+    "prev_date": "2026/09/12",
+    "prev_pop": "1",
+    "prev_rank": "7",
+    "prev_idx": "81",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022106760": {
+    "prev_date": "2026/10/18",
+    "prev_pop": "11",
+    "prev_rank": "8",
+    "prev_idx": "84",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021103665": {
+    "prev_date": "2026/10/11",
+    "prev_pop": "12",
+    "prev_rank": "12",
+    "prev_idx": "96",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021105609": {
+    "prev_date": "2026/09/21",
+    "prev_pop": "5",
+    "prev_rank": "5",
+    "prev_idx": "101",
+    "prev_dist": "芝2200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2020103928": {
+    "prev_date": "2026/10/04",
+    "prev_pop": "11",
+    "prev_rank": "10",
+    "prev_idx": "100",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2020103354": {
+    "prev_date": "2026/08/01",
+    "prev_pop": "8",
+    "prev_rank": "11",
+    "prev_idx": "94",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024104323": {
+    "prev_date": "2026/08/29",
+    "prev_pop": "10",
+    "prev_rank": "6",
+    "prev_idx": "57",
+    "prev_dist": "ダ1700",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024100483": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "4",
+    "prev_rank": "3",
+    "prev_idx": "73",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024101736": {
+    "prev_date": "2026/09/27",
+    "prev_pop": "7",
+    "prev_rank": "4",
+    "prev_idx": "55",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024103510": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "5",
+    "prev_rank": "4",
+    "prev_idx": "63",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024103504": {
+    "prev_date": "2026/10/31",
+    "prev_pop": "4",
+    "prev_rank": "5",
+    "prev_idx": "66",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024100030": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "11",
+    "prev_rank": "9",
+    "prev_idx": "56",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102924": {
+    "prev_date": "2026/11/01",
+    "prev_pop": "11",
+    "prev_rank": "11",
+    "prev_idx": "46",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024103078": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "3",
+    "prev_rank": "6",
+    "prev_idx": "46",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102815": {
+    "prev_date": "2026/10/17",
+    "prev_pop": "4",
+    "prev_rank": "10",
+    "prev_idx": "39",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024106294": {
+    "prev_date": "2026/10/18",
+    "prev_pop": "4",
+    "prev_rank": "4",
+    "prev_idx": "87",
+    "prev_dist": "芝1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024106268": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "2",
+    "prev_rank": "2",
+    "prev_idx": "66",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024100666": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "8",
+    "prev_rank": "9",
+    "prev_idx": "55",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024106134": {
+    "prev_date": "2026/09/21",
+    "prev_pop": "8",
+    "prev_rank": "6",
+    "prev_idx": "83",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102861": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "13",
+    "prev_rank": "12",
+    "prev_idx": "41",
+    "prev_dist": "芝1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102893": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "6",
+    "prev_rank": "2",
+    "prev_idx": "64",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024104674": {
+    "prev_date": "2026/09/26",
+    "prev_pop": "7",
+    "prev_rank": "7",
+    "prev_idx": "78",
+    "prev_dist": "芝1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102103": {
+    "prev_date": "2026/09/19",
+    "prev_pop": "5",
+    "prev_rank": "7",
+    "prev_idx": "26",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024105002": {
+    "prev_date": "2026/09/05",
+    "prev_pop": "12",
+    "prev_rank": "11",
+    "prev_idx": "44",
+    "prev_dist": "ダ1700",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024106253": {
+    "prev_date": "2026/08/30",
+    "prev_pop": "6",
+    "prev_rank": "4",
+    "prev_idx": "80",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024105885": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "3",
+    "prev_rank": "8",
+    "prev_idx": "56",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024103445": {
+    "prev_date": "2026/10/03",
+    "prev_pop": "7",
+    "prev_rank": "3",
+    "prev_idx": "68",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023100941": {
+    "prev_date": "2026/10/10",
+    "prev_pop": "16",
+    "prev_rank": "10",
+    "prev_idx": "82",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023107218": {
+    "prev_date": "2026/03/01",
+    "prev_pop": "1",
+    "prev_rank": "1",
+    "prev_idx": "73",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021105238": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "10",
+    "prev_rank": "7",
+    "prev_idx": "87",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022106663": {
+    "prev_date": "2026/10/18",
+    "prev_pop": "8",
+    "prev_rank": "10",
+    "prev_idx": "61",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022102796": {
+    "prev_date": "2026/09/26",
+    "prev_pop": "13",
+    "prev_rank": "13",
+    "prev_idx": "74",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022105343": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "3",
+    "prev_rank": "9",
+    "prev_idx": "78",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023103378": {
+    "prev_date": "2026/10/11",
+    "prev_pop": "12",
+    "prev_rank": "9",
+    "prev_idx": "87",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023104861": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "7",
+    "prev_rank": "4",
+    "prev_idx": "91",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023106226": {
+    "prev_date": "2026/10/31",
+    "prev_pop": "15",
+    "prev_rank": "11",
+    "prev_idx": "87",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022104633": {
+    "prev_date": "2026/10/10",
+    "prev_pop": "11",
+    "prev_rank": "6",
+    "prev_idx": "85",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023100213": {
+    "prev_date": "2026/05/10",
+    "prev_pop": "12",
+    "prev_rank": "11",
+    "prev_idx": "79",
+    "prev_dist": "ダ2100",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023100804": {
+    "prev_date": "2026/10/31",
+    "prev_pop": "12",
+    "prev_rank": "10",
+    "prev_idx": "83",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023100233": {
+    "prev_date": "2026/08/30",
+    "prev_pop": "1",
+    "prev_rank": "1",
+    "prev_idx": "80",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2019102986": {
+    "prev_date": "2026/10/18",
+    "prev_pop": "8",
+    "prev_rank": "9",
+    "prev_idx": "65",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022103623": {
+    "prev_date": "2026/11/08",
+    "prev_pop": "14",
+    "prev_rank": "8",
+    "prev_idx": "73",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022102293": {
+    "prev_date": "2026/10/10",
+    "prev_pop": "7",
+    "prev_rank": "15",
+    "prev_idx": "63",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023106569": {
+    "prev_date": "2026/10/31",
+    "prev_pop": "4",
+    "prev_rank": "4",
+    "prev_idx": "91",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023106614": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "7",
+    "prev_rank": "6",
+    "prev_idx": "77",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023107291": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "7",
+    "prev_rank": "6",
+    "prev_idx": "73",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023107290": {
+    "prev_date": "2026/10/31",
+    "prev_pop": "10",
+    "prev_rank": "12",
+    "prev_idx": "86",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023107113": {
+    "prev_date": "2026/01/24",
+    "prev_pop": "1",
+    "prev_rank": "1",
+    "prev_idx": "95",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023107074": {
+    "prev_date": "2026/08/15",
+    "prev_pop": "5",
+    "prev_rank": "8",
+    "prev_idx": "88",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022101263": {
+    "prev_date": "2026/09/06",
+    "prev_pop": "10",
+    "prev_rank": "4",
+    "prev_idx": "92",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023104488": {
+    "prev_date": "2026/10/17",
+    "prev_pop": "10",
+    "prev_rank": "10",
+    "prev_idx": "76",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022104710": {
+    "prev_date": "2026/09/26",
+    "prev_pop": "5",
+    "prev_rank": "4",
+    "prev_idx": "90",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023104305": {
+    "prev_date": "2026/09/26",
+    "prev_pop": "11",
+    "prev_rank": "3",
+    "prev_idx": "91",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022105794": {
+    "prev_date": "2026/09/21",
+    "prev_pop": "7",
+    "prev_rank": "4",
+    "prev_idx": "69",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022105534": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "1",
+    "prev_rank": "6",
+    "prev_idx": "73",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022104598": {
+    "prev_date": "2026/11/07",
+    "prev_pop": "10",
+    "prev_rank": "9",
+    "prev_idx": "82",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021100081": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "7",
+    "prev_rank": "7",
+    "prev_idx": "72",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022105470": {
+    "prev_date": "2025/12/27",
+    "prev_pop": "3",
+    "prev_rank": "7",
+    "prev_idx": "85",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023102615": {
+    "prev_date": "2026/08/22",
+    "prev_pop": "8",
+    "prev_rank": "9",
+    "prev_idx": "54",
+    "prev_dist": "ダ1700",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023107297": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "2",
+    "prev_rank": "3",
+    "prev_idx": "82",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023103397": {
+    "prev_date": "2026/09/05",
+    "prev_pop": "6",
+    "prev_rank": "6",
+    "prev_idx": "81",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021101724": {
+    "prev_date": "2026/08/09",
+    "prev_pop": "4",
+    "prev_rank": "6",
+    "prev_idx": "84",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021101068": {
+    "prev_date": "2026/06/28",
+    "prev_pop": "6",
+    "prev_rank": "1",
+    "prev_idx": "105",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022110066": {
+    "prev_date": "2026/08/22",
+    "prev_pop": "9",
+    "prev_rank": "13",
+    "prev_idx": "89",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022105549": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "6",
+    "prev_rank": "1",
+    "prev_idx": "78",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023105246": {
+    "prev_date": "2026/10/18",
+    "prev_pop": "8",
+    "prev_rank": "11",
+    "prev_idx": "81",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022101197": {
+    "prev_date": "2026/08/22",
+    "prev_pop": "7",
+    "prev_rank": "9",
+    "prev_idx": "93",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023103822": {
+    "prev_date": "2026/08/02",
+    "prev_pop": "8",
+    "prev_rank": "9",
+    "prev_idx": "78",
+    "prev_dist": "ダ1700",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2020100934": {
+    "prev_date": "2026/10/18",
+    "prev_pop": "13",
+    "prev_rank": "6",
+    "prev_idx": "86",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022105014": {
+    "prev_date": "2026/10/18",
+    "prev_pop": "3",
+    "prev_rank": "7",
+    "prev_idx": "86",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021100789": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "8",
+    "prev_rank": "8",
+    "prev_idx": "91",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023106433": {
+    "prev_date": "2026/10/03",
+    "prev_pop": "5",
+    "prev_rank": "1",
+    "prev_idx": "107",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023107210": {
+    "prev_date": "2026/03/22",
+    "prev_pop": "1",
+    "prev_rank": "2",
+    "prev_idx": "91",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023103467": {
+    "prev_date": "2026/09/12",
+    "prev_pop": "2",
+    "prev_rank": "16",
+    "prev_idx": "46",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023104069": {
+    "prev_date": "2026/10/18",
+    "prev_pop": "4",
+    "prev_rank": "4",
+    "prev_idx": "92",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022104587": {
+    "prev_date": "2026/05/10",
+    "prev_pop": "10",
+    "prev_rank": "13",
+    "prev_idx": "39",
+    "prev_dist": "芝2400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023107010": {
+    "prev_date": "2026/07/19",
+    "prev_pop": "5",
+    "prev_rank": "8",
+    "prev_idx": "76",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021106199": {
+    "prev_date": "2026/06/20",
+    "prev_pop": "13",
+    "prev_rank": "6",
+    "prev_idx": "84",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023104359": {
+    "prev_date": "2026/09/12",
+    "prev_pop": "5",
+    "prev_rank": "4",
+    "prev_idx": "69",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023106418": {
+    "prev_date": "2026/10/17",
+    "prev_pop": "11",
+    "prev_rank": "8",
+    "prev_idx": "73",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021104103": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "6",
+    "prev_rank": "5",
+    "prev_idx": "67",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022103353": {
+    "prev_date": "2026/10/10",
+    "prev_pop": "6",
+    "prev_rank": "4",
+    "prev_idx": "83",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023107340": {
+    "prev_date": "2026/08/29",
+    "prev_pop": "1",
+    "prev_rank": "6",
+    "prev_idx": "61",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023107440": {
+    "prev_date": "2026/09/13",
+    "prev_pop": "12",
+    "prev_rank": "14",
+    "prev_idx": "71",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021104820": {
+    "prev_date": "2026/09/22",
+    "prev_pop": "7",
+    "prev_rank": "12",
+    "prev_idx": "37",
+    "prev_dist": "芝2200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023106919": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "7",
+    "prev_rank": "9",
+    "prev_idx": "78",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023105163": {
+    "prev_date": "2026/09/06",
+    "prev_pop": "7",
+    "prev_rank": "17",
+    "prev_idx": "51",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023103298": {
+    "prev_date": "2026/10/31",
+    "prev_pop": "8",
+    "prev_rank": "9",
+    "prev_idx": "70",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022104981": {
+    "prev_date": "2026/10/17",
+    "prev_pop": "9",
+    "prev_rank": "10",
+    "prev_idx": "72",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023107161": {
+    "prev_date": "2026/06/06",
+    "prev_pop": "2",
+    "prev_rank": "1",
+    "prev_idx": "86",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024105330": {
+    "prev_date": "2026/09/19",
+    "prev_pop": "10",
+    "prev_rank": "10",
+    "prev_idx": "61",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024101953": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "11",
+    "prev_rank": "13",
+    "prev_idx": "23",
+    "prev_dist": "ダ1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102587": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "7",
+    "prev_rank": "4",
+    "prev_idx": "70",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024103854": {
+    "prev_date": "2026/10/12",
+    "prev_pop": "10",
+    "prev_rank": "11",
+    "prev_idx": "29",
+    "prev_dist": "ダ1300",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024108133": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "16",
+    "prev_rank": "14",
+    "prev_idx": "28",
+    "prev_dist": "ダ1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024103642": {
+    "prev_date": "2026/08/08",
+    "prev_pop": "8",
+    "prev_rank": "9",
+    "prev_idx": "59",
+    "prev_dist": "芝1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102821": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "3",
+    "prev_rank": "2",
+    "prev_idx": "79",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024105548": {
+    "prev_date": "2026/09/05",
+    "prev_pop": "5",
+    "prev_rank": "8",
+    "prev_idx": "61",
+    "prev_dist": "ダ1700",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024106796": {
+    "prev_date": "2026/10/04",
+    "prev_pop": "5",
+    "prev_rank": "6",
+    "prev_idx": "50",
+    "prev_dist": "ダ1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024106350": {
+    "prev_date": "2026/08/01",
+    "prev_pop": "9",
+    "prev_rank": "10",
+    "prev_idx": "-147",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024104532": {
+    "prev_date": "2026/07/19",
+    "prev_pop": "12",
+    "prev_rank": "15",
+    "prev_idx": "26",
+    "prev_dist": "芝1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024104451": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "4",
+    "prev_rank": "5",
+    "prev_idx": "69",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102761": {
+    "prev_date": "2026/10/10",
+    "prev_pop": "12",
+    "prev_rank": "8",
+    "prev_idx": "44",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024106838": {
+    "prev_date": "2026/10/31",
+    "prev_pop": "6",
+    "prev_rank": "3",
+    "prev_idx": "64",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024108296": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "8",
+    "prev_rank": "6",
+    "prev_idx": "60",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024106013": {
+    "prev_date": "2026/10/12",
+    "prev_pop": "8",
+    "prev_rank": "5",
+    "prev_idx": "57",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102005": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "6",
+    "prev_rank": "7",
+    "prev_idx": "49",
+    "prev_dist": "ダ1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024106840": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "7",
+    "prev_rank": "3",
+    "prev_idx": "73",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024100210": {
+    "prev_date": "2026/10/12",
+    "prev_pop": "3",
+    "prev_rank": "2",
+    "prev_idx": "73",
+    "prev_dist": "芝1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102392": {
+    "prev_date": "2026/07/11",
+    "prev_pop": "6",
+    "prev_rank": "5",
+    "prev_idx": "52",
+    "prev_dist": "芝1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024105544": {
+    "prev_date": "2026/10/03",
+    "prev_pop": "15",
+    "prev_rank": "8",
+    "prev_idx": "50",
+    "prev_dist": "芝1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024104480": {
+    "prev_date": "2026/09/19",
+    "prev_pop": "7",
+    "prev_rank": "7",
+    "prev_idx": "68",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102157": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "15",
+    "prev_rank": "12",
+    "prev_idx": "20",
+    "prev_dist": "芝1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024101696": {
+    "prev_date": "2026/09/12",
+    "prev_pop": "2",
+    "prev_rank": "2",
+    "prev_idx": "48",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024106407": {
+    "prev_date": "2026/09/27",
+    "prev_pop": "2",
+    "prev_rank": "3",
+    "prev_idx": "55",
+    "prev_dist": "芝1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024107425": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "11",
+    "prev_rank": "12",
+    "prev_idx": "55",
+    "prev_dist": "芝1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102244": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "3",
+    "prev_rank": "4",
+    "prev_idx": "73",
+    "prev_dist": "芝1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024106509": {
+    "prev_date": "2026/10/18",
+    "prev_pop": "4",
+    "prev_rank": "2",
+    "prev_idx": "61",
+    "prev_dist": "芝1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024101762": {
+    "prev_date": "2026/09/26",
+    "prev_pop": "13",
+    "prev_rank": "10",
+    "prev_idx": "51",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024105437": {
+    "prev_date": "2026/09/27",
+    "prev_pop": "3",
+    "prev_rank": "5",
+    "prev_idx": "73",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102626": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "3",
+    "prev_rank": "4",
+    "prev_idx": "67",
+    "prev_dist": "芝1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024101312": {
+    "prev_date": "2026/09/06",
+    "prev_pop": "8",
+    "prev_rank": "7",
+    "prev_idx": "82",
+    "prev_dist": "芝1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023103310": {
+    "prev_date": "2026/09/12",
+    "prev_pop": "9",
+    "prev_rank": "4",
+    "prev_idx": "88",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021105417": {
+    "prev_date": "2026/02/21",
+    "prev_pop": "6",
+    "prev_rank": "6",
+    "prev_idx": "84",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023101382": {
+    "prev_date": "2026/10/03",
+    "prev_pop": "6",
+    "prev_rank": "2",
+    "prev_idx": "97",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2017104815": {
+    "prev_date": "2026/10/03",
+    "prev_pop": "8",
+    "prev_rank": "10",
+    "prev_idx": "86",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023104224": {
+    "prev_date": "2026/09/13",
+    "prev_pop": "11",
+    "prev_rank": "10",
+    "prev_idx": "82",
+    "prev_dist": "芝2200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022103310": {
+    "prev_date": "2026/09/27",
+    "prev_pop": "11",
+    "prev_rank": "7",
+    "prev_idx": "66",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023106718": {
+    "prev_date": "2026/09/06",
+    "prev_pop": "3",
+    "prev_rank": "4",
+    "prev_idx": "88",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022100274": {
+    "prev_date": "2026/10/25",
+    "prev_pop": "2",
+    "prev_rank": "4",
+    "prev_idx": "75",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2020102760": {
+    "prev_date": "2026/09/20",
+    "prev_pop": "7",
+    "prev_rank": "10",
+    "prev_idx": "78",
+    "prev_dist": "ダ2400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023103351": {
+    "prev_date": "2026/09/06",
+    "prev_pop": "8",
+    "prev_rank": "11",
+    "prev_idx": "82",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023105324": {
+    "prev_date": "2026/09/26",
+    "prev_pop": "1",
+    "prev_rank": "1",
+    "prev_idx": "70",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021100008": {
+    "prev_date": "2026/10/31",
+    "prev_pop": "10",
+    "prev_rank": "10",
+    "prev_idx": "77",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021101905": {
+    "prev_date": "2026/10/11",
+    "prev_pop": "6",
+    "prev_rank": "11",
+    "prev_idx": "81",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021103525": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "12",
+    "prev_rank": "13",
+    "prev_idx": "83",
+    "prev_dist": "ダ1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022104004": {
+    "prev_date": "2026/10/03",
+    "prev_pop": "15",
+    "prev_rank": "7",
+    "prev_idx": "96",
+    "prev_dist": "ダ1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2020100583": {
+    "prev_date": "2026/11/01",
+    "prev_pop": "6",
+    "prev_rank": "7",
+    "prev_idx": "103",
+    "prev_dist": "ダ1300",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2020105250": {
+    "prev_date": "2026/10/03",
+    "prev_pop": "11",
+    "prev_rank": "16",
+    "prev_idx": "85",
+    "prev_dist": "ダ1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021101429": {
+    "prev_date": "2026/11/01",
+    "prev_pop": "11",
+    "prev_rank": "9",
+    "prev_idx": "88",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2019107016": {
+    "prev_date": "2026/10/17",
+    "prev_pop": "17",
+    "prev_rank": "17",
+    "prev_idx": "70",
+    "prev_dist": "芝1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023104545": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "1",
+    "prev_rank": "1",
+    "prev_idx": "91",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022104862": {
+    "prev_date": "2026/08/15",
+    "prev_pop": "10",
+    "prev_rank": "14",
+    "prev_idx": "54",
+    "prev_dist": "ダ1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021103288": {
+    "prev_date": "2026/08/01",
+    "prev_pop": "11",
+    "prev_rank": "15",
+    "prev_idx": "54",
+    "prev_dist": "ダ1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023106916": {
+    "prev_date": "2026/10/11",
+    "prev_pop": "9",
+    "prev_rank": "6",
+    "prev_idx": "100",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021101382": {
+    "prev_date": "2026/10/03",
+    "prev_pop": "16",
+    "prev_rank": "12",
+    "prev_idx": "85",
+    "prev_dist": "芝1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2020110120": {
+    "prev_date": "2026/10/11",
+    "prev_pop": "10",
+    "prev_rank": "9",
+    "prev_idx": "82",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022102716": {
+    "prev_date": "2026/08/02",
+    "prev_pop": "1",
+    "prev_rank": "1",
+    "prev_idx": "90",
+    "prev_dist": "ダ1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022107138": {
+    "prev_date": "2026/10/17",
+    "prev_pop": "13",
+    "prev_rank": "9",
+    "prev_idx": "78",
+    "prev_dist": "芝1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021106157": {
+    "prev_date": "2026/10/18",
+    "prev_pop": "3",
+    "prev_rank": "10",
+    "prev_idx": "80",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023102247": {
+    "prev_date": "2026/10/17",
+    "prev_pop": "9",
+    "prev_rank": "13",
+    "prev_idx": "72",
+    "prev_dist": "芝2200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023102886": {
+    "prev_date": "2026/02/10",
+    "prev_pop": "3",
+    "prev_rank": "5",
+    "prev_idx": "72",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2020100621": {
+    "prev_date": "2026/10/17",
+    "prev_pop": "11",
+    "prev_rank": "11",
+    "prev_idx": "76",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022106218": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "10",
+    "prev_rank": "9",
+    "prev_idx": "61",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023105534": {
+    "prev_date": "2026/05/16",
+    "prev_pop": "1",
+    "prev_rank": "8",
+    "prev_idx": "95",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023103792": {
+    "prev_date": "2026/10/18",
+    "prev_pop": "5",
+    "prev_rank": "10",
+    "prev_idx": "69",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023107359": {
+    "prev_date": "2026/08/16",
+    "prev_pop": "1",
+    "prev_rank": "1",
+    "prev_idx": "89",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022106846": {
+    "prev_date": "2026/08/23",
+    "prev_pop": "10",
+    "prev_rank": "4",
+    "prev_idx": "90",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022106593": {
+    "prev_date": "2026/10/31",
+    "prev_pop": "17",
+    "prev_rank": "13",
+    "prev_idx": "85",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022100068": {
+    "prev_date": "2026/10/17",
+    "prev_pop": "2",
+    "prev_rank": "1",
+    "prev_idx": "86",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021102717": {
+    "prev_date": "2026/09/27",
+    "prev_pop": "12",
+    "prev_rank": "14",
+    "prev_idx": "56",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2021105478": {
+    "prev_date": "2026/10/17",
+    "prev_pop": "13",
+    "prev_rank": "7",
+    "prev_idx": "87",
+    "prev_dist": "芝2200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023104389": {
+    "prev_date": "2026/10/31",
+    "prev_pop": "11",
+    "prev_rank": "12",
+    "prev_idx": "55",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2019105076": {
+    "prev_date": "2026/09/22",
+    "prev_pop": "14",
+    "prev_rank": "14",
+    "prev_idx": "34",
+    "prev_dist": "芝2200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2022103308": {
+    "prev_date": "2026/09/26",
+    "prev_pop": "2",
+    "prev_rank": "3",
+    "prev_idx": "59",
+    "prev_dist": "芝2000",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2023103875": {
+    "prev_date": "2026/07/18",
+    "prev_pop": "6",
+    "prev_rank": "8",
+    "prev_idx": "80",
+    "prev_dist": "芝1800",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024106790": {
+    "prev_date": "2026/09/27",
+    "prev_pop": "11",
+    "prev_rank": "5",
+    "prev_idx": "65",
+    "prev_dist": "ダ1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024109020": {
+    "prev_date": "2026/08/16",
+    "prev_pop": "14",
+    "prev_rank": "15",
+    "prev_idx": "19",
+    "prev_dist": "ダ1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024100287": {
+    "prev_date": "2026/08/15",
+    "prev_pop": "12",
+    "prev_rank": "13",
+    "prev_idx": "37",
+    "prev_dist": "芝1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024105355": {
+    "prev_date": "2026/08/23",
+    "prev_pop": "5",
+    "prev_rank": "9",
+    "prev_idx": "27",
+    "prev_dist": "芝1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024100532": {
+    "prev_date": "2026/09/21",
+    "prev_pop": "13",
+    "prev_rank": "14",
+    "prev_idx": "-18",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024108366": {
+    "prev_date": "2026/10/17",
+    "prev_pop": "1",
+    "prev_rank": "2",
+    "prev_idx": "52",
+    "prev_dist": "ダ1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024106083": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "2",
+    "prev_rank": "2",
+    "prev_idx": "60",
+    "prev_dist": "ダ1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102846": {
+    "prev_date": "2026/09/22",
+    "prev_pop": "2",
+    "prev_rank": "2",
+    "prev_idx": "47",
+    "prev_dist": "芝1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024108327": {
+    "prev_date": "2026/10/31",
+    "prev_pop": "7",
+    "prev_rank": "4",
+    "prev_idx": "70",
+    "prev_dist": "ダ1400",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024103670": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "4",
+    "prev_rank": "4",
+    "prev_idx": "60",
+    "prev_dist": "ダ1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024102849": {
+    "prev_date": "2026/10/24",
+    "prev_pop": "9",
+    "prev_rank": "5",
+    "prev_idx": "57",
+    "prev_dist": "ダ1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024107347": {
+    "prev_date": "2026/09/27",
+    "prev_pop": "9",
+    "prev_rank": "9",
+    "prev_idx": "54",
+    "prev_dist": "ダ1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024105439": {
+    "prev_date": "2026/09/22",
+    "prev_pop": "13",
+    "prev_rank": "14",
+    "prev_idx": "22",
+    "prev_dist": "芝1600",
+    "target_date": "20261115",
+    "status": "取れた"
+  },
+  "2024100877": {
+    "prev_date": "2026/08/16",
+    "prev_pop": "6",
+    "prev_rank": "10",
+    "prev_idx": "47",
+    "prev_dist": "ダ1200",
+    "target_date": "20261115",
+    "status": "取れた"
+  }
+}
